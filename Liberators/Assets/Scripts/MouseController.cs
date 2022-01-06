@@ -10,9 +10,12 @@ public class MouseController : MonoBehaviour
     public Sprite neutralCursor;
     Grid mainGrid;
     MapController mapController;
+    GameObject selectedUnit;
+    bool unitSelected;
 
     Vector2 cursorPosition = new Vector2(0, 0);
     Vector2 tilePosition = new Vector2(0, 0);
+    Vector2Int gridPosition = new Vector2Int(0, 0);
 
     // Start is called before the first frame update
     void Start()
@@ -25,9 +28,10 @@ public class MouseController : MonoBehaviour
     void Update()
     {
         Vector2 worldPos = Camera.main.ScreenToWorldPoint(cursorPosition);
-        worldPos = mapController.worldToTilePos(worldPos);
+        worldPos = mapController.tileWorldPos(worldPos);
         tilePosition = new Vector3(worldPos.x, worldPos.y, -1);
         transform.position = tilePosition;
+        gridPosition = mapController.gridTilePos(tilePosition);
     }
 
     void OnCursorMovement(InputValue value)
@@ -37,12 +41,25 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
-        GameObject selectedUnit = mainGrid.GetComponentInChildren<MapController>().getUnitFromCoords(tilePosition);
-        if (!selectedUnit)
+        if (!unitSelected)
         {
-            Debug.Log("No unit");
+            if (selectedUnit)
+            {
+                selectedUnit.GetComponent<UnitController>().destroyMarkers();
+            }
+            GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
+            if (targetUnit)
+            {
+                selectedUnit = targetUnit;
+                targetUnit.GetComponent<UnitController>().createMarkers();
+                unitSelected = true;
+                return;
+            }
             return;
         }
-        Debug.Log("Has unit");
+        else
+        {
+            unitSelected = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
+        }
     }
 }
