@@ -17,7 +17,7 @@ public class MapController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public GameObject getUnitFromCoords(Vector2Int coords)
@@ -64,14 +64,16 @@ public class MapController : MonoBehaviour
 
     public Vector2 tileGridPos(Vector2Int gridPos)
     {
-        return new Vector2(((float)(gridPos.x - gridPos.y)/2) * mainGrid.cellSize.x, ((float)(gridPos.x + gridPos.y - 1f) / 2) * mainGrid.cellSize.y);
+        return new Vector2(((float)(gridPos.x - gridPos.y) / 2) * mainGrid.cellSize.x, ((float)(gridPos.x + gridPos.y - 1f) / 2) * mainGrid.cellSize.y);
     }
 
     public Vector2Int gridTilePos(Vector2 tilePos)
     {
-        int gridX = Mathf.CeilToInt(tilePos.y + tilePos.x);
-        int gridY = Mathf.CeilToInt(tilePos.y - tilePos.x);
-        return new Vector2Int(gridX, gridY);
+        float tileX = tilePos.x * 2 / mainGrid.cellSize.x;
+        float tileY = (tilePos.y +0.25f) * 2 / mainGrid.cellSize.y;
+        int gridX = Mathf.CeilToInt(tileY + tileX);
+        int gridY = Mathf.CeilToInt(tileY - tileX);
+        return new Vector2Int(gridX, gridY) / 2;
     }
 
     public Vector2Int gridWorldPos(Vector2 worldPos)

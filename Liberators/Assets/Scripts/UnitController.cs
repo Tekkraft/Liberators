@@ -35,11 +35,12 @@ public class UnitController : MonoBehaviour
         {
             for (int j = -movementRange; j <= movementRange; j++)
             {
-                if (Mathf.Abs(i) + Mathf.Abs(j) <= movementRange)
+                if (mapController.gridDistance(new Vector2Int(i, j) + unitGridPosition, unitGridPosition) <= movementRange)
                 {
                     GameObject temp = GameObject.Instantiate(marker);
                     Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i,j));
                     temp.GetComponent<MarkerController>().setup(MarkerController.Markers.BLUE, markerLocation);
+                    markerList.Add(temp);
                 }
             }
         }
@@ -49,8 +50,9 @@ public class UnitController : MonoBehaviour
     {
         for (int i = 0; i < markerList.Count; i = 0)
         {
-            GameObject currentMarker = markerList[0];
-            currentMarker.GetComponent<MarkerController>().removeMarker();
+            GameObject temp = markerList[0];
+            markerList.Remove(temp);
+            temp.GetComponent<MarkerController>().removeMarker();
         }
     }
 
@@ -58,6 +60,7 @@ public class UnitController : MonoBehaviour
     {
         Vector2Int destinationTile = mapController.gridTilePos(destination);
         int distance = mapController.gridDistance(destinationTile, unitGridPosition);
+        Debug.Log(distance);
         if (distance <= movementRange)
         {
             setUnitPos(destination);
@@ -69,8 +72,8 @@ public class UnitController : MonoBehaviour
     void setUnitPos(Vector2 worldPos)
     {
         transform.position = worldPos;
-        transform.Translate(new Vector3(0,0.75f,-2));
         unitGridPosition = mapController.gridWorldPos(transform.position);
+        transform.Translate(new Vector3(0,0.75f,-2));
         destroyMarkers();
     }
 
