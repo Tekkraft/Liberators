@@ -8,10 +8,15 @@ public class MapController : MonoBehaviour
     Grid mainGrid;
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
 
-    // Start is called before the first frame update
     void Awake()
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
@@ -52,6 +57,18 @@ public class MapController : MonoBehaviour
             unitList.Add(key, unit);
         }
         return moved;
+    }
+
+    public bool attackUnit(GameObject attacker, GameObject defender)
+    {
+        bool defeated = attacker.GetComponent<UnitController>().attackUnit(defender);
+        if (defeated)
+        {
+            Vector2Int location = defender.GetComponent<UnitController>().getUnitPos();
+            unitList.Remove(location);
+            GameObject.Destroy(defender);
+        }
+        return true;
     }
 
     public Vector2 tileWorldPos(Vector2 worldPos)

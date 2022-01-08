@@ -41,17 +41,18 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
+        GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
         if (!unitSelected)
         {
             if (selectedUnit)
             {
                 selectedUnit.GetComponent<UnitController>().destroyMarkers();
             }
-            GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
             if (targetUnit)
             {
                 selectedUnit = targetUnit;
-                targetUnit.GetComponent<UnitController>().createMarkers();
+                UnitController targetController = targetUnit.GetComponent<UnitController>();
+                targetController.createMarkers(UnitController.MarkerAreas.RADIAL, targetController.getStats()[0], 0);
                 unitSelected = true;
                 return;
             }
@@ -59,7 +60,14 @@ public class MouseController : MonoBehaviour
         }
         else
         {
-            unitSelected = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
+            if (targetUnit)
+            {
+                mapController.attackUnit(selectedUnit,targetUnit);
+            }
+            else
+            {
+                unitSelected = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
+            }
         }
     }
 }
