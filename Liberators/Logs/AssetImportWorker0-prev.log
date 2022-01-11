@@ -1,0 +1,363 @@
+Unity Editor version:    2020.3.25f1 (9b9180224418)
+Branch:                  2020.3/staging
+Build type:              Release
+Batch mode:              YES
+macOS version:           Version 11.3.1 (Build 20E241)
+Darwin version:          20.4.0
+Architecture:            x86_64
+Running under Rosetta:   YES
+Available memory:        16384 MB
+Using pre-set license
+Pro License: NO
+
+COMMAND LINE ARGUMENTS:
+/Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/MacOS/Unity
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+/Users/jefferyyang/Documents/GitHub/Liberators/Liberators
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+64160
+Successfully changed project path to: /Users/jefferyyang/Documents/GitHub/Liberators/Liberators
+/Users/jefferyyang/Documents/GitHub/Liberators/Liberators
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 45.18 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.25f1 (9b9180224418)
+[Subsystems] Discovering subsystems at path /Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path /Users/jefferyyang/Documents/GitHub/Liberators/Liberators/Assets
+GfxDevice: creating device client; threaded=0
+2022-01-11 14:53:30.786 Unity[77518:13632413] (null) preferred device: Apple M1 (high power)
+2022-01-11 14:53:30.786 Unity[77518:13632413] Metal devices available: 1
+2022-01-11 14:53:30.786 Unity[77518:13632413] 0: Apple M1 (high power)
+2022-01-11 14:53:30.786 Unity[77518:13632413] Using device Apple M1 (high power)
+Initializing Metal device caps: Apple M1
+Initialize mono
+Mono path[0] = '/Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/Managed'
+Mono path[1] = '/Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = '/Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56518
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: /Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: /Applications/Unity/Hub/Editor/2020.3.25f1/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: /Applications/Unity/Hub/Editor/2020.3.25f1/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll
+Registered in 0.000531 seconds.
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 45.09 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.315 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1315ms)
+		BeginReloadAssembly (79ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (0ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (3ms)
+		EndReloadAssembly (1113ms)
+			LoadAssemblies (76ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (189ms)
+			ReleaseScriptCaches (0ms)
+			RebuildScriptCaches (43ms)
+			SetupLoadedEditorAssemblies (568ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (45ms)
+				BeforeProcessingInitializeOnLoad (79ms)
+				ProcessInitializeOnLoadAttributes (314ms)
+				ProcessInitializeOnLoadMethodAttributes (112ms)
+				AfterProcessingInitializeOnLoad (0ms)
+				EditorAssembliesLoaded (1ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (0ms)
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.001494 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 43.78 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  2.449 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2450ms)
+		BeginReloadAssembly (259ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (33ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (39ms)
+		EndReloadAssembly (2097ms)
+			LoadAssemblies (174ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (378ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (60ms)
+			SetupLoadedEditorAssemblies (1170ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (44ms)
+				BeforeProcessingInitializeOnLoad (173ms)
+				ProcessInitializeOnLoadAttributes (888ms)
+				ProcessInitializeOnLoadMethodAttributes (48ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (30ms)
+Platform modules already initialized, skipping
+Validating Project structure ... 0.000503 seconds.
+Shader import version has changed; will reimport all shaders...
+Upgrading shader files ...0.000574 seconds.
+Application.AssetDatabase Initial Script Refresh Start
+RefreshInfo: InitialScriptRefreshV2(NoUpdateAssetOptions) scanfilter:  ... 1 filters
+RefreshProfiler: Total: 0.000ms
+Application.AssetDatabase Initial Script Refresh End
+Application.AssetDatabase.Refresh Start
+Application.AssetDatabase.Refresh End
+RefreshInfo: StopAssetImportingV2(ForceSynchronousImport) scanfilter: 
+RefreshProfiler: Total: 0.000ms
+Launching external process: /Applications/Unity/Hub/Editor/2020.3.25f1/Unity.app/Contents/Tools/UnityShaderCompiler
+Launched and connected shader compiler UnityShaderCompiler after 0.03 seconds
+Initializing Unity extensions:
+========================================================================
+Worker process is ready to serve import requests
+Refreshing native plugins compatible for Editor in 0.32 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2541 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 213.0 MB.
+System memory in use after: 212.3 MB.
+
+Unloading 120 unused Assets to reduce memory usage. Loaded Objects now: 3013.
+Total: 2.689792 ms (FindLiveObjects: 0.114875 ms CreateObjectMapping: 0.048917 ms MarkObjects: 2.135708 ms  DeleteObjects: 0.389584 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  path: Assets/Scenes/PrototypeBattle.unity
+  artifactKey: Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/PrototypeBattle.unity using Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21393c043b581e6ef3a709d8d2e1f0c2') in 0.019538 seconds 
+  Import took 0.022923 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.489331 seconds.
+  path: Assets/Sprites/TestUnitIcons/AllyBanner.png
+  artifactKey: Guid(5ba0a8901e53b42858b4cd73fedc1310) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/TestUnitIcons/AllyBanner.png using Guid(5ba0a8901e53b42858b4cd73fedc1310) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ec30f8615167142146c236e999bd0a26') in 0.645976 seconds 
+  Import took 0.655500 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000298 seconds.
+  path: Assets/Sprites/TestUnitIcons/NeutralBanner.png
+  artifactKey: Guid(0153801df0a514bd9929245a3960736b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/TestUnitIcons/NeutralBanner.png using Guid(0153801df0a514bd9929245a3960736b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '97a71d2a6075d2fea36a485c5d10569f') in 0.014211 seconds 
+  Import took 0.016844 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000338 seconds.
+  path: Assets/Sprites/TestUnitIcons/PlayerBanner.png
+  artifactKey: Guid(8d42415b97a7c4fbdac0398167689dad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/TestUnitIcons/PlayerBanner.png using Guid(8d42415b97a7c4fbdac0398167689dad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0ae951e1bc2ceb49ee3883facc3238c') in 0.008402 seconds 
+  Import took 0.011508 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000182 seconds.
+  path: Assets/Sprites/TestUnitIcons/HostileBanner.png
+  artifactKey: Guid(e5be96f00266f4fe5be5eb548009a895) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/TestUnitIcons/HostileBanner.png using Guid(e5be96f00266f4fe5be5eb548009a895) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cfbd3e33cb97e56598ec942b1ed26824') in 0.008162 seconds 
+  Import took 0.010946 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.373569 seconds.
+  path: Assets/Sprites/TestIsoMarkers/TileMarker.png
+  artifactKey: Guid(88e156563e58d432fa0ecb04ffa41a8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/TestIsoMarkers/TileMarker.png using Guid(88e156563e58d432fa0ecb04ffa41a8b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '887da0829e7f58f5bc83f7ab035e6373') in 0.019981 seconds 
+  Import took 0.026527 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000310 seconds.
+  path: Assets/Sprites/TestIsoMarkers/TileMarkerGreen.png
+  artifactKey: Guid(277be382adb4e459995074156a352813) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/TestIsoMarkers/TileMarkerGreen.png using Guid(277be382adb4e459995074156a352813) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f652e6fc9d3cdcfa12abc7f48c0b8c4') in 0.012489 seconds 
+  Import took 0.016810 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000280 seconds.
+  path: Assets/Sprites/TestIsoMarkers/TileMarkerBlue.png
+  artifactKey: Guid(cb8807918af7141b2880252b8ad32456) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/TestIsoMarkers/TileMarkerBlue.png using Guid(cb8807918af7141b2880252b8ad32456) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7726d68f829493e25ca800d24ac59168') in 0.010289 seconds 
+  Import took 0.013783 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000231 seconds.
+  path: Assets/Sprites/TestIsoMarkers/TileMarkerRed.png
+  artifactKey: Guid(e7253af0eb57a47f9ab2ea2c5ae3ed1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/TestIsoMarkers/TileMarkerRed.png using Guid(e7253af0eb57a47f9ab2ea2c5ae3ed1a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f71cbea398260aebe8e15ef9f1736fb1') in 0.009859 seconds 
+  Import took 0.013175 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.228880 seconds.
+  path: Assets/Sprites/Battle Sprites
+  artifactKey: Guid(09bb35480c09a4bfc8eb8365fb86a048) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites using Guid(09bb35480c09a4bfc8eb8365fb86a048) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5de9c7effdd4c2eb5a192632d3969484') in 0.001294 seconds 
+  Import took 0.005042 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.374486 seconds.
+  path: Assets/Sprites/TestIsoMarkers
+  artifactKey: Guid(5f76b627f191c4d2383a194be02c9149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/TestIsoMarkers using Guid(5f76b627f191c4d2383a194be02c9149) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c4c8cd1ea9e6c21b826749af46489294') in 0.001573 seconds 
+  Import took 0.007403 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.581528 seconds.
+  path: Assets/Sprites/UI Sprites
+  artifactKey: Guid(ec2b7f33d88e245fc8b62ec3ca408307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/UI Sprites using Guid(ec2b7f33d88e245fc8b62ec3ca408307) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5bd36925423e58b328f24fccb86ea448') in 0.001247 seconds 
+  Import took 0.004770 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 19.896071 seconds.
+  path: Assets/Sprites/UI Sprites/UIBorder.png
+  artifactKey: Guid(a318ba5a2809d4ab68d919ff3de2af22) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/UI Sprites/UIBorder.png using Guid(a318ba5a2809d4ab68d919ff3de2af22) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ecd2da31348339e34edad761a6ea50e') in 0.010108 seconds 
+  Import took 0.013327 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 21.984131 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoBorder.png
+  artifactKey: Guid(e020927bbf8e8413f90331330dccb554) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoBorder.png using Guid(e020927bbf8e8413f90331330dccb554) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1750a7c77a284c71d74d201991d1069') in 0.008654 seconds 
+  Import took 0.011700 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000264 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoTileGreen.png
+  artifactKey: Guid(a4461b31ce5ac40a295cf2dfa67061d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoTileGreen.png using Guid(a4461b31ce5ac40a295cf2dfa67061d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '84fb76309bf25703bbc554646edbc97f') in 0.007562 seconds 
+  Import took 0.010172 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000351 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoBorderBlue.png
+  artifactKey: Guid(423d56ee1f905476c870ed5e24869732) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoBorderBlue.png using Guid(423d56ee1f905476c870ed5e24869732) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e65c5e377ef015c2bfcd6980f76783e') in 0.007998 seconds 
+  Import took 0.010658 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000258 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoTileBlue.png
+  artifactKey: Guid(90f1ae1bf87ea45f2b76068b01afe9b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoTileBlue.png using Guid(90f1ae1bf87ea45f2b76068b01afe9b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9049378e5e29dec3f075df7bbcc9a1d3') in 0.008421 seconds 
+  Import took 0.011369 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000278 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoBorderGreen.png
+  artifactKey: Guid(f200b37090c6940dd911e7ba3d15d964) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoBorderGreen.png using Guid(f200b37090c6940dd911e7ba3d15d964) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4860c2d39e91b7bb418c12e1baaff1d1') in 0.008269 seconds 
+  Import took 0.011095 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000234 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoBorderRed.png
+  artifactKey: Guid(ff6551835bc2741789288db979350d9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoBorderRed.png using Guid(ff6551835bc2741789288db979350d9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '825184e1c24d2f64849db01ce357b0bf') in 0.008644 seconds 
+  Import took 0.011563 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000209 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoTile.png
+  artifactKey: Guid(77c1bf835e8b04ecca9ad36a3d4929ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoTile.png using Guid(77c1bf835e8b04ecca9ad36a3d4929ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '97ebc3b7941a3120bf7bc31d06c34549') in 0.008536 seconds 
+  Import took 0.011561 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.960179 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoTileRed.png
+  artifactKey: Guid(48dce9879a8fd4cf6b9d3ca6b64a137a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V2/BaseIsoTileRed.png using Guid(48dce9879a8fd4cf6b9d3ca6b64a137a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b4b8cb7dc30d8791a19b623fac2a96e7') in 0.014775 seconds 
+  Import took 0.020186 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.055978 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoBlueTransparent 1.png
+  artifactKey: Guid(f72bd81d73eca4060b97aca95777ffe5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoBlueTransparent 1.png using Guid(f72bd81d73eca4060b97aca95777ffe5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c279dbb6ba084ac594402bcfe2891a3') in 0.011418 seconds 
+  Import took 0.015505 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000239 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoFull.png
+  artifactKey: Guid(0cf1e7205f01c4d278fb3b8f4ec106fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoFull.png using Guid(0cf1e7205f01c4d278fb3b8f4ec106fc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df666b19f7afa9ac845e3fdefee9db61') in 0.009796 seconds 
+  Import took 0.013046 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.012751 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoGrayTransparent.png
+  artifactKey: Guid(c16bd1cbbd71a48ad889931365047dae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoGrayTransparent.png using Guid(c16bd1cbbd71a48ad889931365047dae) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '072b511812072199c8aece2a07562c0e') in 0.009827 seconds 
+  Import took 0.013416 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000376 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoGrayTransparentSmall.png
+  artifactKey: Guid(b5e2a5fa9f41847dca3e9e119924f3e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoGrayTransparentSmall.png using Guid(b5e2a5fa9f41847dca3e9e119924f3e2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d3731d7123f707cf140b2db736f6cd5') in 0.008593 seconds 
+  Import took 0.011479 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.008127 seconds.
+  path: Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoRedTransparent.png
+  artifactKey: Guid(3e7543a4592c543d08bcf14b557e845c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/TestIsoTiles V1/TestIsoRedTransparent.png using Guid(3e7543a4592c543d08bcf14b557e845c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8480fef4908ba37133553518de0f0aae') in 0.008579 seconds 
+  Import took 0.011855 seconds .
+

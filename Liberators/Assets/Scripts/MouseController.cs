@@ -52,7 +52,7 @@ public class MouseController : MonoBehaviour
             {
                 selectedUnit = targetUnit;
                 UnitController targetController = targetUnit.GetComponent<UnitController>();
-                targetController.createMarkers(UnitController.MarkerAreas.RADIAL, targetController.getStats()[0], 0);
+                targetController.createMarkers(UnitController.MarkerAreas.RADIAL, targetController.getStats()[0], 0, MarkerController.Markers.BLUE);
                 unitSelected = true;
                 return;
             }
@@ -69,5 +69,21 @@ public class MouseController : MonoBehaviour
                 unitSelected = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
             }
         }
+    }
+
+    void OnCursorAlternate()
+    {
+        completeAction();
+    }
+
+    void completeAction()
+    {
+        mapController.setActionState(MapController.actionType.NONE);
+        if (selectedUnit)
+        {
+            selectedUnit.GetComponent<UnitController>().destroyMarkers();
+        }
+        selectedUnit = null;
+        unitSelected = false;
     }
 }

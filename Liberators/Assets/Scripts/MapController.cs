@@ -8,6 +8,10 @@ public class MapController : MonoBehaviour
     Grid mainGrid;
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
 
+    //Action Handlers
+    public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC };
+    actionType actionState = actionType.NONE;
+
     void Awake()
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
@@ -25,15 +29,18 @@ public class MapController : MonoBehaviour
 
     }
 
-    public GameObject getUnitFromCoords(Vector2Int coords)
+    //Action Management
+    public void setActionState(actionType actionState)
     {
-        if (unitList.ContainsKey(coords))
-        {
-            return unitList[coords];
-        }
-        return null;
+        this.actionState = actionState;
     }
 
+    public actionType getActionState()
+    {
+        return actionState;
+    }
+
+    //Unit Management
     public void addUnit(GameObject unit)
     {
         unitList.Add(unit.GetComponent<UnitController>().getUnitPos(), unit);
@@ -69,6 +76,16 @@ public class MapController : MonoBehaviour
             GameObject.Destroy(defender);
         }
         return true;
+    }
+
+    //Grid Management
+    public GameObject getUnitFromCoords(Vector2Int coords)
+    {
+        if (unitList.ContainsKey(coords))
+        {
+            return unitList[coords];
+        }
+        return null;
     }
 
     public Vector2 tileWorldPos(Vector2 worldPos)

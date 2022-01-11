@@ -119,7 +119,7 @@ public class UnitController : MonoBehaviour
         return unitGridPosition;
     }
 
-    public void createMarkers(MarkerAreas area, int maxRange, int minRange)
+    public void createMarkers(MarkerAreas area, int maxRange, int minRange, MarkerController.Markers color)
     {
         for (int i = -maxRange; i <= maxRange; i++)
         {
@@ -133,7 +133,7 @@ public class UnitController : MonoBehaviour
                         {
                             GameObject temp = GameObject.Instantiate(marker);
                             Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
-                            temp.GetComponent<MarkerController>().setup(MarkerController.Markers.BLUE, markerLocation);
+                            temp.GetComponent<MarkerController>().setup(color, markerLocation);
                             markerList.Add(temp);
                         }
                         break;
@@ -142,7 +142,7 @@ public class UnitController : MonoBehaviour
                         {
                             GameObject temp = GameObject.Instantiate(marker);
                             Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
-                            temp.GetComponent<MarkerController>().setup(MarkerController.Markers.BLUE, markerLocation);
+                            temp.GetComponent<MarkerController>().setup(color, markerLocation);
                             markerList.Add(temp);
                         }
                         break;
@@ -151,7 +151,7 @@ public class UnitController : MonoBehaviour
                         {
                             GameObject temp = GameObject.Instantiate(marker);
                             Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
-                            temp.GetComponent<MarkerController>().setup(MarkerController.Markers.BLUE, markerLocation);
+                            temp.GetComponent<MarkerController>().setup(color, markerLocation);
                             markerList.Add(temp);
                         }
                         break;
