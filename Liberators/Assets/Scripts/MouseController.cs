@@ -34,6 +34,7 @@ public class MouseController : MonoBehaviour
         gridPosition = mapController.gridTilePos(tilePosition);
     }
 
+    //Input Handling
     void OnCursorMovement(InputValue value)
     {
         cursorPosition = value.Get<Vector2>();
@@ -63,10 +64,15 @@ public class MouseController : MonoBehaviour
             if (targetUnit)
             {
                 mapController.attackUnit(selectedUnit,targetUnit);
+                completeAction();
             }
             else
             {
                 unitSelected = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
+                if (!unitSelected)
+                {
+                    completeAction();
+                }
             }
         }
     }
@@ -76,6 +82,7 @@ public class MouseController : MonoBehaviour
         completeAction();
     }
 
+    //Action Handling
     void completeAction()
     {
         mapController.setActionState(MapController.actionType.NONE);
@@ -85,5 +92,10 @@ public class MouseController : MonoBehaviour
         }
         selectedUnit = null;
         unitSelected = false;
+    }
+
+    void movePrepare()
+    {
+
     }
 }
