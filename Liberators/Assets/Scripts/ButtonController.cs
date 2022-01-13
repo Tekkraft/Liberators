@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonController : MonoBehaviour
 {
-    MapController.actionType linkedAction;
+    public MapController.actionType linkedAction;
     Grid mainGrid;
     MapController mapController;
 

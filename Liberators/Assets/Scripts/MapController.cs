@@ -8,6 +8,8 @@ public class MapController : MonoBehaviour
     Grid mainGrid;
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
 
+    Canvas uiCanvas;
+
     //Action Handlers
     public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC };
     actionType actionState = actionType.NONE;
@@ -15,6 +17,7 @@ public class MapController : MonoBehaviour
     void Awake()
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
+        uiCanvas = GameObject.FindObjectOfType<Canvas>();
     }
 
     // Start is called before the first frame update
@@ -27,6 +30,12 @@ public class MapController : MonoBehaviour
     void Update()
     {
 
+    }
+
+    //Canvas Management
+    public bool mouseOverCanvas(Vector2 mousePos)
+    {
+        return uiCanvas.GetComponent<UIController>().mouseOverCanvas(mousePos);
     }
 
     //Action Management

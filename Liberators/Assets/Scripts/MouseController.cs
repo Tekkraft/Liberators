@@ -32,6 +32,7 @@ public class MouseController : MonoBehaviour
         tilePosition = new Vector3(worldPos.x, worldPos.y, -1);
         transform.position = tilePosition;
         gridPosition = mapController.gridTilePos(tilePosition);
+        Cursor.visible = mapController.mouseOverCanvas(cursorPosition);
     }
 
     //Input Handling
@@ -42,38 +43,46 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
+        MapController.actionType action = mapController.getActionState();
         GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
-        if (!unitSelected)
+        if (selectedUnit)
         {
-            if (selectedUnit)
+            selectedUnit.GetComponent<UnitController>().destroyMarkers();
+        }
+        if (unitSelected)
+        {
+            switch (action)
             {
-                selectedUnit.GetComponent<UnitController>().destroyMarkers();
+                case MapController.actionType.MOVE:
+                    moveAction();
+                    break;
+
+                case MapController.actionType.ATTACK:
+                    attackAction(targetUnit);
+                    break;
+
+                case MapController.actionType.SUPPORT:
+                    supportAction();
+                    break;
             }
-            if (targetUnit)
-            {
-                selectedUnit = targetUnit;
-                UnitController targetController = targetUnit.GetComponent<UnitController>();
-                targetController.createMarkers(UnitController.MarkerAreas.RADIAL, targetController.getStats()[0], 0, MarkerController.Markers.BLUE);
-                unitSelected = true;
-                return;
-            }
-            return;
         }
         else
         {
-            if (targetUnit)
+            switch (action)
             {
-                mapController.attackUnit(selectedUnit,targetUnit);
-                completeAction();
+                case MapController.actionType.MOVE:
+                    movePrepare(targetUnit);
+                    break;
+
+                case MapController.actionType.ATTACK:
+                    attackPrepare(targetUnit);
+                    break;
+
+                case MapController.actionType.SUPPORT:
+                    supportPrepare(targetUnit);
+                    break;
             }
-            else
-            {
-                unitSelected = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
-                if (!unitSelected)
-                {
-                    completeAction();
-                }
-            }
+
         }
     }
 
@@ -94,8 +103,65 @@ public class MouseController : MonoBehaviour
         unitSelected = false;
     }
 
-    void movePrepare()
+    void movePrepare(GameObject unit)
     {
+        if (!unit)
+        {
+            return;
+        }
+        selectedUnit = unit;
+        UnitController targetController = unit.GetComponent<UnitController>();
+        targetController.createMarkers(UnitController.MarkerAreas.RADIAL, targetController.getStats()[0], 0, MarkerController.Markers.BLUE);
+        unitSelected = true;
+    }
 
+    void moveAction()
+    {
+        unitSelected = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
+        if (!unitSelected)
+        {
+            completeAction();
+        }
+    }
+
+    void attackPrepare(GameObject unit)
+    {
+        if (!unit)
+        {
+            return;
+        }
+        selectedUnit = unit;
+        UnitController targetController = unit.GetComponent<UnitController>();
+        targetController.createMarkers(targetController.getAttackArea(), targetController.getRange(), 1, MarkerController.Markers.RED);
+        unitSelected = true;
+    }
+
+    void attackAction(GameObject targetUnit)
+    {
+        if (!targetUnit)
+        {
+            return;
+        }
+        mapController.attackUnit(selectedUnit, targetUnit);
+        completeAction();
+    }
+
+    void supportPrepare(GameObject unit)
+    {
+        if (!unit)
+        {
+            return;
+        }
+        selectedUnit = unit;
+        UnitController targetController = unit.GetComponent<UnitController>();
+        targetController.createMarkers(UnitController.MarkerAreas.RADIAL, 0, 0, MarkerController.Markers.GREEN);
+        unitSelected = true;
+    }
+
+    void supportAction()
+    {
+        UnitController targetController = selectedUnit.GetComponent<UnitController>();
+        targetController.restoreHealth(targetController.getStats()[0]);
+        completeAction();
     }
 }

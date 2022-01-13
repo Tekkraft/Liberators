@@ -16,6 +16,9 @@ public class UnitController : MonoBehaviour
     List<GameObject> markerList = new List<GameObject>();
     int teamNumber = -1;
 
+    public int range = 4;
+    public MarkerAreas attackArea = MarkerAreas.RADIAL;
+
     //Unit Stats
     /**
      * Movement (MOV): How far units can move in one move action.
@@ -87,6 +90,16 @@ public class UnitController : MonoBehaviour
     public int[] getStats()
     {
         return new int[] { movementRange, maxHP, currentHP, str, pot, acu, fin, rea };
+    }
+
+    public int getRange()
+    {
+        return range;
+    }
+
+    public MarkerAreas getAttackArea()
+    {
+        return attackArea;
     }
 
     public int getTeamNumber()
