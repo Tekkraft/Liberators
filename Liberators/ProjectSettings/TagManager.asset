@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MainGrid
   - Unit
+  - Cursor
   layers:
   - Default
   - TransparentFX

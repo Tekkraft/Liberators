@@ -14,7 +14,7 @@ public class UnitController : MonoBehaviour
     Grid mainGrid;
     MapController mapController;
     List<GameObject> markerList = new List<GameObject>();
-    int teamNumber = -1;
+    public int teamNumber = -1;
 
     public int range = 4;
     public MarkerAreas attackArea = MarkerAreas.RADIAL;
@@ -37,6 +37,10 @@ public class UnitController : MonoBehaviour
     int fin;
     int rea;
 
+    //Unit Properties
+    int maxActions = 2;
+    int actions = 2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +50,7 @@ public class UnitController : MonoBehaviour
         unitPosition.y--;
         unitGridPosition = mapController.gridTilePos(unitPosition);
         mapController.addUnit(this.gameObject);
-        createUnit(20, 5, 5, 5, 5, 5, -1);
+        createUnit(20, 5, 5, 5, 5, 5, teamNumber);
     }
 
     // Update is called once per frame
@@ -65,6 +69,26 @@ public class UnitController : MonoBehaviour
         this.fin = fin;
         this.rea = rea;
         this.teamNumber = teamNumber;
+    }
+
+    public int getActions()
+    {
+        return actions;
+    }
+
+    public bool useActions(int used)
+    {
+        if (actions < used)
+        {
+            return false;
+        }
+        actions -= used;
+        return true;
+    }
+
+    public void resetActions()
+    {
+        actions = maxActions;
     }
 
     public bool attackUnit(GameObject target)
@@ -102,7 +126,7 @@ public class UnitController : MonoBehaviour
         return attackArea;
     }
 
-    public int getTeamNumber()
+    public int getTeam()
     {
         return teamNumber;
     }
@@ -138,36 +162,12 @@ public class UnitController : MonoBehaviour
         {
             for (int j = -maxRange; j <= maxRange; j++)
             {
-                switch (area)
+                if (inRange(area, maxRange, minRange, new Vector2Int(i, j)))
                 {
-                    case MarkerAreas.RADIAL:
-                        int distance = mapController.gridDistance(new Vector2Int(i, j) + unitGridPosition, unitGridPosition);
-                        if (distance <= maxRange && distance >= minRange)
-                        {
-                            GameObject temp = GameObject.Instantiate(marker);
-                            Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
-                            temp.GetComponent<MarkerController>().setup(color, markerLocation);
-                            markerList.Add(temp);
-                        }
-                        break;
-                    case MarkerAreas.BOX:
-                        if (Mathf.Abs(i) >= minRange && Mathf.Abs(j) >= minRange)
-                        {
-                            GameObject temp = GameObject.Instantiate(marker);
-                            Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
-                            temp.GetComponent<MarkerController>().setup(color, markerLocation);
-                            markerList.Add(temp);
-                        }
-                        break;
-                    case MarkerAreas.CROSS:
-                        if ((i == 0 && Mathf.Abs(j) >= minRange) || (j == 0 && Mathf.Abs(i) >= minRange))
-                        {
-                            GameObject temp = GameObject.Instantiate(marker);
-                            Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
-                            temp.GetComponent<MarkerController>().setup(color, markerLocation);
-                            markerList.Add(temp);
-                        }
-                        break;
+                    GameObject temp = GameObject.Instantiate(marker);
+                    Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
+                    temp.GetComponent<MarkerController>().setup(color, markerLocation);
+                    markerList.Add(temp);
                 }
             }
         }
@@ -183,4 +183,18 @@ public class UnitController : MonoBehaviour
         }
     }
 
+    public bool inRange(MarkerAreas area, int maxRange, int minRange, Vector2Int location)
+    {
+        switch (area)
+        {
+            case MarkerAreas.RADIAL:
+                int distance = mapController.gridDistance(location + unitGridPosition, unitGridPosition);
+                return (distance <= maxRange && distance >= minRange);
+            case MarkerAreas.BOX:
+                return (Mathf.Abs(location.x) >= minRange && Mathf.Abs(location.y) >= minRange);
+            case MarkerAreas.CROSS:
+                return ((location.x == 0 && Mathf.Abs(location.y) >= minRange) || (location.y == 0 && Mathf.Abs(location.x) >= minRange));
+        }
+        return false;
+    }
 }

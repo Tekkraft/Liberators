@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon Object", order = 51)]
+public class Weapon : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public enum WeaponType { MELEE, GUN, FOCUS, SPECIAL };
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    string weaponName;
+
+    [SerializeField]
+    WeaponType weaponType;
+
+    [SerializeField]
+    int weaponStrength;
+
+    [SerializeField]
+    int weaponRange;
 }

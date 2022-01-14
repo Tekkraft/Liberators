@@ -7,8 +7,15 @@ public class MapController : MonoBehaviour
     //Grid Coordinates are +x to top-right, +y to top-left
     Grid mainGrid;
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
+    Dictionary<int, List<GameObject>> teamLists = new Dictionary<int, List<GameObject>>();
+    int eliminatedTeams = 0;
+    List<GameObject> actedUnits = new List<GameObject>();
+    int activeTeam = 0;
+    int turnNumber = 1;
 
     Canvas uiCanvas;
+    GameObject cursor;
+    MouseController cursorController;
 
     //Action Handlers
     public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC };
@@ -18,18 +25,42 @@ public class MapController : MonoBehaviour
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         uiCanvas = GameObject.FindObjectOfType<Canvas>();
+        cursor = GameObject.FindGameObjectWithTag("Cursor");
+        cursorController = cursor.GetComponent<MouseController>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("Turn " + turnNumber);
     }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    //Turn Management
+    void nextPhase()
+    {
+        cursorController.completeAction();
+        actedUnits.Clear();
+        activeTeam++;
+        while (!teamLists.ContainsKey(activeTeam))
+        {
+            if (teamLists.Count + eliminatedTeams < activeTeam)
+            {
+                activeTeam = -1;
+                turnNumber++;
+            }
+            activeTeam++;
+        }
+    }
+
+    public int getActiveTeam()
+    {
+        return activeTeam;
     }
 
     //Canvas Management
@@ -42,6 +73,10 @@ public class MapController : MonoBehaviour
     public void setActionState(actionType actionState)
     {
         this.actionState = actionState;
+        if (actionState == actionType.MISC)
+        {
+            nextPhase();
+        }
     }
 
     public actionType getActionState()
@@ -53,6 +88,12 @@ public class MapController : MonoBehaviour
     public void addUnit(GameObject unit)
     {
         unitList.Add(unit.GetComponent<UnitController>().getUnitPos(), unit);
+        int team = unit.GetComponent<UnitController>().getTeam();
+        if (!teamLists.ContainsKey(team))
+        {
+            teamLists.Add(team, new List<GameObject>());
+        }
+        teamLists[team].Add(unit);
     }
 
     public bool moveUnit(GameObject unit, Vector2 coords)
@@ -77,11 +118,27 @@ public class MapController : MonoBehaviour
 
     public bool attackUnit(GameObject attacker, GameObject defender)
     {
-        bool defeated = attacker.GetComponent<UnitController>().attackUnit(defender);
+        UnitController attackerController = attacker.GetComponent<UnitController>();
+        UnitController defenderController = defender.GetComponent<UnitController>();
+
+        bool inRange = attackerController.inRange(attackerController.getAttackArea(), attackerController.range, 1, defenderController.getUnitPos());
+        if (!inRange || attackerController.getTeam() == defenderController.getTeam())
+        {
+            return false;
+        }
+
+        bool defeated = attackerController.attackUnit(defender);
         if (defeated)
         {
-            Vector2Int location = defender.GetComponent<UnitController>().getUnitPos();
+            Vector2Int location = defenderController.getUnitPos();
             unitList.Remove(location);
+            int team = defenderController.getTeam();
+            teamLists[team].Remove(defender);
+            if (teamLists[team].Count <= 0)
+            {
+                teamLists.Remove(team);
+                eliminatedTeams++;
+            }
             GameObject.Destroy(defender);
         }
         return true;
@@ -113,7 +170,7 @@ public class MapController : MonoBehaviour
     public Vector2Int gridTilePos(Vector2 tilePos)
     {
         float tileX = tilePos.x * 2 / mainGrid.cellSize.x;
-        float tileY = (tilePos.y +0.25f) * 2 / mainGrid.cellSize.y;
+        float tileY = (tilePos.y + 0.25f) * 2 / mainGrid.cellSize.y;
         int gridX = Mathf.CeilToInt(tileY + tileX);
         int gridY = Mathf.CeilToInt(tileY - tileX);
         return new Vector2Int(gridX, gridY) / 2;

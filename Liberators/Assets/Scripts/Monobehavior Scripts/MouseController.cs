@@ -45,9 +45,11 @@ public class MouseController : MonoBehaviour
     {
         MapController.actionType action = mapController.getActionState();
         GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
-        if (selectedUnit)
+        if (targetUnit)
         {
-            selectedUnit.GetComponent<UnitController>().destroyMarkers();
+            if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam()){
+                return;
+            }
         }
         if (unitSelected)
         {
@@ -92,7 +94,7 @@ public class MouseController : MonoBehaviour
     }
 
     //Action Handling
-    void completeAction()
+    public void completeAction()
     {
         mapController.setActionState(MapController.actionType.NONE);
         if (selectedUnit)
@@ -109,6 +111,10 @@ public class MouseController : MonoBehaviour
         {
             return;
         }
+        if (selectedUnit)
+        {
+            selectedUnit.GetComponent<UnitController>().destroyMarkers();
+        }
         selectedUnit = unit;
         UnitController targetController = unit.GetComponent<UnitController>();
         targetController.createMarkers(UnitController.MarkerAreas.RADIAL, targetController.getStats()[0], 0, MarkerController.Markers.BLUE);
@@ -117,8 +123,8 @@ public class MouseController : MonoBehaviour
 
     void moveAction()
     {
-        unitSelected = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
-        if (!unitSelected)
+        bool obstructed = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
+        if (!obstructed)
         {
             completeAction();
         }
@@ -129,6 +135,10 @@ public class MouseController : MonoBehaviour
         if (!unit)
         {
             return;
+        }
+        if (selectedUnit)
+        {
+            selectedUnit.GetComponent<UnitController>().destroyMarkers();
         }
         selectedUnit = unit;
         UnitController targetController = unit.GetComponent<UnitController>();
@@ -142,8 +152,12 @@ public class MouseController : MonoBehaviour
         {
             return;
         }
-        mapController.attackUnit(selectedUnit, targetUnit);
-        completeAction();
+
+        bool success = mapController.attackUnit(selectedUnit, targetUnit);
+        if (success)
+        {
+            completeAction();
+        }
     }
 
     void supportPrepare(GameObject unit)
@@ -151,6 +165,10 @@ public class MouseController : MonoBehaviour
         if (!unit)
         {
             return;
+        }
+        if (selectedUnit)
+        {
+            selectedUnit.GetComponent<UnitController>().destroyMarkers();
         }
         selectedUnit = unit;
         UnitController targetController = unit.GetComponent<UnitController>();
