@@ -33,6 +33,7 @@ public class MapController : MonoBehaviour
     void Start()
     {
         Debug.Log("Turn " + turnNumber);
+        Debug.Log("Team " + activeTeam);
     }
 
     // Update is called once per frame
@@ -45,6 +46,11 @@ public class MapController : MonoBehaviour
     void nextPhase()
     {
         cursorController.completeAction();
+        List<GameObject> active = teamLists[activeTeam];
+        foreach (GameObject unit in active)
+        {
+            unit.GetComponent<UnitController>().resetActions();
+        }
         actedUnits.Clear();
         activeTeam++;
         while (!teamLists.ContainsKey(activeTeam))

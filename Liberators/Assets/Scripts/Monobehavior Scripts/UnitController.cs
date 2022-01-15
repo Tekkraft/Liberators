@@ -71,19 +71,20 @@ public class UnitController : MonoBehaviour
         this.teamNumber = teamNumber;
     }
 
-    public int getActions()
+    public int[] getActions()
     {
-        return actions;
+        return new int[] { maxActions, actions };
+    }
+
+    public bool checkActions(int used)
+    {
+        return actions < used;
     }
 
     public bool useActions(int used)
     {
-        if (actions < used)
-        {
-            return false;
-        }
         actions -= used;
-        return true;
+        return actions <= 0;
     }
 
     public void resetActions()

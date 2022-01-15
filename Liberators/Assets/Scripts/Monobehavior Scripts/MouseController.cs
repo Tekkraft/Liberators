@@ -12,6 +12,8 @@ public class MouseController : MonoBehaviour
     MapController mapController;
     GameObject selectedUnit;
     bool unitSelected;
+    Canvas uiCanvas;
+    UIController uiController;
 
     Vector2 cursorPosition = new Vector2(0, 0);
     Vector2 tilePosition = new Vector2(0, 0);
@@ -22,6 +24,8 @@ public class MouseController : MonoBehaviour
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
+        uiCanvas = GameObject.FindObjectOfType<Canvas>();
+        uiController = uiCanvas.GetComponent<UIController>();
     }
 
     // Update is called once per frame
@@ -33,6 +37,8 @@ public class MouseController : MonoBehaviour
         transform.position = tilePosition;
         gridPosition = mapController.gridTilePos(tilePosition);
         Cursor.visible = mapController.mouseOverCanvas(cursorPosition);
+        uiController.unHoverUnit();
+        uiController.hoverUnit(mapController.getUnitFromCoords(gridPosition));
     }
 
     //Input Handling
@@ -45,12 +51,6 @@ public class MouseController : MonoBehaviour
     {
         MapController.actionType action = mapController.getActionState();
         GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
-        if (targetUnit)
-        {
-            if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam()){
-                return;
-            }
-        }
         if (unitSelected)
         {
             switch (action)
@@ -70,6 +70,13 @@ public class MouseController : MonoBehaviour
         }
         else
         {
+            if (targetUnit)
+            {
+                if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
+                {
+                    return;
+                }
+            }
             switch (action)
             {
                 case MapController.actionType.MOVE:
@@ -123,9 +130,15 @@ public class MouseController : MonoBehaviour
 
     void moveAction()
     {
+        UnitController selectedController = selectedUnit.GetComponent<UnitController>();
+        if (selectedController.checkActions(1))
+        {
+            return;
+        }
         bool obstructed = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
         if (!obstructed)
         {
+            bool done = selectedController.useActions(1);
             completeAction();
         }
     }
@@ -148,15 +161,16 @@ public class MouseController : MonoBehaviour
 
     void attackAction(GameObject targetUnit)
     {
-        if (!targetUnit)
+        UnitController selectedController = selectedUnit.GetComponent<UnitController>();
+        if (!targetUnit || selectedController.checkActions(1))
         {
             return;
         }
-
         bool success = mapController.attackUnit(selectedUnit, targetUnit);
         if (success)
         {
             completeAction();
+            bool done = selectedController.useActions(1);
         }
     }
 
@@ -179,7 +193,13 @@ public class MouseController : MonoBehaviour
     void supportAction()
     {
         UnitController targetController = selectedUnit.GetComponent<UnitController>();
+        if (targetController.checkActions(2))
+        {
+            completeAction();
+            return;
+        }
         targetController.restoreHealth(targetController.getStats()[0]);
+        bool done = targetController.useActions(2);
         completeAction();
     }
 }
