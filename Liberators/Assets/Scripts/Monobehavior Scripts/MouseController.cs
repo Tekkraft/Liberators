@@ -198,7 +198,7 @@ public class MouseController : MonoBehaviour
             completeAction();
             return;
         }
-        targetController.restoreHealth(targetController.getStats()[0]);
+        targetController.restoreHealth(targetController.getStats()[4]);
         bool done = targetController.useActions(2);
         completeAction();
     }

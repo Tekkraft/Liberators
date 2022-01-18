@@ -9,10 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90b978b95402f4d1fb4b768fe1927cb8, type: 3}
-  m_Name: Caster1
+  m_Script: {fileID: 11500000, guid: 3cd53bbf90d6841ebbf4701357c3916a, type: 3}
+  m_Name: Generic Gunner
   m_EditorClassIdentifier: 
-  weaponName: Short Caster
-  weaponType: 1
-  weaponStrength: 20
-  weaponRange: 8
+  unitName: 
+  maxHP: 0
+  mov: 0
+  str: 0
+  pot: 0
+  acu: 0
+  fin: 0
+  rea: 0
+  activeWeapon: {fileID: 0}
+  weaponEquip: []
+  className: 

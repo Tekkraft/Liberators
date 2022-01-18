@@ -59,9 +59,11 @@ public class MapController : MonoBehaviour
             {
                 activeTeam = -1;
                 turnNumber++;
+                Debug.Log("Turn " + turnNumber);
             }
             activeTeam++;
         }
+        Debug.Log("Team " + activeTeam);
     }
 
     public int getActiveTeam()
@@ -127,7 +129,7 @@ public class MapController : MonoBehaviour
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
 
-        bool inRange = attackerController.inRange(attackerController.getAttackArea(), attackerController.range, 1, defenderController.getUnitPos());
+        bool inRange = attackerController.inRange(attackerController.getAttackArea(), attackerController.range, 1, defenderController.getUnitPos() - attackerController.getUnitPos());
         if (!inRange || attackerController.getTeam() == defenderController.getTeam())
         {
             return false;
