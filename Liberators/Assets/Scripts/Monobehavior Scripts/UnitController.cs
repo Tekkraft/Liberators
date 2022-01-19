@@ -19,16 +19,8 @@ public class UnitController : MonoBehaviour
     public int range = 4;
     public MarkerAreas attackArea = MarkerAreas.RADIAL;
 
-    //Unit Stats
-    /**
-     * Movement (MOV): How far units can move in one move action.
-     * Strength (STR): How much damage units can do with all physical melee attacks.
-     * Potential (POT): How much damage units can do with all magical attacks.
-     * Acuity (ACU): How much hit, evasion and critical evasion a unit has for ranged attacks and how much critical a unit has for melee attacks.
-     * Finesse (FIN): How much hit, evasion and critical evasion a unit has for melee attacks, how much critical a unit has for ranged attacks.
-     * Reaction (REA): Modifies evasion and critical evasion for all attacks and influences counterattacks.
-     **/
-    public int movementRange = 5;
+    public Unit unitObject;
+    int movementRange;
     int maxHP;
     int currentHP;
     int str;
@@ -41,6 +33,8 @@ public class UnitController : MonoBehaviour
     int maxActions = 2;
     int actions = 2;
 
+    public Weapon equippedWeapon;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +44,7 @@ public class UnitController : MonoBehaviour
         unitPosition.y--;
         unitGridPosition = mapController.gridTilePos(unitPosition);
         mapController.addUnit(this.gameObject);
-        createUnit(20, 5, 5, 5, 5, 5, teamNumber);
+        createUnit(unitObject.getStats(), teamNumber);
     }
 
     // Update is called once per frame
@@ -59,15 +53,16 @@ public class UnitController : MonoBehaviour
 
     }
 
-    public void createUnit(int maxHP, int str, int pot, int acu, int fin, int rea, int teamNumber)
+    public void createUnit(int[] unitStats, int teamNumber)
     {
-        this.maxHP = maxHP;
+        this.maxHP = unitStats[0];
+        this.movementRange = unitStats[1];
         currentHP = this.maxHP;
-        this.str = str;
-        this.pot = pot;
-        this.acu = acu;
-        this.fin = fin;
-        this.rea = rea;
+        this.str = unitStats[2];
+        this.pot = unitStats[3];
+        this.acu = unitStats[4];
+        this.fin = unitStats[5];
+        this.rea = unitStats[6];
         this.teamNumber = teamNumber;
     }
 

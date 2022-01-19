@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be6331fd036d41199e3d462f90d530e, type: 3}
   m_Name: Basic Armor
   m_EditorClassIdentifier: 
-  armorName: 
+  armorName: Basic Armor
   armorDefense: 0
   armorMagDefense: 0

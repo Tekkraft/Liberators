@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cd53bbf90d6841ebbf4701357c3916a, type: 3}
   m_Name: Generic Gunner
   m_EditorClassIdentifier: 
-  unitName: 
-  maxHP: 0
-  mov: 0
-  str: 0
-  pot: 0
-  acu: 0
-  fin: 0
-  rea: 0
-  activeWeapon: {fileID: 0}
-  weaponEquip: []
-  className: 
+  unitName: Gunner
+  maxHP: 20
+  mov: 5
+  str: 3
+  pot: 3
+  acu: 7
+  fin: 7
+  rea: 3
+  className: Gunner

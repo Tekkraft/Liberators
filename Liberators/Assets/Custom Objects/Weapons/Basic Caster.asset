@@ -15,4 +15,9 @@ MonoBehaviour:
   weaponName: Short Caster
   weaponType: 1
   weaponStrength: 20
+  weaponHit: 0
+  weaponCrit: 0
   weaponRange: 8
+  ammoCapacity: 0
+  abilities:
+  - {fileID: 11400000, guid: f3f89a8dc9b89423b9ef96f716ba7581, type: 2}

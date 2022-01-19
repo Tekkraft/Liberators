@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Ability", menuName = "Ability Object", order = 50)]
 public class Ability : ScriptableObject
 {
-    public enum damageType{ PHYSICAL, MAGIC, TRUE }
+    public enum damageType { PHYSICAL, MAGIC, TRUE }
 
     [SerializeField]
     string abilityName;
@@ -16,15 +16,20 @@ public class Ability : ScriptableObject
     [SerializeField]
     MapController.actionType abilityType;
 
+    //Attack and Support - Range of targeting. Add to base range if weapon skill.
+    //Move - Flat move bonus
     [SerializeField]
     int abilityRange;
 
     [SerializeField]
     UnitController.MarkerAreas abilityRangeType;
 
+    //Attack and Support - Range of effect
+    //Move - Bonus move multiplier out of 100
     [SerializeField]
     int abilityRadius;
 
+    //Unusued for Move
     [SerializeField]
     UnitController.MarkerAreas abilityRadiusType;
 
@@ -36,4 +41,54 @@ public class Ability : ScriptableObject
 
     [SerializeField]
     int abilityDamage;
+
+    public string getName()
+    {
+        return abilityName;
+    }
+
+    public int getAPCost()
+    {
+        return abilityAP;
+    }
+
+    public MapController.actionType getAbilityType()
+    {
+        return abilityType;
+    }
+
+    public int getAbilityRange()
+    {
+        return abilityRange;
+    }
+
+    public int getAbilityRadius()
+    {
+        return abilityRadius;
+    }
+
+    public UnitController.MarkerAreas getAbilityRangeType()
+    {
+        return abilityRangeType;
+    }
+
+    public UnitController.MarkerAreas getAbilityRadiusType()
+    {
+        return abilityRadiusType;
+    }
+
+    public damageType getAbilityDamageType()
+    {
+        return abilityDamageType;
+    }
+
+    public bool isDamageFixed()
+    {
+        return abilityDamageFixed;
+    }
+
+    public int getAbilityDamage()
+    {
+        return abilityDamage;
+    }
 }

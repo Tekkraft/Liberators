@@ -40,11 +40,23 @@ public class Unit : ScriptableObject
     int rea;
 
     [SerializeField]
-    Weapon activeWeapon;
-
-    [SerializeField]
-    List<Weapon> weaponEquip;
-
-    [SerializeField]
     string className;
+
+    [SerializeField]
+    List<Ability> prfAbilities;
+
+    public string getUnitName()
+    {
+        return unitName;
+    }
+
+    public int[] getStats()
+    {
+        return new int[] { maxHP, mov, str, pot, acu, fin, rea };
+    }
+
+    public List<Ability> getAbilities()
+    {
+        return prfAbilities;
+    }
 }

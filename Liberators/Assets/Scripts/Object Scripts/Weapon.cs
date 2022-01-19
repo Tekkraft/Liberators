@@ -30,4 +30,24 @@ public class Weapon : ScriptableObject
 
     [SerializeField]
     List<Ability> abilities;
+
+    public string getWeaponName()
+    {
+        return weaponName;
+    }
+
+    public WeaponType getWeaponType()
+    {
+        return weaponType;
+    }
+
+    public int[] getWeaponStats()
+    {
+        return new int[] { weaponStrength, weaponHit, weaponCrit, weaponRange };
+    }
+
+    public List<Ability> getAbilities()
+    {
+        return abilities;
+    }
 }

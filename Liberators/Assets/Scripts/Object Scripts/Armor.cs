@@ -13,4 +13,14 @@ public class Armor : ScriptableObject
 
     [SerializeField]
     int armorMagDefense;
+
+    public string getName ()
+    {
+        return armorName;
+    }
+
+    public int[] getDefenses ()
+    {
+        return new int[] { armorDefense, armorMagDefense };
+    }
 }
