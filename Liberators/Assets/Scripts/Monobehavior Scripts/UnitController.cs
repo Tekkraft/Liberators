@@ -30,10 +30,13 @@ public class UnitController : MonoBehaviour
     int rea;
 
     //Unit Properties
-    int maxActions = 2;
-    int actions = 2;
+    int maxActions = 3;
+    int actions = 3;
 
+    public Ability basicMovement;
     public Weapon equippedWeapon;
+    public Armor equippedArmor;
+    List<Ability> allAbilities = new List<Ability>();
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +48,9 @@ public class UnitController : MonoBehaviour
         unitGridPosition = mapController.gridTilePos(unitPosition);
         mapController.addUnit(this.gameObject);
         createUnit(unitObject.getStats(), teamNumber);
+        allAbilities.Add(basicMovement);
+        allAbilities.AddRange(equippedWeapon.getAbilities());
+        allAbilities.AddRange(unitObject.getAbilities());
     }
 
     // Update is called once per frame

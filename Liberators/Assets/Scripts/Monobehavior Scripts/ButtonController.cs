@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class ButtonController : MonoBehaviour
 {
-    public MapController.actionType linkedAction;
+    MapController.actionType linkedAction;
+    Ability linkedAbility;
     Grid mainGrid;
     MapController mapController;
+
+    public Sprite moveSprite;
+    public Sprite attackSprite;
+    public Sprite supportSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +26,24 @@ public class ButtonController : MonoBehaviour
         
     }
 
+    public void setupButton (Ability linkedAbility)
+    {
+        this.linkedAbility = linkedAbility;
+        linkedAction = linkedAbility.getAbilityType();
+        switch (linkedAction)
+        {
+            case MapController.actionType.MOVE:
+                gameObject.GetComponentInChildren<SpriteRenderer>().sprite = moveSprite;
+                break;
+            case MapController.actionType.ATTACK:
+                gameObject.GetComponentInChildren<SpriteRenderer>().sprite = moveSprite;
+                break;
+            case MapController.actionType.SUPPORT:
+                gameObject.GetComponentInChildren<SpriteRenderer>().sprite = moveSprite;
+                break;
+        }
+    }
+
     public void setButtonAction(MapController.actionType action)
     {
         linkedAction = action;
@@ -29,5 +52,10 @@ public class ButtonController : MonoBehaviour
     public void setAction()
     {
         mapController.setActionState(linkedAction);
+    }
+
+    public Ability getAbility()
+    {
+        return linkedAbility;
     }
 }

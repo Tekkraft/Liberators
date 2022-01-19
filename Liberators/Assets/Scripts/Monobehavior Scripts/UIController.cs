@@ -13,6 +13,8 @@ public class UIController : MonoBehaviour
     public GameObject apMeter;
 
     GameObject hoveredUnit;
+    List<GameObject> allButtons = new List<GameObject>()
+        ;
 
     // Start is called before the first frame update
     void Start()
@@ -57,8 +59,37 @@ public class UIController : MonoBehaviour
         return results.Count > 0;
     }
 
-    public void drawButtons()
+    public void drawButtons(List<Ability> allAbilities)
     {
-        //No implementation yet.
+        int count = allAbilities.Count;
+        for (int i = allButtons.Count - 1; i >= 0; i--)
+        {
+            GameObject temp = allButtons[i];
+            allButtons.Remove(temp);
+            GameObject.Destroy(temp);
+        }
+        float spacing = 4f + button.GetComponent<RectTransform>().rect.height;
+        if (count % 2 == 0)
+        {
+            for (int i = -count/2; i < count/2; i++)
+            {
+                GameObject newButton = GameObject.Instantiate(button, transform);
+                allButtons.Add(newButton);
+                newButton.transform.Translate(new Vector2((spacing / 2 + spacing * i), 0));
+            }
+        }
+        else
+        {
+            for (int i = (-count + 1) / 2; i < (count + 1)/2; i++)
+            {
+                GameObject newButton = GameObject.Instantiate(button, transform);
+                allButtons.Add(newButton);
+                newButton.transform.Translate(new Vector2((spacing * i), 0));
+            }
+        }
+        for (int i = 0; i < allButtons.Count; i++)
+        {
+            allButtons[i].GetComponent<ButtonController>().setupButton(allAbilities[i]);
+        }
     }
 }
