@@ -93,6 +93,11 @@ public class UnitController : MonoBehaviour
         actions = maxActions;
     }
 
+    public List<Ability> getAbilities()
+    {
+        return allAbilities;
+    }
+
     public bool attackUnit(GameObject target)
     {
         return target.GetComponent<UnitController>().takeDamage(str);

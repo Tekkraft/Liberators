@@ -20,6 +20,8 @@ public class MapController : MonoBehaviour
     //Action Handlers
     public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC };
     actionType actionState = actionType.NONE;
+    Ability activeAbility;
+    GameObject activeUnit;
 
     void Awake()
     {
@@ -45,7 +47,7 @@ public class MapController : MonoBehaviour
     //Turn Management
     void nextPhase()
     {
-        cursorController.completeAction();
+        completeAction(null);
         List<GameObject> active = teamLists[activeTeam];
         foreach (GameObject unit in active)
         {
@@ -78,18 +80,170 @@ public class MapController : MonoBehaviour
     }
 
     //Action Management
-    public void setActionState(actionType actionState)
+    public void setActionState(GameObject unit, Ability ability)
     {
-        this.actionState = actionState;
+        if (ability)
+        {
+            actionState = ability.getAbilityType();
+        }
+        else
+        {
+            actionState = actionType.NONE;
+        }
+        if (!unit)
+        {
+            return;
+        }
+        activeAbility = ability;
+        activeUnit = unit;
         if (actionState == actionType.MISC)
         {
             nextPhase();
+        }
+        else
+        {
+            actionSetup(unit);
         }
     }
 
     public actionType getActionState()
     {
         return actionState;
+    }
+
+    void actionSetup(GameObject targetUnit)
+    {
+        switch (actionState)
+        {
+            case actionType.MOVE:
+                movePrepare(targetUnit);
+                break;
+
+            case actionType.ATTACK:
+                attackPrepare(targetUnit);
+                break;
+
+            case actionType.SUPPORT:
+                supportPrepare(targetUnit);
+                break;
+        }
+    }
+
+    public void executeAction(GameObject targetUnit)
+    {
+        switch (actionState)
+        {
+            case actionType.MOVE:
+                moveAction();
+                break;
+
+            case actionType.ATTACK:
+                attackAction(targetUnit);
+                break;
+
+            case actionType.SUPPORT:
+                supportAction(targetUnit);
+                break;
+        }
+        completeAction(targetUnit);
+    }
+
+    //Action Handling
+    public void completeAction(GameObject selectedUnit)
+    {
+        setActionState(null, null);
+        if (selectedUnit)
+        {
+            selectedUnit.GetComponent<UnitController>().destroyMarkers();
+        } else
+        {
+            foreach (GameObject unit in actedUnits)
+            {
+                unit.GetComponent<UnitController>().destroyMarkers();
+            }
+        }
+        cursorController.setSelectedUnit(null);
+    }
+
+    public void movePrepare(GameObject unit)
+    {
+        if (!unit)
+        {
+            return;
+        }
+        cursorController.setSelectedUnit(unit);
+        UnitController targetController = unit.GetComponent<UnitController>();
+        targetController.createMarkers(UnitController.MarkerAreas.RADIAL, targetController.getStats()[0], 0, MarkerController.Markers.BLUE);
+    }
+
+    void moveAction()
+    {
+        UnitController activeController = activeUnit.GetComponent<UnitController>();
+        if (activeController.checkActions(1))
+        {
+            return;
+        }
+        bool clear = moveUnit(activeUnit, tileGridPos(cursorController.getGridPos()));
+        if (clear)
+        {
+            bool done = activeController.useActions(1);
+            completeAction(activeUnit);
+        }
+    }
+
+    public void attackPrepare(GameObject unit)
+    {
+        if (!unit)
+        {
+            return;
+        }
+        cursorController.setSelectedUnit(unit);
+        UnitController targetController = unit.GetComponent<UnitController>();
+        targetController.createMarkers(targetController.getAttackArea(), targetController.getRange(), 1, MarkerController.Markers.RED);
+        cursorController.setSelectedUnit(unit);
+    }
+
+    void attackAction(GameObject targetUnit)
+    {
+        UnitController selectedController = cursorController.getSelectedUnit().GetComponent<UnitController>();
+        if (!targetUnit || selectedController.checkActions(1))
+        {
+            return;
+        }
+        bool success = attackUnit(cursorController.getSelectedUnit(), targetUnit);
+        if (success)
+        {
+            completeAction(cursorController.getSelectedUnit());
+            bool done = selectedController.useActions(1);
+        }
+    }
+
+    public void supportPrepare(GameObject unit)
+    {
+        if (!unit)
+        {
+            return;
+        }
+        if (cursorController.getSelectedUnit())
+        {
+            cursorController.getSelectedUnit().GetComponent<UnitController>().destroyMarkers();
+        }
+        cursorController.setSelectedUnit(unit);
+        UnitController targetController = unit.GetComponent<UnitController>();
+        targetController.createMarkers(UnitController.MarkerAreas.RADIAL, 0, 0, MarkerController.Markers.GREEN);
+    }
+
+    void supportAction(GameObject targetUnit)
+    {
+        UnitController targetController = cursorController.getSelectedUnit().GetComponent<UnitController>();
+        if (targetController.checkActions(2))
+        {
+            completeAction(cursorController.getSelectedUnit());
+            return;
+        }
+        targetController.restoreHealth(targetController.getStats()[4]);
+        bool done = targetController.useActions(2);
+        completeAction(cursorController.getSelectedUnit());
     }
 
     //Unit Management

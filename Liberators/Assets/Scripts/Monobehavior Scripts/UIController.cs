@@ -59,15 +59,10 @@ public class UIController : MonoBehaviour
         return results.Count > 0;
     }
 
-    public void drawButtons(List<Ability> allAbilities)
+    public void drawButtons(List<Ability> allAbilities, GameObject linkedUnit)
     {
+        clearButtons();
         int count = allAbilities.Count;
-        for (int i = allButtons.Count - 1; i >= 0; i--)
-        {
-            GameObject temp = allButtons[i];
-            allButtons.Remove(temp);
-            GameObject.Destroy(temp);
-        }
         float spacing = 4f + button.GetComponent<RectTransform>().rect.height;
         if (count % 2 == 0)
         {
@@ -89,7 +84,17 @@ public class UIController : MonoBehaviour
         }
         for (int i = 0; i < allButtons.Count; i++)
         {
-            allButtons[i].GetComponent<ButtonController>().setupButton(allAbilities[i]);
+            allButtons[i].GetComponent<ButtonController>().setupButton(allAbilities[i], linkedUnit);
+        }
+    }
+
+    public void clearButtons()
+    {
+        for (int i = allButtons.Count - 1; i >= 0; i--)
+        {
+            GameObject temp = allButtons[i];
+            allButtons.Remove(temp);
+            GameObject.Destroy(temp);
         }
     }
 }

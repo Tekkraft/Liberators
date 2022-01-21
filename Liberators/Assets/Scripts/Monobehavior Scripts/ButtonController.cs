@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
     MapController.actionType linkedAction;
     Ability linkedAbility;
+    GameObject linkedUnit;
     Grid mainGrid;
     MapController mapController;
 
@@ -26,32 +28,28 @@ public class ButtonController : MonoBehaviour
         
     }
 
-    public void setupButton (Ability linkedAbility)
+    public void setupButton (Ability linkedAbility, GameObject linkedUnit)
     {
+        this.linkedUnit = linkedUnit;
         this.linkedAbility = linkedAbility;
         linkedAction = linkedAbility.getAbilityType();
         switch (linkedAction)
         {
             case MapController.actionType.MOVE:
-                gameObject.GetComponentInChildren<SpriteRenderer>().sprite = moveSprite;
+                gameObject.transform.GetChild(0).GetComponent<Image>().sprite = moveSprite;
                 break;
             case MapController.actionType.ATTACK:
-                gameObject.GetComponentInChildren<SpriteRenderer>().sprite = moveSprite;
+                gameObject.transform.GetChild(0).GetComponent<Image>().sprite = attackSprite;
                 break;
             case MapController.actionType.SUPPORT:
-                gameObject.GetComponentInChildren<SpriteRenderer>().sprite = moveSprite;
+                gameObject.transform.GetChild(0).GetComponent<Image>().sprite = supportSprite;
                 break;
         }
     }
 
-    public void setButtonAction(MapController.actionType action)
-    {
-        linkedAction = action;
-    }
-
     public void setAction()
     {
-        mapController.setActionState(linkedAction);
+        mapController.setActionState(linkedUnit, linkedAbility);
     }
 
     public Ability getAbility()
