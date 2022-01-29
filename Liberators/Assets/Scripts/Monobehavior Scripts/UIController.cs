@@ -66,7 +66,7 @@ public class UIController : MonoBehaviour
         float spacing = 4f + button.GetComponent<RectTransform>().rect.height;
         if (count % 2 == 0)
         {
-            for (int i = -count/2; i < count/2; i++)
+            for (int i = -count / 2; i < count / 2; i++)
             {
                 GameObject newButton = GameObject.Instantiate(button, transform);
                 allButtons.Add(newButton);
@@ -75,7 +75,7 @@ public class UIController : MonoBehaviour
         }
         else
         {
-            for (int i = (-count + 1) / 2; i < (count + 1)/2; i++)
+            for (int i = (-count + 1) / 2; i < (count + 1) / 2; i++)
             {
                 GameObject newButton = GameObject.Instantiate(button, transform);
                 allButtons.Add(newButton);
@@ -95,6 +95,26 @@ public class UIController : MonoBehaviour
             GameObject temp = allButtons[i];
             allButtons.Remove(temp);
             GameObject.Destroy(temp);
+        }
+    }
+
+    public void validateButtons(int availableActions)
+    {
+        resetButtons();
+        foreach (GameObject button in allButtons)
+        {
+            if (availableActions < button.GetComponent<ButtonController>().getAbility().getAPCost())
+            {
+                button.GetComponent<Button>().interactable = false;
+            }
+        }
+    }
+
+    public void resetButtons()
+    {
+        foreach (GameObject button in allButtons)
+        {
+            button.GetComponent<Button>().interactable = true;
         }
     }
 }

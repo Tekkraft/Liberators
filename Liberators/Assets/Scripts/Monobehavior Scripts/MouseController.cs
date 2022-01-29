@@ -64,6 +64,7 @@ public class MouseController : MonoBehaviour
                     return;
                 }
                 uiController.drawButtons(targetUnit.GetComponent<UnitController>().getAbilities(), targetUnit);
+                uiController.validateButtons(targetUnit.GetComponent<UnitController>().getActions()[1]);
             }
         }
     }

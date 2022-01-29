@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Power Slide
   abilityAP: 2
-  abilityType: 0
+  abilityType: 1
   abilityRange: 0
   abilityRangeType: 2
-  abilityRadius: 300
+  abilityRadius: 150
   abilityRadiusType: 0
   abilityDamageType: 0
   abilityDamageFixed: 0

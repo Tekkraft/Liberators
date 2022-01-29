@@ -21,3 +21,5 @@ MonoBehaviour:
   ammoCapacity: 0
   abilities:
   - {fileID: 11400000, guid: f3f89a8dc9b89423b9ef96f716ba7581, type: 2}
+  - {fileID: 11400000, guid: 19b97ad4e0b274604ae3fb01af7e7dc0, type: 2}
+  - {fileID: 11400000, guid: 97c6266b639834280bef60598ce7ec1d, type: 2}

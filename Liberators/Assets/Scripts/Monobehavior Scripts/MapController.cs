@@ -47,6 +47,7 @@ public class MapController : MonoBehaviour
     //Turn Management
     void nextPhase()
     {
+        uiCanvas.GetComponent<UIController>().resetButtons();
         completeAction(null);
         List<GameObject> active = teamLists[activeTeam];
         foreach (GameObject unit in active)
@@ -157,12 +158,13 @@ public class MapController : MonoBehaviour
             selectedUnit.GetComponent<UnitController>().destroyMarkers();
         } else
         {
-            foreach (GameObject unit in actedUnits)
+            foreach (KeyValuePair<Vector2Int, GameObject> pair in unitList)
             {
-                unit.GetComponent<UnitController>().destroyMarkers();
+                pair.Value.GetComponent<UnitController>().destroyMarkers();
             }
         }
         cursorController.setSelectedUnit(null);
+        uiCanvas.GetComponent<UIController>().clearButtons();
     }
 
     public void movePrepare(GameObject unit)
@@ -173,13 +175,13 @@ public class MapController : MonoBehaviour
         }
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        targetController.createMarkers(UnitController.MarkerAreas.RADIAL, targetController.getStats()[0], 0, MarkerController.Markers.BLUE);
+        targetController.createMarkers(activeAbility.getAbilityRangeType(), finalRange(unit.GetComponent<UnitController>().getStats()[0], activeAbility), 0, MarkerController.Markers.BLUE);
     }
 
     void moveAction()
     {
         UnitController activeController = activeUnit.GetComponent<UnitController>();
-        if (activeController.checkActions(1))
+        if (activeController.checkActions(activeAbility.getAPCost()))
         {
             return;
         }
@@ -266,7 +268,7 @@ public class MapController : MonoBehaviour
         }
         Vector2Int key = unit.GetComponent<UnitController>().getUnitPos();
         unitList.Remove(key);
-        bool moved = unit.GetComponent<UnitController>().moveUnit(coords);
+        bool moved = unit.GetComponent<UnitController>().moveUnit(coords, activeAbility) ;
         if (moved)
         {
             unitList.Add(gridTilePos(coords), unit);
@@ -304,6 +306,12 @@ public class MapController : MonoBehaviour
             GameObject.Destroy(defender);
         }
         return true;
+    }
+
+    //Stat Math
+    public int finalRange(int baseRange, Ability ability)
+    {
+        return Mathf.FloorToInt((float) (baseRange + ability.getAbilityRange()) * (((float) ability.getAbilityRadius() / 100f) + 1f));
     }
 
     //Grid Management
