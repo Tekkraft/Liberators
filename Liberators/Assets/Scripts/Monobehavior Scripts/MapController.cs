@@ -188,7 +188,7 @@ public class MapController : MonoBehaviour
         bool clear = moveUnit(activeUnit, tileGridPos(cursorController.getGridPos()));
         if (clear)
         {
-            bool done = activeController.useActions(1);
+            bool done = activeController.useActions(activeAbility.getAPCost());
             completeAction(activeUnit);
         }
     }
@@ -208,7 +208,7 @@ public class MapController : MonoBehaviour
     void attackAction(GameObject targetUnit)
     {
         UnitController selectedController = cursorController.getSelectedUnit().GetComponent<UnitController>();
-        if (!targetUnit || selectedController.checkActions(1))
+        if (!targetUnit || selectedController.checkActions(activeAbility.getAPCost()))
         {
             return;
         }
@@ -216,7 +216,7 @@ public class MapController : MonoBehaviour
         if (success)
         {
             completeAction(cursorController.getSelectedUnit());
-            bool done = selectedController.useActions(1);
+            bool done = selectedController.useActions(activeAbility.getAPCost());
         }
     }
 
@@ -238,13 +238,13 @@ public class MapController : MonoBehaviour
     void supportAction(GameObject targetUnit)
     {
         UnitController targetController = cursorController.getSelectedUnit().GetComponent<UnitController>();
-        if (targetController.checkActions(2))
+        if (targetController.checkActions(activeAbility.getAPCost()))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
         }
         targetController.restoreHealth(targetController.getStats()[4]);
-        bool done = targetController.useActions(2);
+        bool done = targetController.useActions(activeAbility.getAPCost());
         completeAction(cursorController.getSelectedUnit());
     }
 
@@ -355,6 +355,11 @@ public class MapController : MonoBehaviour
     {
         int xDist = Mathf.Abs(gridPos1.x - gridPos2.x);
         int yDist = Mathf.Abs(gridPos1.y - gridPos2.y);
+        Debug.Log(gridPos1);
+        Debug.Log(gridPos2);
+        Debug.Log(xDist);
+        Debug.Log(yDist);
+        Debug.Log(xDist + yDist);
         return xDist + yDist;
     }
 

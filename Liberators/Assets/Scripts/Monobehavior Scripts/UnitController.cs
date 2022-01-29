@@ -168,7 +168,7 @@ public class UnitController : MonoBehaviour
         {
             for (int j = -maxRange; j <= maxRange; j++)
             {
-                if (inRange(area, maxRange, minRange, new Vector2Int(i, j)))
+                if (inRange(area, maxRange, minRange, new Vector2Int(i, j) + unitGridPosition))
                 {
                     GameObject temp = GameObject.Instantiate(marker);
                     Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
@@ -194,7 +194,7 @@ public class UnitController : MonoBehaviour
         switch (area)
         {
             case MarkerAreas.RADIAL:
-                int distance = mapController.gridDistance(location + unitGridPosition, unitGridPosition);
+                int distance = mapController.gridDistance(location, unitGridPosition);
                 return (distance <= maxRange && distance >= minRange);
             case MarkerAreas.BOX:
                 return (Mathf.Abs(location.x) >= minRange && Mathf.Abs(location.y) >= minRange && Mathf.Abs(location.x) <= maxRange && Mathf.Abs(location.y) <= maxRange);
