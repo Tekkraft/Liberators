@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90b978b95402f4d1fb4b768fe1927cb8, type: 3}
   m_Name: Basic Melee
   m_EditorClassIdentifier: 
-  weaponName: 
+  weaponName: Short Edge
   weaponType: 0
   weaponStrength: 10
   weaponHit: 10

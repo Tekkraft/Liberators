@@ -16,9 +16,6 @@ public class UnitController : MonoBehaviour
     List<GameObject> markerList = new List<GameObject>();
     public int teamNumber = -1;
 
-    public int range = 4;
-    public MarkerAreas attackArea = MarkerAreas.RADIAL;
-
     public Unit unitObject;
     int mov;
     int maxHP;
@@ -34,6 +31,8 @@ public class UnitController : MonoBehaviour
     int actions = 3;
 
     public Ability basicMovement;
+    public Ability passUnitAbility;
+    public Ability endTurnAbility;
     public Weapon equippedWeapon;
     public Armor equippedArmor;
     List<Ability> allAbilities = new List<Ability>();
@@ -98,14 +97,59 @@ public class UnitController : MonoBehaviour
         return allAbilities;
     }
 
-    public bool attackUnit(GameObject target)
+    public Weapon getEquippedWeapon()
     {
-        return target.GetComponent<UnitController>().takeDamage(str);
+        return equippedWeapon;
     }
 
-    public bool takeDamage(int damage)
+    public Armor getEquippedArmor()
     {
-        currentHP -= damage;
+        return equippedArmor;
+    }
+
+    public bool attackUnit(GameObject target, Ability attackAbility)
+    {
+        int damage = 0;
+        if (equippedWeapon)
+        {
+            damage += equippedWeapon.getWeaponStats()[0];
+        }
+        switch (attackAbility.getAbilityDamageSource())
+        {
+            case Ability.damageType.PHYSICAL:
+                damage += attackAbility.getAbilityDamage() + str;
+                break;
+            case Ability.damageType.MAGIC:
+                damage += attackAbility.getAbilityDamage() + pot;
+                break;
+            case Ability.damageType.TRUE:
+                damage += attackAbility.getAbilityDamage();
+                break;
+        }
+        Debug.Log(damage);
+        return target.GetComponent<UnitController>().takeDamage(damage, attackAbility.getAbilityDamageType());
+    }
+
+    public bool takeDamage(int damage, Ability.damageType damageType)
+    {
+        int damageTaken = damage;
+        if (equippedArmor)
+        {
+            switch (damageType)
+            {
+                case Ability.damageType.PHYSICAL:
+                    damageTaken -= equippedArmor.getDefenses()[0];
+                    break;
+                case Ability.damageType.MAGIC:
+                    damageTaken -= equippedArmor.getDefenses()[1];
+                    break;
+            }
+        }
+        if (damageTaken < 0)
+        {
+            damageTaken = 0;
+        }
+        currentHP -= damageTaken;
         return currentHP <= 0;
     }
 
@@ -121,16 +165,6 @@ public class UnitController : MonoBehaviour
     public int[] getStats()
     {
         return new int[] { mov, maxHP, currentHP, str, pot, acu, fin, rea };
-    }
-
-    public int getRange()
-    {
-        return range;
-    }
-
-    public MarkerAreas getAttackArea()
-    {
-        return attackArea;
     }
 
     public int getTeam()
@@ -199,7 +233,7 @@ public class UnitController : MonoBehaviour
             case MarkerAreas.BOX:
                 return (Mathf.Abs(location.x) >= minRange && Mathf.Abs(location.y) >= minRange && Mathf.Abs(location.x) <= maxRange && Mathf.Abs(location.y) <= maxRange);
             case MarkerAreas.CROSS:
-                return ((location.x == 0 && Mathf.Abs(location.y) >= minRange) || (location.y == 0 && Mathf.Abs(location.x) >= minRange));
+                return ((location.x == unitGridPosition.x && Mathf.Abs(location.y) >= minRange) || (location.y == unitGridPosition.y && Mathf.Abs(location.x) >= minRange));
         }
         return false;
     }

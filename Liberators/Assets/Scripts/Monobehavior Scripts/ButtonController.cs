@@ -11,6 +11,8 @@ public class ButtonController : MonoBehaviour
     Grid mainGrid;
     MapController mapController;
 
+    public bool fixedAction = true;
+    public Ability fixedAbility;
     public Sprite moveSprite;
     public Sprite attackSprite;
     public Sprite supportSprite;
@@ -20,6 +22,10 @@ public class ButtonController : MonoBehaviour
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
+        if (fixedAction)
+        {
+            setupButton(fixedAbility, null);
+        }
     }
 
     // Update is called once per frame

@@ -18,7 +18,7 @@ public class MapController : MonoBehaviour
     MouseController cursorController;
 
     //Action Handlers
-    public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC };
+    public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC, WAIT, END };
     actionType actionState = actionType.NONE;
     Ability activeAbility;
     GameObject activeUnit;
@@ -91,20 +91,17 @@ public class MapController : MonoBehaviour
         {
             actionState = actionType.NONE;
         }
+        if (actionState == actionType.END)
+        {
+            nextPhase();
+        }
         if (!unit)
         {
             return;
         }
         activeAbility = ability;
         activeUnit = unit;
-        if (actionState == actionType.MISC)
-        {
-            nextPhase();
-        }
-        else
-        {
-            actionSetup(unit);
-        }
+        actionSetup(unit);
     }
 
     public actionType getActionState()
@@ -156,7 +153,8 @@ public class MapController : MonoBehaviour
         if (selectedUnit)
         {
             selectedUnit.GetComponent<UnitController>().destroyMarkers();
-        } else
+        }
+        else
         {
             foreach (KeyValuePair<Vector2Int, GameObject> pair in unitList)
             {
@@ -195,13 +193,13 @@ public class MapController : MonoBehaviour
 
     public void attackPrepare(GameObject unit)
     {
-        if (!unit)
+        if (!unit || !activeAbility)
         {
             return;
         }
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        targetController.createMarkers(targetController.getAttackArea(), targetController.getRange(), 1, MarkerController.Markers.RED);
+        targetController.createMarkers(activeAbility.getAbilityRangeType(), targetController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRange(), 1, MarkerController.Markers.RED);
         cursorController.setSelectedUnit(unit);
     }
 
@@ -268,7 +266,7 @@ public class MapController : MonoBehaviour
         }
         Vector2Int key = unit.GetComponent<UnitController>().getUnitPos();
         unitList.Remove(key);
-        bool moved = unit.GetComponent<UnitController>().moveUnit(coords, activeAbility) ;
+        bool moved = unit.GetComponent<UnitController>().moveUnit(coords, activeAbility);
         if (moved)
         {
             unitList.Add(gridTilePos(coords), unit);
@@ -285,13 +283,17 @@ public class MapController : MonoBehaviour
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
 
-        bool inRange = attackerController.inRange(attackerController.getAttackArea(), attackerController.range, 1, defenderController.getUnitPos() - attackerController.getUnitPos());
+        if (!activeAbility)
+        {
+            return false;
+        }
+        bool inRange = attackerController.inRange(activeAbility.getAbilityRangeType(), attackerController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRange(), 1, defenderController.getUnitPos() - attackerController.getUnitPos());
         if (!inRange || attackerController.getTeam() == defenderController.getTeam())
         {
             return false;
         }
 
-        bool defeated = attackerController.attackUnit(defender);
+        bool defeated = attackerController.attackUnit(defender, activeAbility);
         if (defeated)
         {
             Vector2Int location = defenderController.getUnitPos();
@@ -311,7 +313,7 @@ public class MapController : MonoBehaviour
     //Stat Math
     public int finalRange(int baseRange, Ability ability)
     {
-        return Mathf.FloorToInt((float) (baseRange + ability.getAbilityRange()) * (((float) ability.getAbilityRadius() / 100f) + 1f));
+        return Mathf.FloorToInt((float)(baseRange + ability.getAbilityRange()) * (((float)ability.getAbilityRadius() / 100f) + 1f));
     }
 
     //Grid Management
@@ -355,11 +357,6 @@ public class MapController : MonoBehaviour
     {
         int xDist = Mathf.Abs(gridPos1.x - gridPos2.x);
         int yDist = Mathf.Abs(gridPos1.y - gridPos2.y);
-        Debug.Log(gridPos1);
-        Debug.Log(gridPos2);
-        Debug.Log(xDist);
-        Debug.Log(yDist);
-        Debug.Log(xDist + yDist);
         return xDist + yDist;
     }
 

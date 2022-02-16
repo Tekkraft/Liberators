@@ -33,11 +33,12 @@ public class Ability : ScriptableObject
     [SerializeField]
     UnitController.MarkerAreas abilityRadiusType;
 
+    //True Damage = Flat Damage
     [SerializeField]
-    damageType abilityDamageType;
+    damageType abilityDamageSource;
 
     [SerializeField]
-    bool abilityDamageFixed;
+    damageType abilityDamageType;
 
     [SerializeField]
     int abilityDamage;
@@ -77,14 +78,14 @@ public class Ability : ScriptableObject
         return abilityRadiusType;
     }
 
+    public damageType getAbilityDamageSource()
+    {
+        return abilityDamageSource;
+    }
+
     public damageType getAbilityDamageType()
     {
         return abilityDamageType;
-    }
-
-    public bool isDamageFixed()
-    {
-        return abilityDamageFixed;
     }
 
     public int getAbilityDamage()
