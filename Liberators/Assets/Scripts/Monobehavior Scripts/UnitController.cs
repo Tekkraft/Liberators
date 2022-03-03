@@ -126,7 +126,6 @@ public class UnitController : MonoBehaviour
                 damage += attackAbility.getAbilityDamage();
                 break;
         }
-        Debug.Log(damage);
         return target.GetComponent<UnitController>().takeDamage(damage, attackAbility.getAbilityDamageType());
     }
 

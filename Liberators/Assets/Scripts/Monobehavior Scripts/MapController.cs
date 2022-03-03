@@ -184,10 +184,10 @@ public class MapController : MonoBehaviour
             return;
         }
         bool clear = moveUnit(activeUnit, tileGridPos(cursorController.getGridPos()));
+        completeAction(activeUnit);
         if (clear)
         {
             bool done = activeController.useActions(activeAbility.getAPCost());
-            completeAction(activeUnit);
         }
     }
 
@@ -211,9 +211,9 @@ public class MapController : MonoBehaviour
             return;
         }
         bool success = attackUnit(cursorController.getSelectedUnit(), targetUnit);
+        completeAction(cursorController.getSelectedUnit());
         if (success)
         {
-            completeAction(cursorController.getSelectedUnit());
             bool done = selectedController.useActions(activeAbility.getAPCost());
         }
     }
@@ -287,7 +287,7 @@ public class MapController : MonoBehaviour
         {
             return false;
         }
-        bool inRange = attackerController.inRange(activeAbility.getAbilityRangeType(), attackerController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRange(), 1, defenderController.getUnitPos() - attackerController.getUnitPos());
+        bool inRange = attackerController.inRange(activeAbility.getAbilityRangeType(), attackerController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRange(), 1, defenderController.getUnitPos());
         if (!inRange || attackerController.getTeam() == defenderController.getTeam())
         {
             return false;
