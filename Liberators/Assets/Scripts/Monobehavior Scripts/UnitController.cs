@@ -174,7 +174,7 @@ public class UnitController : MonoBehaviour
     public bool moveUnit(Vector2 destination, Ability moveAbility)
     {
         Vector2Int destinationTile = mapController.gridTilePos(destination);
-        if (inRange(moveAbility.getAbilityRangeType(), mapController.finalRange(mov, moveAbility), 0, destinationTile))
+        if (inRange(moveAbility.getAbilityRangeType(), mapController.finalRange(mov, moveAbility), moveAbility.getAbilityRanges()[1], destinationTile))
         {
             setUnitPos(destination);
             return true;
@@ -201,7 +201,7 @@ public class UnitController : MonoBehaviour
         {
             for (int j = -maxRange; j <= maxRange; j++)
             {
-                if (inRange(area, maxRange, minRange, new Vector2Int(i, j) + unitGridPosition))
+                if (inRange(area, maxRange, minRange, new Vector2Int(i, j)))
                 {
                     GameObject temp = GameObject.Instantiate(marker);
                     Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
@@ -222,15 +222,16 @@ public class UnitController : MonoBehaviour
         }
     }
 
+    //Calculates whether a given location is within range of the specified range parameters.
     public bool inRange(MarkerAreas area, int maxRange, int minRange, Vector2Int location)
     {
         switch (area)
         {
             case MarkerAreas.RADIAL:
-                int distance = mapController.gridDistance(location, unitGridPosition);
+                int distance = Mathf.Abs(location.x) + Mathf.Abs(location.y);
                 return (distance <= maxRange && distance >= minRange);
             case MarkerAreas.BOX:
-                return (Mathf.Abs(location.x) >= minRange && Mathf.Abs(location.y) >= minRange && Mathf.Abs(location.x) <= maxRange && Mathf.Abs(location.y) <= maxRange);
+                return (Mathf.Abs(location.x) >= minRange || Mathf.Abs(location.y) >= minRange) && (Mathf.Abs(location.x) <= maxRange && Mathf.Abs(location.y) <= maxRange);
             case MarkerAreas.CROSS:
                 return ((location.x == unitGridPosition.x && Mathf.Abs(location.y) >= minRange) || (location.y == unitGridPosition.y && Mathf.Abs(location.x) >= minRange));
         }

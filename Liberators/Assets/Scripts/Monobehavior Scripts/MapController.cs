@@ -23,6 +23,8 @@ public class MapController : MonoBehaviour
     Ability activeAbility;
     GameObject activeUnit;
 
+    public GameObject abilityCalculator;
+
     void Awake()
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
@@ -173,7 +175,7 @@ public class MapController : MonoBehaviour
         }
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        targetController.createMarkers(activeAbility.getAbilityRangeType(), finalRange(unit.GetComponent<UnitController>().getStats()[0], activeAbility), 0, MarkerController.Markers.BLUE);
+        targetController.createMarkers(activeAbility.getAbilityRangeType(), finalRange(unit.GetComponent<UnitController>().getStats()[0], activeAbility), activeAbility.getAbilityRanges()[0], MarkerController.Markers.BLUE);
     }
 
     void moveAction()
@@ -199,23 +201,50 @@ public class MapController : MonoBehaviour
         }
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        targetController.createMarkers(activeAbility.getAbilityRangeType(), targetController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRange(), 1, MarkerController.Markers.RED);
+        if (activeAbility.getSpecialRules().Contains("SelfCast"))
+        {
+            targetController.createMarkers(activeAbility.getAbilityRangeType(), 0, 0, MarkerController.Markers.RED);
+        }
+        else
+        {
+            targetController.createMarkers(activeAbility.getAbilityRangeType(), targetController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0], activeAbility.getAbilityRanges()[1], MarkerController.Markers.RED);
+        }
         cursorController.setSelectedUnit(unit);
     }
 
     void attackAction(GameObject targetUnit)
     {
         UnitController selectedController = cursorController.getSelectedUnit().GetComponent<UnitController>();
-        if (!targetUnit || selectedController.checkActions(activeAbility.getAPCost()))
+        if (!activeAbility || !targetUnit)
         {
             return;
         }
-        bool success = attackUnit(cursorController.getSelectedUnit(), targetUnit);
-        completeAction(cursorController.getSelectedUnit());
-        if (success)
+        UnitController targetController = targetUnit.GetComponent<UnitController>();
+        if (activeAbility.getSpecialRules().Contains("SelfCast") && !selectedController.inRange(activeAbility.getAbilityRangeType(), 0, 0, targetController.getUnitPos() - selectedController.getUnitPos()))
         {
-            bool done = selectedController.useActions(activeAbility.getAPCost());
+            completeAction(cursorController.getSelectedUnit());
+            return;
         }
+        if (selectedController.checkActions(activeAbility.getAPCost()) || !selectedController.inRange(activeAbility.getAbilityRangeType(), selectedController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0], activeAbility.getAbilityRanges()[1], targetController.getUnitPos() - selectedController.getUnitPos()) || (selectedController.getTeam() == targetController.getTeam() && !activeAbility.getSpecialRules().Contains("SelfCast")))
+        {
+            completeAction(cursorController.getSelectedUnit());
+            return;
+        }
+        GameObject temp = GameObject.Instantiate(abilityCalculator);
+        AbilityCalculatorController calculator = temp.GetComponent<AbilityCalculatorController>();
+        calculator.inintalizeCalculator(cursorController.getSelectedUnit(), activeAbility, cursorController.getGridPos());
+        List<GameObject> hitUnits = calculator.getAffectedUnits();
+        foreach (GameObject target in hitUnits)
+        {
+            if (target.GetComponent<UnitController>().getTeam() == selectedController.getTeam())
+            {
+                continue;
+            }
+            attackUnit(cursorController.getSelectedUnit(), target);
+        }
+        GameObject.Destroy(temp);
+        completeAction(cursorController.getSelectedUnit());
+        selectedController.useActions(activeAbility.getAPCost());
     }
 
     public void supportPrepare(GameObject unit)
@@ -247,6 +276,16 @@ public class MapController : MonoBehaviour
     }
 
     //Unit Management
+    public List<GameObject> getUnits()
+    {
+        List<GameObject> allUnits = new List<GameObject>();
+        foreach (KeyValuePair<Vector2Int, GameObject> temp in unitList)
+        {
+            allUnits.Add(temp.Value);
+        }
+        return allUnits;
+    }
+
     public void addUnit(GameObject unit)
     {
         unitList.Add(unit.GetComponent<UnitController>().getUnitPos(), unit);
@@ -278,21 +317,10 @@ public class MapController : MonoBehaviour
         return moved;
     }
 
-    public bool attackUnit(GameObject attacker, GameObject defender)
+    public void attackUnit(GameObject attacker, GameObject defender)
     {
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
-
-        if (!activeAbility)
-        {
-            return false;
-        }
-        bool inRange = attackerController.inRange(activeAbility.getAbilityRangeType(), attackerController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRange(), 1, defenderController.getUnitPos());
-        if (!inRange || attackerController.getTeam() == defenderController.getTeam())
-        {
-            return false;
-        }
-
         bool defeated = attackerController.attackUnit(defender, activeAbility);
         if (defeated)
         {
@@ -307,13 +335,12 @@ public class MapController : MonoBehaviour
             }
             GameObject.Destroy(defender);
         }
-        return true;
     }
 
     //Stat Math
     public int finalRange(int baseRange, Ability ability)
     {
-        return Mathf.FloorToInt((float)(baseRange + ability.getAbilityRange()) * (((float)ability.getAbilityRadius() / 100f) + 1f));
+        return Mathf.FloorToInt((float)(baseRange + ability.getAbilityRanges()[0]) * (((float)ability.getAbilityRadii()[0] / 100f) + 1f));
     }
 
     //Grid Management
