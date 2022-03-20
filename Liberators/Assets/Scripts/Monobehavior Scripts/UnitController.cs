@@ -174,14 +174,16 @@ public class UnitController : MonoBehaviour
     public bool moveUnit(Vector2 destination, Ability moveAbility)
     {
         Vector2Int destinationTile = mapController.gridTilePos(destination);
-        if (inRange(moveAbility.getAbilityRangeType(), mapController.finalRange(mov, moveAbility), moveAbility.getAbilityRanges()[1], destinationTile))
+        mapController.pathfinder.changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getAbilityRanges()[1]);
+        mapController.pathfinder.calculate(true);
+        if (mapController.pathfinder.checkCoords(destinationTile))
         {
             setUnitPos(destination);
             return true;
         }
         return false;
     }
-
+     
     void setUnitPos(Vector2 worldPos)
     {
         transform.position = worldPos;
@@ -195,20 +197,17 @@ public class UnitController : MonoBehaviour
         return unitGridPosition;
     }
 
-    public void createMarkers(MarkerAreas area, int maxRange, int minRange, MarkerController.Markers color)
+    public void createMarkers(int maxRange, int minRange, MarkerController.Markers color, bool passableState)
     {
-        for (int i = -maxRange; i <= maxRange; i++)
+        mapController.pathfinder.changeParameters(unitGridPosition, maxRange, minRange);
+        mapController.pathfinder.calculate(passableState);
+        List<Vector2Int> coords = mapController.pathfinder.getValidCoords();
+        foreach(Vector2Int gridPos in coords)
         {
-            for (int j = -maxRange; j <= maxRange; j++)
-            {
-                if (inRange(area, maxRange, minRange, new Vector2Int(i, j)))
-                {
-                    GameObject temp = GameObject.Instantiate(marker);
-                    Vector2 markerLocation = mapController.tileGridPos(unitGridPosition + new Vector2Int(i, j));
-                    temp.GetComponent<MarkerController>().setup(color, markerLocation);
-                    markerList.Add(temp);
-                }
-            }
+            GameObject temp = GameObject.Instantiate(marker);
+            Vector2 markerLocation = mapController.tileGridPos(gridPos);
+            temp.GetComponent<MarkerController>().setup(color, markerLocation);
+            markerList.Add(temp);
         }
     }
 
@@ -220,21 +219,5 @@ public class UnitController : MonoBehaviour
             markerList.Remove(temp);
             temp.GetComponent<MarkerController>().removeMarker();
         }
-    }
-
-    //Calculates whether a given location is within range of the specified range parameters.
-    public bool inRange(MarkerAreas area, int maxRange, int minRange, Vector2Int location)
-    {
-        switch (area)
-        {
-            case MarkerAreas.RADIAL:
-                int distance = Mathf.Abs(location.x) + Mathf.Abs(location.y);
-                return (distance <= maxRange && distance >= minRange);
-            case MarkerAreas.BOX:
-                return (Mathf.Abs(location.x) >= minRange || Mathf.Abs(location.y) >= minRange) && (Mathf.Abs(location.x) <= maxRange && Mathf.Abs(location.y) <= maxRange);
-            case MarkerAreas.CROSS:
-                return ((location.x == unitGridPosition.x && Mathf.Abs(location.y) >= minRange) || (location.y == unitGridPosition.y && Mathf.Abs(location.x) >= minRange));
-        }
-        return false;
     }
 }

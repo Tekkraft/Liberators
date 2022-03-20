@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class TerrainTile : Tile
 {
@@ -34,4 +37,17 @@ public class TerrainTile : Tile
     {
         return new int[] { hitBonus, avoidBonus };
     }
+
+    //"Borrowed" from Unity Documentation
+    #if UNITY_EDITOR
+    // The following is a helper that adds a menu item to create a TerrainTile Asset
+    [MenuItem("Assets/Create/TerrainTile")]
+    public static void CreateTerrainTile()
+    {
+        string path = EditorUtility.SaveFilePanelInProject("Save Terrain Tile", "New Terrain Tile", "Asset", "Save Terrain Tile", "Assets");
+        if (path == "")
+            return;
+        AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<TerrainTile>(), path);
+    }
+    #endif
 }

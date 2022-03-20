@@ -29,10 +29,12 @@ public class AbilityCalculatorController : MonoBehaviour
     public List<GameObject> getAffectedUnits()
     {
         List<GameObject> hitUnits = new List<GameObject>();
+        mapController.pathfinder.changeParameters(calculatorPosition, linkedAbility.getAbilityRadii()[0], linkedAbility.getAbilityRadii()[1]);
+        mapController.pathfinder.calculate(false);
         foreach (GameObject unit in mapController.getUnits())
         {
             UnitController unitController = unit.GetComponent<UnitController>();
-            if (unitController.inRange(linkedAbility.getAbilityRadiusType(), linkedAbility.getAbilityRadii()[0], linkedAbility.getAbilityRadii()[1], unitController.getUnitPos() - calculatorPosition))
+            if (mapController.pathfinder.checkCoords(unitController.getUnitPos()))
             {
                 hitUnits.Add(unit);
             }

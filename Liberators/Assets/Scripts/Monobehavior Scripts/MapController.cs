@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MapController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class MapController : MonoBehaviour
     Canvas uiCanvas;
     GameObject cursor;
     MouseController cursorController;
+    Tilemap mainTilemap;
+    public Pathfinder pathfinder;
 
     //Action Handlers
     public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC, WAIT, END };
@@ -31,6 +34,8 @@ public class MapController : MonoBehaviour
         uiCanvas = GameObject.FindObjectOfType<Canvas>();
         cursor = GameObject.FindGameObjectWithTag("Cursor");
         cursorController = cursor.GetComponent<MouseController>();
+        mainTilemap = mainGrid.GetComponentInChildren<Tilemap>();
+        pathfinder = new Pathfinder(new Vector2Int(0, 0), 0, 0, mainTilemap);
     }
 
     // Start is called before the first frame update
@@ -38,12 +43,6 @@ public class MapController : MonoBehaviour
     {
         Debug.Log("Turn " + turnNumber);
         Debug.Log("Team " + activeTeam);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     //Turn Management
@@ -175,7 +174,7 @@ public class MapController : MonoBehaviour
         }
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        targetController.createMarkers(activeAbility.getAbilityRangeType(), finalRange(unit.GetComponent<UnitController>().getStats()[0], activeAbility), activeAbility.getAbilityRanges()[0], MarkerController.Markers.BLUE);
+        targetController.createMarkers(finalRange(unit.GetComponent<UnitController>().getStats()[0], activeAbility), activeAbility.getAbilityRanges()[0], MarkerController.Markers.BLUE, true);
     }
 
     void moveAction()
@@ -203,11 +202,11 @@ public class MapController : MonoBehaviour
         UnitController targetController = unit.GetComponent<UnitController>();
         if (activeAbility.getSpecialRules().Contains("SelfCast"))
         {
-            targetController.createMarkers(activeAbility.getAbilityRangeType(), 0, 0, MarkerController.Markers.RED);
+            targetController.createMarkers(0, 0, MarkerController.Markers.RED, false);
         }
         else
         {
-            targetController.createMarkers(activeAbility.getAbilityRangeType(), targetController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0], activeAbility.getAbilityRanges()[1], MarkerController.Markers.RED);
+            targetController.createMarkers(targetController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0], activeAbility.getAbilityRanges()[1], MarkerController.Markers.RED, false);
         }
         cursorController.setSelectedUnit(unit);
     }
@@ -220,12 +219,14 @@ public class MapController : MonoBehaviour
             return;
         }
         UnitController targetController = targetUnit.GetComponent<UnitController>();
-        if (activeAbility.getSpecialRules().Contains("SelfCast") && !selectedController.inRange(activeAbility.getAbilityRangeType(), 0, 0, targetController.getUnitPos() - selectedController.getUnitPos()))
+        pathfinder.changeParameters(selectedController.getUnitPos(), selectedController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0], activeAbility.getAbilityRanges()[1]);
+        pathfinder.calculate(false);
+        if (activeAbility.getSpecialRules().Contains("SelfCast") && !(targetController.getUnitPos() != selectedController.getUnitPos()))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
         }
-        if (selectedController.checkActions(activeAbility.getAPCost()) || !selectedController.inRange(activeAbility.getAbilityRangeType(), selectedController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0], activeAbility.getAbilityRanges()[1], targetController.getUnitPos() - selectedController.getUnitPos()) || (selectedController.getTeam() == targetController.getTeam() && !activeAbility.getSpecialRules().Contains("SelfCast")))
+        if (selectedController.checkActions(activeAbility.getAPCost()) || !pathfinder.checkCoords(targetController.getUnitPos()) || (selectedController.getTeam() == targetController.getTeam() && !activeAbility.getSpecialRules().Contains("SelfCast")))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
@@ -259,7 +260,7 @@ public class MapController : MonoBehaviour
         }
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        targetController.createMarkers(UnitController.MarkerAreas.RADIAL, 0, 0, MarkerController.Markers.GREEN);
+        targetController.createMarkers(0, 0, MarkerController.Markers.GREEN, false);
     }
 
     void supportAction(GameObject targetUnit)
