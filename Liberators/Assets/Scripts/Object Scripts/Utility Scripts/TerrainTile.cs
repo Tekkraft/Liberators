@@ -5,13 +5,33 @@ using UnityEngine.Tilemaps;
 
 public class TerrainTile : Tile
 {
-    string tileName;
+    public string tileName;
 
     //Can units move past this tile?
-    bool passable;
+    public bool passable;
     //Can units target over this tile?
-    bool pathable;
+    public bool pathable;
 
-    int hitBonus;
-    int avoidBonus;
+    public int hitBonus;
+    public int avoidBonus;
+
+    public string getTileName()
+    {
+        return tileName;
+    }
+
+    public bool isPassable()
+    {
+        return passable;
+    }
+
+    public bool isPathable()
+    {
+        return pathable;
+    }
+
+    public int[] getBonuses()
+    {
+        return new int[] { hitBonus, avoidBonus };
+    }
 }
