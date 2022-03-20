@@ -221,7 +221,7 @@ public class MapController : MonoBehaviour
         UnitController targetController = targetUnit.GetComponent<UnitController>();
         pathfinder.changeParameters(selectedController.getUnitPos(), selectedController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0], activeAbility.getAbilityRanges()[1]);
         pathfinder.calculate(false);
-        if (activeAbility.getSpecialRules().Contains("SelfCast") && !(targetController.getUnitPos() != selectedController.getUnitPos()))
+        if (activeAbility.getSpecialRules().Contains("SelfCast") && !pathfinder.checkCoords(targetController.getUnitPos()))
         {
             completeAction(cursorController.getSelectedUnit());
             return;

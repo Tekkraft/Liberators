@@ -53,13 +53,13 @@ public class Pathfinder
             //+1/- 1 in X
             newCoords.x += 1;
             TerrainTile tile = gameMap.GetTile<TerrainTile>(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0));
-            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)))
+            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)) && !searchedCoords.Contains(newCoords))
             {
                 searchList.AddLast(new CellPair(newCoords, newDist));
             }
             newCoords.x -= 2;
             tile = gameMap.GetTile<TerrainTile>(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0));
-            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)))
+            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)) && !searchedCoords.Contains(newCoords))
             {
                 searchList.AddLast(new CellPair(newCoords, newDist));
             }
@@ -67,13 +67,13 @@ public class Pathfinder
             //+1/-1 in Y
             newCoords.y += 1;
             tile = gameMap.GetTile<TerrainTile>(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0));
-            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)))
+            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)) && !searchedCoords.Contains(newCoords))
             {
                 searchList.AddLast(new CellPair(newCoords, newDist));
             }
             newCoords.y -= 2;
             tile = gameMap.GetTile<TerrainTile>(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0));
-            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)))
+            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)) && !searchedCoords.Contains(newCoords))
             {
                 searchList.AddLast(new CellPair(newCoords, newDist));
             }
