@@ -185,6 +185,8 @@ public class MapController : MonoBehaviour
             return;
         }
         bool clear = moveUnit(activeUnit, tileGridPos(cursorController.getGridPos()));
+        Debug.Log(tileGridPos(cursorController.getGridPos()));
+        Debug.Log(cursorController.tilePosition);
         completeAction(activeUnit);
         if (clear)
         {
@@ -369,8 +371,8 @@ public class MapController : MonoBehaviour
 
     public Vector2Int gridTilePos(Vector2 tilePos)
     {
-        float tileX = tilePos.x - mainGrid.cellSize.x / 2;
-        float tileY = tilePos.y - mainGrid.cellSize.y / 2;
+        float tileX = tilePos.x + mainGrid.cellSize.x / 2;
+        float tileY = tilePos.y + mainGrid.cellSize.y / 2;
         return new Vector2Int(Mathf.CeilToInt(tileX), Mathf.CeilToInt(tileY));
     }
 

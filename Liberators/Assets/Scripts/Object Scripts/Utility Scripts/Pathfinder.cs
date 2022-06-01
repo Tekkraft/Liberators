@@ -24,6 +24,7 @@ public class Pathfinder
     public void changeParameters(Vector2Int origin, int maxRange, int minRange)
     {
         clearCalculator();
+        Debug.Log("Origin:" + origin);
         this.origin = origin;
         this.minRange = minRange;
         this.maxRange = maxRange;

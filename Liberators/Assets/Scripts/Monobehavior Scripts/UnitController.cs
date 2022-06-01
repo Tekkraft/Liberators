@@ -43,7 +43,6 @@ public class UnitController : MonoBehaviour
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
         unitPosition = mapController.tileWorldPos(transform.position);
-        unitPosition.y--;
         unitGridPosition = mapController.gridTilePos(unitPosition);
         mapController.addUnit(this.gameObject);
         createUnit(unitObject.getStats(), teamNumber);
@@ -201,6 +200,7 @@ public class UnitController : MonoBehaviour
 
     public void createMarkers(int maxRange, int minRange, MarkerController.Markers color, bool passableState)
     {
+        Debug.Log(unitGridPosition);
         mapController.pathfinder.changeParameters(unitGridPosition, maxRange, minRange);
         mapController.pathfinder.calculate(passableState);
         List<Vector2Int> coords = mapController.pathfinder.getValidCoords();

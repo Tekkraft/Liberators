@@ -16,7 +16,7 @@ public class MouseController : MonoBehaviour
     UIController uiController;
 
     Vector2 cursorPosition = new Vector2(0, 0);
-    Vector2 tilePosition = new Vector2(0, 0);
+    public Vector2 tilePosition = new Vector2(0, 0);
     Vector2Int gridPosition = new Vector2Int(0, 0);
 
     // Start is called before the first frame update
