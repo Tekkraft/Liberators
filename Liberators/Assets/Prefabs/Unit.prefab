@@ -96,4 +96,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marker: {fileID: 6958815629102385123, guid: b76a23c86aaa145c28439c9b6fa22512, type: 3}
-  movementRange: 5
+  teamNumber: -1
+  range: 4
+  attackArea: 0
+  unitObject: {fileID: 11400000, guid: cd8d8bcbd3a8d4aef8cc06abb78ad856, type: 2}
+  basicMovement: {fileID: 11400000, guid: 09429bc01024540d086b9fdf80c020d8, type: 2}
+  equippedWeapon: {fileID: 0}
+  equippedArmor: {fileID: 0}

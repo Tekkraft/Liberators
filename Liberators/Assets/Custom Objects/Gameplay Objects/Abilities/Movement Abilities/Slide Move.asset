@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67a77f5bb98f1433892e2c93c72d91e7, type: 3}
+  m_Name: Slide Move
+  m_EditorClassIdentifier: 
+  abilityName: Power Slide
+  abilityAP: 2
+  abilityType: 1
+  abilityRangeMax: 0
+  abilityRangeMin: 0
+  abilityRangeType: 2
+  abilityRadiusMax: 100
+  abilityRadiusMin: 0
+  abilityRadiusType: 0
+  abilityDamageSource: 0
+  abilityDamageType: 0
+  abilityDamage: 0
+  specialRules: []

@@ -12,6 +12,8 @@ public class MouseController : MonoBehaviour
     MapController mapController;
     GameObject selectedUnit;
     bool unitSelected;
+    Canvas uiCanvas;
+    UIController uiController;
 
     Vector2 cursorPosition = new Vector2(0, 0);
     Vector2 tilePosition = new Vector2(0, 0);
@@ -22,6 +24,8 @@ public class MouseController : MonoBehaviour
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
+        uiCanvas = GameObject.FindObjectOfType<Canvas>();
+        uiController = uiCanvas.GetComponent<UIController>();
     }
 
     // Update is called once per frame
@@ -32,8 +36,12 @@ public class MouseController : MonoBehaviour
         tilePosition = new Vector3(worldPos.x, worldPos.y, -1);
         transform.position = tilePosition;
         gridPosition = mapController.gridTilePos(tilePosition);
+        Cursor.visible = mapController.mouseOverCanvas(cursorPosition);
+        uiController.unHoverUnit();
+        uiController.hoverUnit(mapController.getUnitFromCoords(gridPosition));
     }
 
+    //Input Handling
     void OnCursorMovement(InputValue value)
     {
         cursorPosition = value.Get<Vector2>();
@@ -41,33 +49,51 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
+        MapController.actionType action = mapController.getActionState();
         GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
-        if (!unitSelected)
+        if (unitSelected)
         {
-            if (selectedUnit)
-            {
-                selectedUnit.GetComponent<UnitController>().destroyMarkers();
-            }
-            if (targetUnit)
-            {
-                selectedUnit = targetUnit;
-                UnitController targetController = targetUnit.GetComponent<UnitController>();
-                targetController.createMarkers(UnitController.MarkerAreas.RADIAL, targetController.getStats()[0], 0);
-                unitSelected = true;
-                return;
-            }
-            return;
+            mapController.executeAction(targetUnit);
         }
         else
         {
             if (targetUnit)
             {
-                mapController.attackUnit(selectedUnit,targetUnit);
-            }
-            else
-            {
-                unitSelected = !mapController.moveUnit(selectedUnit, mapController.tileGridPos(gridPosition));
+                if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
+                {
+                    return;
+                }
+                uiController.drawButtons(targetUnit.GetComponent<UnitController>().getAbilities(), targetUnit);
+                uiController.validateButtons(targetUnit.GetComponent<UnitController>().getActions()[1]);
             }
         }
+    }
+
+    void OnCursorAlternate()
+    {
+        mapController.completeAction(selectedUnit);
+    }
+
+    public void setSelectedUnit(GameObject unit)
+    {
+        selectedUnit = unit;
+        if (selectedUnit)
+        {
+            unitSelected = true;
+        }
+        else
+        {
+            unitSelected = false;
+        }
+    }
+
+    public GameObject getSelectedUnit()
+    {
+        return selectedUnit;
+    }
+
+    public Vector2Int getGridPos()
+    {
+        return gridPosition;
     }
 }

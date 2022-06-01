@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b978b95402f4d1fb4b768fe1927cb8, type: 3}
+  m_Name: Basic Focus
+  m_EditorClassIdentifier: 
+  weaponName: Small Focus
+  weaponType: 2
+  weaponStrength: 5
+  weaponHit: 0
+  weaponCrit: 0
+  weaponRange: 5
+  ammoCapacity: 0
+  abilities:
+  - {fileID: 11400000, guid: d4068ed09273d46e287819d275c77b13, type: 2}
+  - {fileID: 11400000, guid: aef5752a3501c4ae1a1a7e96393b67a1, type: 2}
