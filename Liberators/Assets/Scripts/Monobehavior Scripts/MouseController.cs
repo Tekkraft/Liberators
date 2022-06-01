@@ -59,6 +59,8 @@ public class MouseController : MonoBehaviour
         {
             if (targetUnit)
             {
+                Debug.Log(gridPosition);
+                Debug.Log(targetUnit.GetComponent<UnitController>().getUnitPos());
                 if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
                 {
                     return;
@@ -71,6 +73,7 @@ public class MouseController : MonoBehaviour
 
     void OnCursorAlternate()
     {
+        Debug.Log(gridPosition);
         mapController.completeAction(selectedUnit);
     }
 

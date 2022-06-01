@@ -48,7 +48,10 @@ public class UnitController : MonoBehaviour
         mapController.addUnit(this.gameObject);
         createUnit(unitObject.getStats(), teamNumber);
         allAbilities.Add(basicMovement);
-        allAbilities.AddRange(equippedWeapon.getAbilities());
+        if (equippedWeapon)
+        {
+            allAbilities.AddRange(equippedWeapon.getAbilities());
+        }
         allAbilities.AddRange(unitObject.getAbilities());
     }
 
@@ -188,7 +191,6 @@ public class UnitController : MonoBehaviour
     {
         transform.position = worldPos;
         unitGridPosition = mapController.gridWorldPos(transform.position);
-        transform.Translate(new Vector3(0, 0.75f, -2));
         destroyMarkers();
     }
 

@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c92ac47b0374eb5becdf2af4456ab0, type: 3}
+  m_Name: Concrete Ceiling
+  m_EditorClassIdentifier: 
+  m_Sprite: {fileID: 21300000, guid: 7860e47bbf2ef4002bc18c1d6bf844e4, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Transform:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
+  m_InstancedGameObject: {fileID: 0}
+  m_Flags: 1
+  m_ColliderType: 1
+  tileName: Ceiling
+  spriteList:
+  - {fileID: 21300000, guid: 43fe77e13e7e847bcbf580cb7ba30534, type: 3}
+  - {fileID: 21300000, guid: 88bb43422c9e84e9a86afcf4fbe387e7, type: 3}
+  - {fileID: 21300000, guid: cfd2fdecd51c34911a64398bdc79cb7c, type: 3}
+  - {fileID: 21300000, guid: e1de7c5b643d749b595866c73d9cf48b, type: 3}
+  - {fileID: 21300000, guid: 7860e47bbf2ef4002bc18c1d6bf844e4, type: 3}
+  - {fileID: 21300000, guid: 1cf76c6470eec45abaa62a5f97854f50, type: 3}
+  - {fileID: 21300000, guid: dcdc3be45c69a42b797f2e331f35f5db, type: 3}
+  - {fileID: 21300000, guid: c41f35d1c06a64c9b93583a5328aa5d2, type: 3}
+  - {fileID: 21300000, guid: 87d76e2a2e6e64967b4a5b7fb7e1b442, type: 3}
+  - {fileID: 21300000, guid: 8f4095147e80644169fa23a6dd03444d, type: 3}
+  - {fileID: 21300000, guid: 63524163b2e1b41f198a090ee789b738, type: 3}
+  - {fileID: 21300000, guid: f7e00e0cd184c411db0e0ee28a821957, type: 3}
+  - {fileID: 21300000, guid: e843dc80971f840f5b5466c220780810, type: 3}
+  - {fileID: 21300000, guid: 0ed5d03dbbb24484da996ffc9a7ac46d, type: 3}
+  - {fileID: 21300000, guid: 091b3f18a6bf545328a88364bc722aa0, type: 3}
+  - {fileID: 21300000, guid: 4bf024b6007d742e092637a670599777, type: 3}
+  single: 0
+  passable: 0
+  pathable: 0
+  hitBonus: 0
+  avoidBonus: 0

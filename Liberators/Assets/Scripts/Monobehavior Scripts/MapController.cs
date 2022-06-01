@@ -359,21 +359,19 @@ public class MapController : MonoBehaviour
         Vector3 localCellCoords = mainGrid.LocalToCell(worldPos);
         Vector3Int localCellInt = new Vector3Int(Mathf.CeilToInt(localCellCoords.x), Mathf.CeilToInt(localCellCoords.y), Mathf.CeilToInt(localCellCoords.z));
         Vector3 localCoords = mainGrid.CellToLocal(localCellInt);
-        return new Vector2(localCoords.x, localCoords.y + mainGrid.cellSize.y / 2);
+        return new Vector2(localCoords.x + mainGrid.cellSize.x / 2, localCoords.y + mainGrid.cellSize.y / 2);
     }
 
     public Vector2 tileGridPos(Vector2Int gridPos)
     {
-        return new Vector2(((float)(gridPos.x - gridPos.y) / 2) * mainGrid.cellSize.x, ((float)(gridPos.x + gridPos.y - 1f) / 2) * mainGrid.cellSize.y);
+        return new Vector2((float)gridPos.x - mainGrid.cellSize.x / 2, (float)gridPos.y - mainGrid.cellSize.y / 2);
     }
 
     public Vector2Int gridTilePos(Vector2 tilePos)
     {
-        float tileX = tilePos.x * 2 / mainGrid.cellSize.x;
-        float tileY = (tilePos.y + 0.25f) * 2 / mainGrid.cellSize.y;
-        int gridX = Mathf.CeilToInt(tileY + tileX);
-        int gridY = Mathf.CeilToInt(tileY - tileX);
-        return new Vector2Int(gridX, gridY) / 2;
+        float tileX = tilePos.x - mainGrid.cellSize.x / 2;
+        float tileY = tilePos.y - mainGrid.cellSize.y / 2;
+        return new Vector2Int(Mathf.CeilToInt(tileX), Mathf.CeilToInt(tileY));
     }
 
     public Vector2Int gridWorldPos(Vector2 worldPos)

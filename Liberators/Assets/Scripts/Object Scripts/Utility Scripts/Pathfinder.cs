@@ -73,7 +73,7 @@ public class Pathfinder
             }
             newCoords.y -= 2;
             tile = gameMap.GetTile<TerrainTile>(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0));
-            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)) && !searchedCoords.Contains(newCoords))
+            if (tile && ((tile.isPassable() && passableState) || (tile.isPathable() && !passableState)) && !searchedCoords.Contains(newCoords) )
             {
                 searchList.AddLast(new CellPair(newCoords, newDist));
             }
