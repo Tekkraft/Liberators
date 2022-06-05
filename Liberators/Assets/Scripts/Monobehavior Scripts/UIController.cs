@@ -13,8 +13,7 @@ public class UIController : MonoBehaviour
     public GameObject apMeter;
 
     GameObject hoveredUnit;
-    List<GameObject> allButtons = new List<GameObject>()
-        ;
+    List<GameObject> allButtons = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()

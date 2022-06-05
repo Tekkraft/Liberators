@@ -51,6 +51,9 @@ public class Ability : ScriptableObject
     [SerializeField]
     int abilityDamage;
 
+    [SerializeField]
+    bool requiresLOS;
+
     //Special rules = Line, Damage Ramp, etc.
     [SerializeField]
     List<string> specialRules;
@@ -103,6 +106,11 @@ public class Ability : ScriptableObject
     public int getAbilityDamage()
     {
         return abilityDamage;
+    }
+
+    public bool getLOSRequirement()
+    {
+        return requiresLOS;
     }
 
     public List<string> getSpecialRules()

@@ -15,8 +15,6 @@ public class TerrainTile : Tile
 
     //Can units move past this tile?
     public bool passable;
-    //Can units target over this tile?
-    public bool pathable;
 
     public int hitBonus;
     public int avoidBonus;
@@ -29,11 +27,6 @@ public class TerrainTile : Tile
     public bool isPassable()
     {
         return passable;
-    }
-
-    public bool isPathable()
-    {
-        return pathable;
     }
 
     public int[] getBonuses()

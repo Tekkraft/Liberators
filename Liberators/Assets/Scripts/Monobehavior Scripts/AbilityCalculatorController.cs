@@ -7,7 +7,6 @@ public class AbilityCalculatorController : MonoBehaviour
     Grid mainGrid;
     MapController mapController;
     Canvas uiCanvas;
-    UIController uiController;
     Vector2Int calculatorPosition;
 
     GameObject linkedUnit;
@@ -19,7 +18,6 @@ public class AbilityCalculatorController : MonoBehaviour
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
         uiCanvas = GameObject.FindObjectOfType<Canvas>();
-        uiController = uiCanvas.GetComponent<UIController>();
         linkedUnit = unit;
         linkedController = linkedUnit.GetComponent<UnitController>();
         linkedAbility = ability;
@@ -29,14 +27,16 @@ public class AbilityCalculatorController : MonoBehaviour
     public List<GameObject> getAffectedUnits()
     {
         List<GameObject> hitUnits = new List<GameObject>();
-        mapController.pathfinder.changeParameters(calculatorPosition, linkedAbility.getAbilityRadii()[0], linkedAbility.getAbilityRadii()[1]);
-        mapController.pathfinder.calculate(false);
         foreach (GameObject unit in mapController.getUnits())
         {
             UnitController unitController = unit.GetComponent<UnitController>();
-            if (mapController.pathfinder.checkCoords(unitController.getUnitPos()))
+            float distance = Mathf.Abs((mapController.gridTilePos(calculatorPosition) - linkedController.getUnitPos()).magnitude);
+            if (distance <= linkedAbility.getAbilityRadii()[0] && distance >= linkedAbility.getAbilityRadii()[1])
             {
-                hitUnits.Add(unit);
+                if (mapController.checkLineOfSightAOE(mapController.gridTilePos(calculatorPosition),unit) || !linkedAbility.getLOSRequirement())
+                {
+                    hitUnits.Add(unit);
+                }
             }
         }
         return hitUnits;

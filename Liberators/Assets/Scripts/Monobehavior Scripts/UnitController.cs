@@ -9,7 +9,6 @@ public class UnitController : MonoBehaviour
 
     //Control Variables
     public GameObject marker;
-    Vector2 unitPosition;
     Vector2Int unitGridPosition;
     Grid mainGrid;
     MapController mapController;
@@ -42,8 +41,7 @@ public class UnitController : MonoBehaviour
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
-        unitPosition = mapController.tileWorldPos(transform.position);
-        unitGridPosition = mapController.gridTilePos(unitPosition);
+        unitGridPosition = mapController.gridWorldPos(transform.position);
         mapController.addUnit(this.gameObject);
         createUnit(unitObject.getStats(), teamNumber);
         allAbilities.Add(basicMovement);
@@ -177,7 +175,7 @@ public class UnitController : MonoBehaviour
     {
         Vector2Int destinationTile = mapController.gridTilePos(destination);
         mapController.pathfinder.changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getAbilityRanges()[1]);
-        mapController.pathfinder.calculate(true);
+        mapController.pathfinder.calculate();
         if (mapController.pathfinder.checkCoords(destinationTile))
         {
             setUnitPos(destination);
@@ -198,13 +196,23 @@ public class UnitController : MonoBehaviour
         return unitGridPosition;
     }
 
-    public void createMarkers(int maxRange, int minRange, MarkerController.Markers color, bool passableState)
+    public void createMoveMarkers(int maxRange, int minRange, MarkerController.Markers color)
     {
-        Debug.Log(unitGridPosition);
         mapController.pathfinder.changeParameters(unitGridPosition, maxRange, minRange);
-        mapController.pathfinder.calculate(passableState);
+        mapController.pathfinder.calculate();
         List<Vector2Int> coords = mapController.pathfinder.getValidCoords();
-        foreach(Vector2Int gridPos in coords)
+        foreach (Vector2Int gridPos in coords)
+        {
+            GameObject temp = GameObject.Instantiate(marker);
+            Vector2 markerLocation = mapController.tileGridPos(gridPos);
+            temp.GetComponent<MarkerController>().setup(color, markerLocation);
+            markerList.Add(temp);
+        }
+    }
+
+    public void createAttackMarkers(List<Vector2Int> coords, MarkerController.Markers color)
+    {
+        foreach (Vector2Int gridPos in coords)
         {
             GameObject temp = GameObject.Instantiate(marker);
             Vector2 markerLocation = mapController.tileGridPos(gridPos);
