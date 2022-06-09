@@ -104,9 +104,6 @@ public class Rangefinder
         }
         for (int i = unitList.Count - 1; i >= 0; i--)
         {
-            Debug.Log(mapController);
-            Debug.Log(mapController.tileGridPos(attacker.GetComponent<UnitController>().getUnitPos()));
-            Debug.Log(mapController.tileGridPos(unitList[i].GetComponent<UnitController>().getUnitPos()));
             if ((losRequired && !checkLineOfSight(attacker, unitList[i])) || !inRange(mapController.tileGridPos(attacker.GetComponent<UnitController>().getUnitPos()), mapController.tileGridPos(unitList[i].GetComponent<UnitController>().getUnitPos()), maxRange, minRange))
             {
                 unitList.Remove(unitList[i]);
@@ -144,7 +141,6 @@ public class Rangefinder
     {
         Vector2 direction = target - origin;
         RaycastHit2D hit = Physics2D.Raycast(origin, direction, direction.magnitude, mapController.lineOfSightLayer);
-        Debug.DrawRay(origin, direction);
         return hit.collider != null;
     }
 

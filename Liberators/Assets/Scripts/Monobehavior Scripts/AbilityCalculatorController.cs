@@ -32,7 +32,7 @@ public class AbilityCalculatorController : MonoBehaviour
             int rangeMax = linkedAbility.getAbilityRadii()[0];
             int rangeMin = linkedAbility.getAbilityRadii()[1];
             Rangefinder rangefinder = new Rangefinder(linkedUnit, rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists());
-            if (rangefinder.checkLineOfSightAOE(calculatorPosition,unit))
+            if (rangefinder.checkLineOfSightAOE(mapController.tileGridPos(calculatorPosition),unit))
             {
                 hitUnits.Add(unit);
             }

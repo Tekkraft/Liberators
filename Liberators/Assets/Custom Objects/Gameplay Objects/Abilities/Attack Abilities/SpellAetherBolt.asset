@@ -24,4 +24,5 @@ MonoBehaviour:
   abilityDamageSource: 1
   abilityDamageType: 1
   abilityDamage: 0
+  requiresLOS: 1
   specialRules: []
