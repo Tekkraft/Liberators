@@ -29,14 +29,12 @@ public class AbilityCalculatorController : MonoBehaviour
         List<GameObject> hitUnits = new List<GameObject>();
         foreach (GameObject unit in mapController.getUnits())
         {
-            UnitController unitController = unit.GetComponent<UnitController>();
-            float distance = Mathf.Abs((mapController.gridTilePos(calculatorPosition) - linkedController.getUnitPos()).magnitude);
-            if (distance <= linkedAbility.getAbilityRadii()[0] && distance >= linkedAbility.getAbilityRadii()[1])
+            int rangeMax = linkedAbility.getAbilityRadii()[0];
+            int rangeMin = linkedAbility.getAbilityRadii()[1];
+            Rangefinder rangefinder = new Rangefinder(linkedUnit, rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists());
+            if (rangefinder.checkLineOfSightAOE(calculatorPosition,unit))
             {
-                if (mapController.checkLineOfSightAOE(mapController.gridTilePos(calculatorPosition),unit) || !linkedAbility.getLOSRequirement())
-                {
-                    hitUnits.Add(unit);
-                }
+                hitUnits.Add(unit);
             }
         }
         return hitUnits;

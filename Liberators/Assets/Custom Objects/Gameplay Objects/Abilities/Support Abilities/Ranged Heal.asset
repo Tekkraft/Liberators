@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a77f5bb98f1433892e2c93c72d91e7, type: 3}
   m_Name: Ranged Heal
   m_EditorClassIdentifier: 
-  abilityName: 
-  abilityAP: 0
-  abilityType: 0
-  abilityRangeMax: 0
+  abilityName: Mend
+  abilityAP: 1
+  abilityType: 3
+  abilityRangeMax: 5
   abilityRangeMin: 0
   abilityRangeType: 0
-  abilityRadiusMax: 0
+  abilityRadiusMax: 1
   abilityRadiusMin: 0
   abilityRadiusType: 0
-  abilityDamageSource: 0
-  abilityDamageType: 0
-  abilityDamage: 0
-  requiresLOS: 0
+  abilityDamageSource: 1
+  abilityDamageType: 1
+  abilityDamage: 10
+  requiresLOS: 1
   specialRules: []

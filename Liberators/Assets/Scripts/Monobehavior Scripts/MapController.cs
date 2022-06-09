@@ -46,14 +46,6 @@ public class MapController : MonoBehaviour
         Debug.Log("Team " + activeTeam);
     }
 
-    void Update()
-    {
-        if (unitList.Count > 2)
-        {
-            checkLineOfSight(teamLists[0][0], teamLists[1][0]);
-        }
-    }
-
     //Turn Management
     void nextPhase()
     {
@@ -211,13 +203,14 @@ public class MapController : MonoBehaviour
         UnitController targetController = unit.GetComponent<UnitController>();
         int rangeMax = targetController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0];
         int rangeMin = activeAbility.getAbilityRanges()[1];
+        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists);
         if (activeAbility.getSpecialRules().Contains("SelfCast"))
         {
             targetController.createAttackMarkers(new List<Vector2Int>() { targetController.getUnitPos() }, MarkerController.Markers.RED);
         }
         else
         {
-            targetController.createAttackMarkers(validTargetCoords(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement()), MarkerController.Markers.RED);
+            targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(activeTeam), MarkerController.Markers.RED);
         }
         cursorController.setSelectedUnit(unit);
     }
@@ -232,12 +225,13 @@ public class MapController : MonoBehaviour
         UnitController targetController = targetUnit.GetComponent<UnitController>();
         int rangeMax = selectedController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0];
         int rangeMin = activeAbility.getAbilityRanges()[1];
+        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists);
         if (activeAbility.getSpecialRules().Contains("SelfCast") && targetController.getUnitPos() != selectedController.getUnitPos())
         {
             completeAction(cursorController.getSelectedUnit());
             return;
         }
-        if (selectedController.checkActions(activeAbility.getAPCost()) || validTargetCoords(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement()).Contains(targetController.getUnitPos()) || (selectedController.getTeam() == targetController.getTeam() && !activeAbility.getSpecialRules().Contains("SelfCast")))
+        if (selectedController.checkActions(activeAbility.getAPCost()) || ((!rangefinder.generateTargetsNotOfTeam(activeTeam).Contains(targetUnit) && !activeAbility.getSpecialRules().Contains("SelfCast")) || (!rangefinder.generateTargetsOfTeam(activeTeam).Contains(targetUnit) && activeAbility.getSpecialRules().Contains("SelfCast"))) || (selectedController.getTeam() == targetController.getTeam() && !activeAbility.getSpecialRules().Contains("SelfCast")))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
@@ -273,7 +267,8 @@ public class MapController : MonoBehaviour
         UnitController targetController = unit.GetComponent<UnitController>();
         int rangeMax = cursorController.getSelectedUnit().GetComponent<UnitController>().getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0];
         int rangeMin = activeAbility.getAbilityRanges()[1];
-        targetController.createAttackMarkers(validTargetCoords(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement()), MarkerController.Markers.GREEN);
+        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists);
+        targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(activeTeam), MarkerController.Markers.GREEN);
     }
 
     void supportAction(GameObject targetUnit)
@@ -351,61 +346,16 @@ public class MapController : MonoBehaviour
         }
     }
 
+    //Other Helpers
+    public Dictionary<int, List<GameObject>> getTeamLists()
+    {
+        return teamLists;
+    }
+
     //Stat Math
     public int finalRange(int baseRange, Ability ability)
     {
         return Mathf.FloorToInt((float)(baseRange + ability.getAbilityRanges()[0]) * (((float)ability.getAbilityRadii()[0] / 100f) + 1f));
-    }
-
-    //Basic Rangefinding
-    public List<Vector2Int> validTargetCoords (GameObject attacker, int maxRange, int minRange, bool losRequired)
-    {
-        List<GameObject> unitList = new List<GameObject>();
-        for (int i = 0; i < teamLists.Count; i++)
-        {
-            unitList.AddRange(teamLists[i]);
-        }
-        for (int i = unitList.Count - 1; i >= 0; i--)
-        {
-            if ((losRequired && !checkLineOfSight(attacker, unitList[i])) || !inRange(tileGridPos(attacker.GetComponent<UnitController>().getUnitPos()), tileGridPos(unitList[i].GetComponent<UnitController>().getUnitPos()) , maxRange, minRange))
-            {
-                unitList.Remove(unitList[i]);
-            }
-        }
-        List<Vector2Int> coordsList = new List<Vector2Int>();
-        for (int i = 0; i < unitList.Count; i++)
-        {
-            coordsList.Add(unitList[i].GetComponent<UnitController>().getUnitPos());
-        }
-        return coordsList;
-    }
-
-    public bool inRange(Vector2 attackerCoords, Vector2 targetCoords, int maxRange, int minRange)
-    {
-        float range = Mathf.Abs((attackerCoords - targetCoords).magnitude);
-        return range <= maxRange && range >= minRange;
-    }
-
-    //Line of Sight Checks
-    public bool checkLineOfSight(GameObject source, GameObject target)
-    {
-        Vector2 sourceCenter = tileGridPos(source.GetComponent<UnitController>().getUnitPos());
-        Vector2 targetCenter = tileGridPos(target.GetComponent<UnitController>().getUnitPos());
-        return !checkLineCollision(sourceCenter, targetCenter);
-    }
-
-    public bool checkLineOfSightAOE(Vector2 source, GameObject target)
-    {
-        Vector2 targetCenter = tileGridPos(target.GetComponent<UnitController>().getUnitPos());
-        return !checkLineCollision(source, targetCenter);
-    }
-
-    public bool checkLineCollision(Vector2 origin, Vector2 target)
-    {
-        Vector2 direction = target - origin;
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, direction.magnitude, lineOfSightLayer);
-        Debug.DrawRay(origin, direction);
-        return hit.collider != null;
     }
 
     //Grid Management
