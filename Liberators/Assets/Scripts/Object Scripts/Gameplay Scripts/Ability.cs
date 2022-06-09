@@ -54,6 +54,9 @@ public class Ability : ScriptableObject
     [SerializeField]
     bool requiresLOS;
 
+    [SerializeField]
+    bool requiresAOELOS;
+
     //Special rules = Line, Damage Ramp, etc.
     [SerializeField]
     List<string> specialRules;
@@ -111,6 +114,11 @@ public class Ability : ScriptableObject
     public bool getLOSRequirement()
     {
         return requiresLOS;
+    }
+
+    public bool getAOELOSRequirement()
+    {
+        return requiresAOELOS;
     }
 
     public List<string> getSpecialRules()
