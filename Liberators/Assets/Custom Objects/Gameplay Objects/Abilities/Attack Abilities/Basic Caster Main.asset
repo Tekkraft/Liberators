@@ -24,5 +24,8 @@ MonoBehaviour:
   abilityDamageSource: 2
   abilityDamageType: 0
   abilityDamage: 0
+  abilityHitBonus: 0
+  trueHit: 0
   requiresLOS: 1
+  requiresAOELOS: 1
   specialRules: []

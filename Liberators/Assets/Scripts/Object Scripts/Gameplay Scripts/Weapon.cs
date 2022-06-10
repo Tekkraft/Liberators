@@ -26,9 +26,6 @@ public class Weapon : ScriptableObject
     int weaponRange;
 
     [SerializeField]
-    int ammoCapacity;
-
-    [SerializeField]
     List<Ability> abilities;
 
     public string getWeaponName()

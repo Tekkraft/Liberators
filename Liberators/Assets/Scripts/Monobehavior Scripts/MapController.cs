@@ -5,7 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class MapController : MonoBehaviour
 {
-    //Grid Coordinates are +x to top-right, +y to top-left
+    //Special Constants
+    public static int reactThreshold = 10; //Minimum threshold for evasion bonuses for ranged attacks. No threshold for melee attacks.
+    public static float hitFactor = 2;
+    public static float avoidFactor = 1;
+
     Grid mainGrid;
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
     Dictionary<int, List<GameObject>> teamLists = new Dictionary<int, List<GameObject>>();
@@ -330,7 +334,29 @@ public class MapController : MonoBehaviour
     {
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
-        bool defeated = attackerController.attackUnit(defender, activeAbility);
+        //TEMPORARILY ASSUMING ALL ATTACKS RANGED
+        bool defeated = false;
+        int randomChance = Random.Range(0,99);
+        int effectiveHit = (int) (attackerController.getStats()[4] * hitFactor) + activeAbility.getAbilityHitBonus();
+        if (attackerController.equippedWeapon)
+        {
+            effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
+        }
+        float rawAvoid = defenderController.getStats()[4];
+        if (defenderController.getStats()[6] < reactThreshold)
+        {
+            rawAvoid = 0;
+        } else
+        {
+            rawAvoid += (defenderController.getStats()[6] - reactThreshold);
+        }
+        int effectiveAvoid = (int) (rawAvoid * avoidFactor);
+        Debug.Log("Attack Hit: " + effectiveHit + " Defend Avoid: " + effectiveAvoid + " Total Chance: " + (effectiveHit - effectiveAvoid));
+        Debug.Log("Roll: " + randomChance + " Hits: " + (randomChance < effectiveHit - effectiveAvoid));
+        if (randomChance < effectiveHit - effectiveAvoid || activeAbility.getTrueHit())
+        {
+            defeated = attackerController.attackUnit(defender, activeAbility);
+        }
         if (defeated)
         {
             Vector2Int location = defenderController.getUnitPos();

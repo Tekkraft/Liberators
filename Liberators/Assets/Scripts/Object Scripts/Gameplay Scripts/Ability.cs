@@ -52,6 +52,12 @@ public class Ability : ScriptableObject
     int abilityDamage;
 
     [SerializeField]
+    int abilityHitBonus;
+
+    [SerializeField]
+    bool trueHit;
+
+    [SerializeField]
     bool requiresLOS;
 
     [SerializeField]
@@ -109,6 +115,16 @@ public class Ability : ScriptableObject
     public int getAbilityDamage()
     {
         return abilityDamage;
+    }
+
+    public int getAbilityHitBonus()
+    {
+        return abilityHitBonus;
+    }
+
+    public bool getTrueHit()
+    {
+        return trueHit;
     }
 
     public bool getLOSRequirement()

@@ -10,23 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67a77f5bb98f1433892e2c93c72d91e7, type: 3}
-  m_Name: SpellShadowPulse
+  m_Name: SpellAetherLance
   m_EditorClassIdentifier: 
-  abilityName: Shadow Pulse
-  abilityAP: 3
+  abilityName: Aether Lance
+  abilityAP: 1
   abilityType: 2
-  abilityRangeMax: 0
+  abilityRangeMax: 3
   abilityRangeMin: 0
   abilityRangeType: 0
-  abilityRadiusMax: 200
-  abilityRadiusMin: 1
+  abilityRadiusMax: 0
+  abilityRadiusMin: 0
   abilityRadiusType: 0
   abilityDamageSource: 1
   abilityDamageType: 1
-  abilityDamage: 1
-  abilityHitBonus: 0
-  trueHit: 1
-  requiresLOS: 0
-  requiresAOELOS: 0
-  specialRules:
-  - SelfCast
+  abilityDamage: 5
+  abilityHitBonus: -10
+  trueHit: 0
+  requiresLOS: 1
+  requiresAOELOS: 1
+  specialRules: []
