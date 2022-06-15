@@ -49,7 +49,7 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
-        MapController.actionType action = mapController.getActionState();
+        actionType action = mapController.getActionState();
         GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
         if (unitSelected)
         {

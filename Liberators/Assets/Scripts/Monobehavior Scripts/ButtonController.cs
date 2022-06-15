@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
-    MapController.actionType linkedAction;
+    actionType linkedAction;
     Ability linkedAbility;
     GameObject linkedUnit;
     Grid mainGrid;
@@ -41,13 +41,13 @@ public class ButtonController : MonoBehaviour
         linkedAction = linkedAbility.getAbilityType();
         switch (linkedAction)
         {
-            case MapController.actionType.MOVE:
+            case actionType.MOVE:
                 gameObject.transform.GetChild(0).GetComponent<Image>().sprite = moveSprite;
                 break;
-            case MapController.actionType.ATTACK:
+            case actionType.ATTACK:
                 gameObject.transform.GetChild(0).GetComponent<Image>().sprite = attackSprite;
                 break;
-            case MapController.actionType.SUPPORT:
+            case actionType.SUPPORT:
                 gameObject.transform.GetChild(0).GetComponent<Image>().sprite = supportSprite;
                 break;
         }

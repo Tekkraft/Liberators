@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
-    //Enums
-    public enum MarkerAreas { RADIAL, BOX, CROSS };
 
     //Control Variables
     public GameObject marker;
@@ -116,30 +114,30 @@ public class UnitController : MonoBehaviour
         }
         switch (attackAbility.getAbilityDamageSource())
         {
-            case Ability.damageType.PHYSICAL:
+            case damageType.PHYSICAL:
                 damage += attackAbility.getAbilityDamage() + str;
                 break;
-            case Ability.damageType.MAGIC:
+            case damageType.MAGIC:
                 damage += attackAbility.getAbilityDamage() + pot;
                 break;
-            case Ability.damageType.TRUE:
+            case damageType.TRUE:
                 damage += attackAbility.getAbilityDamage();
                 break;
         }
         return target.GetComponent<UnitController>().takeDamage(damage, attackAbility.getAbilityDamageType());
     }
 
-    public bool takeDamage(int damage, Ability.damageType damageType)
+    public bool takeDamage(int damage, damageType damageType)
     {
         int damageTaken = damage;
         if (equippedArmor)
         {
             switch (damageType)
             {
-                case Ability.damageType.PHYSICAL:
+                case damageType.PHYSICAL:
                     damageTaken -= equippedArmor.getDefenses()[0];
                     break;
-                case Ability.damageType.MAGIC:
+                case damageType.MAGIC:
                     damageTaken -= equippedArmor.getDefenses()[1];
                     break;
             }

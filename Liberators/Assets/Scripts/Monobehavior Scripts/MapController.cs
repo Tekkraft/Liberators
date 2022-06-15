@@ -26,7 +26,6 @@ public class MapController : MonoBehaviour
     public LayerMask lineOfSightLayer;
 
     //Action Handlers
-    public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC, WAIT, END };
     actionType actionState = actionType.NONE;
     Ability activeAbility;
     GameObject activeUnit;
@@ -46,8 +45,7 @@ public class MapController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Turn " + turnNumber);
-        Debug.Log("Team " + activeTeam);
+        uiCanvas.GetComponent<UIController>().changeBanner("Team " + activeTeam, 15);
     }
 
     //Turn Management
@@ -68,11 +66,10 @@ public class MapController : MonoBehaviour
             {
                 activeTeam = -1;
                 turnNumber++;
-                Debug.Log("Turn " + turnNumber);
             }
             activeTeam++;
         }
-        Debug.Log("Team " + activeTeam);
+        uiCanvas.GetComponent<UIController>().changeBanner("Team " + activeTeam, 15);
     }
 
     public int getActiveTeam()
@@ -208,7 +205,7 @@ public class MapController : MonoBehaviour
         int rangeMax = targetController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0];
         int rangeMin = activeAbility.getAbilityRanges()[1];
         Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists);
-        if (activeAbility.getSpecialRules().Contains("SelfCast"))
+        if (activeAbility.getTargetType() == targetType.SELF)
         {
             targetController.createAttackMarkers(new List<Vector2Int>() { targetController.getUnitPos() }, MarkerController.Markers.RED);
         }
@@ -230,12 +227,12 @@ public class MapController : MonoBehaviour
         int rangeMax = selectedController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0];
         int rangeMin = activeAbility.getAbilityRanges()[1];
         Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists);
-        if (activeAbility.getSpecialRules().Contains("SelfCast") && targetController.getUnitPos() != selectedController.getUnitPos())
+        if (activeAbility.getTargetType() == targetType.SELF && targetController.getUnitPos() != selectedController.getUnitPos())
         {
             completeAction(cursorController.getSelectedUnit());
             return;
         }
-        if (selectedController.checkActions(activeAbility.getAPCost()) || ((!rangefinder.generateTargetsNotOfTeam(activeTeam).Contains(targetUnit) && !activeAbility.getSpecialRules().Contains("SelfCast")) || (!rangefinder.generateTargetsOfTeam(activeTeam).Contains(targetUnit) && activeAbility.getSpecialRules().Contains("SelfCast"))) || (selectedController.getTeam() == targetController.getTeam() && !activeAbility.getSpecialRules().Contains("SelfCast")))
+        if (selectedController.checkActions(activeAbility.getAPCost()) || (!rangefinder.generateTargetsNotOfTeam(activeTeam).Contains(targetUnit) && activeAbility.getTargetType() != targetType.SELF) || (!rangefinder.generateTargetsOfTeam(activeTeam).Contains(targetUnit) && activeAbility.getTargetType() == targetType.SELF) || (selectedController.getTeam() == targetController.getTeam() && activeAbility.getTargetType() != targetType.SELF))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
@@ -337,18 +334,18 @@ public class MapController : MonoBehaviour
         //TEMPORARILY ASSUMING ALL ATTACKS RANGED
         bool defeated = false;
         int randomChance = Random.Range(0,99);
-        int effectiveHit = (int) (attackerController.getStats()[4] * hitFactor) + activeAbility.getAbilityHitBonus();
+        int effectiveHit = (int) (attackerController.getStats()[5] * hitFactor + activeAbility.getAbilityHitBonus());
         if (attackerController.equippedWeapon)
         {
             effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
         }
-        float rawAvoid = defenderController.getStats()[4];
-        if (defenderController.getStats()[6] < reactThreshold)
+        float rawAvoid = defenderController.getStats()[5];
+        if (defenderController.getStats()[7] < reactThreshold)
         {
             rawAvoid = 0;
         } else
         {
-            rawAvoid += (defenderController.getStats()[6] - reactThreshold);
+            rawAvoid += (defenderController.getStats()[7] - reactThreshold);
         }
         int effectiveAvoid = (int) (rawAvoid * avoidFactor);
         Debug.Log("Attack Hit: " + effectiveHit + " Defend Avoid: " + effectiveAvoid + " Total Chance: " + (effectiveHit - effectiveAvoid));

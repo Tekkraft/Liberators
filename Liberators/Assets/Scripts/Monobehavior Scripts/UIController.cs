@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
 
     public GameObject hpMeter;
     public GameObject apMeter;
+    public GameObject bannerComponent;
 
     GameObject hoveredUnit;
     List<GameObject> allButtons = new List<GameObject>();
@@ -18,7 +19,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        bannerComponent.transform.Translate(new Vector3(0, 300, 0));
     }
 
     // Update is called once per frame
@@ -58,6 +59,7 @@ public class UIController : MonoBehaviour
         return results.Count > 0;
     }
 
+    //Button Handling
     public void drawButtons(List<Ability> allAbilities, GameObject linkedUnit)
     {
         clearButtons();
@@ -115,5 +117,23 @@ public class UIController : MonoBehaviour
         {
             button.GetComponent<Button>().interactable = true;
         }
+    }
+
+    //Banner Handling
+    //Time is in tenth of seconds
+    public void changeBanner(string textMessage, int bannerDuration)
+    {
+        bannerComponent.transform.Translate(new Vector3(0, -300, 0));
+        bannerComponent.GetComponentInChildren<Text>().text = textMessage;
+        StartCoroutine(bannerExit(bannerDuration));
+    }
+
+    IEnumerator bannerExit(int time)
+    {
+        for (int i = 0; i < time; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        bannerComponent.transform.Translate(new Vector3(0, 300, 0));
     }
 }

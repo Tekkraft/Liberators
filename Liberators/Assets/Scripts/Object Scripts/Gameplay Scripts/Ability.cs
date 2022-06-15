@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Ability", menuName = "Ability Object", order = 50)]
 public class Ability : ScriptableObject
 {
-    public enum damageType { PHYSICAL, MAGIC, TRUE }
 
     [SerializeField]
     string abilityName;
@@ -14,7 +13,13 @@ public class Ability : ScriptableObject
     int abilityAP;
 
     [SerializeField]
-    MapController.actionType abilityType;
+    actionType abilityType;
+
+    [SerializeField]
+    bool isMelee;
+
+    [SerializeField]
+    targetType abilityTargetType;
 
     //Attack and Support - Range of targeting. Add to base range if weapon skill.
     //Move - Flat move bonus
@@ -26,7 +31,7 @@ public class Ability : ScriptableObject
     int abilityRangeMin;
 
     [SerializeField]
-    UnitController.MarkerAreas abilityRangeType;
+    markerAreas abilityRangeType;
 
     //Attack and Support - Range of effect
     //Move - Bonus move multiplier out of 100
@@ -39,7 +44,7 @@ public class Ability : ScriptableObject
 
     //Unusued for Move
     [SerializeField]
-    UnitController.MarkerAreas abilityRadiusType;
+    markerAreas abilityRadiusType;
 
     //True Damage = Flat Damage
     [SerializeField]
@@ -77,9 +82,19 @@ public class Ability : ScriptableObject
         return abilityAP;
     }
 
-    public MapController.actionType getAbilityType()
+    public actionType getAbilityType()
     {
         return abilityType;
+    }
+
+    public bool getMelee()
+    {
+        return isMelee;
+    }
+
+    public targetType getTargetType()
+    {
+        return abilityTargetType;
     }
 
     public int[] getAbilityRanges()
@@ -92,12 +107,12 @@ public class Ability : ScriptableObject
         return new int[] { abilityRadiusMax, abilityRadiusMin };
     }
 
-    public UnitController.MarkerAreas getAbilityRangeType()
+    public markerAreas getAbilityRangeType()
     {
         return abilityRangeType;
     }
 
-    public UnitController.MarkerAreas getAbilityRadiusType()
+    public markerAreas getAbilityRadiusType()
     {
         return abilityRadiusType;
     }
