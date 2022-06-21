@@ -14,7 +14,6 @@ public class MapController : MonoBehaviour
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
     Dictionary<int, List<GameObject>> teamLists = new Dictionary<int, List<GameObject>>();
     int eliminatedTeams = 0;
-    List<GameObject> actedUnits = new List<GameObject>();
     int activeTeam = 0;
     int turnNumber = 1;
 
@@ -25,12 +24,13 @@ public class MapController : MonoBehaviour
     public Pathfinder pathfinder;
     public LayerMask lineOfSightLayer;
 
+    public GameObject overlayObject;
+    GameObject activeOverlay;
+
     //Action Handlers
     actionType actionState = actionType.NONE;
     Ability activeAbility;
     GameObject activeUnit;
-
-    public GameObject abilityCalculator;
 
     void Awake()
     {
@@ -54,11 +54,16 @@ public class MapController : MonoBehaviour
         uiCanvas.GetComponent<UIController>().resetButtons();
         completeAction(null);
         List<GameObject> active = teamLists[activeTeam];
-        foreach (GameObject unit in active)
+        for (int i = active.Count - 1; i >= 0; i--)
         {
+            GameObject unit = active[i];
             unit.GetComponent<UnitController>().resetActions();
+            bool dead = unit.GetComponent<UnitController>().endUnitTurn();
+            if (dead)
+            {
+                killUnit(unit);
+            }
         }
-        actedUnits.Clear();
         activeTeam++;
         while (!teamLists.ContainsKey(activeTeam))
         {
@@ -153,6 +158,7 @@ public class MapController : MonoBehaviour
     public void completeAction(GameObject selectedUnit)
     {
         setActionState(null, null);
+        GameObject.Destroy(activeOverlay);
         if (selectedUnit)
         {
             selectedUnit.GetComponent<UnitController>().destroyMarkers();
@@ -202,16 +208,35 @@ public class MapController : MonoBehaviour
         }
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        int rangeMax = targetController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0];
+        int rangeMax = activeAbility.getAbilityRanges()[0];
+        if (!activeAbility.getFixedAbilityRange())
+        {
+            rangeMax += targetController.getEquippedWeapon().getWeaponStats()[3];
+        }
         int rangeMin = activeAbility.getAbilityRanges()[1];
-        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists);
+        Vector2 direction = new Vector2(0, 0);
+        if (activeOverlay)
+        {
+            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
+        }
+        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
         if (activeAbility.getTargetType() == targetType.SELF)
         {
             targetController.createAttackMarkers(new List<Vector2Int>() { targetController.getUnitPos() }, MarkerController.Markers.RED);
         }
         else
         {
-            targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(activeTeam), MarkerController.Markers.RED);
+            if (activeAbility.getTargetType() == targetType.BEAM)
+            {
+                GameObject temp = GameObject.Instantiate(overlayObject, targetController.gameObject.transform);
+                activeOverlay = temp;
+                activeOverlay.GetComponent<OverlayController>().initalize(activeAbility.getAbilityRanges()[0], true);
+
+            }
+            else
+            {
+                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(activeTeam, activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
+            }
         }
         cursorController.setSelectedUnit(unit);
     }
@@ -224,32 +249,29 @@ public class MapController : MonoBehaviour
             return;
         }
         UnitController targetController = targetUnit.GetComponent<UnitController>();
-        int rangeMax = selectedController.getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0];
+        int rangeMax = activeAbility.getAbilityRanges()[0];
+        if (!activeAbility.getFixedAbilityRange())
+        {
+            rangeMax += selectedController.getEquippedWeapon().getWeaponStats()[3];
+        }
         int rangeMin = activeAbility.getAbilityRanges()[1];
-        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists);
-        if (activeAbility.getTargetType() == targetType.SELF && targetController.getUnitPos() != selectedController.getUnitPos())
+        Vector2 direction = new Vector2(0, 0);
+        if (activeOverlay)
+        {
+            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
+        }
+        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
+        if (selectedController.checkActions(activeAbility.getAPCost()) || (activeAbility.getTargetType() == targetType.SELF && targetUnit != cursorController.getSelectedUnit()) || !rangefinder.generateTargetsNotOfTeam(activeTeam, activeAbility.getTargetType() == targetType.BEAM).Contains(targetUnit))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
         }
-        if (selectedController.checkActions(activeAbility.getAPCost()) || (!rangefinder.generateTargetsNotOfTeam(activeTeam).Contains(targetUnit) && activeAbility.getTargetType() != targetType.SELF) || (!rangefinder.generateTargetsOfTeam(activeTeam).Contains(targetUnit) && activeAbility.getTargetType() == targetType.SELF) || (selectedController.getTeam() == targetController.getTeam() && activeAbility.getTargetType() != targetType.SELF))
-        {
-            completeAction(cursorController.getSelectedUnit());
-            return;
-        }
-        GameObject temp = GameObject.Instantiate(abilityCalculator);
-        AbilityCalculatorController calculator = temp.GetComponent<AbilityCalculatorController>();
-        calculator.inintalizeCalculator(cursorController.getSelectedUnit(), activeAbility, cursorController.getGridPos());
-        List<GameObject> hitUnits = calculator.getAffectedUnits();
+        AbilityCalculator calculator = new AbilityCalculator(targetUnit, activeAbility, cursorController.getGridPos(), direction);
+        List<GameObject> hitUnits = calculator.getAffectedUnits(true);
         foreach (GameObject target in hitUnits)
         {
-            if (target.GetComponent<UnitController>().getTeam() == selectedController.getTeam())
-            {
-                continue;
-            }
             attackUnit(cursorController.getSelectedUnit(), target);
         }
-        GameObject.Destroy(temp);
         completeAction(cursorController.getSelectedUnit());
         selectedController.useActions(activeAbility.getAPCost());
     }
@@ -266,10 +288,19 @@ public class MapController : MonoBehaviour
         }
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        int rangeMax = cursorController.getSelectedUnit().GetComponent<UnitController>().getEquippedWeapon().getWeaponStats()[3] + activeAbility.getAbilityRanges()[0];
+        int rangeMax = activeAbility.getAbilityRanges()[0];
+        if (!activeAbility.getFixedAbilityRange())
+        {
+            rangeMax += cursorController.getSelectedUnit().GetComponent<UnitController>().getEquippedWeapon().getWeaponStats()[3];
+        }
         int rangeMin = activeAbility.getAbilityRanges()[1];
-        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists);
-        targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(activeTeam), MarkerController.Markers.GREEN);
+        Vector2 direction = new Vector2(0, 0);
+        if (activeOverlay)
+        {
+            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
+        }
+        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
+        targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(activeTeam, activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.GREEN);
     }
 
     void supportAction(GameObject targetUnit)
@@ -333,8 +364,8 @@ public class MapController : MonoBehaviour
         UnitController defenderController = defender.GetComponent<UnitController>();
         //TEMPORARILY ASSUMING ALL ATTACKS RANGED
         bool defeated = false;
-        int randomChance = Random.Range(0,99);
-        int effectiveHit = (int) (attackerController.getStats()[5] * hitFactor + activeAbility.getAbilityHitBonus());
+        int randomChance = Random.Range(0, 99);
+        int effectiveHit = (int)(attackerController.getStats()[5] * hitFactor + activeAbility.getAbilityHitBonus());
         if (attackerController.equippedWeapon)
         {
             effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
@@ -343,29 +374,29 @@ public class MapController : MonoBehaviour
         if (defenderController.getStats()[7] < reactThreshold)
         {
             rawAvoid = 0;
-        } else
+        }
+        else
         {
             rawAvoid += (defenderController.getStats()[7] - reactThreshold);
         }
-        int effectiveAvoid = (int) (rawAvoid * avoidFactor);
+        int effectiveAvoid = (int)(rawAvoid * avoidFactor);
         Debug.Log("Attack Hit: " + effectiveHit + " Defend Avoid: " + effectiveAvoid + " Total Chance: " + (effectiveHit - effectiveAvoid));
         Debug.Log("Roll: " + randomChance + " Hits: " + (randomChance < effectiveHit - effectiveAvoid));
         if (randomChance < effectiveHit - effectiveAvoid || activeAbility.getTrueHit())
         {
+            if (attackerController.getEquippedWeapon().getWeaponStatus())
+            {
+                defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attacker);
+            }
+            if (activeAbility.getAbilityStatus())
+            {
+                defenderController.inflictStatus(activeAbility.getAbilityStatus(), attacker);
+            }
             defeated = attackerController.attackUnit(defender, activeAbility);
         }
         if (defeated)
         {
-            Vector2Int location = defenderController.getUnitPos();
-            unitList.Remove(location);
-            int team = defenderController.getTeam();
-            teamLists[team].Remove(defender);
-            if (teamLists[team].Count <= 0)
-            {
-                teamLists.Remove(team);
-                eliminatedTeams++;
-            }
-            GameObject.Destroy(defender);
+            killUnit(defender);
         }
     }
 
@@ -373,6 +404,20 @@ public class MapController : MonoBehaviour
     public Dictionary<int, List<GameObject>> getTeamLists()
     {
         return teamLists;
+    }
+
+    public void killUnit(GameObject deadUnit)
+    {
+        Vector2Int location = deadUnit.GetComponent<UnitController>().getUnitPos();
+        unitList.Remove(location);
+        int team = deadUnit.GetComponent<UnitController>().getTeam();
+        teamLists[team].Remove(deadUnit);
+        if (teamLists[team].Count <= 0)
+        {
+            teamLists.Remove(team);
+            eliminatedTeams++;
+        }
+        GameObject.Destroy(deadUnit);
     }
 
     //Stat Math

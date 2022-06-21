@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: SpellAetherLance
   m_EditorClassIdentifier: 
   abilityName: Aether Lance
+  abilitySprite: {fileID: 21300000, guid: 8e1bc8f8e5b2b44ed9a0438768d6af21, type: 3}
   abilityAP: 1
   abilityType: 2
-  abilityRangeMax: 3
+  isMelee: 0
+  abilityTargetType: 5
+  abilityRangeMax: 10
   abilityRangeMin: 0
   abilityRangeType: 0
+  fixedAbilityRange: 1
   abilityRadiusMax: 0
   abilityRadiusMin: 0
   abilityRadiusType: 0
@@ -28,4 +32,7 @@ MonoBehaviour:
   trueHit: 0
   requiresLOS: 1
   requiresAOELOS: 1
+  hasOwnElement: 1
+  abilityElement: 7
+  inflictStatus: {fileID: 0}
   specialRules: []

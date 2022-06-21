@@ -34,7 +34,8 @@ public class UnitController : MonoBehaviour
     public Armor equippedArmor;
     List<Ability> allAbilities = new List<Ability>();
 
-    // Start is called before the first frame update
+    List<StatusInstance> statuses = new List<StatusInstance>();
+
     void Start()
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
@@ -48,12 +49,6 @@ public class UnitController : MonoBehaviour
             allAbilities.AddRange(equippedWeapon.getAbilities());
         }
         allAbilities.AddRange(unitObject.getAbilities());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void createUnit(int[] unitStats, int teamNumber)
@@ -88,6 +83,34 @@ public class UnitController : MonoBehaviour
     public void resetActions()
     {
         actions = maxActions;
+    }
+
+    //Call only at end of team turn
+    public bool endUnitTurn()
+    {
+        for (int i = statuses.Count - 1; i >= 0; i--)
+        {
+            Status linkedStatus = statuses[i].getStatus();
+            int[] healthOverTime = linkedStatus.getHealthOverTime();
+            if (healthOverTime[0] > 0)
+            {
+                bool lethal = takeDamage(healthOverTime[0], damageType.TRUE);
+                if (lethal)
+                {
+                    return true;
+                }
+            }
+            if (healthOverTime[1] > 0)
+            {
+                restoreHealth(healthOverTime[1]);
+            }
+            bool expired = statuses[i].update();
+            if (expired)
+            {
+                statuses.Remove(statuses[i]);
+            }
+        }
+        return false;
     }
 
     public List<Ability> getAbilities()
@@ -157,6 +180,11 @@ public class UnitController : MonoBehaviour
         {
             currentHP = maxHP;
         }
+    }
+
+    public void inflictStatus(Status newStatus, GameObject source)
+    {
+        statuses.Add(new StatusInstance(newStatus, source));
     }
 
     public int[] getStats()

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Jump Move
   m_EditorClassIdentifier: 
   abilityName: Leap
+  abilitySprite: {fileID: 0}
   abilityAP: 2
   abilityType: 1
+  isMelee: 0
+  abilityTargetType: 1
   abilityRangeMax: 2
   abilityRangeMin: 2
   abilityRangeType: 1
@@ -24,4 +27,11 @@ MonoBehaviour:
   abilityDamageSource: 0
   abilityDamageType: 0
   abilityDamage: 0
+  abilityHitBonus: 0
+  trueHit: 0
+  requiresLOS: 0
+  requiresAOELOS: 0
+  hasOwnElement: 0
+  abilityElement: 0
+  inflictStatus: {fileID: 0}
   specialRules: []

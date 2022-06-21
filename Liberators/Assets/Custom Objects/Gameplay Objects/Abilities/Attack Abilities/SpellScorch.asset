@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67a77f5bb98f1433892e2c93c72d91e7, type: 3}
-  m_Name: Basic Melee Ability
+  m_Name: SpellScorch
   m_EditorClassIdentifier: 
-  abilityName: Attack
-  abilitySprite: {fileID: 21300000, guid: f97e95fd29d5a43c6bb6357584f3e914, type: 3}
+  abilityName: Scorch
+  abilitySprite: {fileID: 21300000, guid: 536e70552918546a8b3571aea6c482d6, type: 3}
   abilityAP: 1
   abilityType: 2
-  isMelee: 1
+  isMelee: 0
   abilityTargetType: 2
   abilityRangeMax: 0
   abilityRangeMin: 0
@@ -24,14 +24,14 @@ MonoBehaviour:
   abilityRadiusMax: 0
   abilityRadiusMin: 0
   abilityRadiusType: 0
-  abilityDamageSource: 0
-  abilityDamageType: 0
-  abilityDamage: 0
+  abilityDamageSource: 1
+  abilityDamageType: 1
+  abilityDamage: -100
   abilityHitBonus: 0
-  trueHit: 0
+  trueHit: 1
   requiresLOS: 1
-  requiresAOELOS: 1
-  hasOwnElement: 0
-  abilityElement: 0
-  inflictStatus: {fileID: 0}
+  requiresAOELOS: 0
+  hasOwnElement: 1
+  abilityElement: 11
+  inflictStatus: {fileID: 11400000, guid: 732f05df2eb3742fa96b36ebb1e144d3, type: 2}
   specialRules: []

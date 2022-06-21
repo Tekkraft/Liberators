@@ -13,12 +13,25 @@ MonoBehaviour:
   m_Name: End Turn
   m_EditorClassIdentifier: 
   abilityName: End Turn
+  abilitySprite: {fileID: 0}
   abilityAP: 0
   abilityType: 6
-  abilityRange: 0
+  isMelee: 0
+  abilityTargetType: 8
+  abilityRangeMax: 0
+  abilityRangeMin: 0
   abilityRangeType: 0
-  abilityRadius: 0
+  abilityRadiusMax: 0
+  abilityRadiusMin: 0
   abilityRadiusType: 0
   abilityDamageSource: 0
   abilityDamageType: 0
   abilityDamage: 0
+  abilityHitBonus: 0
+  trueHit: 0
+  requiresLOS: 0
+  requiresAOELOS: 0
+  hasOwnElement: 0
+  abilityElement: 0
+  inflictStatus: {fileID: 0}
+  specialRules: []

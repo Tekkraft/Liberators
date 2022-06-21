@@ -18,6 +18,9 @@ public class Status : ScriptableObject
     bool statusVisible;
 
     //Direct Stat Changes
+    [SerializeField]
+    bool hasStatChanges;
+
     //False here equals percentile
     [SerializeField]
     bool flatStatChange;
@@ -25,8 +28,8 @@ public class Status : ScriptableObject
     [SerializeField]
     int maxHP;
 
-    [SerializeField]
-    int mov;
+    //[SerializeField]
+    int mov = 0;
 
     [SerializeField]
     int str;
@@ -58,22 +61,86 @@ public class Status : ScriptableObject
     int actionPointChange;
 
     [SerializeField]
-    int actionPointSet;
-
-    [SerializeField]
-    bool setAPActive;
+    bool setAPMode;
 
     //Movement Changes
     [SerializeField]
     int movementChange;
 
     [SerializeField]
-    int movementSet;
-
-    [SerializeField]
-    bool setMoveActive;
+    bool setMoveMode;
 
     //Special Properties
     [SerializeField]
     List<string> specialProperties;
+
+    public string getName()
+    {
+        return statusName;
+    }
+
+    public int getDuration()
+    {
+        return statusDuration;
+    }
+
+    public statusType getStatusType()
+    {
+        return statusType;
+    }
+
+    public bool isVisible()
+    {
+        return statusVisible;
+    }
+
+    public bool statChanges()
+    {
+        return hasStatChanges;
+    }
+
+    public bool statChangeType()
+    {
+        return flatStatChange;
+    }
+
+    public int[] getStatChanges()
+    {
+        return new int[] { maxHP, mov, str, pot, acu, fin, rea };
+    }
+
+    public int[] getHealthOverTime()
+    {
+        return new int[] { damageOverTime, healingOverTime };
+    }
+
+    public element getHealthOverTimeElement()
+    {
+        return healthChangeElement;
+    }
+
+    public int getAPChange()
+    {
+        return actionPointChange;
+    }
+
+    public bool getAPMode()
+    {
+        return setAPMode;
+    }
+
+    public int getMoveChange()
+    {
+        return movementChange;
+    }
+
+    public bool getMoveMode()
+    {
+        return setMoveMode;
+    }
+
+    public List<string> getSpecialProperties()
+    {
+        return specialProperties;
+    }
 }

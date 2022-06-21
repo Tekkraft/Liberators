@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Ranged Heal
   m_EditorClassIdentifier: 
   abilityName: Mend
+  abilitySprite: {fileID: 0}
   abilityAP: 1
   abilityType: 3
+  isMelee: 0
+  abilityTargetType: 3
   abilityRangeMax: 5
   abilityRangeMin: 0
   abilityRangeType: 0
@@ -24,5 +27,11 @@ MonoBehaviour:
   abilityDamageSource: 1
   abilityDamageType: 1
   abilityDamage: 10
+  abilityHitBonus: 0
+  trueHit: 0
   requiresLOS: 1
+  requiresAOELOS: 0
+  hasOwnElement: 0
+  abilityElement: 0
+  inflictStatus: {fileID: 0}
   specialRules: []

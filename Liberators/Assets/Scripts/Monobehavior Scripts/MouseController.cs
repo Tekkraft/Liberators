@@ -16,6 +16,7 @@ public class MouseController : MonoBehaviour
     UIController uiController;
 
     Vector2 cursorPosition = new Vector2(0, 0);
+    Vector2 worldPosition = new Vector2(0, 0);
     public Vector2 tilePosition = new Vector2(0, 0);
     Vector2Int gridPosition = new Vector2Int(0, 0);
 
@@ -31,9 +32,9 @@ public class MouseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector2 worldPos = Camera.main.ScreenToWorldPoint(cursorPosition);
-        worldPos = mapController.tileWorldPos(worldPos);
-        tilePosition = new Vector3(worldPos.x, worldPos.y, -1);
+        worldPosition = Camera.main.ScreenToWorldPoint(cursorPosition);
+        Vector2 tilePos = mapController.tileWorldPos(worldPosition);
+        tilePosition = new Vector3(tilePos.x, tilePos.y, -1);
         transform.position = tilePosition;
         gridPosition = mapController.gridTilePos(tilePosition);
         Cursor.visible = mapController.mouseOverCanvas(cursorPosition);
@@ -95,5 +96,10 @@ public class MouseController : MonoBehaviour
     public Vector2Int getGridPos()
     {
         return gridPosition;
+    }
+
+    public Vector2 getWorldPos()
+    {
+        return worldPosition;
     }
 }

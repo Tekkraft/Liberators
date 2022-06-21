@@ -13,20 +13,25 @@ MonoBehaviour:
   m_Name: SpellShadowPulse
   m_EditorClassIdentifier: 
   abilityName: Shadow Pulse
+  abilitySprite: {fileID: 21300000, guid: 2e1ccad23d6c74836b0a6758433dfab4, type: 3}
   abilityAP: 3
   abilityType: 2
+  isMelee: 0
+  abilityTargetType: 7
   abilityRangeMax: 0
   abilityRangeMin: 0
   abilityRangeType: 0
   abilityRadiusMax: 200
-  abilityRadiusMin: 1
+  abilityRadiusMin: 0
   abilityRadiusType: 0
   abilityDamageSource: 1
   abilityDamageType: 1
-  abilityDamage: 1
+  abilityDamage: 0
   abilityHitBonus: 0
   trueHit: 1
   requiresLOS: 0
   requiresAOELOS: 0
-  specialRules:
-  - SelfCast
+  hasOwnElement: 1
+  abilityElement: 10
+  inflictStatus: {fileID: 0}
+  specialRules: []

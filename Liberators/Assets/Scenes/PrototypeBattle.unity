@@ -3288,7 +3288,7 @@ MonoBehaviour:
   lineOfSightLayer:
     serializedVersion: 2
     m_Bits: 128
-  abilityCalculator: {fileID: 7074314389454194127, guid: 0ac49b2fd4b65461f8b7c09d9028eb0f, type: 3}
+  overlayObject: {fileID: 6635731327509979368, guid: 83233230f4f124990b89f85d6e170750, type: 3}
 --- !u!483693784 &2107954707
 TilemapRenderer:
   m_ObjectHideFlags: 0

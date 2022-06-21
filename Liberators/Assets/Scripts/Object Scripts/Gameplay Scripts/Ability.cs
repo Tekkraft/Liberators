@@ -5,9 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Ability", menuName = "Ability Object", order = 50)]
 public class Ability : ScriptableObject
 {
-
     [SerializeField]
     string abilityName;
+
+    [SerializeField]
+    Sprite abilitySprite;
 
     [SerializeField]
     int abilityAP;
@@ -32,6 +34,9 @@ public class Ability : ScriptableObject
 
     [SerializeField]
     markerAreas abilityRangeType;
+
+    [SerializeField]
+    bool fixedAbilityRange;
 
     //Attack and Support - Range of effect
     //Move - Bonus move multiplier out of 100
@@ -68,13 +73,27 @@ public class Ability : ScriptableObject
     [SerializeField]
     bool requiresAOELOS;
 
-    //Special rules = Line, Damage Ramp, etc.
+    [SerializeField]
+    bool hasOwnElement = true;
+
+    [SerializeField]
+    element abilityElement;
+
+    [SerializeField]
+    Status inflictStatus;
+
+    //Special rules = Damage Ramp, etc.
     [SerializeField]
     List<string> specialRules;
 
     public string getName()
     {
         return abilityName;
+    }
+
+    public Sprite getSprite()
+    {
+        return abilitySprite;
     }
 
     public int getAPCost()
@@ -100,6 +119,11 @@ public class Ability : ScriptableObject
     public int[] getAbilityRanges()
     {
         return new int[] { abilityRangeMax, abilityRangeMin };
+    }
+
+    public bool getFixedAbilityRange()
+    {
+        return fixedAbilityRange;
     }
 
     public int[] getAbilityRadii()
@@ -150,6 +174,21 @@ public class Ability : ScriptableObject
     public bool getAOELOSRequirement()
     {
         return requiresAOELOS;
+    }
+
+    public bool hasElement()
+    {
+        return hasOwnElement;
+    }
+
+    public element getElement()
+    {
+        return abilityElement;
+    }
+
+    public Status getAbilityStatus()
+    {
+        return inflictStatus;
     }
 
     public List<string> getSpecialRules()

@@ -28,16 +28,15 @@ public class ButtonController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void setupButton (Ability linkedAbility, GameObject linkedUnit)
     {
         this.linkedUnit = linkedUnit;
         this.linkedAbility = linkedAbility;
+        if (linkedAbility.getSprite())
+        {
+            gameObject.transform.GetChild(0).GetComponent<Image>().sprite = linkedAbility.getSprite();
+            return;
+        }
         linkedAction = linkedAbility.getAbilityType();
         switch (linkedAction)
         {

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: SpellAetherBolt
   m_EditorClassIdentifier: 
   abilityName: Aether Burst
+  abilitySprite: {fileID: 21300000, guid: 407869f4c7c214623b1809562a148356, type: 3}
   abilityAP: 1
   abilityType: 2
+  isMelee: 0
+  abilityTargetType: 2
   abilityRangeMax: 0
   abilityRangeMin: 0
   abilityRangeType: 0
@@ -28,4 +31,7 @@ MonoBehaviour:
   trueHit: 0
   requiresLOS: 1
   requiresAOELOS: 1
+  hasOwnElement: 1
+  abilityElement: 7
+  inflictStatus: {fileID: 0}
   specialRules: []

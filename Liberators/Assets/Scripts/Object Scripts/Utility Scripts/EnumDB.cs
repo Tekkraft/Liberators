@@ -20,3 +20,5 @@ public enum markerAreas { RADIAL, BOX, CROSS };
 public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC, WAIT, END };
 
 public enum statusType { BUFF, DEBUFF, NONE}
+
+public enum WeaponType { MELEE, GUN, FOCUS, SPECIAL };
