@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
-
     //Control Variables
     public GameObject marker;
     Vector2Int unitGridPosition;
@@ -14,6 +13,7 @@ public class UnitController : MonoBehaviour
     public int teamNumber = -1;
 
     public Unit unitObject;
+    string unitName;
     int mov;
     int maxHP;
     int currentHP;
@@ -43,6 +43,7 @@ public class UnitController : MonoBehaviour
         unitGridPosition = mapController.gridWorldPos(transform.position);
         mapController.addUnit(this.gameObject);
         createUnit(unitObject.getStats(), teamNumber);
+        this.unitName = unitObject.getUnitName();
         allAbilities.Add(basicMovement);
         if (equippedWeapon)
         {
@@ -187,6 +188,11 @@ public class UnitController : MonoBehaviour
         statuses.Add(new StatusInstance(newStatus, source));
     }
 
+    public string getName()
+    {
+        return unitName;
+    }
+
     public int[] getStats()
     {
         return new int[] { mov, maxHP, currentHP, str, pot, acu, fin, rea };
@@ -200,9 +206,9 @@ public class UnitController : MonoBehaviour
     public bool moveUnit(Vector2 destination, Ability moveAbility)
     {
         Vector2Int destinationTile = mapController.gridTilePos(destination);
-        mapController.pathfinder.changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getAbilityRanges()[1]);
-        mapController.pathfinder.calculate();
-        if (mapController.pathfinder.checkCoords(destinationTile))
+        mapController.getPathfinder().changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getAbilityRanges()[1]);
+        mapController.getPathfinder().calculate();
+        if (mapController.getPathfinder().checkCoords(destinationTile))
         {
             setUnitPos(destination);
             return true;
@@ -224,9 +230,9 @@ public class UnitController : MonoBehaviour
 
     public void createMoveMarkers(int maxRange, int minRange, MarkerController.Markers color)
     {
-        mapController.pathfinder.changeParameters(unitGridPosition, maxRange, minRange);
-        mapController.pathfinder.calculate();
-        List<Vector2Int> coords = mapController.pathfinder.getValidCoords();
+        mapController.getPathfinder().changeParameters(unitGridPosition, maxRange, minRange);
+        mapController.getPathfinder().calculate();
+        List<Vector2Int> coords = mapController.getPathfinder().getValidCoords();
         foreach (Vector2Int gridPos in coords)
         {
             GameObject temp = GameObject.Instantiate(marker);

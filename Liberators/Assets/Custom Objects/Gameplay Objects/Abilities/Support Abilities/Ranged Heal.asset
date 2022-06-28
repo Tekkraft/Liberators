@@ -21,11 +21,13 @@ MonoBehaviour:
   abilityRangeMax: 5
   abilityRangeMin: 0
   abilityRangeType: 0
+  fixedAbilityRange: 0
   abilityRadiusMax: 1
   abilityRadiusMin: 0
   abilityRadiusType: 0
   abilityDamageSource: 1
   abilityDamageType: 1
+  damagingAbility: 1
   abilityDamage: 10
   abilityHitBonus: 0
   trueHit: 0

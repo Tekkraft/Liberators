@@ -27,6 +27,7 @@ MonoBehaviour:
   abilityRadiusType: 0
   abilityDamageSource: 1
   abilityDamageType: 1
+  damagingAbility: 1
   abilityDamage: 5
   abilityHitBonus: -10
   trueHit: 0

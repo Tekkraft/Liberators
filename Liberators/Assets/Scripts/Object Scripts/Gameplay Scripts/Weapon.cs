@@ -9,7 +9,7 @@ public class Weapon : ScriptableObject
     string weaponName;
 
     [SerializeField]
-    WeaponType weaponType;
+    weaponType weaponType;
 
     [SerializeField]
     int weaponStrength;
@@ -37,7 +37,7 @@ public class Weapon : ScriptableObject
         return weaponName;
     }
 
-    public WeaponType getWeaponType()
+    public weaponType getWeaponType()
     {
         return weaponType;
     }

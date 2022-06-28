@@ -59,6 +59,9 @@ public class Ability : ScriptableObject
     damageType abilityDamageType;
 
     [SerializeField]
+    bool damagingAbility = true;
+
+    [SerializeField]
     int abilityDamage;
 
     [SerializeField]
@@ -149,6 +152,11 @@ public class Ability : ScriptableObject
     public damageType getAbilityDamageType()
     {
         return abilityDamageType;
+    }
+
+    public bool getDamagingAbility()
+    {
+        return damagingAbility;
     }
 
     public int getAbilityDamage()

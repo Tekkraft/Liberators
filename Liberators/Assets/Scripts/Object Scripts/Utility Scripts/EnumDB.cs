@@ -19,6 +19,10 @@ public enum markerAreas { RADIAL, BOX, CROSS };
 
 public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC, WAIT, END };
 
-public enum statusType { BUFF, DEBUFF, NONE}
+public enum statusType { BUFF, DEBUFF, NONE }
 
-public enum WeaponType { MELEE, GUN, FOCUS, SPECIAL };
+public enum weaponType { MELEE, GUN, FOCUS, SPECIAL };
+
+public enum actionPhase { INACTIVE, PREPARE, PREVIEW, EXECUTE };
+
+public enum turnPhase { START, MAIN, END };

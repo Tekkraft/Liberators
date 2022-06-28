@@ -10,9 +10,11 @@ public class MapController : MonoBehaviour
     public static float hitFactor = 2;
     public static float avoidFactor = 1;
 
+    //Main Variabless
     Grid mainGrid;
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
     Dictionary<int, List<GameObject>> teamLists = new Dictionary<int, List<GameObject>>();
+    List<List<int>> teamAlignments = new List<List<int>>();
     int eliminatedTeams = 0;
     int activeTeam = 0;
     int turnNumber = 1;
@@ -21,16 +23,24 @@ public class MapController : MonoBehaviour
     GameObject cursor;
     MouseController cursorController;
     Tilemap mainTilemap;
-    public Pathfinder pathfinder;
-    public LayerMask lineOfSightLayer;
+    Pathfinder pathfinder;
 
-    public GameObject overlayObject;
     GameObject activeOverlay;
+
+    GameObject activePreview;
+
+    turnPhase turnPhase = turnPhase.START;
+    actionPhase actionPhase = actionPhase.INACTIVE;
 
     //Action Handlers
     actionType actionState = actionType.NONE;
     Ability activeAbility;
     GameObject activeUnit;
+
+    //Public Objects
+    public LayerMask lineOfSightLayer;
+    public GameObject overlayObject;
+    public MapData mapData;
 
     void Awake()
     {
@@ -40,17 +50,20 @@ public class MapController : MonoBehaviour
         cursorController = cursor.GetComponent<MouseController>();
         mainTilemap = mainGrid.GetComponentInChildren<Tilemap>();
         pathfinder = new Pathfinder(new Vector2Int(0, 0), 0, 0, mainTilemap);
+        teamAlignments = mapData.getTeamAlignments();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        uiCanvas.GetComponent<UIController>().changeBanner("Team " + activeTeam, 15);
+        turnPhase = turnPhase.START;
+        StartCoroutine(bannerTimer());
     }
 
     //Turn Management
     void nextPhase()
     {
+        turnPhase = turnPhase.END;
         uiCanvas.GetComponent<UIController>().resetButtons();
         completeAction(null);
         List<GameObject> active = teamLists[activeTeam];
@@ -74,12 +87,34 @@ public class MapController : MonoBehaviour
             }
             activeTeam++;
         }
-        uiCanvas.GetComponent<UIController>().changeBanner("Team " + activeTeam, 15);
+        turnPhase = turnPhase.START;
+        StartCoroutine(bannerTimer());
     }
 
     public int getActiveTeam()
     {
         return activeTeam;
+    }
+
+    IEnumerator bannerTimer()
+    {
+        int bannerTime = 15;
+        uiCanvas.GetComponent<UIController>().changeBanner("Team " + activeTeam, bannerTime);
+        for (int i = 0; i < bannerTime; i++)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        turnPhase = turnPhase.MAIN;
+    }
+
+    public turnPhase getTurnPhase()
+    {
+        return turnPhase;
+    }
+
+    public actionPhase getActionPhase()
+    {
+        return actionPhase;
     }
 
     //Canvas Management
@@ -158,6 +193,7 @@ public class MapController : MonoBehaviour
     public void completeAction(GameObject selectedUnit)
     {
         setActionState(null, null);
+        actionPhase = actionPhase.INACTIVE;
         GameObject.Destroy(activeOverlay);
         if (selectedUnit)
         {
@@ -206,6 +242,7 @@ public class MapController : MonoBehaviour
         {
             return;
         }
+        actionPhase = actionPhase.PREPARE;
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
         int rangeMax = activeAbility.getAbilityRanges()[0];
@@ -219,7 +256,7 @@ public class MapController : MonoBehaviour
         {
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
-        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
         if (activeAbility.getTargetType() == targetType.SELF)
         {
             targetController.createAttackMarkers(new List<Vector2Int>() { targetController.getUnitPos() }, MarkerController.Markers.RED);
@@ -235,38 +272,48 @@ public class MapController : MonoBehaviour
             }
             else
             {
-                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(activeTeam, activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
+                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(cursorController.getSelectedUnit().GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
             }
         }
         cursorController.setSelectedUnit(unit);
     }
 
-    void attackAction(GameObject targetUnit)
+    void attackPreview(GameObject targetUnit)
     {
-        UnitController selectedController = cursorController.getSelectedUnit().GetComponent<UnitController>();
-        if (!activeAbility || !targetUnit)
+        if (!targetUnit || !activeAbility)
         {
             return;
         }
+        actionPhase = actionPhase.PREPARE;
         UnitController targetController = targetUnit.GetComponent<UnitController>();
-        int rangeMax = activeAbility.getAbilityRanges()[0];
-        if (!activeAbility.getFixedAbilityRange())
+        GameObject selectedUnit = cursorController.getSelectedUnit();
+
+    }
+
+    void attackAction(GameObject targetUnit)
+    {
+        UnitController selectedController = cursorController.getSelectedUnit().GetComponent<UnitController>();
+        if (!activeAbility)
         {
-            rangeMax += selectedController.getEquippedWeapon().getWeaponStats()[3];
+            completeAction(cursorController.getSelectedUnit());
+            return;
         }
-        int rangeMin = activeAbility.getAbilityRanges()[1];
         Vector2 direction = new Vector2(0, 0);
         if (activeOverlay)
         {
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
-        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
-        if (selectedController.checkActions(activeAbility.getAPCost()) || (activeAbility.getTargetType() == targetType.SELF && targetUnit != cursorController.getSelectedUnit()) || !rangefinder.generateTargetsNotOfTeam(activeTeam, activeAbility.getTargetType() == targetType.BEAM).Contains(targetUnit))
+        if ((activeAbility.getTargetType() == targetType.UNIT || activeAbility.getTargetType() == targetType.TARGET || activeAbility.getTargetType() == targetType.ALLY) && !targetUnit)
         {
             completeAction(cursorController.getSelectedUnit());
             return;
         }
-        AbilityCalculator calculator = new AbilityCalculator(targetUnit, activeAbility, cursorController.getGridPos(), direction);
+        if (selectedController.checkActions(activeAbility.getAPCost()) || (activeAbility.getTargetType() == targetType.SELF && targetUnit != cursorController.getSelectedUnit()))
+        {
+            completeAction(cursorController.getSelectedUnit());
+            return;
+        }
+        AbilityCalculator calculator = new AbilityCalculator(getNonAlignedTeams(activeTeam), activeAbility, cursorController.getGridPos(), direction);
         List<GameObject> hitUnits = calculator.getAffectedUnits(true);
         foreach (GameObject target in hitUnits)
         {
@@ -299,8 +346,8 @@ public class MapController : MonoBehaviour
         {
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
-        Rangefinder rangefinder = new Rangefinder(cursorController.getSelectedUnit(), rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
-        targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(activeTeam, activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.GREEN);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
+        targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(cursorController.getSelectedUnit().GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.GREEN);
     }
 
     void supportAction(GameObject targetUnit)
@@ -362,22 +409,32 @@ public class MapController : MonoBehaviour
     {
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
-        //TEMPORARILY ASSUMING ALL ATTACKS RANGED
         bool defeated = false;
         int randomChance = Random.Range(0, 99);
         int effectiveHit = (int)(attackerController.getStats()[5] * hitFactor + activeAbility.getAbilityHitBonus());
+        if (activeAbility.getMelee())
+        {
+            effectiveHit = (int)(attackerController.getStats()[6] * hitFactor + activeAbility.getAbilityHitBonus());
+        }
         if (attackerController.equippedWeapon)
         {
             effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
         }
-        float rawAvoid = defenderController.getStats()[5];
-        if (defenderController.getStats()[7] < reactThreshold)
+        float rawAvoid;
+        if (!activeAbility.getMelee())
         {
-            rawAvoid = 0;
+            if (defenderController.getStats()[7] < reactThreshold)
+            {
+                rawAvoid = 0;
+            }
+            else
+            {
+                rawAvoid = defenderController.getStats()[5] + (defenderController.getStats()[7] - reactThreshold);
+            }
         }
         else
         {
-            rawAvoid += (defenderController.getStats()[7] - reactThreshold);
+            rawAvoid = defenderController.getStats()[6] + defenderController.getStats()[7];
         }
         int effectiveAvoid = (int)(rawAvoid * avoidFactor);
         Debug.Log("Attack Hit: " + effectiveHit + " Defend Avoid: " + effectiveAvoid + " Total Chance: " + (effectiveHit - effectiveAvoid));
@@ -392,7 +449,10 @@ public class MapController : MonoBehaviour
             {
                 defenderController.inflictStatus(activeAbility.getAbilityStatus(), attacker);
             }
-            defeated = attackerController.attackUnit(defender, activeAbility);
+            if (activeAbility.getDamagingAbility())
+            {
+                defeated = attackerController.attackUnit(defender, activeAbility);
+            }
         }
         if (defeated)
         {
@@ -420,6 +480,36 @@ public class MapController : MonoBehaviour
         GameObject.Destroy(deadUnit);
     }
 
+    List<int> getAlignedTeams(int team)
+    {
+        foreach (List<int> temp in teamAlignments)
+        {
+            if (temp.Contains(team))
+            {
+                return temp;
+            }
+        }
+        return new List<int>();
+    }
+
+    List<int> getNonAlignedTeams(int team)
+    {
+        List<int> unalignedTeams = new List<int>();
+        foreach (List<int> temp in teamAlignments)
+        {
+            if (!temp.Contains(team))
+            {
+                unalignedTeams.AddRange(temp);
+            }
+        }
+        return unalignedTeams;
+    }
+
+    public Pathfinder getPathfinder()
+    {
+        return pathfinder;
+    }
+
     //Stat Math
     public int finalRange(int baseRange, Ability ability)
     {
@@ -445,6 +535,11 @@ public class MapController : MonoBehaviour
     }
 
     public Vector2 tileGridPos(Vector2Int gridPos)
+    {
+        return new Vector2((float)gridPos.x - mainGrid.cellSize.x / 2, (float)gridPos.y - mainGrid.cellSize.y / 2);
+    }
+
+    public Vector2 tileGridPos(Vector2 gridPos)
     {
         return new Vector2((float)gridPos.x - mainGrid.cellSize.x / 2, (float)gridPos.y - mainGrid.cellSize.y / 2);
     }

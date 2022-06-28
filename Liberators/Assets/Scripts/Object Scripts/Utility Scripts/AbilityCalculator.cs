@@ -6,26 +6,20 @@ public class AbilityCalculator
 {
     Grid mainGrid;
     MapController mapController;
-    Canvas uiCanvas;
     Vector2Int calculatorPosition;
     Vector2 targetDirection;
+    List<int> targetTeams;
 
-    GameObject linkedUnit;
-    UnitController linkedController;
     Ability linkedAbility;
 
-    List<GameObject> hitTargets;
-
-    public AbilityCalculator(GameObject unit, Ability ability, Vector2Int calcPos, Vector2 targetDirection)
+    public AbilityCalculator(List<int> targetTeams, Ability ability, Vector2Int calcPos, Vector2 targetDirection)
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
-        uiCanvas = GameObject.FindObjectOfType<Canvas>();
-        linkedUnit = unit;
-        linkedController = linkedUnit.GetComponent<UnitController>();
         linkedAbility = ability;
         calculatorPosition = calcPos;
         this.targetDirection = targetDirection;
+        this.targetTeams = targetTeams;
     }
 
     public List<GameObject> getAffectedUnits(bool checkAOE)
@@ -53,8 +47,8 @@ public class AbilityCalculator
     {
         int rangeMax = linkedAbility.getAbilityRadii()[0];
         int rangeMin = linkedAbility.getAbilityRadii()[1];
-        Rangefinder rangefinder = new Rangefinder(linkedUnit, rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
-        List<GameObject> hitUnits = rangefinder.generateTargetsNotOfTeam(linkedUnit.GetComponent<UnitController>().getTeam(), false);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
+        List<GameObject> hitUnits = rangefinder.generateTargetsNotOfTeam(calculatorPosition, targetTeams, false);
         return hitUnits;
     }
 
@@ -62,8 +56,9 @@ public class AbilityCalculator
     {
         int rangeMax = linkedAbility.getAbilityRadii()[0];
         int rangeMin = linkedAbility.getAbilityRadii()[1];
-        Rangefinder rangefinder = new Rangefinder(linkedUnit, rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
-        List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(linkedUnit.GetComponent<UnitController>().getTeam(), false);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
+        List<GameObject> hitUnits;
+        hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, false);
         return hitUnits;
     }
 
@@ -71,8 +66,8 @@ public class AbilityCalculator
     {
         int rangeMax = linkedAbility.getAbilityRadii()[0];
         int rangeMin = linkedAbility.getAbilityRadii()[1];
-        Rangefinder rangefinder = new Rangefinder(linkedUnit, rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
-        List<GameObject> hitUnits = rangefinder.generateTargetsNotOfTeam(linkedUnit.GetComponent<UnitController>().getTeam(), true);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
+        List<GameObject> hitUnits = rangefinder.generateTargetsNotOfTeam(calculatorPosition, targetTeams, true);
         return hitUnits;
     }
 }

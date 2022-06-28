@@ -12,6 +12,10 @@ public class UIController : MonoBehaviour
     public GameObject hpMeter;
     public GameObject apMeter;
     public GameObject bannerComponent;
+    public GameObject combatPreview;
+
+    GameObject activeBanner;
+    GameObject activePreview;
 
     GameObject hoveredUnit;
     List<GameObject> allButtons = new List<GameObject>();
@@ -123,8 +127,9 @@ public class UIController : MonoBehaviour
     //Time is in tenth of seconds
     public void changeBanner(string textMessage, int bannerDuration)
     {
-        bannerComponent.transform.Translate(new Vector3(0, -300, 0));
-        bannerComponent.GetComponentInChildren<Text>().text = textMessage;
+        activeBanner = GameObject.Instantiate(bannerComponent, transform);
+        activeBanner.transform.localPosition = new Vector3(0, 0, 0);
+        activeBanner.GetComponentInChildren<Text>().text = textMessage;
         StartCoroutine(bannerExit(bannerDuration));
     }
 
@@ -134,6 +139,14 @@ public class UIController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
         }
-        bannerComponent.transform.Translate(new Vector3(0, 300, 0));
+        GameObject.Destroy(activeBanner);
+    }
+
+    //Preview Handling
+    public GameObject displayPreview(GameObject attacker, GameObject defender, Ability activeAbility, int playerHit, int playerDamage, int playerCrit)
+    {
+        activePreview = GameObject.Instantiate(combatPreview, transform);
+        activePreview.GetComponent<PreviewController>().setData(attacker, defender, activeAbility, playerHit, playerDamage, playerCrit);
+        return activePreview;
     }
 }
