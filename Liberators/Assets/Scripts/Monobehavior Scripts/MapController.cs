@@ -268,11 +268,11 @@ public class MapController : MonoBehaviour
                 GameObject temp = GameObject.Instantiate(overlayObject, targetController.gameObject.transform);
                 activeOverlay = temp;
                 activeOverlay.GetComponent<OverlayController>().initalize(activeAbility.getAbilityRanges()[0], true);
-
             }
             else
             {
-                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(cursorController.getSelectedUnit().GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
+                Debug.Log(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), activeAbility.getTargetType() == targetType.BEAM).Count);
+                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
             }
         }
         cursorController.setSelectedUnit(unit);

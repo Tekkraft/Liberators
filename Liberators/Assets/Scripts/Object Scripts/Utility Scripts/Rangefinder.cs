@@ -112,12 +112,14 @@ public class Rangefinder
         else
         {
             targetCoordsList = validTargetCoords(originCoords, maxRange, minRange, requiresLOS);
+            Debug.Log("GEN" + targetCoordsList.Count);
         }
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
             GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
-            if (targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
+            Debug.Log(temp.GetComponent<UnitController>().getTeam() + " " + temp.name);
+            if (!targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
             {
                 validTargets.Add(targetCoordsList[i]);
             }
@@ -136,7 +138,7 @@ public class Rangefinder
         }
         for (int i = unitList.Count - 1; i >= 0; i--)
         {
-            if ((losRequired && !checkLineOfSight(originCoords, unitList[i].GetComponent<UnitController>().getUnitPos())) || !inRange(mapController.tileGridPos(originCoords), mapController.tileGridPos(unitList[i].GetComponent<UnitController>().getUnitPos()), maxRange, minRange))
+            if ((losRequired && checkLineCollision(originCoords, unitList[i].GetComponent<UnitController>().getUnitPos())) || !inRange(mapController.tileGridPos(originCoords), mapController.tileGridPos(unitList[i].GetComponent<UnitController>().getUnitPos()), maxRange, minRange))
             {
                 unitList.Remove(unitList[i]);
             }
@@ -178,21 +180,13 @@ public class Rangefinder
     }
 
     //Line of Sight Checks
-    public bool checkLineOfSight(Vector2 source, Vector2 target)
+    public bool checkLineCollision(Vector2 originPos, Vector2 targetPos)
     {
-        return !checkLineCollision(source, target);
-    }
-
-    public bool checkLineOfSightAOE(Vector2 source, GameObject target)
-    {
-        Vector2 targetCenter = mapController.tileGridPos(target.GetComponent<UnitController>().getUnitPos());
-        return !checkLineCollision(source, targetCenter);
-    }
-
-    public bool checkLineCollision(Vector2 origin, Vector2 target)
-    {
+        Vector2 origin = mapController.tileGridPos(originPos);
+        Vector2 target = mapController.tileGridPos(targetPos);
         Vector2 direction = target - origin;
         RaycastHit2D hit = Physics2D.Raycast(origin, direction, direction.magnitude, mapController.lineOfSightLayer);
+        Debug.DrawRay(origin, direction, Color.white, 100);
         return hit.collider != null;
     }
 }

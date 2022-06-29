@@ -3134,6 +3134,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   overlayObject: {fileID: 6635731327509979368, guid: 83233230f4f124990b89f85d6e170750, type: 3}
+  mapData: {fileID: 11400000, guid: 7e7c4af863ce9419290f33264ea3e590, type: 2}
 --- !u!483693784 &2107954707
 TilemapRenderer:
   m_ObjectHideFlags: 0
