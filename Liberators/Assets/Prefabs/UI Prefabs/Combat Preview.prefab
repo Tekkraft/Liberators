@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8954aed50bf498380ee8102f1ad344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: {fileID: 0}
-  abilityName: {fileID: 0}
+  unitName: {fileID: 8194046758269291506}
+  abilityName: {fileID: 8194046757822827506}
   playerHit: {fileID: 8194046757805326814}
   playerDamage: {fileID: 8194046758871223874}
   playerCrit: {fileID: 8194046758126225504}
@@ -401,10 +401,10 @@ RectTransform:
   m_Father: {fileID: 8194046756840304676}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -70}
-  m_SizeDelta: {x: 160, y: 40}
+  m_SizeDelta: {x: -20, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8194046757822827503
 CanvasRenderer:

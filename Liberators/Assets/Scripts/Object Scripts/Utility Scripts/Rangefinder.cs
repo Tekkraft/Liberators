@@ -112,13 +112,11 @@ public class Rangefinder
         else
         {
             targetCoordsList = validTargetCoords(originCoords, maxRange, minRange, requiresLOS);
-            Debug.Log("GEN" + targetCoordsList.Count);
         }
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
             GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
-            Debug.Log(temp.GetComponent<UnitController>().getTeam() + " " + temp.name);
             if (!targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
             {
                 validTargets.Add(targetCoordsList[i]);
@@ -186,7 +184,6 @@ public class Rangefinder
         Vector2 target = mapController.tileGridPos(targetPos);
         Vector2 direction = target - origin;
         RaycastHit2D hit = Physics2D.Raycast(origin, direction, direction.magnitude, mapController.lineOfSightLayer);
-        Debug.DrawRay(origin, direction, Color.white, 100);
         return hit.collider != null;
     }
 }

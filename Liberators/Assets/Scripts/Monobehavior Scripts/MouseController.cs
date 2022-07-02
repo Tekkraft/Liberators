@@ -19,6 +19,7 @@ public class MouseController : MonoBehaviour
     Vector2 worldPosition = new Vector2(0, 0);
     public Vector2 tilePosition = new Vector2(0, 0);
     Vector2Int gridPosition = new Vector2Int(0, 0);
+    GameObject activeHover;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,25 @@ public class MouseController : MonoBehaviour
         Cursor.visible = mapController.mouseOverCanvas(cursorPosition);
         uiController.unHoverUnit();
         uiController.hoverUnit(mapController.getUnitFromCoords(gridPosition));
+
+        if (mapController.getActionPhase() == actionPhase.PREPARE)
+        {
+            GameObject hoveredUnit = mapController.getUnitFromCoords(gridPosition);
+            activeHover = hoveredUnit;
+            if (hoveredUnit && !uiController.hasPreview())
+            {
+                attackPreview(selectedUnit, hoveredUnit, mapController.getActiveAbility());
+            }
+            else if (hoveredUnit && !hoveredUnit.Equals(activeHover))
+            {
+                uiController.clearPreview();
+                attackPreview(selectedUnit, hoveredUnit, mapController.getActiveAbility());
+            }
+            else if (!hoveredUnit)
+            {
+                uiController.clearPreview();
+            }
+        }
     }
 
     //Input Handling
@@ -50,7 +70,6 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
-        actionType action = mapController.getActionState();
         GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
         if (unitSelected)
         {
@@ -102,4 +121,31 @@ public class MouseController : MonoBehaviour
     {
         return worldPosition;
     }
+
+    public bool mouseOnLeft()
+    {
+        return (cursorPosition.x / Screen.width) < 0.5;
+    }
+
+    public void attackPreview(GameObject attacker, GameObject defender, Ability activeAbility)
+    {
+        UnitController attackerController = attacker.GetComponent<UnitController>();
+        UnitController defenderController = defender.GetComponent<UnitController>();
+        int[] hitStats = mapController.getHitStats(attackerController, defenderController);
+        GameObject activePreview = uiCanvas.GetComponent<UIController>().displayPreview(attacker, defender, activeAbility, hitStats[0], attackerController.getExpectedDamage(defenderController, activeAbility), hitStats[1]);
+        RectTransform previewTransform = activePreview.GetComponent<RectTransform>();
+        if (!mouseOnLeft())
+        {
+            previewTransform.anchorMax = new Vector2(0, 0.5f);
+            previewTransform.anchorMin = new Vector2(0, 0.5f);
+            previewTransform.anchoredPosition = new Vector2(previewTransform.sizeDelta.x / 2 + 20f, 0);
+        }
+        else
+        {
+            previewTransform.anchorMax = new Vector2(1, 0.5f);
+            previewTransform.anchorMin = new Vector2(1, 0.5f);
+            previewTransform.anchoredPosition = new Vector2(-(previewTransform.sizeDelta.x / 2 + 20f), 0);
+        }
+    }
+
 }

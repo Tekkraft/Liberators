@@ -9,6 +9,7 @@ public class MapController : MonoBehaviour
     public static int reactThreshold = 10; //Minimum threshold for evasion bonuses for ranged attacks. No threshold for melee attacks.
     public static float hitFactor = 2;
     public static float avoidFactor = 1;
+    public static float critFactor = 2;
 
     //Main Variabless
     Grid mainGrid;
@@ -26,8 +27,6 @@ public class MapController : MonoBehaviour
     Pathfinder pathfinder;
 
     GameObject activeOverlay;
-
-    GameObject activePreview;
 
     turnPhase turnPhase = turnPhase.START;
     actionPhase actionPhase = actionPhase.INACTIVE;
@@ -152,7 +151,7 @@ public class MapController : MonoBehaviour
         return actionState;
     }
 
-    void actionSetup(GameObject targetUnit)
+    public void actionSetup(GameObject targetUnit)
     {
         switch (actionState)
         {
@@ -195,6 +194,7 @@ public class MapController : MonoBehaviour
         setActionState(null, null);
         actionPhase = actionPhase.INACTIVE;
         GameObject.Destroy(activeOverlay);
+        uiCanvas.GetComponent<UIController>().clearPreview();
         if (selectedUnit)
         {
             selectedUnit.GetComponent<UnitController>().destroyMarkers();
@@ -210,7 +210,7 @@ public class MapController : MonoBehaviour
         uiCanvas.GetComponent<UIController>().clearButtons();
     }
 
-    public void movePrepare(GameObject unit)
+    void movePrepare(GameObject unit)
     {
         if (!unit)
         {
@@ -236,7 +236,7 @@ public class MapController : MonoBehaviour
         }
     }
 
-    public void attackPrepare(GameObject unit)
+    void attackPrepare(GameObject unit)
     {
         if (!unit || !activeAbility)
         {
@@ -271,23 +271,10 @@ public class MapController : MonoBehaviour
             }
             else
             {
-                Debug.Log(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), activeAbility.getTargetType() == targetType.BEAM).Count);
                 targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
             }
         }
         cursorController.setSelectedUnit(unit);
-    }
-
-    void attackPreview(GameObject targetUnit)
-    {
-        if (!targetUnit || !activeAbility)
-        {
-            return;
-        }
-        actionPhase = actionPhase.PREPARE;
-        UnitController targetController = targetUnit.GetComponent<UnitController>();
-        GameObject selectedUnit = cursorController.getSelectedUnit();
-
     }
 
     void attackAction(GameObject targetUnit)
@@ -313,6 +300,7 @@ public class MapController : MonoBehaviour
             completeAction(cursorController.getSelectedUnit());
             return;
         }
+        actionPhase = actionPhase.EXECUTE;
         AbilityCalculator calculator = new AbilityCalculator(getNonAlignedTeams(activeTeam), activeAbility, cursorController.getGridPos(), direction);
         List<GameObject> hitUnits = calculator.getAffectedUnits(true);
         foreach (GameObject target in hitUnits)
@@ -323,7 +311,7 @@ public class MapController : MonoBehaviour
         selectedController.useActions(activeAbility.getAPCost());
     }
 
-    public void supportPrepare(GameObject unit)
+    void supportPrepare(GameObject unit)
     {
         if (!unit)
         {
@@ -410,36 +398,11 @@ public class MapController : MonoBehaviour
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
         bool defeated = false;
-        int randomChance = Random.Range(0, 99);
-        int effectiveHit = (int)(attackerController.getStats()[5] * hitFactor + activeAbility.getAbilityHitBonus());
-        if (activeAbility.getMelee())
-        {
-            effectiveHit = (int)(attackerController.getStats()[6] * hitFactor + activeAbility.getAbilityHitBonus());
-        }
-        if (attackerController.equippedWeapon)
-        {
-            effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
-        }
-        float rawAvoid;
-        if (!activeAbility.getMelee())
-        {
-            if (defenderController.getStats()[7] < reactThreshold)
-            {
-                rawAvoid = 0;
-            }
-            else
-            {
-                rawAvoid = defenderController.getStats()[5] + (defenderController.getStats()[7] - reactThreshold);
-            }
-        }
-        else
-        {
-            rawAvoid = defenderController.getStats()[6] + defenderController.getStats()[7];
-        }
-        int effectiveAvoid = (int)(rawAvoid * avoidFactor);
-        Debug.Log("Attack Hit: " + effectiveHit + " Defend Avoid: " + effectiveAvoid + " Total Chance: " + (effectiveHit - effectiveAvoid));
-        Debug.Log("Roll: " + randomChance + " Hits: " + (randomChance < effectiveHit - effectiveAvoid));
-        if (randomChance < effectiveHit - effectiveAvoid || activeAbility.getTrueHit())
+        int randomChance = Random.Range(0, 100);
+        int[] hitStats = getHitStats(attackerController, defenderController);
+        int totalHit = hitStats[0];
+        int totalCrit = hitStats[1];
+        if (randomChance < totalHit || activeAbility.getTrueHit())
         {
             if (attackerController.getEquippedWeapon().getWeaponStatus())
             {
@@ -451,7 +414,7 @@ public class MapController : MonoBehaviour
             }
             if (activeAbility.getDamagingAbility())
             {
-                defeated = attackerController.attackUnit(defender, activeAbility);
+                defeated = attackerController.attackUnit(defender.GetComponent<UnitController>(), activeAbility, totalCrit);
             }
         }
         if (defeated)
@@ -510,10 +473,59 @@ public class MapController : MonoBehaviour
         return pathfinder;
     }
 
+    public Ability getActiveAbility()
+    {
+        return activeAbility;
+    }
+
     //Stat Math
     public int finalRange(int baseRange, Ability ability)
     {
         return Mathf.FloorToInt((float)(baseRange + ability.getAbilityRanges()[0]) * (((float)ability.getAbilityRadii()[0] / 100f) + 1f));
+    }
+
+    public int[] getHitStats(UnitController attackerController, UnitController defenderController)
+    {
+        int effectiveHit = (int)(attackerController.getStats()[5] * hitFactor + activeAbility.getAbilityHitBonus());
+        if (activeAbility.getMelee())
+        {
+            effectiveHit = (int)(attackerController.getStats()[6] * hitFactor + activeAbility.getAbilityHitBonus());
+        }
+        if (attackerController.equippedWeapon)
+        {
+            effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
+        }
+        float rawAvoid;
+        if (!activeAbility.getMelee())
+        {
+            if (defenderController.getStats()[7] < reactThreshold)
+            {
+                rawAvoid = 0;
+            }
+            else
+            {
+                rawAvoid = defenderController.getStats()[5] + (defenderController.getStats()[7] - reactThreshold);
+            }
+        }
+        else
+        {
+            rawAvoid = defenderController.getStats()[6] + defenderController.getStats()[7];
+        }
+        int effectiveAvoid = (int)(rawAvoid * avoidFactor);
+        int effectiveCrit;
+        if (activeAbility.getMelee())
+        {
+            //Melee - Use acuity
+            effectiveCrit = attackerController.getStats()[5];
+        }
+        else
+        {
+            //Ranged - Use finesse
+            effectiveCrit = attackerController.getStats()[6];
+        }
+        int totalHit = effectiveHit - effectiveAvoid;
+        int totalCrit = effectiveCrit - effectiveAvoid;
+        return new int[] { totalHit, totalCrit };
     }
 
     //Grid Management

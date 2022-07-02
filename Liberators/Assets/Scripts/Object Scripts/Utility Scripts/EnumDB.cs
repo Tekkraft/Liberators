@@ -23,6 +23,6 @@ public enum statusType { BUFF, DEBUFF, NONE }
 
 public enum weaponType { MELEE, GUN, FOCUS, SPECIAL };
 
-public enum actionPhase { INACTIVE, PREPARE, PREVIEW, EXECUTE };
+public enum actionPhase { INACTIVE, PREPARE, EXECUTE };
 
 public enum turnPhase { START, MAIN, END };

@@ -149,4 +149,14 @@ public class UIController : MonoBehaviour
         activePreview.GetComponent<PreviewController>().setData(attacker, defender, activeAbility, playerHit, playerDamage, playerCrit);
         return activePreview;
     }
+
+    public void clearPreview()
+    {
+        GameObject.Destroy(activePreview);
+    }
+
+    public bool hasPreview()
+    {
+        return activePreview;
+    }
 }

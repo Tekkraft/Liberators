@@ -129,26 +129,14 @@ public class UnitController : MonoBehaviour
         return equippedArmor;
     }
 
-    public bool attackUnit(GameObject target, Ability attackAbility)
+    public bool attackUnit(UnitController targetController, Ability attackAbility, int critChance)
     {
-        int damage = 0;
-        if (equippedWeapon)
+        int damage = getExpectedDamage(targetController, attackAbility);
+        if (Random.Range(0, 100) < critChance)
         {
-            damage += equippedWeapon.getWeaponStats()[0];
+            damage = (int) (damage * MapController.critFactor);
         }
-        switch (attackAbility.getAbilityDamageSource())
-        {
-            case damageType.PHYSICAL:
-                damage += attackAbility.getAbilityDamage() + str;
-                break;
-            case damageType.MAGIC:
-                damage += attackAbility.getAbilityDamage() + pot;
-                break;
-            case damageType.TRUE:
-                damage += attackAbility.getAbilityDamage();
-                break;
-        }
-        return target.GetComponent<UnitController>().takeDamage(damage, attackAbility.getAbilityDamageType());
+        return targetController.takeDamage(damage, attackAbility.getAbilityDamageType());
     }
 
     public bool takeDamage(int damage, damageType damageType)
@@ -186,6 +174,51 @@ public class UnitController : MonoBehaviour
     public void inflictStatus(Status newStatus, GameObject source)
     {
         statuses.Add(new StatusInstance(newStatus, source));
+    }
+
+    public int getExpectedDamage(UnitController targetController, Ability attackAbility)
+    {
+        int damage = 0;
+        if (equippedWeapon)
+        {
+            damage += equippedWeapon.getWeaponStats()[0];
+        }
+        switch (attackAbility.getAbilityDamageSource())
+        {
+            case damageType.PHYSICAL:
+                damage += attackAbility.getAbilityDamage() + str;
+                break;
+            case damageType.MAGIC:
+                damage += attackAbility.getAbilityDamage() + pot;
+                break;
+            case damageType.TRUE:
+                damage += attackAbility.getAbilityDamage();
+                break;
+        }
+        damage -= targetController.getExpectedDefense(attackAbility);
+        if (damage < 0)
+        {
+            damage = 0;
+        }
+        return damage;
+    }
+
+    public int getExpectedDefense(Ability attackAbility)
+    {
+        int defense = 0;
+        if (equippedArmor)
+        {
+            switch (attackAbility.getAbilityDamageType())
+            {
+                case damageType.PHYSICAL:
+                    defense += equippedArmor.getDefenses()[0];
+                    break;
+                case damageType.MAGIC:
+                    defense += equippedArmor.getDefenses()[1];
+                    break;
+            }
+        }
+        return defense;
     }
 
     public string getName()
