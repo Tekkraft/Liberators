@@ -131,7 +131,7 @@ public class UnitController : MonoBehaviour
 
     public bool attackUnit(UnitController targetController, Ability attackAbility, int critChance)
     {
-        int damage = getExpectedDamage(targetController, attackAbility);
+        int damage = getAttack(attackAbility);
         if (Random.Range(0, 100) < critChance)
         {
             damage = (int) (damage * MapController.critFactor);
@@ -176,6 +176,28 @@ public class UnitController : MonoBehaviour
         statuses.Add(new StatusInstance(newStatus, source));
     }
 
+    public int getAttack(Ability attackAbility)
+    {
+        int damage = 0;
+        if (equippedWeapon)
+        {
+            damage += equippedWeapon.getWeaponStats()[0];
+        }
+        switch (attackAbility.getAbilityDamageSource())
+        {
+            case damageType.PHYSICAL:
+                damage += attackAbility.getAbilityDamage() + str;
+                break;
+            case damageType.MAGIC:
+                damage += attackAbility.getAbilityDamage() + pot;
+                break;
+            case damageType.TRUE:
+                damage += attackAbility.getAbilityDamage();
+                break;
+        }
+        return damage;
+    }
+
     public int getExpectedDamage(UnitController targetController, Ability attackAbility)
     {
         int damage = 0;
@@ -195,7 +217,7 @@ public class UnitController : MonoBehaviour
                 damage += attackAbility.getAbilityDamage();
                 break;
         }
-        damage -= targetController.getExpectedDefense(attackAbility);
+        damage -= targetController.getDefense(attackAbility);
         if (damage < 0)
         {
             damage = 0;
@@ -203,7 +225,7 @@ public class UnitController : MonoBehaviour
         return damage;
     }
 
-    public int getExpectedDefense(Ability attackAbility)
+    public int getDefense(Ability attackAbility)
     {
         int defense = 0;
         if (equippedArmor)
