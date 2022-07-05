@@ -48,12 +48,12 @@ public class MouseController : MonoBehaviour
             activeHover = hoveredUnit;
             if (hoveredUnit && !uiController.hasPreview())
             {
-                attackPreview(selectedUnit, hoveredUnit, mapController.getActiveAbility());
+                attackPreview(selectedUnit, hoveredUnit, mapController.getActiveCombatAbility());
             }
             else if (hoveredUnit && !hoveredUnit.Equals(activeHover))
             {
                 uiController.clearPreview();
-                attackPreview(selectedUnit, hoveredUnit, mapController.getActiveAbility());
+                attackPreview(selectedUnit, hoveredUnit, mapController.getActiveCombatAbility());
             }
             else if (!hoveredUnit)
             {
@@ -127,7 +127,7 @@ public class MouseController : MonoBehaviour
         return (cursorPosition.x / Screen.width) < 0.5;
     }
 
-    public void attackPreview(GameObject attacker, GameObject defender, Ability activeAbility)
+    public void attackPreview(GameObject attacker, GameObject defender, CombatAbility activeAbility)
     {
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();

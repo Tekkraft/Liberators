@@ -2,29 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Ability", menuName = "Ability Object", order = 50)]
-public class Ability : ScriptableObject
+[CreateAssetMenu(fileName = "New Attack Ability", menuName = "Attack Ability", order = 44)]
+public class CombatAbility : Ability
 {
-    [SerializeField]
-    string abilityName;
-
-    [SerializeField]
-    Sprite abilitySprite;
-
-    [SerializeField]
-    int abilityAP;
-
-    [SerializeField]
-    actionType abilityType;
-
     [SerializeField]
     bool isMelee;
 
     [SerializeField]
     targetType abilityTargetType;
 
-    //Attack and Support - Range of targeting. Add to base range if weapon skill.
-    //Move - Flat move bonus
     [SerializeField]
     int abilityRangeMax;
 
@@ -33,23 +19,14 @@ public class Ability : ScriptableObject
     int abilityRangeMin;
 
     [SerializeField]
-    markerAreas abilityRangeType;
-
-    [SerializeField]
     bool fixedAbilityRange;
 
-    //Attack and Support - Range of effect
-    //Move - Bonus move multiplier out of 100
+    //AOE Range (temp, will remove soon)
     [SerializeField]
     int abilityRadiusMax;
 
-    //Unusued for Move
     [SerializeField]
     int abilityRadiusMin;
-
-    //Unusued for Move
-    [SerializeField]
-    markerAreas abilityRadiusType;
 
     //True Damage = Flat Damage
     [SerializeField]
@@ -71,13 +48,13 @@ public class Ability : ScriptableObject
     bool trueHit;
 
     [SerializeField]
-    bool requiresLOS;
+    bool requiresLOS = true;
 
     [SerializeField]
-    bool requiresAOELOS;
+    bool requiresAOELOS = true;
 
     [SerializeField]
-    bool hasOwnElement = true;
+    bool hasOwnElement;
 
     [SerializeField]
     element abilityElement;
@@ -88,26 +65,6 @@ public class Ability : ScriptableObject
     //Special rules = Damage Ramp, etc.
     [SerializeField]
     List<string> specialRules;
-
-    public string getName()
-    {
-        return abilityName;
-    }
-
-    public Sprite getSprite()
-    {
-        return abilitySprite;
-    }
-
-    public int getAPCost()
-    {
-        return abilityAP;
-    }
-
-    public actionType getAbilityType()
-    {
-        return abilityType;
-    }
 
     public bool getMelee()
     {
@@ -132,16 +89,6 @@ public class Ability : ScriptableObject
     public int[] getAbilityRadii()
     {
         return new int[] { abilityRadiusMax, abilityRadiusMin };
-    }
-
-    public markerAreas getAbilityRangeType()
-    {
-        return abilityRangeType;
-    }
-
-    public markerAreas getAbilityRadiusType()
-    {
-        return abilityRadiusType;
     }
 
     public damageType getAbilityDamageSource()

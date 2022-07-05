@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Short Edge
   weaponType: 0
   weaponStrength: 10
-  weaponHit: 200
+  weaponHit: 100
   weaponCrit: 5
   weaponRange: 1
   weaponElement: 1

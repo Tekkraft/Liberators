@@ -9,22 +9,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a77f5bb98f1433892e2c93c72d91e7, type: 3}
-  m_Name: SpellScorch
+  m_Script: {fileID: 11500000, guid: 06ee35cf9cf8c49c5b86c7d2feb16252, type: 3}
+  m_Name: Scorch
   m_EditorClassIdentifier: 
   abilityName: Scorch
   abilitySprite: {fileID: 21300000, guid: 536e70552918546a8b3571aea6c482d6, type: 3}
   abilityAP: 1
   abilityType: 2
   isMelee: 0
-  abilityTargetType: 2
+  abilityTargetType: 0
   abilityRangeMax: 0
   abilityRangeMin: 0
-  abilityRangeType: 0
   fixedAbilityRange: 0
   abilityRadiusMax: 0
   abilityRadiusMin: 0
-  abilityRadiusType: 0
+  abilityDamageSource: 0
+  abilityDamageType: 0
+  damagingAbility: 1
+  abilityDamage: 0
+  abilityHitBonus: 0
+  trueHit: 0
+  requiresLOS: 0
+  requiresAOELOS: 0
+  hasOwnElement: 1
+  abilityElement: 0
+  inflictStatus: {fileID: 0}
+  specialRules: []
+  isMelee: 0
+  abilityTargetType: 2
+  abilityRangeMax: 0
+  abilityRangeMin: 0
+  fixedAbilityRange: 0
+  abilityRadiusMax: 0
+  abilityRadiusMin: 0
   abilityDamageSource: 1
   abilityDamageType: 1
   damagingAbility: 0
@@ -32,7 +49,7 @@ MonoBehaviour:
   abilityHitBonus: 0
   trueHit: 1
   requiresLOS: 1
-  requiresAOELOS: 0
+  requiresAOELOS: 1
   hasOwnElement: 1
   abilityElement: 11
   inflictStatus: {fileID: 11400000, guid: 732f05df2eb3742fa96b36ebb1e144d3, type: 2}
