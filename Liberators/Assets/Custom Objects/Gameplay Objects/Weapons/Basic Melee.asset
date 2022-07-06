@@ -20,5 +20,5 @@ MonoBehaviour:
   weaponRange: 1
   weaponElement: 1
   abilities:
-  - {fileID: 11400000, guid: fa8584d7f866e42e0a8563694859842d, type: 2}
+  - {fileID: 11400000, guid: 967e54e5877954b28aaf4c5d5f7b45fb, type: 2}
   weaponStatus: {fileID: 0}

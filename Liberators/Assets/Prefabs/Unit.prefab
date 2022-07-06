@@ -99,7 +99,7 @@ MonoBehaviour:
   marker: {fileID: 6958815629102385123, guid: b76a23c86aaa145c28439c9b6fa22512, type: 3}
   teamNumber: -1
   unitObject: {fileID: 11400000, guid: cd8d8bcbd3a8d4aef8cc06abb78ad856, type: 2}
-  basicMovement: {fileID: 11400000, guid: 09429bc01024540d086b9fdf80c020d8, type: 2}
+  basicMovement: {fileID: 11400000, guid: 282e41814c0c94219bc771108b1e5bf9, type: 2}
   passUnitAbility: {fileID: 11400000, guid: d227c9dd105bf4968b983901904c1487, type: 2}
   endTurnAbility: {fileID: 11400000, guid: 581b533f39259440ab967d0802ff9eb4, type: 2}
   equippedWeapon: {fileID: 0}

@@ -297,12 +297,12 @@ public class MapController : MonoBehaviour
         {
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
-        if ((calculateAbility.getTargetType() == targetType.UNIT || calculateAbility.getTargetType() == targetType.TARGET || calculateAbility.getTargetType() == targetType.ALLY) && !targetUnit)
+        if (((calculateAbility.getTargetType() == targetType.UNIT || calculateAbility.getTargetType() == targetType.TARGET || calculateAbility.getTargetType() == targetType.ALLY) && !targetUnit) || (calculateAbility.getTargetType() == targetType.SELF && targetUnit != cursorController.getSelectedUnit()))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
         }
-        if (selectedController.checkActions(activeAbility.getAPCost()) || (calculateAbility.getTargetType() == targetType.SELF && targetUnit != cursorController.getSelectedUnit()))
+        if (selectedController.checkActions(activeAbility.getAPCost()))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
@@ -374,29 +374,33 @@ public class MapController : MonoBehaviour
         CombatAbility calculateAbility = activeAbility as CombatAbility;
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
-        bool defeated = false;
-        int randomChance = Random.Range(0, 100);
-        int[] hitStats = getHitStats(attackerController, defenderController);
-        int totalHit = hitStats[0];
-        int totalCrit = hitStats[1];
-        if (randomChance < totalHit || calculateAbility.getTrueHit())
+        for (int i = 0; i < calculateAbility.getNumberOfAttacks(); i++)
         {
-            if (attackerController.getEquippedWeapon().getWeaponStatus())
+            bool defeated = false;
+            int randomChance = Random.Range(0, 100);
+            int[] hitStats = getHitStats(attackerController, defenderController);
+            int totalHit = hitStats[0];
+            int totalCrit = hitStats[1];
+            if (randomChance < totalHit || calculateAbility.getTrueHit())
             {
-                defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attacker);
+                if (attackerController.getEquippedWeapon().getWeaponStatus())
+                {
+                    defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attacker);
+                }
+                if (calculateAbility.getAbilityStatus())
+                {
+                    defenderController.inflictStatus(calculateAbility.getAbilityStatus(), attacker);
+                }
+                if (calculateAbility.getDamagingAbility())
+                {
+                    defeated = attackerController.attackUnit(defender.GetComponent<UnitController>(), calculateAbility, totalCrit);
+                }
             }
-            if (calculateAbility.getAbilityStatus())
+            if (defeated)
             {
-                defenderController.inflictStatus(calculateAbility.getAbilityStatus(), attacker);
+                killUnit(defender);
+                break;
             }
-            if (calculateAbility.getDamagingAbility())
-            {
-                defeated = attackerController.attackUnit(defender.GetComponent<UnitController>(), calculateAbility, totalCrit);
-            }
-        }
-        if (defeated)
-        {
-            killUnit(defender);
         }
     }
 

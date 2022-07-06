@@ -29,7 +29,10 @@ public class ButtonController : MonoBehaviour
 
     void Update()
     {
-        gameObject.GetComponent<Button>().interactable = mapController.getTurnPhase() == turnPhase.MAIN;
+        if (gameObject.GetComponent<Button>().interactable)
+        {
+            gameObject.GetComponent<Button>().interactable = mapController.getTurnPhase() == turnPhase.MAIN;
+        }
     }
 
     public void setupButton(Ability linkedAbility, GameObject linkedUnit)

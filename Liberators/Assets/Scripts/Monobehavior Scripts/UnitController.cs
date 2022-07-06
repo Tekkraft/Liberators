@@ -195,6 +195,7 @@ public class UnitController : MonoBehaviour
                 damage += attackAbility.getAbilityDamage();
                 break;
         }
+        damage = (int)(damage * ((attackAbility.getAbilityDamageBonus() / 100f) + 1f));
         return damage;
     }
 
@@ -217,6 +218,7 @@ public class UnitController : MonoBehaviour
                 damage += attackAbility.getAbilityDamage();
                 break;
         }
+        damage = (int)(damage * ((attackAbility.getAbilityDamageBonus() / 100f) + 1f));
         damage -= targetController.getDefense(attackAbility);
         if (damage < 0)
         {
@@ -273,7 +275,7 @@ public class UnitController : MonoBehaviour
      
     void setUnitPos(Vector2 worldPos)
     {
-        transform.position = worldPos;
+        transform.position = new Vector3(worldPos.x, worldPos.y, -2);
         unitGridPosition = mapController.gridWorldPos(transform.position);
         destroyMarkers();
     }

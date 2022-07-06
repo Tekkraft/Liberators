@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Attack Ability", menuName = "Attack Ability", order = 44)]
+[CreateAssetMenu(fileName = "New Combat Ability", menuName = "Combat Ability", order = 44)]
 public class CombatAbility : Ability
 {
     [SerializeField]
@@ -42,10 +42,16 @@ public class CombatAbility : Ability
     int abilityDamage;
 
     [SerializeField]
+    int abilityDamageBonus;
+
+    [SerializeField]
     int abilityHitBonus;
 
     [SerializeField]
     bool trueHit;
+
+    [SerializeField]
+    int numberOfAttacks = 1;
 
     [SerializeField]
     bool requiresLOS = true;
@@ -111,6 +117,11 @@ public class CombatAbility : Ability
         return abilityDamage;
     }
 
+    public int getAbilityDamageBonus()
+    {
+        return abilityDamageBonus;
+    }
+
     public int getAbilityHitBonus()
     {
         return abilityHitBonus;
@@ -119,6 +130,11 @@ public class CombatAbility : Ability
     public bool getTrueHit()
     {
         return trueHit;
+    }
+
+    public int getNumberOfAttacks()
+    {
+        return numberOfAttacks;
     }
 
     public bool getLOSRequirement()

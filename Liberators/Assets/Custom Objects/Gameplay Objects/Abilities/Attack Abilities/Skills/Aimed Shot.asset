@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06ee35cf9cf8c49c5b86c7d2feb16252, type: 3}
-  m_Name: Caster Attack
+  m_Name: Aimed Shot
   m_EditorClassIdentifier: 
-  abilityName: Shoot
+  abilityName: Aimed Shot
   abilitySprite: {fileID: 21300000, guid: 9713aa18f6b5042f5b79ded182f50bc5, type: 3}
-  abilityAP: 1
+  abilityAP: 2
   abilityType: 2
   isMelee: 0
   abilityTargetType: 2
-  abilityRangeMax: 0
-  abilityRangeMin: 0
+  abilityRangeMax: 5
+  abilityRangeMin: 3
   fixedAbilityRange: 0
   abilityRadiusMax: 0
   abilityRadiusMin: 0
@@ -27,8 +27,10 @@ MonoBehaviour:
   abilityDamageType: 0
   damagingAbility: 1
   abilityDamage: 0
+  abilityDamageBonus: 100
   abilityHitBonus: 0
-  trueHit: 0
+  trueHit: 1
+  numberOfAttacks: 1
   requiresLOS: 1
   requiresAOELOS: 1
   hasOwnElement: 0
