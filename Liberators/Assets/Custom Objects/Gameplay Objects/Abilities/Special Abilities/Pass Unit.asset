@@ -15,17 +15,17 @@ MonoBehaviour:
   abilityName: Wait
   abilitySprite: {fileID: 0}
   abilityAP: 0
-  abilityType: 5
+  abilityType: 4
   isMelee: 0
   abilityTargetType: 8
   abilityRangeMax: 0
   abilityRangeMin: 0
-  abilityRangeType: 0
+  fixedAbilityRange: 0
   abilityRadiusMax: 0
   abilityRadiusMin: 0
-  abilityRadiusType: 0
   abilityDamageSource: 0
   abilityDamageType: 0
+  damagingAbility: 1
   abilityDamage: 0
   abilityHitBonus: 0
   trueHit: 0

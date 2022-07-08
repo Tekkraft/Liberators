@@ -160,12 +160,8 @@ public class MapController : MonoBehaviour
                 movePrepare(targetUnit);
                 break;
 
-            case actionType.ATTACK:
-                attackPrepare(targetUnit);
-                break;
-
-            case actionType.SUPPORT:
-                supportPrepare(targetUnit);
+            case actionType.COMBAT:
+                combatPrepare(targetUnit);
                 break;
         }
     }
@@ -178,12 +174,8 @@ public class MapController : MonoBehaviour
                 moveAction();
                 break;
 
-            case actionType.ATTACK:
-                attackAction(targetUnit);
-                break;
-
-            case actionType.SUPPORT:
-                supportAction(targetUnit);
+            case actionType.COMBAT:
+                combatAction(targetUnit);
                 break;
         }
         completeAction(targetUnit);
@@ -213,13 +205,18 @@ public class MapController : MonoBehaviour
 
     void movePrepare(GameObject unit)
     {
+        if (activeAbility.getAbilityType() != actionType.MOVE)
+        {
+            return;
+        }
+        MovementAbility calculateAbility = activeAbility as MovementAbility;
         if (!unit)
         {
             return;
         }
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        targetController.createMoveMarkers(finalRange(unit.GetComponent<UnitController>().getStats()[0], activeAbility), activeAbility.getAbilityRanges()[0], MarkerController.Markers.BLUE);
+        targetController.createMoveMarkers(finalRange(unit.GetComponent<UnitController>().getStats()[0], calculateAbility), calculateAbility.getMinMoveRange(), MarkerController.Markers.BLUE);
     }
 
     void moveAction()
@@ -238,8 +235,13 @@ public class MapController : MonoBehaviour
         checkEndGame();
     }
 
-    void attackPrepare(GameObject unit)
+    void combatPrepare(GameObject unit)
     {
+        if (activeAbility.getAbilityType() != actionType.COMBAT)
+        {
+            return;
+        }
+        CombatAbility calculateAbility = activeAbility as CombatAbility;
         if (!unit || !activeAbility)
         {
             return;
@@ -247,40 +249,45 @@ public class MapController : MonoBehaviour
         actionPhase = actionPhase.PREPARE;
         cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
-        int rangeMax = activeAbility.getAbilityRanges()[0];
-        if (!activeAbility.getFixedAbilityRange())
+        int rangeMax = calculateAbility.getAbilityRanges()[0];
+        if (!calculateAbility.getFixedAbilityRange())
         {
             rangeMax += targetController.getEquippedWeapon().getWeaponStats()[3];
         }
-        int rangeMin = activeAbility.getAbilityRanges()[1];
+        int rangeMin = calculateAbility.getAbilityRanges()[1];
         Vector2 direction = new Vector2(0, 0);
         if (activeOverlay)
         {
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
-        if (activeAbility.getTargetType() == targetType.SELF)
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, calculateAbility.getLOSRequirement(), this, teamLists, direction);
+        if (calculateAbility.getTargetType() == targetType.SELF)
         {
             targetController.createAttackMarkers(new List<Vector2Int>() { targetController.getUnitPos() }, MarkerController.Markers.RED);
         }
         else
         {
-            if (activeAbility.getTargetType() == targetType.BEAM)
+            if (calculateAbility.getTargetType() == targetType.BEAM)
             {
                 GameObject temp = GameObject.Instantiate(overlayObject, targetController.gameObject.transform);
                 activeOverlay = temp;
-                activeOverlay.GetComponent<OverlayController>().initalize(activeAbility.getAbilityRanges()[0], true);
+                activeOverlay.GetComponent<OverlayController>().initalize(calculateAbility.getAbilityRanges()[0], true);
             }
             else
             {
-                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
+                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), calculateAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
             }
         }
         cursorController.setSelectedUnit(unit);
     }
 
-    void attackAction(GameObject targetUnit)
+    void combatAction(GameObject targetUnit)
     {
+        if (activeAbility.getAbilityType() != actionType.COMBAT)
+        {
+            return;
+        }
+        CombatAbility calculateAbility = activeAbility as CombatAbility;
         UnitController selectedController = cursorController.getSelectedUnit().GetComponent<UnitController>();
         if (!activeAbility)
         {
@@ -292,18 +299,18 @@ public class MapController : MonoBehaviour
         {
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
-        if ((activeAbility.getTargetType() == targetType.UNIT || activeAbility.getTargetType() == targetType.TARGET || activeAbility.getTargetType() == targetType.ALLY) && !targetUnit)
+        if (((calculateAbility.getTargetType() == targetType.UNIT || calculateAbility.getTargetType() == targetType.TARGET || calculateAbility.getTargetType() == targetType.ALLY) && !targetUnit) || (calculateAbility.getTargetType() == targetType.SELF && targetUnit != cursorController.getSelectedUnit()))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
         }
-        if (selectedController.checkActions(activeAbility.getAPCost()) || (activeAbility.getTargetType() == targetType.SELF && targetUnit != cursorController.getSelectedUnit()))
+        if (selectedController.checkActions(activeAbility.getAPCost()))
         {
             completeAction(cursorController.getSelectedUnit());
             return;
         }
         actionPhase = actionPhase.EXECUTE;
-        AbilityCalculator calculator = new AbilityCalculator(getNonAlignedTeams(activeTeam), activeAbility, cursorController.getGridPos(), direction);
+        AbilityCalculator calculator = new AbilityCalculator(getNonAlignedTeams(activeTeam), calculateAbility, cursorController.getGridPos(), direction);
         List<GameObject> hitUnits = calculator.getAffectedUnits(true);
         foreach (GameObject target in hitUnits)
         {
@@ -311,46 +318,6 @@ public class MapController : MonoBehaviour
         }
         completeAction(cursorController.getSelectedUnit());
         selectedController.useActions(activeAbility.getAPCost());
-    }
-
-    void supportPrepare(GameObject unit)
-    {
-        if (!unit)
-        {
-            return;
-        }
-        if (cursorController.getSelectedUnit())
-        {
-            cursorController.getSelectedUnit().GetComponent<UnitController>().destroyMarkers();
-        }
-        cursorController.setSelectedUnit(unit);
-        UnitController targetController = unit.GetComponent<UnitController>();
-        int rangeMax = activeAbility.getAbilityRanges()[0];
-        if (!activeAbility.getFixedAbilityRange())
-        {
-            rangeMax += cursorController.getSelectedUnit().GetComponent<UnitController>().getEquippedWeapon().getWeaponStats()[3];
-        }
-        int rangeMin = activeAbility.getAbilityRanges()[1];
-        Vector2 direction = new Vector2(0, 0);
-        if (activeOverlay)
-        {
-            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
-        }
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, activeAbility.getLOSRequirement(), this, teamLists, direction);
-        targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(cursorController.getSelectedUnit().GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), activeAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.GREEN);
-    }
-
-    void supportAction(GameObject targetUnit)
-    {
-        UnitController targetController = cursorController.getSelectedUnit().GetComponent<UnitController>();
-        if (targetController.checkActions(activeAbility.getAPCost()))
-        {
-            completeAction(cursorController.getSelectedUnit());
-            return;
-        }
-        targetController.restoreHealth(targetController.getStats()[4]);
-        bool done = targetController.useActions(activeAbility.getAPCost());
-        completeAction(cursorController.getSelectedUnit());
     }
 
     //Unit Management
@@ -377,13 +344,18 @@ public class MapController : MonoBehaviour
 
     public bool moveUnit(GameObject unit, Vector2 coords)
     {
+        if (activeAbility.getAbilityType() != actionType.MOVE)
+        {
+            return false;
+        }
+        MovementAbility calculateAbility = activeAbility as MovementAbility;
         if (getUnitFromCoords(gridTilePos(coords)) && getUnitFromCoords(gridTilePos(coords)) != gameObject)
         {
             return false;
         }
         Vector2Int key = unit.GetComponent<UnitController>().getUnitPos();
         unitList.Remove(key);
-        bool moved = unit.GetComponent<UnitController>().moveUnit(coords, activeAbility);
+        bool moved = unit.GetComponent<UnitController>().moveUnit(coords, calculateAbility);
         if (moved)
         {
             unitList.Add(gridTilePos(coords), unit);
@@ -397,31 +369,40 @@ public class MapController : MonoBehaviour
 
     public void attackUnit(GameObject attacker, GameObject defender)
     {
+        if (activeAbility.getAbilityType() != actionType.COMBAT)
+        {
+            return;
+        }
+        CombatAbility calculateAbility = activeAbility as CombatAbility;
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
-        bool defeated = false;
-        int randomChance = Random.Range(0, 100);
-        int[] hitStats = getHitStats(attackerController, defenderController);
-        int totalHit = hitStats[0];
-        int totalCrit = hitStats[1];
-        if (randomChance < totalHit || activeAbility.getTrueHit())
+        for (int i = 0; i < calculateAbility.getNumberOfAttacks(); i++)
         {
-            if (attackerController.getEquippedWeapon().getWeaponStatus())
+            bool defeated = false;
+            int randomChance = Random.Range(0, 100);
+            int[] hitStats = getHitStats(attackerController, defenderController);
+            int totalHit = hitStats[0];
+            int totalCrit = hitStats[1];
+            if (randomChance < totalHit || calculateAbility.getTrueHit())
             {
-                defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attacker);
+                if (attackerController.getEquippedWeapon().getWeaponStatus())
+                {
+                    defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attacker);
+                }
+                if (calculateAbility.getAbilityStatus())
+                {
+                    defenderController.inflictStatus(calculateAbility.getAbilityStatus(), attacker);
+                }
+                if (calculateAbility.getDamagingAbility())
+                {
+                    defeated = attackerController.attackUnit(defender.GetComponent<UnitController>(), calculateAbility, totalCrit);
+                }
             }
-            if (activeAbility.getAbilityStatus())
+            if (defeated)
             {
-                defenderController.inflictStatus(activeAbility.getAbilityStatus(), attacker);
+                killUnit(defender);
+                break;
             }
-            if (activeAbility.getDamagingAbility())
-            {
-                defeated = attackerController.attackUnit(defender.GetComponent<UnitController>(), activeAbility, totalCrit);
-            }
-        }
-        if (defeated)
-        {
-            killUnit(defender);
         }
     }
 
@@ -506,25 +487,53 @@ public class MapController : MonoBehaviour
         return activeAbility;
     }
 
+    public CombatAbility getActiveCombatAbility()
+    {
+        if (activeAbility.getAbilityType() == actionType.COMBAT)
+        {
+            return activeAbility as CombatAbility;
+        }
+        return null;
+    }
+
+    public MovementAbility getActiveMovementAbility()
+    {
+        if (activeAbility.getAbilityType() == actionType.MOVE)
+        {
+            return activeAbility as MovementAbility;
+        }
+        return null;
+    }
+
     //Stat Math
-    public int finalRange(int baseRange, Ability ability)
+    public int finalRange(int baseRange, MovementAbility ability)
+    {
+        return Mathf.FloorToInt((float)(baseRange + ability.getFlatMoveBonus()) * (((float)ability.getPercentMoveBonus() / 100f) + 1f));
+    }
+
+    public int finalRange(int baseRange, CombatAbility ability)
     {
         return Mathf.FloorToInt((float)(baseRange + ability.getAbilityRanges()[0]) * (((float)ability.getAbilityRadii()[0] / 100f) + 1f));
     }
 
     public int[] getHitStats(UnitController attackerController, UnitController defenderController)
     {
-        int effectiveHit = (int)(attackerController.getStats()[5] * hitFactor + activeAbility.getAbilityHitBonus());
-        if (activeAbility.getMelee())
+        if (activeAbility.getAbilityType() != actionType.COMBAT)
         {
-            effectiveHit = (int)(attackerController.getStats()[6] * hitFactor + activeAbility.getAbilityHitBonus());
+            return null;
+        }
+        CombatAbility calculateAbility = activeAbility as CombatAbility;
+        int effectiveHit = (int)(attackerController.getStats()[5] * hitFactor + calculateAbility.getAbilityHitBonus());
+        if (calculateAbility.getMelee())
+        {
+            effectiveHit = (int)(attackerController.getStats()[6] * hitFactor + calculateAbility.getAbilityHitBonus());
         }
         if (attackerController.equippedWeapon)
         {
             effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
         }
         float rawAvoid;
-        if (!activeAbility.getMelee())
+        if (!calculateAbility.getMelee())
         {
             if (defenderController.getStats()[7] < reactThreshold)
             {
@@ -541,7 +550,7 @@ public class MapController : MonoBehaviour
         }
         int effectiveAvoid = (int)(rawAvoid * avoidFactor);
         int effectiveCrit;
-        if (activeAbility.getMelee())
+        if (calculateAbility.getMelee())
         {
             //Melee - Use acuity
             effectiveCrit = attackerController.getStats()[5];

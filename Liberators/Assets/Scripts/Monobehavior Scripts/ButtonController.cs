@@ -14,8 +14,7 @@ public class ButtonController : MonoBehaviour
     public bool fixedAction = true;
     public Ability fixedAbility;
     public Sprite moveSprite;
-    public Sprite attackSprite;
-    public Sprite supportSprite;
+    public Sprite combatSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +29,10 @@ public class ButtonController : MonoBehaviour
 
     void Update()
     {
-        gameObject.GetComponent<Button>().interactable = mapController.getTurnPhase() == turnPhase.MAIN;
+        if (gameObject.GetComponent<Button>().interactable)
+        {
+            gameObject.GetComponent<Button>().interactable = mapController.getTurnPhase() == turnPhase.MAIN;
+        }
     }
 
     public void setupButton(Ability linkedAbility, GameObject linkedUnit)
@@ -48,11 +50,8 @@ public class ButtonController : MonoBehaviour
             case actionType.MOVE:
                 gameObject.transform.GetChild(0).GetComponent<Image>().sprite = moveSprite;
                 break;
-            case actionType.ATTACK:
-                gameObject.transform.GetChild(0).GetComponent<Image>().sprite = attackSprite;
-                break;
-            case actionType.SUPPORT:
-                gameObject.transform.GetChild(0).GetComponent<Image>().sprite = supportSprite;
+            case actionType.COMBAT:
+                gameObject.transform.GetChild(0).GetComponent<Image>().sprite = combatSprite;
                 break;
         }
     }

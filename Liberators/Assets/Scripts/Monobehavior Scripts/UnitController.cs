@@ -129,7 +129,7 @@ public class UnitController : MonoBehaviour
         return equippedArmor;
     }
 
-    public bool attackUnit(UnitController targetController, Ability attackAbility, int critChance)
+    public bool attackUnit(UnitController targetController, CombatAbility attackAbility, int critChance)
     {
         int damage = getAttack(attackAbility);
         if (Random.Range(0, 100) < critChance)
@@ -176,7 +176,7 @@ public class UnitController : MonoBehaviour
         statuses.Add(new StatusInstance(newStatus, source));
     }
 
-    public int getAttack(Ability attackAbility)
+    public int getAttack(CombatAbility attackAbility)
     {
         int damage = 0;
         if (equippedWeapon)
@@ -195,10 +195,11 @@ public class UnitController : MonoBehaviour
                 damage += attackAbility.getAbilityDamage();
                 break;
         }
+        damage = (int)(damage * ((attackAbility.getAbilityDamageBonus() / 100f) + 1f));
         return damage;
     }
 
-    public int getExpectedDamage(UnitController targetController, Ability attackAbility)
+    public int getExpectedDamage(UnitController targetController, CombatAbility attackAbility)
     {
         int damage = 0;
         if (equippedWeapon)
@@ -217,6 +218,7 @@ public class UnitController : MonoBehaviour
                 damage += attackAbility.getAbilityDamage();
                 break;
         }
+        damage = (int)(damage * ((attackAbility.getAbilityDamageBonus() / 100f) + 1f));
         damage -= targetController.getDefense(attackAbility);
         if (damage < 0)
         {
@@ -225,7 +227,7 @@ public class UnitController : MonoBehaviour
         return damage;
     }
 
-    public int getDefense(Ability attackAbility)
+    public int getDefense(CombatAbility attackAbility)
     {
         int defense = 0;
         if (equippedArmor)
@@ -258,10 +260,10 @@ public class UnitController : MonoBehaviour
         return teamNumber;
     }
 
-    public bool moveUnit(Vector2 destination, Ability moveAbility)
+    public bool moveUnit(Vector2 destination, MovementAbility moveAbility)
     {
         Vector2Int destinationTile = mapController.gridTilePos(destination);
-        mapController.getPathfinder().changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getAbilityRanges()[1]);
+        mapController.getPathfinder().changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getMinMoveRange());
         mapController.getPathfinder().calculate();
         if (mapController.getPathfinder().checkCoords(destinationTile))
         {

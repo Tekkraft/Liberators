@@ -15,9 +15,7 @@ public enum targetType { POINT, TILE, TARGET, ALLY, UNIT, BEAM, PROJECTILE, SELF
 
 public enum element { IMPACT, KINETIC, BALLISTIC, EXPLOSIVE, LASER, PLASMA, IONIC, AETHER, FORCE, LIGHT, DARK, FIRE, WATER, WIND, ENERGY, ICE, EARTH, WILD }
 
-public enum markerAreas { RADIAL, BOX, CROSS };
-
-public enum actionType { NONE, MOVE, ATTACK, SUPPORT, MISC, WAIT, END };
+public enum actionType { NONE, MOVE, COMBAT, MISC, WAIT, END };
 
 public enum statusType { BUFF, DEBUFF, NONE }
 

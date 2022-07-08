@@ -10,9 +10,9 @@ public class AbilityCalculator
     Vector2 targetDirection;
     List<int> targetTeams;
 
-    Ability linkedAbility;
+    CombatAbility linkedAbility;
 
-    public AbilityCalculator(List<int> targetTeams, Ability ability, Vector2Int calcPos, Vector2 targetDirection)
+    public AbilityCalculator(List<int> targetTeams, CombatAbility ability, Vector2Int calcPos, Vector2 targetDirection)
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
