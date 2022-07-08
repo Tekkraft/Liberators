@@ -273,7 +273,7 @@ public class UnitController : MonoBehaviour
      
     void setUnitPos(Vector2 worldPos)
     {
-        transform.position = worldPos;
+        transform.position = new Vector3(worldPos.x, worldPos.y, -2);
         unitGridPosition = mapController.gridWorldPos(transform.position);
         destroyMarkers();
     }

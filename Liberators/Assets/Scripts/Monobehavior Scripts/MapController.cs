@@ -86,6 +86,7 @@ public class MapController : MonoBehaviour
             }
             activeTeam++;
         }
+        checkEndGame();
         turnPhase = turnPhase.START;
         StartCoroutine(bannerTimer());
     }
@@ -234,6 +235,7 @@ public class MapController : MonoBehaviour
         {
             bool done = activeController.useActions(activeAbility.getAPCost());
         }
+        checkEndGame();
     }
 
     void attackPrepare(GameObject unit)
@@ -423,6 +425,31 @@ public class MapController : MonoBehaviour
         }
     }
 
+    //End Map Management
+    void checkEndGame()
+    {
+        if (mapData.evaluateDefeatConditions(unitList, teamLists, turnNumber))
+        {
+            mapDefeat();
+            return;
+        }
+        if (mapData.evaluateVictoryConditions(unitList, teamLists, turnNumber))
+        {
+            mapVictory();
+            return;
+        }
+    }
+
+    void mapVictory()
+    {
+        Debug.Log("VICTORY");
+    }
+
+    void mapDefeat()
+    {
+        Debug.Log("DEFEAT");
+    }
+
     //Other Helpers
     public Dictionary<int, List<GameObject>> getTeamLists()
     {
@@ -440,6 +467,7 @@ public class MapController : MonoBehaviour
             teamLists.Remove(team);
             eliminatedTeams++;
         }
+        checkEndGame();
         GameObject.Destroy(deadUnit);
     }
 

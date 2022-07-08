@@ -92,6 +92,7 @@ public class MouseController : MonoBehaviour
     void OnCursorAlternate()
     {
         mapController.completeAction(selectedUnit);
+        Debug.Log(gridPosition);
     }
 
     public void setSelectedUnit(GameObject unit)
