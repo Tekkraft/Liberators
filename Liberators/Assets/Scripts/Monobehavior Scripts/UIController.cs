@@ -35,6 +35,11 @@ public class UIController : MonoBehaviour
             hpMeter.GetComponent<Text>().text = "HP: " + unitController.getStats()[2] + "/" + unitController.getStats()[1];
             apMeter.GetComponent<Text>().text = "AP: " + unitController.getActions()[1] + "/" + unitController.getActions()[0];
         }
+        else
+        {
+            hpMeter.GetComponent<Text>().text = "HP: ";
+            apMeter.GetComponent<Text>().text = "AP: ";
+        }
     }
 
     public void hoverUnit(GameObject hover)

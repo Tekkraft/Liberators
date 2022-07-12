@@ -199,7 +199,6 @@ public class MapController : MonoBehaviour
                 pair.Value.GetComponent<UnitController>().destroyMarkers();
             }
         }
-        cursorController.setSelectedUnit(null);
         uiCanvas.GetComponent<UIController>().clearButtons();
     }
 
@@ -214,7 +213,6 @@ public class MapController : MonoBehaviour
         {
             return;
         }
-        cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
         targetController.createMoveMarkers(finalRange(unit.GetComponent<UnitController>().getStats()[0], calculateAbility), calculateAbility.getMinMoveRange(), MarkerController.Markers.BLUE);
     }
@@ -247,7 +245,6 @@ public class MapController : MonoBehaviour
             return;
         }
         actionPhase = actionPhase.PREPARE;
-        cursorController.setSelectedUnit(unit);
         UnitController targetController = unit.GetComponent<UnitController>();
         int rangeMax = calculateAbility.getAbilityRanges()[0];
         if (!calculateAbility.getFixedAbilityRange())
@@ -278,7 +275,6 @@ public class MapController : MonoBehaviour
                 targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), calculateAbility.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
             }
         }
-        cursorController.setSelectedUnit(unit);
     }
 
     void combatAction(GameObject targetUnit)
@@ -288,10 +284,10 @@ public class MapController : MonoBehaviour
             return;
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
-        UnitController selectedController = cursorController.getSelectedUnit().GetComponent<UnitController>();
+        UnitController selectedController = activeUnit.GetComponent<UnitController>();
         if (!activeAbility)
         {
-            completeAction(cursorController.getSelectedUnit());
+            completeAction(activeUnit);
             return;
         }
         Vector2 direction = new Vector2(0, 0);
@@ -301,12 +297,12 @@ public class MapController : MonoBehaviour
         }
         if (((calculateAbility.getTargetType() == targetType.UNIT || calculateAbility.getTargetType() == targetType.TARGET || calculateAbility.getTargetType() == targetType.ALLY) && !targetUnit) || (calculateAbility.getTargetType() == targetType.SELF && targetUnit != cursorController.getSelectedUnit()))
         {
-            completeAction(cursorController.getSelectedUnit());
+            completeAction(activeUnit);
             return;
         }
         if (selectedController.checkActions(activeAbility.getAPCost()))
         {
-            completeAction(cursorController.getSelectedUnit());
+            completeAction(activeUnit);
             return;
         }
         actionPhase = actionPhase.EXECUTE;
@@ -314,9 +310,9 @@ public class MapController : MonoBehaviour
         List<GameObject> hitUnits = calculator.getAffectedUnits(true);
         foreach (GameObject target in hitUnits)
         {
-            attackUnit(cursorController.getSelectedUnit(), target);
+            attackUnit(activeUnit, target);
         }
-        completeAction(cursorController.getSelectedUnit());
+        completeAction(activeUnit);
         selectedController.useActions(activeAbility.getAPCost());
     }
 

@@ -11,7 +11,7 @@ public class ButtonController : MonoBehaviour
     Grid mainGrid;
     MapController mapController;
 
-    public bool fixedAction = true;
+    public bool fixedAction;
     public Ability fixedAbility;
     public Sprite moveSprite;
     public Sprite combatSprite;
@@ -29,7 +29,7 @@ public class ButtonController : MonoBehaviour
 
     void Update()
     {
-        if (gameObject.GetComponent<Button>().interactable)
+        if (gameObject.GetComponent<Button>().interactable || fixedAction)
         {
             gameObject.GetComponent<Button>().interactable = mapController.getTurnPhase() == turnPhase.MAIN;
         }
