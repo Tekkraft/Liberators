@@ -184,7 +184,8 @@ public class MapController : MonoBehaviour
     //Action Handling
     public void completeAction(GameObject selectedUnit)
     {
-        setActionState(null, null);
+        actionState = actionType.NONE;
+        activeUnit = null;
         actionPhase = actionPhase.INACTIVE;
         GameObject.Destroy(activeOverlay);
         uiCanvas.GetComponent<UIController>().clearPreview();
@@ -295,7 +296,7 @@ public class MapController : MonoBehaviour
         {
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
-        if (((calculateAbility.getTargetType() == targetType.UNIT || calculateAbility.getTargetType() == targetType.TARGET || calculateAbility.getTargetType() == targetType.ALLY) && !targetUnit) || (calculateAbility.getTargetType() == targetType.SELF && targetUnit != cursorController.getSelectedUnit()))
+        if (((calculateAbility.getTargetType() == targetType.UNIT || calculateAbility.getTargetType() == targetType.TARGET || calculateAbility.getTargetType() == targetType.ALLY) && !targetUnit) || (calculateAbility.getTargetType() == targetType.SELF && targetUnit != activeUnit))
         {
             completeAction(activeUnit);
             return;
@@ -307,7 +308,7 @@ public class MapController : MonoBehaviour
         }
         actionPhase = actionPhase.EXECUTE;
         AbilityCalculator calculator = new AbilityCalculator(getNonAlignedTeams(activeTeam), calculateAbility, cursorController.getGridPos(), direction);
-        List<GameObject> hitUnits = calculator.getAffectedUnits(true);
+        List<GameObject> hitUnits = calculator.getAffectedUnits();
         foreach (GameObject target in hitUnits)
         {
             attackUnit(activeUnit, target);
@@ -499,6 +500,11 @@ public class MapController : MonoBehaviour
             return activeAbility as MovementAbility;
         }
         return null;
+    }
+
+    public GameObject getActiveUnit()
+    {
+        return activeUnit;
     }
 
     //Stat Math

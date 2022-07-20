@@ -10,8 +10,6 @@ public class MouseController : MonoBehaviour
     public Sprite neutralCursor;
     Grid mainGrid;
     MapController mapController;
-    GameObject selectedUnit;
-    bool unitSelected;
     Canvas uiCanvas;
     UIController uiController;
 
@@ -48,12 +46,12 @@ public class MouseController : MonoBehaviour
             activeHover = hoveredUnit;
             if (hoveredUnit && !uiController.hasPreview())
             {
-                attackPreview(selectedUnit, hoveredUnit, mapController.getActiveCombatAbility());
+                attackPreview(mapController.getActiveUnit(), hoveredUnit, mapController.getActiveCombatAbility());
             }
             else if (hoveredUnit && !hoveredUnit.Equals(activeHover))
             {
                 uiController.clearPreview();
-                attackPreview(selectedUnit, hoveredUnit, mapController.getActiveCombatAbility());
+                attackPreview(mapController.getActiveUnit(), hoveredUnit, mapController.getActiveCombatAbility());
             }
             else if (!hoveredUnit)
             {
@@ -71,7 +69,7 @@ public class MouseController : MonoBehaviour
     void OnCursorPrimary()
     {
         GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
-        if (unitSelected)
+        if (mapController.getActiveUnit())
         {
             mapController.executeAction(targetUnit);
         }
@@ -91,26 +89,7 @@ public class MouseController : MonoBehaviour
 
     void OnCursorAlternate()
     {
-        mapController.completeAction(selectedUnit);
-        Debug.Log(gridPosition);
-    }
-
-    public void setSelectedUnit(GameObject unit)
-    {
-        selectedUnit = unit;
-        if (selectedUnit)
-        {
-            unitSelected = true;
-        }
-        else
-        {
-            unitSelected = false;
-        }
-    }
-
-    public GameObject getSelectedUnit()
-    {
-        return selectedUnit;
+        mapController.completeAction(mapController.getActiveUnit());
     }
 
     public Vector2Int getGridPos()

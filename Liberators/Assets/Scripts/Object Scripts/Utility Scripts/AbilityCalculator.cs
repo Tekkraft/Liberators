@@ -22,15 +22,11 @@ public class AbilityCalculator
         this.targetTeams = targetTeams;
     }
 
-    public List<GameObject> getAffectedUnits(bool checkAOE)
+    public List<GameObject> getAffectedUnits()
     {
-        if (checkAOE)
+        if (linkedAbility.getTargetType() != targetType.BEAM)
         {
             return checkAOERange();
-        }
-        else if (linkedAbility.getTargetType() != targetType.BEAM)
-        {
-            return checkAreaRange();
         }
         else
         {
@@ -43,22 +39,12 @@ public class AbilityCalculator
 
     }
 
-    List<GameObject> checkAreaRange()
-    {
-        int rangeMax = linkedAbility.getAbilityRadii()[0];
-        int rangeMin = linkedAbility.getAbilityRadii()[1];
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
-        List<GameObject> hitUnits = rangefinder.generateTargetsNotOfTeam(calculatorPosition, targetTeams, false);
-        return hitUnits;
-    }
-
     List<GameObject> checkAOERange()
     {
         int rangeMax = linkedAbility.getAbilityRadii()[0];
         int rangeMin = linkedAbility.getAbilityRadii()[1];
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
-        List<GameObject> hitUnits;
-        hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, false);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, linkedAbility.getAOELOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
+        List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, false);
         return hitUnits;
     }
 
@@ -67,7 +53,7 @@ public class AbilityCalculator
         int rangeMax = linkedAbility.getAbilityRadii()[0];
         int rangeMin = linkedAbility.getAbilityRadii()[1];
         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
-        List<GameObject> hitUnits = rangefinder.generateTargetsNotOfTeam(calculatorPosition, targetTeams, true);
+        List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, true);
         return hitUnits;
     }
 }

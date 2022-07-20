@@ -15,3 +15,15 @@ MonoBehaviour:
   teamAlignments:
   - items: 00000000
   - items: 01000000
+  routWinConditions: []
+  reachWinConditions:
+  - corner1: {x: 12, y: 3}
+    corner2: {x: 12, y: 3}
+    targetTeam: 0
+  targetWinConditions: []
+  timeWinConditions: []
+  routLoseConditions:
+  - routTeam: 0
+  reachLoseConditions: []
+  targetLoseConditions: []
+  timeLoseConditions: []

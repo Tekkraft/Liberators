@@ -23,12 +23,14 @@ MonoBehaviour:
   fixedAbilityRange: 0
   abilityRadiusMax: 0
   abilityRadiusMin: 0
-  abilityDamageSource: 0
-  abilityDamageType: 0
+  abilityDamageSource: 1
+  abilityDamageType: 1
   damagingAbility: 0
   abilityDamage: 0
+  abilityDamageBonus: 0
   abilityHitBonus: 0
   trueHit: 0
+  numberOfAttacks: 1
   requiresLOS: 1
   requiresAOELOS: 1
   hasOwnElement: 1
