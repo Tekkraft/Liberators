@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7218121907525971630}
   - component: {fileID: 7218121907525971631}
   - component: {fileID: 7218121907525971628}
+  - component: {fileID: 4582344943212309389}
   - component: {fileID: 419961834403347135}
   m_Layer: 0
   m_Name: Unit
@@ -104,6 +105,18 @@ MonoBehaviour:
   endTurnAbility: {fileID: 11400000, guid: 581b533f39259440ab967d0802ff9eb4, type: 2}
   equippedWeapon: {fileID: 0}
   equippedArmor: {fileID: 0}
+--- !u!114 &4582344943212309389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7218121907525971602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b83c5bf5c9e1e4d08beb93007d19229d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &419961834403347135
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -89,6 +89,75 @@ public class MapController : MonoBehaviour
         checkEndGame();
         turnPhase = turnPhase.START;
         StartCoroutine(bannerTimer());
+        if (mapData.getAITeams().Contains(activeTeam))
+        {
+            runAIPhase(teamLists[activeTeam]);
+        }
+    }
+
+    void runAIPhase(List<GameObject> units)
+    {
+        foreach (GameObject active in units)
+        {
+            int cheapest = 10;
+            foreach (Ability ability in active.GetComponent<UnitController>().getAbilities())
+            {
+                //TEMPORARY MEASURE - REMOVE WHEN BEAMS VALID ABILITY
+                if (ability.getAbilityType() == actionType.COMBAT && (ability as CombatAbility).getTargetType() == targetType.BEAM)
+                {
+                    continue;
+                }
+                if (ability.getAPCost() < cheapest)
+                {
+                    cheapest = ability.getAPCost();
+                }
+            }
+            while (active.GetComponent<UnitController>().getActions()[1] >= Mathf.Max(1, cheapest))
+            {
+                Ability selectedAbility = active.GetComponent<AIController>().decideAction(active.GetComponent<UnitController>().getAbilities());
+                if (selectedAbility == null)
+                {
+                    break;
+                }
+                setActionState(active, selectedAbility);
+                if (activeAbility.getAbilityType() == actionType.COMBAT)
+                {
+                    //TEMPORARY MEASURE - REMOVE WHEN BEAMS VALID ABILITY
+                    if ((activeAbility as CombatAbility).getTargetType() == targetType.BEAM)
+                    {
+                        completeAction(active);
+                        continue;
+                    }
+                    else
+                    {
+                        CombatAbility calculateAbility = activeAbility as CombatAbility;
+                        UnitController targetController = activeUnit.GetComponent<UnitController>();
+                        int rangeMax = calculateAbility.getAbilityRanges()[0];
+                        if (!calculateAbility.getFixedAbilityRange())
+                        {
+                            rangeMax += targetController.getEquippedWeapon().getWeaponStats()[3];
+                        }
+                        int rangeMin = calculateAbility.getAbilityRanges()[1];
+                        Vector2 direction = new Vector2(0, 0);
+                        if (activeOverlay)
+                        {
+                            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
+                        }
+                        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, calculateAbility.getLOSRequirement(), this, teamLists, direction);
+                        List<GameObject> validTargets = rangefinder.generateTargetsNotOfTeam(activeUnit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), calculateAbility.getTargetType() == targetType.BEAM);
+                        GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(calculateAbility, validTargets);
+                        if (target)
+                        {
+                            executeAction(target, new Vector2(0, 0));
+                        }
+                    }
+                }
+                else if (activeAbility.getAbilityType() == actionType.MOVE)
+                {
+                    executeAction(activeUnit, tileGridPos(activeUnit.GetComponent<AIController>().getMoveTarget(activeAbility as MovementAbility)));
+                }
+            }
+        }
     }
 
     public int getActiveTeam()
@@ -166,12 +235,12 @@ public class MapController : MonoBehaviour
         }
     }
 
-    public void executeAction(GameObject targetUnit)
+    public void executeAction(GameObject targetUnit, Vector2 tileDestination)
     {
         switch (actionState)
         {
             case actionType.MOVE:
-                moveAction();
+                moveAction(tileDestination);
                 break;
 
             case actionType.COMBAT:
@@ -189,16 +258,9 @@ public class MapController : MonoBehaviour
         actionPhase = actionPhase.INACTIVE;
         GameObject.Destroy(activeOverlay);
         uiCanvas.GetComponent<UIController>().clearPreview();
-        if (selectedUnit)
+        foreach (KeyValuePair<Vector2Int, GameObject> pair in unitList)
         {
-            selectedUnit.GetComponent<UnitController>().destroyMarkers();
-        }
-        else
-        {
-            foreach (KeyValuePair<Vector2Int, GameObject> pair in unitList)
-            {
-                pair.Value.GetComponent<UnitController>().destroyMarkers();
-            }
+            pair.Value.GetComponent<UnitController>().destroyMarkers();
         }
         uiCanvas.GetComponent<UIController>().clearButtons();
     }
@@ -215,17 +277,17 @@ public class MapController : MonoBehaviour
             return;
         }
         UnitController targetController = unit.GetComponent<UnitController>();
-        targetController.createMoveMarkers(finalRange(unit.GetComponent<UnitController>().getStats()[0], calculateAbility), calculateAbility.getMinMoveRange(), MarkerController.Markers.BLUE);
+        targetController.createMoveMarkers(calculateAbility, MarkerController.Markers.BLUE);
     }
 
-    void moveAction()
+    void moveAction(Vector2 tileDestination)
     {
         UnitController activeController = activeUnit.GetComponent<UnitController>();
         if (activeController.checkActions(activeAbility.getAPCost()))
         {
             return;
         }
-        bool clear = moveUnit(activeUnit, tileGridPos(cursorController.getGridPos()));
+        bool clear = moveUnit(activeUnit, tileDestination);
         completeAction(activeUnit);
         if (clear)
         {

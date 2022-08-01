@@ -39,7 +39,6 @@ public class MouseController : MonoBehaviour
         Cursor.visible = mapController.mouseOverCanvas(cursorPosition);
         uiController.unHoverUnit();
         uiController.hoverUnit(mapController.getUnitFromCoords(gridPosition));
-
         if (mapController.getActionPhase() == actionPhase.PREPARE)
         {
             GameObject hoveredUnit = mapController.getUnitFromCoords(gridPosition);
@@ -71,7 +70,7 @@ public class MouseController : MonoBehaviour
         GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
         if (mapController.getActiveUnit())
         {
-            mapController.executeAction(targetUnit);
+            mapController.executeAction(targetUnit, tilePosition);
         }
         else
         {

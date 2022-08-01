@@ -263,9 +263,7 @@ public class UnitController : MonoBehaviour
     public bool moveUnit(Vector2 destination, MovementAbility moveAbility)
     {
         Vector2Int destinationTile = mapController.gridTilePos(destination);
-        mapController.getPathfinder().changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getMinMoveRange());
-        mapController.getPathfinder().calculate();
-        if (mapController.getPathfinder().checkCoords(destinationTile))
+        if (pathfinderValidCoords(moveAbility).Contains(destinationTile))
         {
             setUnitPos(destination);
             return true;
@@ -285,11 +283,9 @@ public class UnitController : MonoBehaviour
         return unitGridPosition;
     }
 
-    public void createMoveMarkers(int maxRange, int minRange, MarkerController.Markers color)
+    public void createMoveMarkers(MovementAbility activeAbility, MarkerController.Markers color)
     {
-        mapController.getPathfinder().changeParameters(unitGridPosition, maxRange, minRange);
-        mapController.getPathfinder().calculate();
-        List<Vector2Int> coords = mapController.getPathfinder().getValidCoords();
+        List<Vector2Int> coords = pathfinderValidCoords(activeAbility);
         foreach (Vector2Int gridPos in coords)
         {
             GameObject temp = GameObject.Instantiate(marker);
@@ -318,5 +314,12 @@ public class UnitController : MonoBehaviour
             markerList.Remove(temp);
             temp.GetComponent<MarkerController>().removeMarker();
         }
+    }
+
+    public List<Vector2Int> pathfinderValidCoords(MovementAbility moveAbility)
+    {
+        mapController.getPathfinder().changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getMinMoveRange());
+        mapController.getPathfinder().calculate();
+        return mapController.getPathfinder().getValidCoords();
     }
 }

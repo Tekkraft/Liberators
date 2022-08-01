@@ -15,6 +15,10 @@ MonoBehaviour:
   teamAlignments:
   - items: 00000000
   - items: 01000000
+  teamNames:
+  - Player
+  - Enemy
+  AITeams: 01000000
   routWinConditions: []
   reachWinConditions:
   - corner1: {x: 12, y: 3}

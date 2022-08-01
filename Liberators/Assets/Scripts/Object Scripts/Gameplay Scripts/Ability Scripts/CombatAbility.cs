@@ -14,14 +14,13 @@ public class CombatAbility : Ability
     [SerializeField]
     int abilityRangeMax;
 
-    //Unused for Move
     [SerializeField]
     int abilityRangeMin;
 
     [SerializeField]
     bool fixedAbilityRange;
 
-    //AOE Range (temp, will remove soon)
+    //AOE Range
     [SerializeField]
     int abilityRadiusMax;
 

@@ -5,9 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Map Data File", menuName = "MapData Object", order = 45)]
 public class MapData : ScriptableObject
 {
-    //To Add: Win/Lose Conditions
     [SerializeField]
     List<SublistInt> teamAlignments;
+
+    [SerializeField]
+    List<string> teamNames;
+
+    [SerializeField]
+    List<int> AITeams;
 
     [SerializeField]
     List<RoutCondition> routWinConditions;
@@ -41,6 +46,35 @@ public class MapData : ScriptableObject
             alignments.Add(temp.items);
         }
         return alignments;
+    }
+
+    public List<int> getAllTeams()
+    {
+        List<int> teamList = new List<int>();
+        foreach (SublistInt temp in teamAlignments)
+        {
+            teamList.AddRange(temp.items);
+        }
+        return teamList;
+    }
+
+    public Dictionary<int,string> getTeamNames()
+    {
+        List<int> fullList = getAllTeams();
+        Dictionary<int, string> nameList = new Dictionary<int, string>();
+        for (int i = 0; i < teamNames.Count; i++)
+        {
+            if (fullList.Contains(i))
+            {
+                nameList.Add(i, teamNames[i]);
+            }
+        }
+        return nameList;
+    }
+
+    public List<int> getAITeams()
+    {
+        return AITeams;
     }
 
     public bool evaluateVictoryConditions(Dictionary<Vector2Int, GameObject> unitList, Dictionary<int, List<GameObject>> teamLists, int currentTurn)
