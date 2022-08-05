@@ -13,6 +13,12 @@ public enum damageType { PHYSICAL, MAGIC, TRUE }
  */
 public enum targetType { POINT, TILE, TARGET, ALLY, UNIT, BEAM, PROJECTILE, SELF, NONE }
 
+public enum targetCondition { RANDOMDUPE, RANDOMUNIQUE, SELECTED, ALL }
+
+public enum targetFilter { ENEMY, ALLY, HPPERC }
+
+public enum effectType { DAMAGE, HEAL, STATUS, INVOKE, MOVE }
+
 public enum element { IMPACT, KINETIC, BALLISTIC, EXPLOSIVE, LASER, PLASMA, IONIC, AETHER, FORCE, LIGHT, DARK, FIRE, WATER, WIND, ENERGY, ICE, EARTH, WILD }
 
 public enum actionType { NONE, MOVE, COMBAT, MISC, WAIT, END };

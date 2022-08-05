@@ -16,6 +16,46 @@ MonoBehaviour:
   abilitySprite: {fileID: 21300000, guid: 9713aa18f6b5042f5b79ded182f50bc5, type: 3}
   abilityAP: 2
   abilityType: 2
+  abilityData:
+    targetInstruction:
+      targetType: 0
+      targetCondition: 2
+      targetConditionCount: 1
+      conditionFilters:
+      - targetFilter: 0
+        filterStat: 0
+      isMelee: 0
+      requiresLOS: 1
+      minRange: 3
+      minRangeFixed: 1
+      maxRange: 5
+      maxRangeFixed: 0
+      hitBonus: 50
+      fixedHit: 0
+    effectInstructions:
+    - independentHit: 0
+      effectTarget:
+        targetType: 7
+        targetCondition: 3
+        targetConditionCount: 0
+        conditionFilters: []
+        isMelee: 0
+        requiresLOS: 0
+        minRange: 0
+        minRangeFixed: 1
+        maxRange: 0
+        maxRangeFixed: 1
+        hitBonus: 0
+        fixedHit: 0
+      effectType: 0
+      effectDamageType: 0
+      effectDamageSource: 0
+      effectIntensity: 0
+      effectPercentBonus: 100
+      effectIndependentElement: 0
+      effectElement: 2
+      effectStatus: {fileID: 0}
+      effectSpecialRules: []
   isMelee: 0
   abilityTargetType: 2
   abilityRangeMax: 5

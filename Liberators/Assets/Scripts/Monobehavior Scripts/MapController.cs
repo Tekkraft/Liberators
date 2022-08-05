@@ -122,30 +122,35 @@ public class MapController : MonoBehaviour
                 setActionState(active, selectedAbility);
                 if (activeAbility.getAbilityType() == actionType.COMBAT)
                 {
+                    AbilityData selectedData = (selectedAbility as CombatAbility).getAbilityData();
                     //TEMPORARY MEASURE - REMOVE WHEN BEAMS VALID ABILITY
-                    if ((activeAbility as CombatAbility).getTargetType() == targetType.BEAM)
+                    if (selectedData.getTargetInstruction().getTargetType() == targetType.BEAM)
                     {
                         completeAction(active);
                         continue;
                     }
                     else
                     {
-                        CombatAbility calculateAbility = activeAbility as CombatAbility;
+                        TargetInstruction targetInstruction = selectedData.getTargetInstruction();
                         UnitController targetController = activeUnit.GetComponent<UnitController>();
-                        int rangeMax = calculateAbility.getAbilityRanges()[0];
-                        if (!calculateAbility.getFixedAbilityRange())
+                        int rangeMax = targetInstruction.getMaxRange();
+                        if (!targetInstruction.getMaxRangeFixed())
                         {
                             rangeMax += targetController.getEquippedWeapon().getWeaponStats()[3];
                         }
-                        int rangeMin = calculateAbility.getAbilityRanges()[1];
+                        int rangeMin = targetInstruction.getMinRange();
+                        if (!targetInstruction.getMinRangeFixed())
+                        {
+                            rangeMax += targetController.getEquippedWeapon().getWeaponStats()[3];
+                        }
                         Vector2 direction = new Vector2(0, 0);
                         if (activeOverlay)
                         {
                             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
                         }
-                        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, calculateAbility.getLOSRequirement(), this, teamLists, direction);
-                        List<GameObject> validTargets = rangefinder.generateTargetsNotOfTeam(activeUnit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), calculateAbility.getTargetType() == targetType.BEAM);
-                        GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(calculateAbility, validTargets);
+                        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), this, teamLists, direction);
+                        List<GameObject> validTargets = rangefinder.generateTargetsNotOfTeam(activeUnit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetInstruction.getTargetType() == targetType.BEAM);
+                        GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(selectedAbility as CombatAbility, validTargets);
                         if (target)
                         {
                             executeAction(target, new Vector2(0, 0));

@@ -6,6 +6,9 @@ using UnityEngine;
 public class CombatAbility : Ability
 {
     [SerializeField]
+    AbilityData abilityData;
+
+    [SerializeField]
     bool isMelee;
 
     [SerializeField]
@@ -70,6 +73,11 @@ public class CombatAbility : Ability
     //Special rules = Damage Ramp, etc.
     [SerializeField]
     List<string> specialRules;
+
+    public AbilityData getAbilityData()
+    {
+        return abilityData;
+    }
 
     public bool getMelee()
     {
