@@ -11,7 +11,7 @@ public enum damageType { PHYSICAL, MAGIC, TRUE }
  * Projectile - Moving hitbox, almost always has some sort of ramp up/down
  * Self - User only
  */
-public enum targetType { POINT, TILE, TARGET, ALLY, UNIT, BEAM, PROJECTILE, SELF, NONE }
+public enum targetType { POINT, TILE, TARGET, BEAM, PROJECTILE, SELF, NONE }
 
 public enum targetCondition { RANDOMDUPE, RANDOMUNIQUE, SELECTED, ALL }
 

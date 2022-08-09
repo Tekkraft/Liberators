@@ -111,7 +111,7 @@ public class MouseController : MonoBehaviour
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
         int[] hitStats = mapController.getHitStats(attackerController, defenderController);
-        GameObject activePreview = uiCanvas.GetComponent<UIController>().displayPreview(attacker, defender, activeAbility, hitStats[0], attackerController.getExpectedDamage(defenderController, activeAbility), hitStats[1]);
+        GameObject activePreview = uiCanvas.GetComponent<UIController>().displayPreview(attacker, defender, activeAbility, hitStats[0], attackerController.getExpectedDamage(defenderController, activeAbility.getAbilityData()), hitStats[1]);
         RectTransform previewTransform = activePreview.GetComponent<RectTransform>();
         if (!mouseOnLeft())
         {

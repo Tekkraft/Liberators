@@ -22,15 +22,15 @@ public class AbilityCalculator
         this.targetTeams = targetTeams;
     }
 
-    public List<GameObject> getAffectedUnits()
+    public List<GameObject> getAffectedUnits(TargetInstruction targetInstruction, UnitController attackingUnit)
     {
-        if (linkedAbility.getTargetType() != targetType.BEAM)
+        if (targetInstruction.getTargetType() != targetType.BEAM)
         {
-            return checkAOERange();
+            return checkAOERange(targetInstruction, attackingUnit);
         }
         else
         {
-            return checkBeamRange();
+            return checkBeamRange(attackingUnit);
         }
     }
 
@@ -39,20 +39,38 @@ public class AbilityCalculator
 
     }
 
-    List<GameObject> checkAOERange()
+    List<GameObject> checkAOERange(TargetInstruction targetInstruction, UnitController attackingUnit)
     {
-        int rangeMax = linkedAbility.getAbilityRadii()[0];
-        int rangeMin = linkedAbility.getAbilityRadii()[1];
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, linkedAbility.getAOELOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
+        int rangeMax = targetInstruction.getMaxRange();
+        if (!targetInstruction.getMaxRangeFixed())
+        {
+            rangeMax += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
+        }
+        int rangeMin = targetInstruction.getMinRange();
+        if (!targetInstruction.getMinRangeFixed())
+        {
+            rangeMin += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
+        }
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, mapController.getTeamLists(), targetDirection);
         List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, false);
         return hitUnits;
     }
 
-    List<GameObject> checkBeamRange()
+    List<GameObject> checkBeamRange(UnitController attackingUnit)
     {
-        int rangeMax = linkedAbility.getAbilityRadii()[0];
-        int rangeMin = linkedAbility.getAbilityRadii()[1];
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, linkedAbility.getLOSRequirement(), mapController, mapController.getTeamLists(), targetDirection);
+        AbilityData abilityData = linkedAbility.getAbilityData();
+        TargetInstruction targetInstruction = abilityData.getTargetInstruction();
+        int rangeMax = targetInstruction.getMaxRange();
+        if (!targetInstruction.getMaxRangeFixed())
+        {
+            rangeMax += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
+        }
+        int rangeMin = targetInstruction.getMinRange();
+        if (!targetInstruction.getMinRangeFixed())
+        {
+            rangeMin += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
+        }
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, mapController.getTeamLists(), targetDirection);
         List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, true);
         return hitUnits;
     }

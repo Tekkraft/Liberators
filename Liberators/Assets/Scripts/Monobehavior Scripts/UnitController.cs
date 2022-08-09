@@ -129,14 +129,14 @@ public class UnitController : MonoBehaviour
         return equippedArmor;
     }
 
-    public bool attackUnit(UnitController targetController, CombatAbility attackAbility, int critChance)
+    public bool attackUnit(UnitController targetController, EffectInstruction attackEffect, int critChance)
     {
-        int damage = getAttack(attackAbility);
+        int damage = getAttack(attackEffect);
         if (Random.Range(0, 100) < critChance)
         {
             damage = (int) (damage * MapController.critFactor);
         }
-        return targetController.takeDamage(damage, attackAbility.getAbilityDamageType());
+        return targetController.takeDamage(damage, attackEffect.getEffectDamageType());
     }
 
     public bool takeDamage(int damage, damageType damageType)
@@ -176,50 +176,63 @@ public class UnitController : MonoBehaviour
         statuses.Add(new StatusInstance(newStatus, source));
     }
 
-    public int getAttack(CombatAbility attackAbility)
+    public int getAttack(EffectInstruction attackEffect)
     {
         int damage = 0;
         if (equippedWeapon)
         {
             damage += equippedWeapon.getWeaponStats()[0];
         }
-        switch (attackAbility.getAbilityDamageSource())
+        switch (attackEffect.getEffectDamageSource())
         {
             case damageType.PHYSICAL:
-                damage += attackAbility.getAbilityDamage() + str;
+                damage += attackEffect.getEffectIntensity() + str;
                 break;
             case damageType.MAGIC:
-                damage += attackAbility.getAbilityDamage() + pot;
+                damage += attackEffect.getEffectIntensity() + pot;
                 break;
             case damageType.TRUE:
-                damage += attackAbility.getAbilityDamage();
+                damage += attackEffect.getEffectIntensity();
                 break;
         }
-        damage = (int)(damage * ((attackAbility.getAbilityDamageBonus() / 100f) + 1f));
+        damage = (int)(damage * ((attackEffect.getEffectPercentBonus() / 100f) + 1f));
         return damage;
     }
 
-    public int getExpectedDamage(UnitController targetController, CombatAbility attackAbility)
+    public int getExpectedDamage(UnitController targetController, AbilityData abilityData)
+    {
+        int damage = 0;
+        foreach (EffectInstruction effect in abilityData.getEffectInstructions())
+        {
+            if (effect.getEffectType() == effectType.DAMAGE)
+            {
+                damage += getExpectedDamageInstance(targetController, effect);
+            }
+        }
+        return damage;
+    }
+
+    public int getExpectedDamageInstance(UnitController targetController, EffectInstruction attackEffect)
     {
         int damage = 0;
         if (equippedWeapon)
         {
             damage += equippedWeapon.getWeaponStats()[0];
         }
-        switch (attackAbility.getAbilityDamageSource())
+        switch (attackEffect.getEffectDamageSource())
         {
             case damageType.PHYSICAL:
-                damage += attackAbility.getAbilityDamage() + str;
+                damage += attackEffect.getEffectIntensity() + str;
                 break;
             case damageType.MAGIC:
-                damage += attackAbility.getAbilityDamage() + pot;
+                damage += attackEffect.getEffectIntensity() + pot;
                 break;
             case damageType.TRUE:
-                damage += attackAbility.getAbilityDamage();
+                damage += attackEffect.getEffectIntensity();
                 break;
         }
-        damage = (int)(damage * ((attackAbility.getAbilityDamageBonus() / 100f) + 1f));
-        damage -= targetController.getDefense(attackAbility);
+        damage = (int)(damage * ((attackEffect.getEffectPercentBonus() / 100f) + 1f));
+        damage -= targetController.getDefense(attackEffect);
         if (damage < 0)
         {
             damage = 0;
@@ -227,12 +240,12 @@ public class UnitController : MonoBehaviour
         return damage;
     }
 
-    public int getDefense(CombatAbility attackAbility)
+    public int getDefense(EffectInstruction attackEffect)
     {
         int defense = 0;
         if (equippedArmor)
         {
-            switch (attackAbility.getAbilityDamageType())
+            switch (attackEffect.getEffectDamageType())
             {
                 case damageType.PHYSICAL:
                     defense += equippedArmor.getDefenses()[0];

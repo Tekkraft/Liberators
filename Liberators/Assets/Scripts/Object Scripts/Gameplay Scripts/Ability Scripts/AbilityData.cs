@@ -26,7 +26,7 @@ public class AbilityData
 public class TargetInstruction
 {
     [SerializeField]
-    targetType targetType;
+    targetType targetType = targetType.NONE;
 
     [SerializeField]
     targetCondition targetCondition;
