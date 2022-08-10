@@ -184,6 +184,13 @@ public class Rangefinder
         Vector2 target = mapController.tileGridPos(targetPos);
         Vector2 direction = target - origin;
         RaycastHit2D hit = Physics2D.Raycast(origin, direction, direction.magnitude, mapController.lineOfSightLayer);
+        if (hit.collider)
+        {
+            Debug.DrawRay(origin, direction, Color.red, 100);
+        } else
+        {
+            Debug.DrawRay(origin, direction, Color.white, 100);
+        }
         return hit.collider != null;
     }
 }

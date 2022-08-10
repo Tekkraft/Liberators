@@ -440,26 +440,35 @@ public class MapController : MonoBehaviour
 
     public List<GameObject> getHitUnits(CombatAbility calculateAbility, TargetInstruction targetInstruction, UnitController selectedController, Vector2 direction)
     {
+        Debug.Log("START");
         if (targetInstruction.getTargetType() == targetType.NONE)
         {
             List<GameObject> target = new List<GameObject>();
             target.Add(selectedController.gameObject);
+            Debug.Log("SINGLE: " + target[0].name);
             return target;
         }
         List<int> teamList = getAllTeams();
+        Debug.Log("MULTIPLE");
         foreach (TargetFilter filter in targetInstruction.getConditionFilters())
         {
             if (filter.getTargetFilter() == targetFilter.ENEMY)
             {
+                Debug.Log("ENEMIES");
                 teamList = getNonAlignedTeams(activeTeam);
             }
             else if (filter.getTargetFilter() == targetFilter.ALLY)
             {
+                Debug.Log("ALLIES");
                 teamList = getAlignedTeams(activeTeam);
             }
         }
         AbilityCalculator calculator = new AbilityCalculator(teamList, calculateAbility, cursorController.getGridPos(), direction);
         List<GameObject> hitUnits = calculator.getAffectedUnits(targetInstruction, selectedController);
+        foreach(GameObject temp in hitUnits)
+        {
+            Debug.Log(temp.name);
+        }
         return hitUnits;
     }
 
@@ -475,12 +484,12 @@ public class MapController : MonoBehaviour
         List<EffectInstruction> effectList = abilityData.getEffectInstructions();
         foreach (EffectInstruction effect in effectList)
         {
-            List<GameObject> hitUnits = getHitUnits(calculateAbility, effect.getEffectTarget(), attacker.GetComponent<UnitController>(), new Vector2());
+            List<GameObject> hitUnits = getHitUnits(calculateAbility, effect.getEffectTarget(), defender.GetComponent<UnitController>(), new Vector2());
             foreach (GameObject target in hitUnits)
             {
-                if (applyEffect(activeUnit, target, effect))
+                if (applyEffect(attacker, target, effect))
                 {
-                    killUnit(defender);
+                    killUnit(target);
                     continue;
                 }
             }
