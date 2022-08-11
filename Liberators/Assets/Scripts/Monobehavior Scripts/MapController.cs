@@ -27,6 +27,9 @@ public class MapController : MonoBehaviour
     Pathfinder pathfinder;
 
     GameObject activeOverlay;
+    List<GameObject> selectedGameObjectTargets = new List<GameObject>();
+    List<Vector2Int> selectedTileTargets = new List<Vector2Int>();
+    List<Vector2> selectedPointTargets = new List<Vector2>();
 
     turnPhase turnPhase = turnPhase.START;
     actionPhase actionPhase = actionPhase.INACTIVE;
@@ -258,6 +261,9 @@ public class MapController : MonoBehaviour
     //Action Handling
     public void completeAction(GameObject selectedUnit)
     {
+        selectedGameObjectTargets.Clear();
+        selectedPointTargets.Clear();
+        selectedTileTargets.Clear();
         actionState = actionType.NONE;
         activeUnit = null;
         actionPhase = actionPhase.INACTIVE;
@@ -360,6 +366,7 @@ public class MapController : MonoBehaviour
         }
         if (activeAbility.getAbilityType() != actionType.COMBAT)
         {
+            completeAction(activeUnit);
             return;
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
@@ -382,13 +389,81 @@ public class MapController : MonoBehaviour
             return;
         }
         actionPhase = actionPhase.EXECUTE;
+        //TEMPORARY CODE - WILL BREAK BEAMS
+        attackUnit(activeUnit, targetUnit);
+        /*
         List<GameObject> hitUnits = getHitUnits(calculateAbility, targetCondition, selectedController, direction);
         foreach(GameObject temp in hitUnits)
         {
             attackUnit(activeUnit, temp);
         }
+        */
         completeAction(activeUnit);
         selectedController.useActions(activeAbility.getAPCost());
+    }
+
+    //Targeting Functions
+    public void addUnitToTargets(GameObject addition)
+    {
+        if (!activeAbility)
+        {
+            completeAction(activeUnit);
+            return;
+        }
+        if (activeAbility.getAbilityType() != actionType.COMBAT)
+        {
+            completeAction(activeUnit);
+            return;
+        }
+        CombatAbility calculateAbility = activeAbility as CombatAbility;
+        UnitController selectedController = activeUnit.GetComponent<UnitController>();
+        AbilityData abilityData = calculateAbility.getAbilityData();
+        TargetInstruction targetCondition = abilityData.getTargetInstruction();
+        int rangeMax = abilityData.getTargetInstruction().getMaxRange();
+        if (!targetCondition.getMaxRangeFixed())
+        {
+            rangeMax += selectedController.getEquippedWeapon().getWeaponStats()[3];
+        }
+        int rangeMin = targetCondition.getMinRange();
+        if (!abilityData.getTargetInstruction().getMinRangeFixed())
+        {
+            rangeMin += selectedController.getEquippedWeapon().getWeaponStats()[3];
+        }
+        Vector2 direction = new Vector2(0, 0);
+        if (activeOverlay)
+        {
+            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
+        }
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetCondition.getLOSRequired(), this, teamLists, direction);
+        if (rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
+        {
+            selectedGameObjectTargets.Add(addition);
+        }
+    }
+
+    public void addTileToTargets(Vector2Int tile)
+    {
+
+    }
+
+    public void addPointToTargets(Vector2 position)
+    {
+
+    }
+
+    public List<GameObject> getGameObjectTargets()
+    {
+        return selectedGameObjectTargets;
+    }
+
+    public List<Vector2Int> getTileTargets()
+    {
+        return selectedTileTargets;
+    }
+
+    public List<Vector2> getPointTargets()
+    {
+        return selectedPointTargets;
     }
 
     //Unit Management
@@ -440,35 +515,26 @@ public class MapController : MonoBehaviour
 
     public List<GameObject> getHitUnits(CombatAbility calculateAbility, TargetInstruction targetInstruction, UnitController selectedController, Vector2 direction)
     {
-        Debug.Log("START");
         if (targetInstruction.getTargetType() == targetType.NONE)
         {
             List<GameObject> target = new List<GameObject>();
             target.Add(selectedController.gameObject);
-            Debug.Log("SINGLE: " + target[0].name);
             return target;
         }
         List<int> teamList = getAllTeams();
-        Debug.Log("MULTIPLE");
         foreach (TargetFilter filter in targetInstruction.getConditionFilters())
         {
             if (filter.getTargetFilter() == targetFilter.ENEMY)
             {
-                Debug.Log("ENEMIES");
                 teamList = getNonAlignedTeams(activeTeam);
             }
             else if (filter.getTargetFilter() == targetFilter.ALLY)
             {
-                Debug.Log("ALLIES");
                 teamList = getAlignedTeams(activeTeam);
             }
         }
         AbilityCalculator calculator = new AbilityCalculator(teamList, calculateAbility, cursorController.getGridPos(), direction);
         List<GameObject> hitUnits = calculator.getAffectedUnits(targetInstruction, selectedController);
-        foreach(GameObject temp in hitUnits)
-        {
-            Debug.Log(temp.name);
-        }
         return hitUnits;
     }
 

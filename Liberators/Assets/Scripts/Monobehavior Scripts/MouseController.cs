@@ -68,13 +68,9 @@ public class MouseController : MonoBehaviour
     void OnCursorPrimary()
     {
         GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
-        if (mapController.getActiveUnit())
+        if (targetUnit)
         {
-            mapController.executeAction(targetUnit, tilePosition);
-        }
-        else
-        {
-            if (targetUnit)
+            if (!mapController.getActiveUnit())
             {
                 if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
                 {
@@ -82,6 +78,24 @@ public class MouseController : MonoBehaviour
                 }
                 uiController.drawButtons(targetUnit.GetComponent<UnitController>().getAbilities(), targetUnit);
                 uiController.validateButtons(targetUnit.GetComponent<UnitController>().getActions()[1]);
+            }
+            else
+            {
+                mapController.addUnitToTargets(targetUnit);
+                if (mapController.getActiveAbility().getAbilityType() == actionType.COMBAT)
+                {
+                    if (mapController.getGameObjectTargets().Count >= mapController.getActiveCombatAbility().getAbilityData().getTargetInstruction().getTargetConditionCount())
+                    {
+                        mapController.executeAction(targetUnit, tilePosition);
+                    }
+                }
+            }
+        }
+        if (mapController.getActiveUnit())
+        {
+            if (mapController.getActiveAbility().getAbilityType() == actionType.MOVE)
+            {
+                mapController.executeAction(targetUnit, tilePosition);
             }
         }
     }
