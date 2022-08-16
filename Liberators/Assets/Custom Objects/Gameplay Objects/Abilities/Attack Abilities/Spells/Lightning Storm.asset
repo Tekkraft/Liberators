@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06ee35cf9cf8c49c5b86c7d2feb16252, type: 3}
-  m_Name: Melee Attack
+  m_Name: Lightning Storm
   m_EditorClassIdentifier: 
-  abilityName: Attack
-  abilitySprite: {fileID: 21300000, guid: f97e95fd29d5a43c6bb6357584f3e914, type: 3}
-  abilityAP: 1
+  abilityName: Lightning Storm
+  abilitySprite: {fileID: 21300000, guid: 2e1ccad23d6c74836b0a6758433dfab4, type: 3}
+  abilityAP: 3
   abilityType: 2
   abilityData:
     targetInstruction:
       targetType: 2
-      targetCondition: 2
-      targetConditionCount: 1
+      targetCondition: 0
+      targetConditionCount: 5
       conditionFilters:
       - targetFilter: 0
         filterStat: 0
-      isMelee: 1
-      requiresLOS: 1
+      isMelee: 0
+      requiresLOS: 0
       minRange: 0
       minRangeFixed: 1
-      maxRange: 0
+      maxRange: 999
       maxRangeFixed: 1
-      hitBonus: 0
+      hitBonus: -75
       fixedHit: 0
     effectInstructions:
     - independentHit: 0
@@ -42,17 +42,40 @@ MonoBehaviour:
         isMelee: 0
         requiresLOS: 0
         minRange: 0
-        minRangeFixed: 0
+        minRangeFixed: 1
         maxRange: 0
-        maxRangeFixed: 0
+        maxRangeFixed: 1
         hitBonus: 0
         fixedHit: 0
       effectType: 0
-      effectDamageType: 0
-      effectDamageSource: 0
+      effectDamageType: 1
+      effectDamageSource: 1
+      effectIntensity: 0
+      effectPercentBonus: -25
+      effectIndependentElement: 0
+      effectElement: 0
+      effectStatus: {fileID: 0}
+      effectSpecialRules: []
+    - independentHit: 1
+      effectTarget:
+        targetType: 6
+        targetCondition: 3
+        targetConditionCount: 0
+        conditionFilters: []
+        isMelee: 0
+        requiresLOS: 0
+        minRange: 0
+        minRangeFixed: 1
+        maxRange: 0
+        maxRangeFixed: 1
+        hitBonus: 25
+        fixedHit: 1
+      effectType: 2
+      effectDamageType: 1
+      effectDamageSource: 1
       effectIntensity: 0
       effectPercentBonus: 0
       effectIndependentElement: 0
       effectElement: 0
-      effectStatus: {fileID: 0}
+      effectStatus: {fileID: 11400000, guid: b07e5bc5be2d8485eaf22f9aaf9a4c0f, type: 2}
       effectSpecialRules: []

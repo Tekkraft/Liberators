@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06ee35cf9cf8c49c5b86c7d2feb16252, type: 3}
-  m_Name: Melee Attack
+  m_Name: Double Shot
   m_EditorClassIdentifier: 
-  abilityName: Attack
-  abilitySprite: {fileID: 21300000, guid: f97e95fd29d5a43c6bb6357584f3e914, type: 3}
-  abilityAP: 1
+  abilityName: Double Shot
+  abilitySprite: {fileID: 21300000, guid: 9713aa18f6b5042f5b79ded182f50bc5, type: 3}
+  abilityAP: 2
   abilityType: 2
   abilityData:
     targetInstruction:
       targetType: 2
       targetCondition: 2
-      targetConditionCount: 1
+      targetConditionCount: 2
       conditionFilters:
       - targetFilter: 0
         filterStat: 0
-      isMelee: 1
+      isMelee: 0
       requiresLOS: 1
       minRange: 0
       minRangeFixed: 1
       maxRange: 0
-      maxRangeFixed: 1
+      maxRangeFixed: 0
       hitBonus: 0
       fixedHit: 0
     effectInstructions:
@@ -51,8 +51,8 @@ MonoBehaviour:
       effectDamageType: 0
       effectDamageSource: 0
       effectIntensity: 0
-      effectPercentBonus: 0
+      effectPercentBonus: -40
       effectIndependentElement: 0
-      effectElement: 0
+      effectElement: 2
       effectStatus: {fileID: 0}
       effectSpecialRules: []

@@ -67,42 +67,38 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
-        GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
-        if (targetUnit)
+        if (!mapController.getActiveUnit())
         {
-            if (!mapController.getActiveUnit())
+            GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
+            if (targetUnit)
             {
-                if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
+                if (!mapController.getActiveUnit())
                 {
-                    return;
-                }
-                uiController.drawButtons(targetUnit.GetComponent<UnitController>().getAbilities(), targetUnit);
-                uiController.validateButtons(targetUnit.GetComponent<UnitController>().getActions()[1]);
-            }
-            else
-            {
-                mapController.addUnitToTargets(targetUnit);
-                if (mapController.getActiveAbility().getAbilityType() == actionType.COMBAT)
-                {
-                    if (mapController.getGameObjectTargets().Count >= mapController.getActiveCombatAbility().getAbilityData().getTargetInstruction().getTargetConditionCount())
+                    if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
                     {
-                        mapController.executeAction(targetUnit, tilePosition);
+                        return;
                     }
+                    uiController.drawButtons(targetUnit.GetComponent<UnitController>().getAbilities(), targetUnit);
+                    uiController.validateButtons(targetUnit.GetComponent<UnitController>().getActions()[1]);
                 }
             }
         }
-        if (mapController.getActiveUnit())
+        if (mapController.getActiveAbility())
         {
             if (mapController.getActiveAbility().getAbilityType() == actionType.MOVE)
             {
-                mapController.executeAction(targetUnit, tilePosition);
+                moveAbilityTargeting();
+            }
+            else if (mapController.getActiveAbility().getAbilityType() == actionType.COMBAT)
+            {
+                combatAbilityTargeting();
             }
         }
     }
 
     void OnCursorAlternate()
     {
-        mapController.completeAction(mapController.getActiveUnit());
+        mapController.completeAction();
     }
 
     public Vector2Int getGridPos()
@@ -124,7 +120,7 @@ public class MouseController : MonoBehaviour
     {
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
-        int[] hitStats = mapController.getHitStats(attackerController, defenderController);
+        int[] hitStats = mapController.getHitStats(attackerController, defenderController, activeAbility.getAbilityData().getTargetInstruction());
         GameObject activePreview = uiCanvas.GetComponent<UIController>().displayPreview(attacker, defender, activeAbility, hitStats[0], attackerController.getExpectedDamage(defenderController, activeAbility.getAbilityData()), hitStats[1]);
         RectTransform previewTransform = activePreview.GetComponent<RectTransform>();
         if (!mouseOnLeft())
@@ -141,4 +137,26 @@ public class MouseController : MonoBehaviour
         }
     }
 
+    //Helper Functions
+    void combatAbilityTargeting()
+    {
+        GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
+        if (mapController.getActiveUnit())
+        {
+            CombatAbility combatAbility = mapController.getActiveCombatAbility();
+            TargetInstruction targetInstruction = combatAbility.getAbilityData().getTargetInstruction();
+            mapController.combatTargeting(targetUnit, targetInstruction, tilePosition);
+        }
+    }
+
+    void moveAbilityTargeting()
+    {
+        if (mapController.getActiveUnit())
+        {
+            if (mapController.getActiveAbility().getAbilityType() == actionType.MOVE)
+            {
+                mapController.executeAction(null, tilePosition);
+            }
+        }
+    }
 }

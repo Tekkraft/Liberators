@@ -5,6 +5,7 @@ using UnityEngine;
 public class AIController : MonoBehaviour
 {
     UnitController hostController;
+    List<Ability> disabledAbilities = new List<Ability>();
 
     void Awake()
     {
@@ -16,7 +17,7 @@ public class AIController : MonoBehaviour
         List<Ability> validAbilities = new List<Ability>();
         foreach (Ability option in availableAbilities)
         {
-            if (hostController.getActions()[1] >= option.getAPCost())
+            if (hostController.getActions()[1] >= option.getAPCost() && !disabledAbilities.Contains(option))
             {
                 validAbilities.Add(option);
             }
@@ -60,5 +61,15 @@ public class AIController : MonoBehaviour
     {
         List<Vector2Int> validTiles = hostController.pathfinderValidCoords(activeAbility);
         return validTiles[Random.Range(0,validTiles.Count)];
+    }
+
+    public void disableActions(Ability ability)
+    {
+        disabledAbilities.Add(ability);
+    }
+
+    public void resetActions()
+    {
+        disabledAbilities.Clear();
     }
 }

@@ -67,12 +67,11 @@ public class MapController : MonoBehaviour
     {
         turnPhase = turnPhase.END;
         uiCanvas.GetComponent<UIController>().resetButtons();
-        completeAction(null);
+        completeAction();
         List<GameObject> active = teamLists[activeTeam];
         for (int i = active.Count - 1; i >= 0; i--)
         {
             GameObject unit = active[i];
-            unit.GetComponent<UnitController>().resetActions();
             bool dead = unit.GetComponent<UnitController>().endUnitTurn();
             if (dead)
             {
@@ -102,7 +101,8 @@ public class MapController : MonoBehaviour
     {
         foreach (GameObject active in units)
         {
-            int cheapest = 10;
+            Debug.Log(active.name);
+            int cheapest = int.MaxValue;
             foreach (Ability ability in active.GetComponent<UnitController>().getAbilities())
             {
                 //TEMPORARY MEASURE - REMOVE WHEN BEAMS VALID ABILITY
@@ -115,13 +115,14 @@ public class MapController : MonoBehaviour
                     cheapest = ability.getAPCost();
                 }
             }
-            while (active.GetComponent<UnitController>().getActions()[1] >= Mathf.Max(1, cheapest))
+            while (active.GetComponent<UnitController>().getActions()[1] >= cheapest)
             {
                 Ability selectedAbility = active.GetComponent<AIController>().decideAction(active.GetComponent<UnitController>().getAbilities());
                 if (selectedAbility == null)
                 {
                     break;
                 }
+                Debug.Log(selectedAbility.getName());
                 setActionState(active, selectedAbility);
                 if (activeAbility.getAbilityType() == actionType.COMBAT)
                 {
@@ -129,7 +130,7 @@ public class MapController : MonoBehaviour
                     //TEMPORARY MEASURE - REMOVE WHEN BEAMS VALID ABILITY
                     if (selectedData.getTargetInstruction().getTargetType() == targetType.BEAM)
                     {
-                        completeAction(active);
+                        completeAction();
                         continue;
                     }
                     else
@@ -153,10 +154,45 @@ public class MapController : MonoBehaviour
                         }
                         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), this, teamLists, direction);
                         List<GameObject> validTargets = rangefinder.generateTargetsNotOfTeam(activeUnit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetInstruction.getTargetType() == targetType.BEAM);
-                        GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(selectedAbility as CombatAbility, validTargets);
-                        if (target)
+                        if (validTargets.Count <= 0)
                         {
-                            executeAction(target, new Vector2(0, 0));
+                            active.GetComponent<AIController>().disableActions(activeAbility);
+                            continue;
+                        }
+                        if (targetInstruction.getTargetCondition() == targetCondition.SELECTED)
+                        {
+                            switch(targetInstruction.getTargetType())
+                            {
+                                case targetType.POINT:
+                                    Debug.Log("Unimplemented Selected Target for AI");
+                                    break;
+
+                                case targetType.TILE:
+                                    Debug.Log("Unimplemented Selected Target for AI");
+                                    break;
+
+                                case targetType.TARGET:
+                                    while (selectedGameObjectTargets.Count < targetInstruction.getTargetConditionCount())
+                                    {
+                                        GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(selectedAbility as CombatAbility, validTargets);
+                                        if (target)
+                                        {
+                                            combatTargeting(target, targetInstruction, new Vector2(0, 0));
+                                        }
+                                    }
+                                    break;
+
+                                default:
+                                    Debug.Log("Unimplemented/Invalid Selected Target for AI");
+                                    break;
+                            }
+                        } else
+                        {
+                            GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(selectedAbility as CombatAbility, validTargets);
+                            if (target)
+                            {
+                                combatTargeting(target, targetInstruction, new Vector2(0, 0));
+                            }
                         }
                     }
                 }
@@ -165,6 +201,7 @@ public class MapController : MonoBehaviour
                     executeAction(activeUnit, tileGridPos(activeUnit.GetComponent<AIController>().getMoveTarget(activeAbility as MovementAbility)));
                 }
             }
+            active.GetComponent<AIController>().resetActions();
         }
     }
 
@@ -255,11 +292,11 @@ public class MapController : MonoBehaviour
                 combatAction(targetUnit);
                 break;
         }
-        completeAction(targetUnit);
+        completeAction();
     }
 
     //Action Handling
-    public void completeAction(GameObject selectedUnit)
+    public void completeAction()
     {
         selectedGameObjectTargets.Clear();
         selectedPointTargets.Clear();
@@ -299,7 +336,7 @@ public class MapController : MonoBehaviour
             return;
         }
         bool clear = moveUnit(activeUnit, tileDestination);
-        completeAction(activeUnit);
+        completeAction();
         if (clear)
         {
             bool done = activeController.useActions(activeAbility.getAPCost());
@@ -342,77 +379,246 @@ public class MapController : MonoBehaviour
         {
             targetController.createAttackMarkers(new List<Vector2Int>() { targetController.getUnitPos() }, MarkerController.Markers.RED);
         }
+        else if (targetCondition.getTargetType() == targetType.BEAM)
+        {
+            GameObject temp = GameObject.Instantiate(overlayObject, targetController.gameObject.transform);
+            activeOverlay = temp;
+            activeOverlay.GetComponent<OverlayController>().initalize(rangeMax, true);
+        }
         else
         {
-            if (targetCondition.getTargetType() == targetType.BEAM)
-            {
-                GameObject temp = GameObject.Instantiate(overlayObject, targetController.gameObject.transform);
-                activeOverlay = temp;
-                activeOverlay.GetComponent<OverlayController>().initalize(rangeMax, true);
-            }
-            else
-            {
-                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
-            }
+            targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
         }
+
     }
 
     void combatAction(GameObject targetUnit)
     {
         if (!activeAbility)
         {
-            completeAction(activeUnit);
+            completeAction();
             return;
         }
         if (activeAbility.getAbilityType() != actionType.COMBAT)
         {
-            completeAction(activeUnit);
+            completeAction();
             return;
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
         UnitController selectedController = activeUnit.GetComponent<UnitController>();
         AbilityData abilityData = calculateAbility.getAbilityData();
         TargetInstruction targetCondition = abilityData.getTargetInstruction();
-        Vector2 direction = new Vector2(0, 0);
-        if (activeOverlay)
-        {
-            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
-        }
         if ((targetCondition.getTargetType() == targetType.TARGET && !targetUnit) || (targetCondition.getTargetType() == targetType.SELF && targetUnit != activeUnit))
         {
-            completeAction(activeUnit);
+            completeAction();
             return;
         }
         if (selectedController.checkActions(activeAbility.getAPCost()))
         {
-            completeAction(activeUnit);
+            completeAction();
             return;
         }
         actionPhase = actionPhase.EXECUTE;
         //TEMPORARY CODE - WILL BREAK BEAMS
-        attackUnit(activeUnit, targetUnit);
-        /*
-        List<GameObject> hitUnits = getHitUnits(calculateAbility, targetCondition, selectedController, direction);
-        foreach(GameObject temp in hitUnits)
+        foreach (GameObject target in selectedGameObjectTargets)
         {
-            attackUnit(activeUnit, temp);
+            UnitController attackerController = activeUnit.GetComponent<UnitController>();
+            UnitController defenderController = target.GetComponent<UnitController>();
+            int randomChance = Random.Range(0, 100);
+            int[] hitStats = getHitStats(attackerController, defenderController, abilityData.getTargetInstruction());
+            if (randomChance < hitStats[0])
+            {
+                attackUnit(activeUnit, target);
+            }
         }
-        */
-        completeAction(activeUnit);
+        completeAction();
         selectedController.useActions(activeAbility.getAPCost());
     }
 
     //Targeting Functions
+    public void combatTargeting(GameObject targetUnit, TargetInstruction targetInstruction, Vector2 tilePosition)
+    {
+        switch (targetInstruction.getTargetCondition())
+        {
+            case targetCondition.RANDOMDUPE:
+                switch (targetInstruction.getTargetType())
+                {
+                    case targetType.TARGET:
+                        randomUnitTargets(true);
+                        executeAction(targetUnit, tilePosition);
+                        break;
+
+                    case targetType.BEAM:
+                        Debug.Log("Invalid TargetType - Beam and RandomDupe are incompatible");
+                        break;
+
+                    case targetType.POINT:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.PROJECTILE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.NONE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.SELF:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.TILE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    default:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+                }
+                break;
+
+            case targetCondition.RANDOMUNIQUE:
+                switch (targetInstruction.getTargetType())
+                {
+                    case targetType.TARGET:
+                        randomUnitTargets(false);
+                        executeAction(targetUnit, tilePosition);
+                        break;
+
+                    case targetType.BEAM:
+                        Debug.Log("Invalid TargetType - Beam and RandomUnique are incompatible");
+                        break;
+
+                    case targetType.POINT:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.PROJECTILE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.NONE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.SELF:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.TILE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    default:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+                }
+                break;
+
+            case targetCondition.SELECTED:
+                switch (targetInstruction.getTargetType())
+                {
+                    case targetType.TARGET:
+                        if (targetUnit)
+                        {
+                            addUnitToTargets(targetUnit);
+                            if (getGameObjectTargets().Count >= getActiveCombatAbility().getAbilityData().getTargetInstruction().getTargetConditionCount())
+                            {
+                                executeAction(targetUnit, tilePosition);
+                            }
+                        }
+                        break;
+
+                    case targetType.BEAM:
+                        if (activeOverlay)
+                        {
+                            AbilityCalculator calculator = new AbilityCalculator(getSpecificTeamList(getActiveTeam(), targetInstruction), getActiveCombatAbility(), activeUnit.GetComponent<UnitController>().getUnitPos(), activeOverlay.GetComponent<OverlayController>().getOverlayDirection());
+                            List<GameObject> targetLine = calculator.getAffectedUnits(targetInstruction, activeUnit.GetComponent<UnitController>());
+                            foreach (GameObject target in targetLine)
+                            {
+                                addUnitToTargets(target);
+                            }
+                            executeAction(targetUnit, tilePosition);
+                        }
+                        break;
+
+                    case targetType.POINT:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.PROJECTILE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.NONE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.SELF:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.TILE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    default:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+                }
+                break;
+
+            case targetCondition.ALL:
+                switch (targetInstruction.getTargetType())
+                {
+                    case targetType.TARGET:
+                        allUnitTargets();
+                        executeAction(targetUnit, tilePosition);
+                        break;
+
+                    case targetType.BEAM:
+                        Debug.Log("Invalid TargetType - Beam and All are incompatible");
+                        break;
+
+                    case targetType.POINT:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.PROJECTILE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.NONE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.SELF:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    case targetType.TILE:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+
+                    default:
+                        Debug.Log("Invalid/Unimplemented TargetType");
+                        break;
+                }
+                break;
+        }
+    }
+
     public void addUnitToTargets(GameObject addition)
     {
         if (!activeAbility)
         {
-            completeAction(activeUnit);
+            completeAction();
             return;
         }
         if (activeAbility.getAbilityType() != actionType.COMBAT)
         {
-            completeAction(activeUnit);
+            completeAction();
             return;
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
@@ -447,6 +653,115 @@ public class MapController : MonoBehaviour
     }
 
     public void addPointToTargets(Vector2 position)
+    {
+
+    }
+
+    public void randomUnitTargets(bool duplicatesAllowed)
+    {
+        if (!activeAbility)
+        {
+            completeAction();
+            return;
+        }
+        if (activeAbility.getAbilityType() != actionType.COMBAT)
+        {
+            completeAction();
+            return;
+        }
+        CombatAbility calculateAbility = activeAbility as CombatAbility;
+        UnitController selectedController = activeUnit.GetComponent<UnitController>();
+        AbilityData abilityData = calculateAbility.getAbilityData();
+        TargetInstruction targetCondition = abilityData.getTargetInstruction();
+        int rangeMax = abilityData.getTargetInstruction().getMaxRange();
+        if (!targetCondition.getMaxRangeFixed())
+        {
+            rangeMax += selectedController.getEquippedWeapon().getWeaponStats()[3];
+        }
+        int rangeMin = targetCondition.getMinRange();
+        if (!abilityData.getTargetInstruction().getMinRangeFixed())
+        {
+            rangeMin += selectedController.getEquippedWeapon().getWeaponStats()[3];
+        }
+        Vector2 direction = new Vector2(0, 0);
+        if (activeOverlay)
+        {
+            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
+        }
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetCondition.getLOSRequired(), this, teamLists, direction);
+        List<GameObject> potentialTargets = rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), false);
+        if (duplicatesAllowed)
+        {
+            while (selectedGameObjectTargets.Count <= targetCondition.getTargetConditionCount())
+            {
+                selectedGameObjectTargets.Add(potentialTargets[Random.Range(0, potentialTargets.Count)]);
+            }
+        }
+        else
+        {
+            if (potentialTargets.Count <= targetCondition.getTargetConditionCount())
+            {
+                selectedGameObjectTargets.AddRange(potentialTargets);
+            }
+            else
+            {
+                while (selectedGameObjectTargets.Count <= targetCondition.getTargetConditionCount())
+                {
+                    GameObject selected = potentialTargets[Random.Range(0, potentialTargets.Count)];
+                    selectedGameObjectTargets.Add(selected);
+                    potentialTargets.Remove(selected);
+                }
+            }
+        }
+    }
+
+    public void randomTileTargets(bool duplicatesAllowed)
+    {
+
+    }
+
+    public void randomPointTargets(bool duplicatesAllowed)
+    {
+
+    }
+
+    public void allUnitTargets()
+    {
+        if (!activeAbility)
+        {
+            completeAction();
+            return;
+        }
+        if (activeAbility.getAbilityType() != actionType.COMBAT)
+        {
+            completeAction();
+            return;
+        }
+        CombatAbility calculateAbility = activeAbility as CombatAbility;
+        UnitController selectedController = activeUnit.GetComponent<UnitController>();
+        AbilityData abilityData = calculateAbility.getAbilityData();
+        TargetInstruction targetCondition = abilityData.getTargetInstruction();
+        int rangeMax = abilityData.getTargetInstruction().getMaxRange();
+        if (!targetCondition.getMaxRangeFixed())
+        {
+            rangeMax += selectedController.getEquippedWeapon().getWeaponStats()[3];
+        }
+        int rangeMin = targetCondition.getMinRange();
+        if (!abilityData.getTargetInstruction().getMinRangeFixed())
+        {
+            rangeMin += selectedController.getEquippedWeapon().getWeaponStats()[3];
+        }
+        Vector2 direction = new Vector2(0, 0);
+        if (activeOverlay)
+        {
+            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
+        }
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetCondition.getLOSRequired(), this, teamLists, direction);
+        List<GameObject> potentialTargets = rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), false);
+        selectedGameObjectTargets.AddRange(potentialTargets);
+    }
+
+    public void allTileTargets()
     {
 
     }
@@ -521,18 +836,7 @@ public class MapController : MonoBehaviour
             target.Add(selectedController.gameObject);
             return target;
         }
-        List<int> teamList = getAllTeams();
-        foreach (TargetFilter filter in targetInstruction.getConditionFilters())
-        {
-            if (filter.getTargetFilter() == targetFilter.ENEMY)
-            {
-                teamList = getNonAlignedTeams(activeTeam);
-            }
-            else if (filter.getTargetFilter() == targetFilter.ALLY)
-            {
-                teamList = getAlignedTeams(activeTeam);
-            }
-        }
+        List<int> teamList = getSpecificTeamList(activeTeam, targetInstruction);
         AbilityCalculator calculator = new AbilityCalculator(teamList, calculateAbility, cursorController.getGridPos(), direction);
         List<GameObject> hitUnits = calculator.getAffectedUnits(targetInstruction, selectedController);
         return hitUnits;
@@ -568,10 +872,10 @@ public class MapController : MonoBehaviour
         UnitController defenderController = defender.GetComponent<UnitController>();
         bool defeated = false;
         int randomChance = Random.Range(0, 100);
-        int[] hitStats = getHitStats(attackerController, defenderController);
+        int[] hitStats = getHitStats(attackerController, defenderController, effect.getEffectTarget());
         int totalHit = hitStats[0];
         int totalCrit = hitStats[1];
-        if (randomChance < totalHit)
+        if (randomChance < totalHit || !effect.getIndependentHit())
         {
             if (attackerController.getEquippedWeapon().getWeaponStatus())
             {
@@ -633,6 +937,25 @@ public class MapController : MonoBehaviour
         }
         checkEndGame();
         GameObject.Destroy(deadUnit);
+    }
+
+    public List<int> getSpecificTeamList(int primaryTeam, TargetInstruction targetInstruction)
+    {
+        List<int> teamList = getAllTeams();
+        foreach (TargetFilter filter in targetInstruction.getConditionFilters())
+        {
+            if (filter.getTargetFilter() == targetFilter.ENEMY)
+            {
+                teamList = getNonAlignedTeams(activeTeam);
+                break;
+            }
+            else if (filter.getTargetFilter() == targetFilter.ALLY)
+            {
+                teamList = getAlignedTeams(activeTeam);
+                break;
+            }
+        }
+        return teamList;
     }
 
     List<int> getAlignedTeams(int team)
@@ -703,32 +1026,26 @@ public class MapController : MonoBehaviour
         return activeUnit;
     }
 
+    public GameObject getActiveOverlay()
+    {
+        return activeOverlay;
+    }
+
     //Stat Math
     public int finalRange(int baseRange, MovementAbility ability)
     {
         return Mathf.FloorToInt((float)(baseRange + ability.getFlatMoveBonus()) * (((float)ability.getPercentMoveBonus() / 100f) + 1f));
     }
 
-    public int[] getHitStats(UnitController attackerController, UnitController defenderController)
+    public int[] getHitStats(UnitController attackerController, UnitController defenderController, TargetInstruction targetInstruction)
     {
-        if (activeAbility.getAbilityType() != actionType.COMBAT)
-        {
-            return null;
-        }
-        CombatAbility calculateAbility = activeAbility as CombatAbility;
-        AbilityData abilityData = calculateAbility.getAbilityData();
-        TargetInstruction targetInstruction = abilityData.getTargetInstruction();
-        int effectiveHit = (int)(attackerController.getStats()[5] * hitFactor + targetInstruction.getHitBonus());
-        if (targetInstruction.getIsMelee())
-        {
-            effectiveHit = (int)(attackerController.getStats()[6] * hitFactor + targetInstruction.getHitBonus());
-        }
-        if (attackerController.equippedWeapon)
-        {
-            effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
-        }
+        int effectiveHit;
+        int effectiveAvoid;
+        int totalHit;
+
+        //Always calculate avoid for crit
         float rawAvoid;
-        if (!abilityData.getTargetInstruction().getIsMelee())
+        if (!targetInstruction.getIsMelee())
         {
             if (defenderController.getStats()[7] < reactThreshold)
             {
@@ -743,9 +1060,31 @@ public class MapController : MonoBehaviour
         {
             rawAvoid = defenderController.getStats()[6] + defenderController.getStats()[7];
         }
-        int effectiveAvoid = (int)(rawAvoid * avoidFactor);
+        effectiveAvoid = (int)(rawAvoid * avoidFactor);
+
+        //Calculate hit differently if fixed hit
+        if (targetInstruction.getFixedHit())
+        {
+            effectiveHit = targetInstruction.getHitBonus();
+            totalHit = effectiveHit;
+        }
+        else
+        {
+            effectiveHit = (int)(attackerController.getStats()[5] * hitFactor + targetInstruction.getHitBonus());
+            if (targetInstruction.getIsMelee())
+            {
+                effectiveHit = (int)(attackerController.getStats()[6] * hitFactor + targetInstruction.getHitBonus());
+            }
+            if (attackerController.equippedWeapon)
+            {
+                effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
+            }
+            totalHit = effectiveHit - effectiveAvoid;
+        }
+
+        //Calculate crit independently
         int effectiveCrit;
-        if (abilityData.getTargetInstruction().getIsMelee())
+        if (targetInstruction.getIsMelee())
         {
             //Melee - Use acuity
             effectiveCrit = attackerController.getStats()[5];
@@ -755,7 +1094,6 @@ public class MapController : MonoBehaviour
             //Ranged - Use finesse
             effectiveCrit = attackerController.getStats()[6];
         }
-        int totalHit = effectiveHit - effectiveAvoid;
         int totalCrit = effectiveCrit - effectiveAvoid;
         return new int[] { totalHit, totalCrit };
     }

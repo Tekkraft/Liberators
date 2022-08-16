@@ -44,7 +44,10 @@ public class UnitController : MonoBehaviour
         mapController.addUnit(this.gameObject);
         createUnit(unitObject.getStats(), teamNumber);
         this.unitName = unitObject.getUnitName();
-        allAbilities.Add(basicMovement);
+        if (basicMovement)
+        {
+            allAbilities.Add(basicMovement);
+        }
         if (equippedWeapon)
         {
             allAbilities.AddRange(equippedWeapon.getAbilities());
@@ -89,26 +92,34 @@ public class UnitController : MonoBehaviour
     //Call only at end of team turn
     public bool endUnitTurn()
     {
+        resetActions();
         for (int i = statuses.Count - 1; i >= 0; i--)
         {
             Status linkedStatus = statuses[i].getStatus();
-            int[] healthOverTime = linkedStatus.getHealthOverTime();
-            if (healthOverTime[0] > 0)
+            if (linkedStatus.getHealthOverTime()[0] > 0)
             {
-                bool lethal = takeDamage(healthOverTime[0], damageType.TRUE);
+                bool lethal = takeDamage(linkedStatus.getHealthOverTime()[0], damageType.TRUE);
                 if (lethal)
                 {
                     return true;
                 }
             }
-            if (healthOverTime[1] > 0)
+            if (linkedStatus.getHealthOverTime()[1] > 0)
             {
-                restoreHealth(healthOverTime[1]);
+                restoreHealth(linkedStatus.getHealthOverTime()[1]);
             }
             bool expired = statuses[i].update();
             if (expired)
             {
                 statuses.Remove(statuses[i]);
+            }
+            if (linkedStatus.getAPMode())
+            {
+                actions += linkedStatus.getAPChange();
+                if (actions < 0)
+                {
+                    actions = 0;
+                }
             }
         }
         return false;
@@ -174,6 +185,14 @@ public class UnitController : MonoBehaviour
     public void inflictStatus(Status newStatus, GameObject source)
     {
         statuses.Add(new StatusInstance(newStatus, source));
+        if (newStatus.getAPMode())
+        {
+            actions += newStatus.getAPChange();
+            if (actions < 0)
+            {
+                actions = 0;
+            }
+        }
     }
 
     public int getAttack(EffectInstruction attackEffect)

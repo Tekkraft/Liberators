@@ -25,17 +25,17 @@ MonoBehaviour:
       - targetFilter: 0
         filterStat: 0
       isMelee: 0
-      requiresLOS: 0
+      requiresLOS: 1
       minRange: 0
       minRangeFixed: 1
-      maxRange: 200
+      maxRange: 999
       maxRangeFixed: 1
       hitBonus: 0
       fixedHit: 0
     effectInstructions:
     - independentHit: 0
       effectTarget:
-        targetType: 7
+        targetType: 6
         targetCondition: 3
         targetConditionCount: 0
         conditionFilters: []
@@ -56,24 +56,3 @@ MonoBehaviour:
       effectElement: 10
       effectStatus: {fileID: 0}
       effectSpecialRules: []
-  isMelee: 0
-  abilityTargetType: 7
-  abilityRangeMax: 0
-  abilityRangeMin: 0
-  fixedAbilityRange: 0
-  abilityRadiusMax: 200
-  abilityRadiusMin: 0
-  abilityDamageSource: 1
-  abilityDamageType: 1
-  damagingAbility: 1
-  abilityDamage: 0
-  abilityDamageBonus: 150
-  abilityHitBonus: 0
-  trueHit: 0
-  numberOfAttacks: 1
-  requiresLOS: 0
-  requiresAOELOS: 1
-  hasOwnElement: 1
-  abilityElement: 10
-  inflictStatus: {fileID: 0}
-  specialRules: []

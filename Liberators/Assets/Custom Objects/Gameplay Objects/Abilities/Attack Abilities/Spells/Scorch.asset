@@ -35,7 +35,7 @@ MonoBehaviour:
     effectInstructions:
     - independentHit: 0
       effectTarget:
-        targetType: 7
+        targetType: 6
         targetCondition: 3
         targetConditionCount: 0
         conditionFilters: []
@@ -56,24 +56,3 @@ MonoBehaviour:
       effectElement: 0
       effectStatus: {fileID: 11400000, guid: 732f05df2eb3742fa96b36ebb1e144d3, type: 2}
       effectSpecialRules: []
-  isMelee: 0
-  abilityTargetType: 2
-  abilityRangeMax: 0
-  abilityRangeMin: 0
-  fixedAbilityRange: 0
-  abilityRadiusMax: 0
-  abilityRadiusMin: 0
-  abilityDamageSource: 1
-  abilityDamageType: 1
-  damagingAbility: 0
-  abilityDamage: 0
-  abilityDamageBonus: 0
-  abilityHitBonus: 0
-  trueHit: 0
-  numberOfAttacks: 1
-  requiresLOS: 1
-  requiresAOELOS: 1
-  hasOwnElement: 1
-  abilityElement: 11
-  inflictStatus: {fileID: 11400000, guid: 732f05df2eb3742fa96b36ebb1e144d3, type: 2}
-  specialRules: []
