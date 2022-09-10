@@ -32,7 +32,7 @@ public class Weapon : ScriptableObject
     [SerializeField]
     Status weaponStatus;
 
-    public string getWeaponName()
+    public string getName()
     {
         return weaponName;
     }

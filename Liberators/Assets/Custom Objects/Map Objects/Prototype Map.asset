@@ -19,7 +19,8 @@ MonoBehaviour:
   - Player
   - Enemy
   AITeams: 01000000
-  routWinConditions: []
+  routWinConditions:
+  - routTeam: 1
   reachWinConditions:
   - corner1: {x: 12, y: 3}
     corner2: {x: 12, y: 3}

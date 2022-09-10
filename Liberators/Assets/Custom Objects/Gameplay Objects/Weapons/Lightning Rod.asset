@@ -15,7 +15,7 @@ MonoBehaviour:
   weaponName: Lightning Rod
   weaponType: 2
   weaponStrength: 0
-  weaponHit: 0
+  weaponHit: 200
   weaponCrit: 0
   weaponRange: 0
   weaponElement: 14

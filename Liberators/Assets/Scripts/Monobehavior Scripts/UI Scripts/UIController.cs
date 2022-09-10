@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     public GameObject apMeter;
     public GameObject bannerComponent;
     public GameObject combatPreview;
+    public GameObject unitDataPreview;
 
     GameObject activeBanner;
     GameObject activePreview;
@@ -148,10 +149,17 @@ public class UIController : MonoBehaviour
     }
 
     //Preview Handling
-    public GameObject displayPreview(GameObject attacker, GameObject defender, Ability activeAbility, int playerHit, int playerDamage, int playerCrit)
+    public GameObject displayPreview(GameObject defender, Ability activeAbility, int playerHit, int playerDamage, int playerCrit)
     {
         activePreview = GameObject.Instantiate(combatPreview, transform);
-        activePreview.GetComponent<PreviewController>().setData(attacker, defender, activeAbility, playerHit, playerDamage, playerCrit);
+        activePreview.GetComponent<PreviewController>().setData(defender, activeAbility, playerHit, playerDamage, playerCrit);
+        return activePreview;
+    }
+
+    public GameObject displayUnitDataPreview(GameObject unit)
+    {
+        activePreview = GameObject.Instantiate(unitDataPreview, transform);
+        activePreview.GetComponent<PreviewController>().setData(unit);
         return activePreview;
     }
 

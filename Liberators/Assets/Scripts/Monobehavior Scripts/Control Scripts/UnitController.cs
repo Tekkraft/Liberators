@@ -98,7 +98,7 @@ public class UnitController : MonoBehaviour
             Status linkedStatus = statuses[i].getStatus();
             if (linkedStatus.getHealthOverTime()[0] > 0)
             {
-                bool lethal = takeDamage(linkedStatus.getHealthOverTime()[0], damageType.TRUE);
+                bool lethal = takeDamage(linkedStatus.getHealthOverTime()[0], damageType.TRUE).Value;
                 if (lethal)
                 {
                     return true;
@@ -140,17 +140,20 @@ public class UnitController : MonoBehaviour
         return equippedArmor;
     }
 
-    public bool attackUnit(UnitController targetController, EffectInstruction attackEffect, int critChance)
+    public CombatData attackUnit(UnitController targetController, EffectInstruction attackEffect, int critChance)
     {
         int damage = getAttack(attackEffect);
+        bool crit = false;
         if (Random.Range(0, 100) < critChance)
         {
             damage = (int) (damage * MapController.critFactor);
+            crit = true;
         }
-        return targetController.takeDamage(damage, attackEffect.getEffectDamageType());
+        KeyValuePair<int, bool> baseData = targetController.takeDamage(damage, attackEffect.getEffectDamageType());
+        return new CombatData(gameObject, targetController.gameObject, attackEffect, true, crit, baseData.Key, baseData.Value);
     }
 
-    public bool takeDamage(int damage, damageType damageType)
+    public KeyValuePair<int, bool> takeDamage(int damage, damageType damageType)
     {
         int damageTaken = damage;
         if (equippedArmor)
@@ -170,7 +173,7 @@ public class UnitController : MonoBehaviour
             damageTaken = 0;
         }
         currentHP -= damageTaken;
-        return currentHP <= 0;
+        return new KeyValuePair<int, bool>(damageTaken, currentHP <= 0);
     }
 
     public void restoreHealth(int healing)

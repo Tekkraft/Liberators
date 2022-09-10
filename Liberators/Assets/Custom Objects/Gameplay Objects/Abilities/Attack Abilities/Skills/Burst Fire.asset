@@ -58,7 +58,7 @@ MonoBehaviour:
       effectSpecialRules: []
     - independentHit: 1
       effectTarget:
-        targetType: 7
+        targetType: 6
         targetCondition: 3
         targetConditionCount: 0
         conditionFilters: []
@@ -81,7 +81,7 @@ MonoBehaviour:
       effectSpecialRules: []
     - independentHit: 1
       effectTarget:
-        targetType: 7
+        targetType: 6
         targetCondition: 3
         targetConditionCount: 0
         conditionFilters: []

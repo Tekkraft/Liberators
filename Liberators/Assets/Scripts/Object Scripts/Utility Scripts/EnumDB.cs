@@ -29,4 +29,4 @@ public enum weaponType { MELEE, GUN, FOCUS, SPECIAL };
 
 public enum actionPhase { INACTIVE, PREPARE, EXECUTE };
 
-public enum turnPhase { START, MAIN, END };
+public enum turnPhase { START, MAIN, PAUSE, END };

@@ -101,7 +101,6 @@ public class MapController : MonoBehaviour
     {
         foreach (GameObject active in units)
         {
-            Debug.Log(active.name);
             int cheapest = int.MaxValue;
             foreach (Ability ability in active.GetComponent<UnitController>().getAbilities())
             {
@@ -122,7 +121,6 @@ public class MapController : MonoBehaviour
                 {
                     break;
                 }
-                Debug.Log(selectedAbility.getName());
                 setActionState(active, selectedAbility);
                 if (activeAbility.getAbilityType() == actionType.COMBAT)
                 {
@@ -146,6 +144,11 @@ public class MapController : MonoBehaviour
                         if (!targetInstruction.getMinRangeFixed())
                         {
                             rangeMax += targetController.getEquippedWeapon().getWeaponStats()[3];
+                        }
+                        if (targetInstruction.getIsMelee())
+                        {
+                            rangeMax = 1;
+                            rangeMin = 1;
                         }
                         Vector2 direction = new Vector2(0, 0);
                         if (activeOverlay)
@@ -178,6 +181,7 @@ public class MapController : MonoBehaviour
                                         if (target)
                                         {
                                             combatTargeting(target, targetInstruction, new Vector2(0, 0));
+                                            break;
                                         }
                                     }
                                     break;
@@ -224,6 +228,11 @@ public class MapController : MonoBehaviour
     public turnPhase getTurnPhase()
     {
         return turnPhase;
+    }
+
+    public void setTurnPhase(turnPhase phase)
+    {
+        turnPhase = phase;
     }
 
     public actionPhase getActionPhase()
@@ -368,6 +377,11 @@ public class MapController : MonoBehaviour
         if (!abilityData.getTargetInstruction().getMinRangeFixed())
         {
             rangeMin += targetController.getEquippedWeapon().getWeaponStats()[3];
+        }
+        if (targetCondition.getIsMelee())
+        {
+            rangeMax = 1;
+            rangeMin = 1;
         }
         Vector2 direction = new Vector2(0, 0);
         if (activeOverlay)
@@ -635,6 +649,11 @@ public class MapController : MonoBehaviour
         {
             rangeMin += selectedController.getEquippedWeapon().getWeaponStats()[3];
         }
+        if (targetCondition.getIsMelee())
+        {
+            rangeMax = 1;
+            rangeMin = 1;
+        }
         Vector2 direction = new Vector2(0, 0);
         if (activeOverlay)
         {
@@ -682,6 +701,11 @@ public class MapController : MonoBehaviour
         if (!abilityData.getTargetInstruction().getMinRangeFixed())
         {
             rangeMin += selectedController.getEquippedWeapon().getWeaponStats()[3];
+        }
+        if (targetCondition.getIsMelee())
+        {
+            rangeMax = 1;
+            rangeMin = 1;
         }
         Vector2 direction = new Vector2(0, 0);
         if (activeOverlay)
@@ -750,6 +774,11 @@ public class MapController : MonoBehaviour
         if (!abilityData.getTargetInstruction().getMinRangeFixed())
         {
             rangeMin += selectedController.getEquippedWeapon().getWeaponStats()[3];
+        }
+        if (targetCondition.getIsMelee())
+        {
+            rangeMax = 1;
+            rangeMin = 1;
         }
         Vector2 direction = new Vector2(0, 0);
         if (activeOverlay)
@@ -857,7 +886,9 @@ public class MapController : MonoBehaviour
             List<GameObject> hitUnits = getHitUnits(calculateAbility, effect.getEffectTarget(), defender.GetComponent<UnitController>(), new Vector2());
             foreach (GameObject target in hitUnits)
             {
-                if (applyEffect(attacker, target, effect))
+                CombatData result = applyEffect(attacker, target, effect);
+                Debug.Log(result.getAttacker().name + " attacks " + result.getDefender() + " and " + result.getAttackHit() + " hits and " + result.getAttackCrit() + " crits for " + result.getDamageDealt() + " and kills " + result.getDefenderKilled());
+                if (result.getDefenderKilled())
                 {
                     killUnit(target);
                     continue;
@@ -866,15 +897,15 @@ public class MapController : MonoBehaviour
         }
     }
 
-    public bool applyEffect(GameObject attacker, GameObject defender, EffectInstruction effect)
+    public CombatData applyEffect(GameObject attacker, GameObject defender, EffectInstruction effect)
     {
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
-        bool defeated = false;
         int randomChance = Random.Range(0, 100);
         int[] hitStats = getHitStats(attackerController, defenderController, effect.getEffectTarget());
         int totalHit = hitStats[0];
         int totalCrit = hitStats[1];
+        CombatData result = new CombatData(attacker, defender, effect, false, false, 0, false);
         if (randomChance < totalHit || !effect.getIndependentHit())
         {
             if (attackerController.getEquippedWeapon().getWeaponStatus())
@@ -887,10 +918,10 @@ public class MapController : MonoBehaviour
             }
             if (effect.getEffectType() == effectType.DAMAGE)
             {
-                defeated = attackerController.attackUnit(defender.GetComponent<UnitController>(), effect, totalCrit);
+                result = attackerController.attackUnit(defender.GetComponent<UnitController>(), effect, totalCrit);
             }
         }
-        return defeated;
+        return result;
     }
 
     //End Map Management

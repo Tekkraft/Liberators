@@ -19,7 +19,7 @@ MonoBehaviour:
   abilityData:
     targetInstruction:
       targetType: 3
-      targetCondition: 3
+      targetCondition: 2
       targetConditionCount: 0
       conditionFilters:
       - targetFilter: 0
@@ -36,7 +36,7 @@ MonoBehaviour:
     - independentHit: 0
       effectTarget:
         targetType: 6
-        targetCondition: 3
+        targetCondition: 2
         targetConditionCount: 0
         conditionFilters: []
         isMelee: 0

@@ -67,38 +67,80 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
-        if (!mapController.getActiveUnit())
+        switch (mapController.getTurnPhase())
         {
-            GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
-            if (targetUnit)
-            {
+            case turnPhase.MAIN:
                 if (!mapController.getActiveUnit())
                 {
-                    if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
+                    GameObject targetUnit = mapController.getUnitFromCoords(gridPosition);
+                    if (targetUnit)
                     {
-                        return;
+                        if (!mapController.getActiveUnit())
+                        {
+                            if (mapController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
+                            {
+                                return;
+                            }
+                            uiController.drawButtons(targetUnit.GetComponent<UnitController>().getAbilities(), targetUnit);
+                            uiController.validateButtons(targetUnit.GetComponent<UnitController>().getActions()[1]);
+                        }
                     }
-                    uiController.drawButtons(targetUnit.GetComponent<UnitController>().getAbilities(), targetUnit);
-                    uiController.validateButtons(targetUnit.GetComponent<UnitController>().getActions()[1]);
                 }
-            }
-        }
-        if (mapController.getActiveAbility())
-        {
-            if (mapController.getActiveAbility().getAbilityType() == actionType.MOVE)
-            {
-                moveAbilityTargeting();
-            }
-            else if (mapController.getActiveAbility().getAbilityType() == actionType.COMBAT)
-            {
-                combatAbilityTargeting();
-            }
+                if (mapController.getActiveAbility())
+                {
+                    if (mapController.getActiveAbility().getAbilityType() == actionType.MOVE)
+                    {
+                        moveAbilityTargeting();
+                    }
+                    else if (mapController.getActiveAbility().getAbilityType() == actionType.COMBAT)
+                    {
+                        combatAbilityTargeting();
+                    }
+                }
+                break;
+
+            default:
+                Debug.Log("Turn Phase Issue - Primary");
+                break;
         }
     }
 
     void OnCursorAlternate()
     {
-        mapController.completeAction();
+        switch (mapController.getTurnPhase())
+        {
+            case turnPhase.MAIN:
+                switch (mapController.getActionPhase())
+                {
+                    case actionPhase.PREPARE:
+                        //Cancel action
+                        mapController.completeAction();
+                        break;
+
+                    case actionPhase.EXECUTE:
+                        //Skip animation
+                        break;
+
+                    case actionPhase.INACTIVE:
+                        //Open unit data
+                        getUnitData(mapController.getUnitFromCoords(gridPosition));
+                        break;
+
+                    default:
+                        Debug.Log("Action Phase Error - Secondary");
+                        break;
+                }
+                break;
+
+            case turnPhase.PAUSE:
+                uiController.clearPreview();
+                mapController.setTurnPhase(turnPhase.MAIN);
+                break;
+
+            default:
+                Debug.Log("Turn Phase Error - Secondary");
+                break;
+        }
     }
 
     public Vector2Int getGridPos()
@@ -121,7 +163,7 @@ public class MouseController : MonoBehaviour
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
         int[] hitStats = mapController.getHitStats(attackerController, defenderController, activeAbility.getAbilityData().getTargetInstruction());
-        GameObject activePreview = uiCanvas.GetComponent<UIController>().displayPreview(attacker, defender, activeAbility, hitStats[0], attackerController.getExpectedDamage(defenderController, activeAbility.getAbilityData()), hitStats[1]);
+        GameObject activePreview = uiCanvas.GetComponent<UIController>().displayPreview(defender, activeAbility, hitStats[0], attackerController.getExpectedDamage(defenderController, activeAbility.getAbilityData()), hitStats[1]);
         RectTransform previewTransform = activePreview.GetComponent<RectTransform>();
         if (!mouseOnLeft())
         {
@@ -158,5 +200,16 @@ public class MouseController : MonoBehaviour
                 mapController.executeAction(null, tilePosition);
             }
         }
+    }
+
+    //Pull up unit data UI and disable all main game input
+    void getUnitData(GameObject unit)
+    {
+        if (!unit)
+        {
+            return;
+        }
+        mapController.setTurnPhase(turnPhase.PAUSE);
+        uiCanvas.GetComponent<UIController>().displayUnitDataPreview(unit);
     }
 }
