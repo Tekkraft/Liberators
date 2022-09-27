@@ -14,9 +14,11 @@ public class UIController : MonoBehaviour
     public GameObject bannerComponent;
     public GameObject combatPreview;
     public GameObject unitDataPreview;
+    public GameObject animationPanel;
 
     GameObject activeBanner;
     GameObject activePreview;
+    GameObject activeAnimation;
 
     GameObject hoveredUnit;
     List<GameObject> allButtons = new List<GameObject>();
@@ -163,6 +165,18 @@ public class UIController : MonoBehaviour
         return activePreview;
     }
 
+    public GameObject displayBattleAnimation(List<CombatData> combatSequence)
+    {
+        activeAnimation = GameObject.Instantiate(animationPanel, transform);
+        activeAnimation.GetComponent<AnimController>().createBattleAnimation(combatSequence);
+        return activeAnimation;
+    }
+
+    public void terminateBattleAnimation()
+    {
+        activeAnimation.GetComponent<AnimController>().terminateAnimation();
+    }
+
     public void clearPreview()
     {
         GameObject.Destroy(activePreview);
@@ -171,5 +185,10 @@ public class UIController : MonoBehaviour
     public bool hasPreview()
     {
         return activePreview;
+    }
+
+    public bool hasAnimation()
+    {
+        return activeAnimation;
     }
 }

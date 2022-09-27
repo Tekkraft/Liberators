@@ -45,6 +45,9 @@ public class Unit : ScriptableObject
     [SerializeField]
     List<Ability> prfAbilities;
 
+    [SerializeField]
+    UnitAnims unitAnims;
+
     public string getUnitName()
     {
         return unitName;
@@ -58,5 +61,22 @@ public class Unit : ScriptableObject
     public List<Ability> getAbilities()
     {
         return prfAbilities;
+    }
+
+    public Sprite getBattleSprite()
+    {
+        return unitAnims.getBattleSprite();
+    }
+}
+
+[System.Serializable]
+class UnitAnims
+{
+    [SerializeField]
+    Sprite battleSprite;
+
+    public Sprite getBattleSprite()
+    {
+        return battleSprite;
     }
 }

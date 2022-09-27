@@ -98,8 +98,8 @@ public class UnitController : MonoBehaviour
             Status linkedStatus = statuses[i].getStatus();
             if (linkedStatus.getHealthOverTime()[0] > 0)
             {
-                bool lethal = takeDamage(linkedStatus.getHealthOverTime()[0], damageType.TRUE).Value;
-                if (lethal)
+                takeDamage(linkedStatus.getHealthOverTime()[0], damageType.TRUE);
+                if (currentHP <= 0)
                 {
                     return true;
                 }
@@ -149,12 +149,13 @@ public class UnitController : MonoBehaviour
             damage = (int) (damage * MapController.critFactor);
             crit = true;
         }
-        KeyValuePair<int, bool> baseData = targetController.takeDamage(damage, attackEffect.getEffectDamageType());
-        return new CombatData(gameObject, targetController.gameObject, attackEffect, true, crit, baseData.Key, baseData.Value);
+        KeyValuePair<int, int> baseData = targetController.takeDamage(damage, attackEffect.getEffectDamageType());
+        return new CombatData(gameObject, targetController.gameObject, attackEffect, true, crit, baseData.Key, baseData.Value, baseData.Value - baseData.Key <= 0);
     }
 
-    public KeyValuePair<int, bool> takeDamage(int damage, damageType damageType)
+    public KeyValuePair<int, int> takeDamage(int damage, damageType damageType)
     {
+        int startingHP = currentHP;
         int damageTaken = damage;
         if (equippedArmor)
         {
@@ -173,7 +174,7 @@ public class UnitController : MonoBehaviour
             damageTaken = 0;
         }
         currentHP -= damageTaken;
-        return new KeyValuePair<int, bool>(damageTaken, currentHP <= 0);
+        return new KeyValuePair<int, int>(damageTaken, startingHP);
     }
 
     public void restoreHealth(int healing)
@@ -185,7 +186,7 @@ public class UnitController : MonoBehaviour
         }
     }
 
-    public void inflictStatus(Status newStatus, GameObject source)
+    public CombatData inflictStatus(Status newStatus, GameObject source)
     {
         statuses.Add(new StatusInstance(newStatus, source));
         if (newStatus.getAPMode())
@@ -196,6 +197,7 @@ public class UnitController : MonoBehaviour
                 actions = 0;
             }
         }
+        return new CombatData(source, gameObject, newStatus, true);
     }
 
     public int getAttack(EffectInstruction attackEffect)
@@ -283,6 +285,16 @@ public class UnitController : MonoBehaviour
     public string getName()
     {
         return unitName;
+    }
+
+    public Unit getUnit()
+    {
+        return unitObject;
+    }
+
+    public int[] getHealth()
+    {
+        return new int[] { maxHP, currentHP };
     }
 
     public int[] getStats()

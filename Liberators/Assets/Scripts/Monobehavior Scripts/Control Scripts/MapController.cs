@@ -93,12 +93,16 @@ public class MapController : MonoBehaviour
         StartCoroutine(bannerTimer());
         if (mapData.getAITeams().Contains(activeTeam))
         {
-            runAIPhase(teamLists[activeTeam]);
+            StartCoroutine(runAIPhase(teamLists[activeTeam]));
         }
     }
 
-    void runAIPhase(List<GameObject> units)
+    IEnumerator runAIPhase(List<GameObject> units)
     {
+        while (turnPhase != turnPhase.MAIN)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
         foreach (GameObject active in units)
         {
             int cheapest = int.MaxValue;
@@ -204,9 +208,11 @@ public class MapController : MonoBehaviour
                 {
                     executeAction(activeUnit, tileGridPos(activeUnit.GetComponent<AIController>().getMoveTarget(activeAbility as MovementAbility)));
                 }
+                yield return new WaitForSeconds(0.5f);
             }
             active.GetComponent<AIController>().resetActions();
         }
+        nextPhase();
     }
 
     public int getActiveTeam()
@@ -434,6 +440,7 @@ public class MapController : MonoBehaviour
         }
         actionPhase = actionPhase.EXECUTE;
         //TEMPORARY CODE - WILL BREAK BEAMS
+        List<CombatData> data = new List<CombatData>();
         foreach (GameObject target in selectedGameObjectTargets)
         {
             UnitController attackerController = activeUnit.GetComponent<UnitController>();
@@ -442,9 +449,26 @@ public class MapController : MonoBehaviour
             int[] hitStats = getHitStats(attackerController, defenderController, abilityData.getTargetInstruction());
             if (randomChance < hitStats[0])
             {
-                attackUnit(activeUnit, target);
+                if (attackerController.getEquippedWeapon().getWeaponStatus())
+                {
+                    data.Add(defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attackerController.gameObject));
+                }
+                List<CombatData> subResults = attackUnit(activeUnit, target, true);
+                if (subResults != null)
+                {
+                    data.AddRange(subResults);
+                }
+            } else
+            {
+                List<CombatData> subResults = attackUnit(activeUnit, target, false);
+                if (subResults != null)
+                {
+                    data.AddRange(subResults);
+                }
             }
+            data.Add(new CombatData());
         }
+        startAnimation(data);
         completeAction();
         selectedController.useActions(activeAbility.getAPCost());
     }
@@ -871,12 +895,13 @@ public class MapController : MonoBehaviour
         return hitUnits;
     }
 
-    public void attackUnit(GameObject attacker, GameObject defender)
+    public List<CombatData> attackUnit(GameObject attacker, GameObject defender, bool overallHit)
     {
+        List<CombatData> retVal = new List<CombatData>();
         //CANNOT DO BEAM AOEs
         if (activeAbility.getAbilityType() != actionType.COMBAT)
         {
-            return;
+            return null;
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
         AbilityData abilityData = calculateAbility.getAbilityData();
@@ -886,18 +911,14 @@ public class MapController : MonoBehaviour
             List<GameObject> hitUnits = getHitUnits(calculateAbility, effect.getEffectTarget(), defender.GetComponent<UnitController>(), new Vector2());
             foreach (GameObject target in hitUnits)
             {
-                CombatData result = applyEffect(attacker, target, effect);
-                Debug.Log(result.getAttacker().name + " attacks " + result.getDefender() + " and " + result.getAttackHit() + " hits and " + result.getAttackCrit() + " crits for " + result.getDamageDealt() + " and kills " + result.getDefenderKilled());
-                if (result.getDefenderKilled())
-                {
-                    killUnit(target);
-                    continue;
-                }
+                CombatData result = applyEffect(attacker, target, effect, overallHit);
+                retVal.Add(result);
             }
         }
+        return retVal;
     }
 
-    public CombatData applyEffect(GameObject attacker, GameObject defender, EffectInstruction effect)
+    public CombatData applyEffect(GameObject attacker, GameObject defender, EffectInstruction effect, bool overallHit)
     {
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
@@ -905,20 +926,41 @@ public class MapController : MonoBehaviour
         int[] hitStats = getHitStats(attackerController, defenderController, effect.getEffectTarget());
         int totalHit = hitStats[0];
         int totalCrit = hitStats[1];
-        CombatData result = new CombatData(attacker, defender, effect, false, false, 0, false);
-        if (randomChance < totalHit || !effect.getIndependentHit())
+        CombatData result = new CombatData(attacker, defender, effect, false, false, 0, attacker.GetComponent<UnitController>().getStats()[2], false);
+        if (!overallHit)
         {
-            if (attackerController.getEquippedWeapon().getWeaponStatus())
-            {
-                defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attacker);
-            }
             if (effect.getEffectType() == effectType.STATUS)
             {
-                defenderController.inflictStatus(effect.getEffectStatus(), attacker);
+                result = new CombatData(attacker, defender, effect.getEffectStatus(), false);
+                return result;
+            }
+            if (effect.getEffectType() == effectType.DAMAGE)
+            {
+                result = new CombatData(attacker, defender, effect, false, false, 0, attacker.GetComponent<UnitController>().getStats()[2], false);
+                return result;
+            }
+        }
+        if (randomChance < totalHit || !effect.getIndependentHit())
+        {
+            if (effect.getEffectType() == effectType.STATUS)
+            {
+                result = defenderController.inflictStatus(effect.getEffectStatus(), attacker);
             }
             if (effect.getEffectType() == effectType.DAMAGE)
             {
                 result = attackerController.attackUnit(defender.GetComponent<UnitController>(), effect, totalCrit);
+            }
+        } else
+        {
+            if (effect.getEffectType() == effectType.STATUS)
+            {
+                result = new CombatData(attacker, defender, effect.getEffectStatus(), false);
+                return result;
+            }
+            if (effect.getEffectType() == effectType.DAMAGE)
+            {
+                result = new CombatData(attacker, defender, effect, false, false, 0, attacker.GetComponent<UnitController>().getStats()[2], false);
+                return result;
             }
         }
         return result;
@@ -950,6 +992,17 @@ public class MapController : MonoBehaviour
     }
 
     //Other Helpers
+    public void killDead(List<CombatData> combatResults)
+    {
+        foreach(CombatData data in combatResults)
+        {
+            if (data.getDefenderKilled() && unitList.ContainsKey(data.getDefender().GetComponent<UnitController>().getUnitPos()))
+            {
+                killUnit(data.getDefender());
+            }
+        }
+    }
+
     public Dictionary<int, List<GameObject>> getTeamLists()
     {
         return teamLists;
@@ -1184,5 +1237,20 @@ public class MapController : MonoBehaviour
     public int gridDistanceFromWorld(Vector2 worldPos1, Vector2 worldPos2)
     {
         return gridDistance(gridWorldPos(worldPos1), gridWorldPos(worldPos2));
+    }
+
+    //Animation Control Functions
+    public void startAnimation(List<CombatData> combatSequence)
+    {
+        turnPhase = turnPhase.PAUSE;
+        uiCanvas.GetComponent<UIController>().displayBattleAnimation(combatSequence);
+        StartCoroutine(postAnimCleanup(combatSequence));
+    }
+
+    IEnumerator postAnimCleanup(List<CombatData> combatSequence)
+    {
+        yield return new WaitWhile(() => uiCanvas.GetComponent<UIController>().hasAnimation());
+        killDead(combatSequence);
+        turnPhase = turnPhase.MAIN;
     }
 }
