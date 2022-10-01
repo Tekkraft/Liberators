@@ -23,73 +23,50 @@ public class AnimationSequence
 
 public class AnimationBlock
 {
-    CombatData combatData = new CombatData();
     List<AnimationStep> animationSteps = new List<AnimationStep>();
-    bool animBreakpoint = false;
 
     public AnimationBlock(CombatData dataEntry)
     {
-        if (dataEntry.getCombatDataType() == combatDataType.BREAK)
+        if (dataEntry.getCombatDataType() == combatDataType.DAMAGE)
         {
-            animBreakpoint = true;
-            return;
-        }
-        else
-        {
-            animBreakpoint = false;
-            combatData = dataEntry;
             animationSteps.Add(new AnimationStep(dataEntry.getAttacker(), "attack"));
-            if (dataEntry.getCombatDataType() == combatDataType.DAMAGE)
+            if (!dataEntry.getAttackHit())
             {
-                if (!dataEntry.getAttackHit())
-                {
-                    animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "evade"));
-                }
-                else if (dataEntry.getDefenderKilled() && dataEntry.getAttackCrit())
-                {
-                    animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "dead stagger"));
-                }
-                else if (dataEntry.getDefenderKilled())
-                {
-                    animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "dead"));
-                }
-                else if (dataEntry.getDamageDealt() <= 0)
-                {
-                    animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "block"));
-                }
-                else if (dataEntry.getAttackCrit())
-                {
-                    animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "stagger"));
-                }
-                else
-                {
-                    animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "defend"));
-                }
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "evade"));
             }
-            else if (dataEntry.getCombatDataType() == combatDataType.STATUS)
+            else if (dataEntry.getDefenderKilled() && dataEntry.getAttackCrit())
             {
-                if (dataEntry.getStatusInflicted())
-                {
-                    animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "statused"));
-                }
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "dead stagger"));
             }
-            return;
+            else if (dataEntry.getDefenderKilled())
+            {
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "dead"));
+            }
+            else if (dataEntry.getDamageDealt() <= 0)
+            {
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "block"));
+            }
+            else if (dataEntry.getAttackCrit())
+            {
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "stagger"));
+            }
+            else
+            {
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "defend"));
+            }
         }
-    }
-
-    public CombatData getCombatData()
-    {
-        return combatData;
+        else if (dataEntry.getCombatDataType() == combatDataType.STATUS)
+        {
+            if (dataEntry.getStatusInflicted())
+            {
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "statused"));
+            }
+        }
     }
 
     public List<AnimationStep> getAnimationSteps()
     {
         return animationSteps;
-    }
-
-    public bool getAnimBreakpoint()
-    {
-        return animBreakpoint;
     }
 }
 

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd53bbf90d6841ebbf4701357c3916a, type: 3}
+  m_Name: BladerG
+  m_EditorClassIdentifier: 
+  unitName: Blader
+  maxHP: 40
+  mov: 5
+  str: 10
+  pot: 2
+  acu: 3
+  fin: 7
+  rea: 5
+  className: Blader
+  prfAbilities: []
+  unitAnims:
+    idleSprite: {fileID: 21300000, guid: 92240bb0faafc4bdb8f859481f8ba3d2, type: 3}
+    attackSprite: {fileID: 21300000, guid: 5dcf8648f79b2453989da1fa4d62ede5, type: 3}
+    evadeSprite: {fileID: 21300000, guid: 999c0edd7f2b04c109cbefef42251daf, type: 3}
+    deadStaggerSprite: {fileID: 21300000, guid: 7d536f357155d447d996c312a5319f02, type: 3}
+    deadSprite: {fileID: 21300000, guid: 1c46f4d19e9e4475cac24434c03e98c5, type: 3}
+    blockSprite: {fileID: 21300000, guid: 20f135a124ee74e9caa38a9bda84fe9d, type: 3}
+    staggerSprite: {fileID: 21300000, guid: 8a0d3b04ec3464bbbaee6873a97a9b7d, type: 3}
+    defendSprite: {fileID: 21300000, guid: 2a3dd3c8a7aea46338a67c579712157c, type: 3}

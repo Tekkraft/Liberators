@@ -7,7 +7,7 @@ public class CombatData
     GameObject attacker, defender;
     EffectInstruction attackEffect;
     bool attackHit, attackCrit;
-    int damageDealt, startingHP;
+    int damageDealt, startingHP, endingHP;
     bool defenderKilled;
     Status status;
     bool statusInflicted;
@@ -23,6 +23,7 @@ public class CombatData
         this.attackCrit = attackCrit;
         this.damageDealt = damageDealt;
         this.startingHP = startingHP;
+        this.endingHP = startingHP - damageDealt;
         this.defenderKilled = defenderKilled;
     }
 
@@ -33,11 +34,6 @@ public class CombatData
         this.defender = defender;
         this.status = status;
         this.statusInflicted = statusInflicted;
-    }
-
-    public CombatData()
-    {
-        combatDataType = combatDataType.BREAK;
     }
 
     public GameObject getAttacker()
@@ -77,7 +73,7 @@ public class CombatData
 
     public int getEndingHP()
     {
-        return startingHP - damageDealt;
+        return endingHP;
     }
 
     public bool getDefenderKilled()

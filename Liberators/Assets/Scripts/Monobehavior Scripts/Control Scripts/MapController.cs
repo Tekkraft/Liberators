@@ -466,7 +466,6 @@ public class MapController : MonoBehaviour
                     data.AddRange(subResults);
                 }
             }
-            data.Add(new CombatData());
         }
         startAnimation(data);
         completeAction();

@@ -63,20 +63,67 @@ public class Unit : ScriptableObject
         return prfAbilities;
     }
 
-    public Sprite getBattleSprite()
+    public Sprite getBattleSprite(string tag)
     {
-        return unitAnims.getBattleSprite();
+        return unitAnims.getLinkedSprite(tag);
     }
 }
 
 [System.Serializable]
 class UnitAnims
 {
+    //TODO: Replace with proper animations when those exist
     [SerializeField]
-    Sprite battleSprite;
+    Sprite idleSprite;
 
-    public Sprite getBattleSprite()
+    [SerializeField]
+    Sprite attackSprite;
+
+    [SerializeField]
+    Sprite evadeSprite;
+
+    [SerializeField]
+    Sprite deadStaggerSprite;
+
+    [SerializeField]
+    Sprite deadSprite;
+
+    [SerializeField]
+    Sprite blockSprite;
+
+    [SerializeField]
+    Sprite staggerSprite;
+
+    [SerializeField]
+    Sprite defendSprite;
+
+    public Sprite getLinkedSprite(string tag)
     {
-        return battleSprite;
+        switch (tag)
+        {
+            case "attack":
+                return attackSprite;
+
+            case "evade":
+                return evadeSprite;
+
+            case "dead stagger":
+                return deadStaggerSprite;
+
+            case "dead":
+                return deadSprite;
+
+            case "block":
+                return blockSprite;
+
+            case "stagger":
+                return staggerSprite;
+
+            case "defend":
+                return defendSprite;
+
+            default:
+                return idleSprite;
+        }
     }
 }
