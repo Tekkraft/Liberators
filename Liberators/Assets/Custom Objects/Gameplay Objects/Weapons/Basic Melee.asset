@@ -15,9 +15,13 @@ MonoBehaviour:
   weaponName: Short Edge
   weaponType: 0
   weaponStrength: 10
-  weaponHit: 10
+  weaponHit: 100
   weaponCrit: 5
   weaponRange: 1
-  ammoCapacity: 0
+  weaponElement: 1
   abilities:
-  - {fileID: 11400000, guid: fa8584d7f866e42e0a8563694859842d, type: 2}
+  - {fileID: 11400000, guid: 967e54e5877954b28aaf4c5d5f7b45fb, type: 2}
+  - {fileID: 11400000, guid: 1d33dfbc43a324f74984d7d86857d20b, type: 2}
+  - {fileID: 11400000, guid: 05421bde51dba40edb7e1d7b3866fd52, type: 2}
+  - {fileID: 11400000, guid: e7437af8344614b30afe4d2b6caffa94, type: 2}
+  weaponStatus: {fileID: 0}

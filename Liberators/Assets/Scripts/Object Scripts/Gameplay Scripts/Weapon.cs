@@ -5,13 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon Object", order = 48)]
 public class Weapon : ScriptableObject
 {
-    public enum WeaponType { MELEE, GUN, FOCUS, SPECIAL };
-
     [SerializeField]
     string weaponName;
 
     [SerializeField]
-    WeaponType weaponType;
+    weaponType weaponType;
 
     [SerializeField]
     int weaponStrength;
@@ -26,17 +24,20 @@ public class Weapon : ScriptableObject
     int weaponRange;
 
     [SerializeField]
-    int ammoCapacity;
+    element weaponElement;
 
     [SerializeField]
     List<Ability> abilities;
 
-    public string getWeaponName()
+    [SerializeField]
+    Status weaponStatus;
+
+    public string getName()
     {
         return weaponName;
     }
 
-    public WeaponType getWeaponType()
+    public weaponType getWeaponType()
     {
         return weaponType;
     }
@@ -46,8 +47,18 @@ public class Weapon : ScriptableObject
         return new int[] { weaponStrength, weaponHit, weaponCrit, weaponRange };
     }
 
+    public element getWeaponElement()
+    {
+        return weaponElement;
+    }
+
     public List<Ability> getAbilities()
     {
         return abilities;
+    }
+
+    public Status getWeaponStatus()
+    {
+        return weaponStatus;
     }
 }

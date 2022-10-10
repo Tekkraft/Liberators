@@ -15,10 +15,13 @@ MonoBehaviour:
   weaponName: Small Focus
   weaponType: 2
   weaponStrength: 5
-  weaponHit: 0
+  weaponHit: 100
   weaponCrit: 0
   weaponRange: 5
-  ammoCapacity: 0
+  weaponElement: 7
   abilities:
-  - {fileID: 11400000, guid: d4068ed09273d46e287819d275c77b13, type: 2}
-  - {fileID: 11400000, guid: aef5752a3501c4ae1a1a7e96393b67a1, type: 2}
+  - {fileID: 11400000, guid: 0f7633246a55c4bb2b60581a77d25dba, type: 2}
+  - {fileID: 11400000, guid: c53e5ba27dd764ccf84f722179befd0b, type: 2}
+  - {fileID: 11400000, guid: 3a9d31cbee13f486c93b3cd92084c6f5, type: 2}
+  - {fileID: 11400000, guid: 8b6f39b6231ff4e3fa7d0666160bb788, type: 2}
+  weaponStatus: {fileID: 0}

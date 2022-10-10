@@ -45,6 +45,9 @@ public class Unit : ScriptableObject
     [SerializeField]
     List<Ability> prfAbilities;
 
+    [SerializeField]
+    UnitAnims unitAnims;
+
     public string getUnitName()
     {
         return unitName;
@@ -58,5 +61,69 @@ public class Unit : ScriptableObject
     public List<Ability> getAbilities()
     {
         return prfAbilities;
+    }
+
+    public Sprite getBattleSprite(string tag)
+    {
+        return unitAnims.getLinkedSprite(tag);
+    }
+}
+
+[System.Serializable]
+class UnitAnims
+{
+    //TODO: Replace with proper animations when those exist
+    [SerializeField]
+    Sprite idleSprite;
+
+    [SerializeField]
+    Sprite attackSprite;
+
+    [SerializeField]
+    Sprite evadeSprite;
+
+    [SerializeField]
+    Sprite deadStaggerSprite;
+
+    [SerializeField]
+    Sprite deadSprite;
+
+    [SerializeField]
+    Sprite blockSprite;
+
+    [SerializeField]
+    Sprite staggerSprite;
+
+    [SerializeField]
+    Sprite defendSprite;
+
+    public Sprite getLinkedSprite(string tag)
+    {
+        switch (tag)
+        {
+            case "attack":
+                return attackSprite;
+
+            case "evade":
+                return evadeSprite;
+
+            case "dead stagger":
+                return deadStaggerSprite;
+
+            case "dead":
+                return deadSprite;
+
+            case "block":
+                return blockSprite;
+
+            case "stagger":
+                return staggerSprite;
+
+            case "defend":
+                return defendSprite;
+
+            default:
+                return idleSprite;
+        }
     }
 }
