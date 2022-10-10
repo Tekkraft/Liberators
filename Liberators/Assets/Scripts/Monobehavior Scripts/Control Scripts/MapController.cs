@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class MapController : MonoBehaviour
 {
@@ -43,6 +44,7 @@ public class MapController : MonoBehaviour
     public LayerMask lineOfSightLayer;
     public GameObject overlayObject;
     public MapData mapData;
+    public GameObject unitTemplate;
 
     void Awake()
     {
@@ -60,6 +62,31 @@ public class MapController : MonoBehaviour
     {
         turnPhase = turnPhase.START;
         StartCoroutine(bannerTimer());
+    }
+
+    //Use this to save key data upon victory
+    void OnDisable()
+    {
+        BattleEntryHandler.reset();
+    }
+
+    //Use this to load key data upon start
+    void OnEnable()
+    {
+        BattleExitHandler.reset();
+        List<Vector2Int> spawnLocations = mapData.getSpawnLocations();
+        for (int i = 0; i < spawnLocations.Count; i++)
+        {
+            GameObject temp = GameObject.Instantiate(unitTemplate);
+            temp.SetActive(false);
+            temp.GetComponent<UnitController>().unitObject = BattleEntryHandler.deployedUnits[i].getUnit();
+            temp.GetComponent<UnitController>().equippedWeapon = BattleEntryHandler.deployedUnits[i].getWeapon();
+            temp.GetComponent<UnitController>().equippedArmor = BattleEntryHandler.deployedUnits[i].getArmor();
+            temp.GetComponent<UnitController>().teamNumber = 0;
+            Vector2 unitPos = tileGridPos(spawnLocations[i]);
+            temp.GetComponent<Transform>().position = new Vector3(unitPos.x, unitPos.y, -2);
+            temp.SetActive(true);
+        }
     }
 
     //Turn Management
@@ -105,6 +132,10 @@ public class MapController : MonoBehaviour
         }
         foreach (GameObject active in units)
         {
+            while (uiCanvas.GetComponent<UIController>().hasAnimation())
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
             int cheapest = int.MaxValue;
             foreach (Ability ability in active.GetComponent<UnitController>().getAbilities())
             {
@@ -120,6 +151,10 @@ public class MapController : MonoBehaviour
             }
             while (active.GetComponent<UnitController>().getActions()[1] >= cheapest)
             {
+                while (uiCanvas.GetComponent<UIController>().hasAnimation())
+                {
+                    yield return new WaitForSeconds(0.1f);
+                }
                 Ability selectedAbility = active.GetComponent<AIController>().decideAction(active.GetComponent<UnitController>().getAbilities());
                 if (selectedAbility == null)
                 {
@@ -168,7 +203,7 @@ public class MapController : MonoBehaviour
                         }
                         if (targetInstruction.getTargetCondition() == targetCondition.SELECTED)
                         {
-                            switch(targetInstruction.getTargetType())
+                            switch (targetInstruction.getTargetType())
                             {
                                 case targetType.POINT:
                                     Debug.Log("Unimplemented Selected Target for AI");
@@ -194,7 +229,8 @@ public class MapController : MonoBehaviour
                                     Debug.Log("Unimplemented/Invalid Selected Target for AI");
                                     break;
                             }
-                        } else
+                        }
+                        else
                         {
                             GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(selectedAbility as CombatAbility, validTargets);
                             if (target)
@@ -212,6 +248,7 @@ public class MapController : MonoBehaviour
             }
             active.GetComponent<AIController>().resetActions();
         }
+        yield return new WaitUntil(() => turnPhase == turnPhase.MAIN);
         nextPhase();
     }
 
@@ -407,7 +444,28 @@ public class MapController : MonoBehaviour
         }
         else
         {
-            targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
+            bool noFilter = true;
+            bool enemyFilter = false;
+            bool allyFilter = false;
+            foreach (TargetFilter filter in targetCondition.getConditionFilters())
+            {
+                if (filter.getTargetFilter() == targetFilter.ENEMY && !enemyFilter)
+                {
+                    targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
+                    enemyFilter = true;
+                    noFilter = false;
+                }
+                if (filter.getTargetFilter() == targetFilter.ALLY && !allyFilter)
+                {
+                    targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.GREEN);
+                    allyFilter = true;
+                    noFilter = false;
+                }
+            }
+            if (noFilter)
+            {
+                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), new List<int>(), targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
+            }
         }
 
     }
@@ -458,7 +516,8 @@ public class MapController : MonoBehaviour
                 {
                     data.AddRange(subResults);
                 }
-            } else
+            }
+            else
             {
                 List<CombatData> subResults = attackUnit(activeUnit, target, false);
                 if (subResults != null)
@@ -683,9 +742,36 @@ public class MapController : MonoBehaviour
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetCondition.getLOSRequired(), this, teamLists, direction);
-        if (rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
+        bool noFilter = true;
+        bool enemyFilter = false;
+        bool allyFilter = false;
+        foreach (TargetFilter filter in targetCondition.getConditionFilters())
         {
-            selectedGameObjectTargets.Add(addition);
+            if (filter.getTargetFilter() == targetFilter.ENEMY && !enemyFilter)
+            {
+                if (rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
+                {
+                    selectedGameObjectTargets.Add(addition);
+                }
+                enemyFilter = true;
+                noFilter = false;
+            }
+            if (filter.getTargetFilter() == targetFilter.ALLY && !allyFilter)
+            {
+                if (rangefinder.generateTargetsOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
+                {
+                    selectedGameObjectTargets.Add(addition);
+                }
+                allyFilter = true;
+                noFilter = false;
+            }
+        }
+        if (noFilter)
+        {
+            if (rangefinder.generateTargetsOfTeam(selectedController.getUnitPos(), new List<int>(), targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
+            {
+                selectedGameObjectTargets.Add(addition);
+            }
         }
     }
 
@@ -949,7 +1035,12 @@ public class MapController : MonoBehaviour
             {
                 result = attackerController.attackUnit(defender.GetComponent<UnitController>(), effect, totalCrit);
             }
-        } else
+            if (effect.getEffectType() == effectType.DAMAGE)
+            {
+                attackerController.healUnit(defender.GetComponent<UnitController>(), effect);
+            }
+        }
+        else
         {
             if (effect.getEffectType() == effectType.STATUS)
             {
@@ -982,18 +1073,24 @@ public class MapController : MonoBehaviour
 
     void mapVictory()
     {
-        Debug.Log("VICTORY");
+        BattleExitHandler.victory = true;
+        BattleExitHandler.turn_count = turnNumber;
+        StopAllCoroutines();
+        SceneManager.LoadSceneAsync("BattleEnd");
     }
 
     void mapDefeat()
     {
-        Debug.Log("DEFEAT");
+        BattleExitHandler.victory = false;
+        BattleExitHandler.turn_count = turnNumber;
+        StopAllCoroutines();
+        SceneManager.LoadSceneAsync("BattleEnd");
     }
 
     //Other Helpers
     public void killDead(List<CombatData> combatResults)
     {
-        foreach(CombatData data in combatResults)
+        foreach (CombatData data in combatResults)
         {
             if (data.getDefenderKilled() && unitList.ContainsKey(data.getDefender().GetComponent<UnitController>().getUnitPos()))
             {

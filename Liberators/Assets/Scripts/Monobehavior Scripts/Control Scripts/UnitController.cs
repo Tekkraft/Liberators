@@ -146,11 +146,17 @@ public class UnitController : MonoBehaviour
         bool crit = false;
         if (Random.Range(0, 100) < critChance)
         {
-            damage = (int) (damage * MapController.critFactor);
+            damage = (int)(damage * MapController.critFactor);
             crit = true;
         }
         KeyValuePair<int, int> baseData = targetController.takeDamage(damage, attackEffect.getEffectDamageType());
         return new CombatData(gameObject, targetController.gameObject, attackEffect, true, crit, baseData.Key, baseData.Value, baseData.Value - baseData.Key <= 0);
+    }
+
+    public void healUnit(UnitController targetController, EffectInstruction healEffect)
+    {
+        int healing = getHealing(healEffect);
+        targetController.restoreHealth(healing);
     }
 
     public KeyValuePair<int, int> takeDamage(int damage, damageType damageType)
@@ -198,6 +204,25 @@ public class UnitController : MonoBehaviour
             }
         }
         return new CombatData(source, gameObject, newStatus, true);
+    }
+
+    public int getHealing(EffectInstruction healEffect)
+    {
+        int healing = 0;
+        switch (healEffect.getEffectDamageSource())
+        {
+            case damageType.PHYSICAL:
+                healing += healEffect.getEffectIntensity() + str;
+                break;
+            case damageType.MAGIC:
+                healing += healEffect.getEffectIntensity() + pot;
+                break;
+            case damageType.TRUE:
+                healing += healEffect.getEffectIntensity();
+                break;
+        }
+        healing = (int)(healing * ((healEffect.getEffectPercentBonus() / 100f) + 1f));
+        return healing;
     }
 
     public int getAttack(EffectInstruction attackEffect)

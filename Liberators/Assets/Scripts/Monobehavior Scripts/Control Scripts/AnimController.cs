@@ -21,6 +21,12 @@ public class AnimController : MonoBehaviour
         if (sequence.getSequence().Count <= 0)
         {
             terminateAnimation();
+            yield break;
+        }
+        if (sequence.getSequence()[0].getAnimationSteps().Count <= 0)
+        {
+            terminateAnimation();
+            yield break;
         }
         int activeTeam = sequence.getSequence()[0].getAnimationSteps()[0].getActor().GetComponent<UnitController>().getTeam();
         List<GameObject> leftUnits = new List<GameObject>();

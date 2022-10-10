@@ -32,3 +32,6 @@ MonoBehaviour:
   reachLoseConditions: []
   targetLoseConditions: []
   timeLoseConditions: []
+  playerSpawnLocations:
+  - {x: 1, y: 3}
+  - {x: 1, y: 4}

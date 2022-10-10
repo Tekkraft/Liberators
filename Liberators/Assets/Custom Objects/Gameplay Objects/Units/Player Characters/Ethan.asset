@@ -13,12 +13,22 @@ MonoBehaviour:
   m_Name: Ethan
   m_EditorClassIdentifier: 
   unitName: Ethan
-  maxHP: 20
+  maxHP: 25
   mov: 4
-  str: 1
-  pot: 8
+  str: 4
+  pot: 10
   acu: 8
   fin: 7
   rea: 5
   className: Aetherist
-  prfAbilities: []
+  prfAbilities:
+  - {fileID: 11400000, guid: 4df6030200dd14aadaca1c0bb1bd6d0e, type: 2}
+  unitAnims:
+    idleSprite: {fileID: 0}
+    attackSprite: {fileID: 0}
+    evadeSprite: {fileID: 0}
+    deadStaggerSprite: {fileID: 0}
+    deadSprite: {fileID: 0}
+    blockSprite: {fileID: 0}
+    staggerSprite: {fileID: 0}
+    defendSprite: {fileID: 0}

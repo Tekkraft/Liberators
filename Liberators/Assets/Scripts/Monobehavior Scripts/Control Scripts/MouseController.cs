@@ -32,9 +32,9 @@ public class MouseController : MonoBehaviour
     void Update()
     {
         worldPosition = Camera.main.ScreenToWorldPoint(cursorPosition);
-        Vector2 tilePos = mapController.tileWorldPos(worldPosition);
-        tilePosition = new Vector3(tilePos.x, tilePos.y, -1);
-        transform.position = tilePosition;
+        tilePosition = mapController.tileWorldPos(worldPosition);
+        Vector3 tileTransform = new Vector3(tilePosition.x, tilePosition.y, -1);
+        transform.position = tileTransform;
         gridPosition = mapController.gridTilePos(tilePosition);
         Cursor.visible = mapController.mouseOverCanvas(cursorPosition);
         uiController.unHoverUnit();

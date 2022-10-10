@@ -31,4 +31,4 @@ public enum actionPhase { INACTIVE, PREPARE, EXECUTE };
 
 public enum turnPhase { START, MAIN, PAUSE, END };
 
-public enum combatDataType { DAMAGE, STATUS };
+public enum combatDataType { DAMAGE, HEAL, STATUS };
