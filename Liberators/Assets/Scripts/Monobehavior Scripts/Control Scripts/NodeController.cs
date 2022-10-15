@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class NodeController : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class NodeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void generate()
@@ -27,5 +28,10 @@ public class NodeController : MonoBehaviour
         icon.GetComponent<SpriteRenderer>().sprite = linkedNode.getAbility().getSprite();
         abilityName.GetComponent<TextMeshPro>().text = linkedNode.getAbility().getName();
         abilityCost.GetComponent<TextMeshPro>().text = linkedNode.getNodeCost() + " PTS";
+    }
+
+    public SkillNode getLinkedNode()
+    {
+        return linkedNode;
     }
 }

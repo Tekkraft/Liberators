@@ -436,7 +436,7 @@ MonoBehaviour:
     m_ActionName: BaseActions/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: BattleActions
+  m_DefaultActionMap: 18aca63c-6a97-489c-962d-5a6ed79f1ab7
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 519420031}
 --- !u!1 &710441652
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: BattleActions
+  m_DefaultActionMap: 18aca63c-6a97-489c-962d-5a6ed79f1ab7
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 519420031}
 --- !u!114 &710441656

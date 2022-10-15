@@ -376,6 +376,7 @@ public class MapController : MonoBehaviour
         {
             return;
         }
+        actionPhase = actionPhase.PREPARE;
         UnitController targetController = unit.GetComponent<UnitController>();
         targetController.createMoveMarkers(calculateAbility, MarkerController.Markers.BLUE);
     }

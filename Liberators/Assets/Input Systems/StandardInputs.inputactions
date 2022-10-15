@@ -2,7 +2,7 @@
     "name": "StandardInputs",
     "maps": [
         {
-            "name": "BattleActions",
+            "name": "Basic Actions",
             "id": "18aca63c-6a97-489c-962d-5a6ed79f1ab7",
             "actions": [
                 {
@@ -148,34 +148,6 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Cursor Alternate",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "BaseActions",
-            "id": "d429bfc7-19e5-48c9-bfa4-6dc0e4099ba8",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "18789a65-609c-4414-a9ef-d163e9f22993",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "984e1a39-b185-4ca2-84a5-0f147a9398b6",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

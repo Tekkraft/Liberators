@@ -114,6 +114,7 @@ public class MouseController : MonoBehaviour
                 {
                     case actionPhase.PREPARE:
                         //Cancel action
+                        Debug.Log("cancel");
                         mapController.completeAction();
                         break;
 

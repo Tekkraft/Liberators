@@ -1,32 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SkillTreeController : MonoBehaviour
 {
     public SkillTree activeTree;
     public GameObject skillNodeObject;
 
+    public GameObject skillPointTracker;
+
+    Vector2 cursorPosition;
+
     void OnEnable()
     {
-            
+        activeTree = SkillTreeEntryHandler.activeTree;
+        SkillTreeExitHandler.reset();
     }
 
     void OnDisable()
     {
-        
+        SkillTreeExitHandler.activeTree = activeTree;
+        SkillTreeEntryHandler.reset();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         drawTree();
+        activeTree.setSkillPoints(0);
+        activeTree.gainSkillPoints(20);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        skillPointTracker.GetComponent<SkillTreeUISync>().setCurrentSkillPoints(activeTree.getAvailableSkillPoints());
+        skillPointTracker.GetComponent<SkillTreeUISync>().setMaxSkillPoints(activeTree.getMaxSkillPoints());
     }
 
     void drawTree()
@@ -42,7 +52,7 @@ public class SkillTreeController : MonoBehaviour
         newNode.GetComponent<NodeController>().linkedNode = node;
         newNode.transform.Translate(new Vector3(offset * 4.5f, 2.5f, 0));
         newNode.SetActive(true);
-        List<float> offsets = getOffsets(activeTree.getRootSkill().getMaxWidth(node), activeTree.getRootSkill().getChildWidths(node));
+        List<float> offsets = getOffsets(node.widthAboveNode(), node.widthOfChildren());
         for (int i = 0; i < node.getChildSkills().Count; i++)
         {
             SkillNode subNode = node.getChildSkills()[i];
@@ -62,5 +72,28 @@ public class SkillTreeController : MonoBehaviour
             index += width / 2f;
         }
         return offsets;
+    }
+
+    public void learnSkill(SkillNode node)
+    {
+        activeTree.learnAbility(node);
+        Debug.Log(activeTree.getUnlockedAbilities().Count);
+    }
+
+    //Input Handling
+    void OnCursorMovement(InputValue value)
+    {
+        cursorPosition = value.Get<Vector2>();
+    }
+
+    void OnCursorPrimary()
+    {
+        Vector2 worldPos = Camera.main.ScreenToWorldPoint(cursorPosition);
+        RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+        if (hit.collider != null)
+        {
+            GameObject node = hit.collider.gameObject;
+            learnSkill(node.GetComponent<NodeController>().getLinkedNode());
+        }
     }
 }

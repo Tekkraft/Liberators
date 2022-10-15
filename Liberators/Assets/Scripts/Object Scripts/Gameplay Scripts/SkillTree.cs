@@ -29,16 +29,25 @@ public class SkillTree : ScriptableObject
         rootSkill.enableSkill();
     }
 
+    public void setSkillPoints(int points)
+    {
+        skillPoints = points;
+        maxSkillPoints = points;
+        rootSkill.disableSkill();
+        rootSkill.enableSkill();
+    }
+
     public List<Ability> getUnlockedAbilities()
     {
         return rootSkill.getUnlockedAbilities();
     }
 
-    public bool unlockAbility(SkillNode skill)
+    public bool learnAbility(SkillNode skill)
     {
         if (skill.isUnlocked() && skill.getNodeCost() <= skillPoints)
         {
-            skill.enableSkill();
+            skill.learnSkill();
+            skillPoints -= skill.getNodeCost();
             return true;
         }
         return false;
@@ -62,6 +71,9 @@ public class SkillNode
     bool unlocked;
 
     [SerializeField]
+    bool obtained;
+
+    [SerializeField]
     List<SkillNode> childSkills;
 
     [SerializeField]
@@ -73,6 +85,11 @@ public class SkillNode
     public bool isUnlocked()
     {
         return unlocked;
+    }
+
+    public bool isObtained()
+    {
+        return obtained;
     }
 
     public List<SkillNode> getChildSkills()
@@ -92,13 +109,11 @@ public class SkillNode
 
     public void disableSkill()
     {
-        if (unlocked)
+        obtained = false;
+        unlocked = false;
+        foreach (SkillNode node in childSkills)
         {
-            unlocked = false;
-            foreach (SkillNode node in childSkills)
-            {
-                node.disableSkill();
-            }
+            node.disableSkill();
         }
     }
 
@@ -107,10 +122,20 @@ public class SkillNode
         unlocked = true;
     }
 
+    public void learnSkill()
+    {
+        obtained = true;
+        unlocked = false;
+        foreach (SkillNode node in childSkills)
+        {
+            node.enableSkill();
+        }
+    }
+
     public List<Ability> getUnlockedAbilities()
     {
         List<Ability> abilities = new List<Ability>();
-        if (unlocked)
+        if (obtained)
         {
             abilities.Add(ability);
             foreach (SkillNode node in childSkills)
@@ -121,66 +146,35 @@ public class SkillNode
         return abilities;
     }
 
-    //Get the max widths of all children of root
-    public List<int> getChildWidths(SkillNode root)
+    //Returns the total width above this node
+    public int widthAboveNode()
+    {
+        int width = 0;
+        foreach (SkillNode child in childSkills)
+        {
+            int childWidth = child.widthAboveNode();
+            if (childWidth == 0)
+            {
+                childWidth = 1;
+            }
+            width += childWidth;
+        }
+        return width;
+    }
+
+    //Returns the total width of this node's children
+    public List<int> widthOfChildren()
     {
         List<int> widths = new List<int>();
-        foreach(SkillNode node in root.getChildSkills())
+        foreach (SkillNode child in childSkills)
         {
-            widths.Add(getMaxWidth(node));
+            int childWidth = child.widthAboveNode();
+            if (childWidth == 0)
+            {
+                childWidth = 1;
+            }
+            widths.Add(childWidth);
         }
         return widths;
-    }
-
-    //Return the highest width for the tree starting at root;
-    public int getMaxWidth(SkillNode root)
-    {
-        List<int> widths = getTreeWidths(root);
-        int maxWidth = -1;
-        foreach (int width in widths)
-        {
-            if (width > maxWidth)
-            {
-                maxWidth = width;
-            }
-        }
-        return maxWidth;
-    }
-
-    //Returns the total widths of the tree by level starting at root
-    public List<int> getTreeWidths(SkillNode root)
-    {
-        List<int> widths = new List<int>();
-        List<SkillNode> nodes;
-        int index = 0;
-        nodes = nodesAtLevel(index, root);
-        while (nodes.Count > 0)
-        {
-            widths.Add(nodes.Count);
-            index++;
-            nodes.Clear();
-            nodes = nodesAtLevel(index, root);
-        }
-        return widths;
-    }
-
-    //Returns the number of nodes at any given level
-    List<SkillNode> nodesAtLevel(int level, SkillNode root)
-    {
-        List<SkillNode> nodes = new List<SkillNode>();
-        int layerLevel = 0;
-        nodes.Add(root);
-        while (layerLevel < level)
-        {
-            List<SkillNode> tempNodes = new List<SkillNode>();
-            tempNodes.AddRange(nodes);
-            nodes.Clear();
-            foreach (SkillNode node in tempNodes)
-            {
-                nodes.AddRange(node.getChildSkills());
-            }
-            layerLevel++;
-        }
-        return nodes;
     }
 }
