@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lana Tree
   m_EditorClassIdentifier: 
   rootSkill:
-    unlocked: 0
+    unlocked: 1
     childSkills: []
     ability: {fileID: 0}
     nodeCost: 0

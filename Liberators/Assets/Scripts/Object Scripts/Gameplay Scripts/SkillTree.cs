@@ -120,4 +120,67 @@ public class SkillNode
         }
         return abilities;
     }
+
+    //Get the max widths of all children of root
+    public List<int> getChildWidths(SkillNode root)
+    {
+        List<int> widths = new List<int>();
+        foreach(SkillNode node in root.getChildSkills())
+        {
+            widths.Add(getMaxWidth(node));
+        }
+        return widths;
+    }
+
+    //Return the highest width for the tree starting at root;
+    public int getMaxWidth(SkillNode root)
+    {
+        List<int> widths = getTreeWidths(root);
+        int maxWidth = -1;
+        foreach (int width in widths)
+        {
+            if (width > maxWidth)
+            {
+                maxWidth = width;
+            }
+        }
+        return maxWidth;
+    }
+
+    //Returns the total widths of the tree by level starting at root
+    public List<int> getTreeWidths(SkillNode root)
+    {
+        List<int> widths = new List<int>();
+        List<SkillNode> nodes;
+        int index = 0;
+        nodes = nodesAtLevel(index, root);
+        while (nodes.Count > 0)
+        {
+            widths.Add(nodes.Count);
+            index++;
+            nodes.Clear();
+            nodes = nodesAtLevel(index, root);
+        }
+        return widths;
+    }
+
+    //Returns the number of nodes at any given level
+    List<SkillNode> nodesAtLevel(int level, SkillNode root)
+    {
+        List<SkillNode> nodes = new List<SkillNode>();
+        int layerLevel = 0;
+        nodes.Add(root);
+        while (layerLevel < level)
+        {
+            List<SkillNode> tempNodes = new List<SkillNode>();
+            tempNodes.AddRange(nodes);
+            nodes.Clear();
+            foreach (SkillNode node in tempNodes)
+            {
+                nodes.AddRange(node.getChildSkills());
+            }
+            layerLevel++;
+        }
+        return nodes;
+    }
 }

@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class SkillTreeUISync : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject currentSkillPointTracker;
+    public GameObject maxSkillPointTracker;
+
+    public void setCurrentSkillPoints(int value)
     {
-        
+        currentSkillPointTracker.GetComponent<TextMeshProUGUI>().text = value.ToString();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void setMaxSkillPoints(int value)
     {
-        
+        maxSkillPointTracker.GetComponent<TextMeshProUGUI>().text = value.ToString();
     }
 }

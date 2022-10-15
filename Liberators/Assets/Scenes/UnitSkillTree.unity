@@ -123,7 +123,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &680447812
+--- !u!1 &582539946
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,42 +131,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 680447813}
-  - component: {fileID: 680447814}
+  - component: {fileID: 582539947}
+  - component: {fileID: 582539948}
   m_Layer: 0
-  m_Name: TreeManager
+  m_Name: Tree Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &680447813
+--- !u!4 &582539947
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680447812}
+  m_GameObject: {fileID: 582539946}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &680447814
+--- !u!114 &582539948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680447812}
+  m_GameObject: {fileID: 582539946}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1a819d2c918f443196cc56e77212eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeTree: {fileID: 0}
+  activeTree: {fileID: 11400000, guid: c8c757230537248f5bcde181568a576e, type: 2}
+  skillNodeObject: {fileID: 2184332557732710745, guid: b951774319ef542d6a45455ae30726de, type: 3}
 --- !u!1 &1150291848
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,8 +581,9 @@ GameObject:
   - component: {fileID: 1558007912}
   - component: {fileID: 1558007914}
   - component: {fileID: 1558007913}
+  - component: {fileID: 1558007915}
   m_Layer: 5
-  m_Name: Background Panel
+  m_Name: Skill Point Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -648,6 +650,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1558007911}
   m_CullTransparentMesh: 1
+--- !u!114 &1558007915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558007911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1624bb46e51804b5c9c19873be61b986, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentSkillPointTracker: {fileID: 1150291848}
+  maxSkillPointTracker: {fileID: 1402896787}
 --- !u!1 &1691829948
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,6 +676,8 @@ GameObject:
   - component: {fileID: 1691829950}
   - component: {fileID: 1691829949}
   - component: {fileID: 1691829952}
+  - component: {fileID: 1691829953}
+  - component: {fileID: 1691829954}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -745,6 +763,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraSpeed: 5
+--- !u!114 &1691829953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691829948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 3a28cf751ceee4d5d86911a1053625fe, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: BattleActions
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 1691829950}
+--- !u!114 &1691829954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691829948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &1703123906
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +822,7 @@ GameObject:
   - component: {fileID: 1703123908}
   - component: {fileID: 1703123907}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -838,7 +902,7 @@ RectTransform:
   m_Children:
   - {fileID: 1558007912}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -918,7 +982,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2139886941
 GameObject:
