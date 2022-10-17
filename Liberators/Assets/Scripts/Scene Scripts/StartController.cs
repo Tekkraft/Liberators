@@ -20,21 +20,47 @@ public class StartController : MonoBehaviour
         overviewCanvas.GetComponent<Canvas>().enabled = true;
         unitCanvas.GetComponent<Canvas>().enabled = false;
         displayBattleOverview();
+        for (int i = 0; i < characterUnitData.Count; i++)
+        {
+            UnitEntryData data = characterUnitData[i];
+            if (data.getSkillTree() == null && data.getUnit() != null)
+            {
+                characterUnitData[i] = new UnitEntryData(data.getUnit(), data.getWeapon(), data.getArmor());
+            }
+        }
     }
 
     void OnEnable()
     {
-
+        loadSkillTree();
     }
 
     void OnDisable()
     {
-        BattleEntryHandler.deployedUnits = characterUnitData;
+
     }
 
     public void enterBattle()
     {
+        BattleEntryHandler.deployedUnits = characterUnitData;
         SceneManager.LoadSceneAsync("PrototypeBattle");
+    }
+
+    public void enterSkillTree()
+    {
+        SkillTreeEntryHandler.unitId = characterState;
+        SkillTreeEntryHandler.activeTree = characterUnitData[characterState].getSkillTree();
+        SceneManager.LoadSceneAsync("UnitSkillTree");
+    }
+
+    public void loadSkillTree()
+    {
+        if (SkillTreeExitHandler.unitId == -1)
+        {
+            return;
+        }
+        setCharacterState(SkillTreeExitHandler.unitId);
+        characterUnitData[characterState].setSkillTree(SkillTreeExitHandler.activeTree);
     }
 
     public void setCharacterState(int stateId)

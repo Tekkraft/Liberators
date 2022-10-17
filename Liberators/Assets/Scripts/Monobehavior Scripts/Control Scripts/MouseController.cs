@@ -161,6 +161,10 @@ public class MouseController : MonoBehaviour
 
     public void attackPreview(GameObject attacker, GameObject defender, CombatAbility activeAbility)
     {
+        if (!activeAbility)
+        {
+            return;
+        }
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
         int[] hitStats = mapController.getHitStats(attackerController, defenderController, activeAbility.getAbilityData().getTargetInstruction());

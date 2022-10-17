@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class SkillTreeController : MonoBehaviour
 {
-    public SkillTree activeTree;
+    public SkillTreeInstance activeTree;
     public GameObject skillNodeObject;
 
     public GameObject skillPointTracker;
@@ -20,6 +21,7 @@ public class SkillTreeController : MonoBehaviour
 
     void OnDisable()
     {
+        SkillTreeExitHandler.unitId = SkillTreeEntryHandler.unitId;
         SkillTreeExitHandler.activeTree = activeTree;
         SkillTreeEntryHandler.reset();
     }
@@ -28,8 +30,6 @@ public class SkillTreeController : MonoBehaviour
     void Start()
     {
         drawTree();
-        activeTree.setSkillPoints(0);
-        activeTree.gainSkillPoints(20);
     }
 
     // Update is called once per frame
@@ -41,7 +41,7 @@ public class SkillTreeController : MonoBehaviour
 
     void drawTree()
     {
-        SkillNode rootSkill = activeTree.getRootSkill();
+        SkillNode rootSkill = activeTree.getRootNode();
         drawNode(rootSkill, gameObject, 0, 0);
     }
 
@@ -77,7 +77,6 @@ public class SkillTreeController : MonoBehaviour
     public void learnSkill(SkillNode node)
     {
         activeTree.learnAbility(node);
-        Debug.Log(activeTree.getUnlockedAbilities().Count);
     }
 
     //Input Handling
@@ -95,5 +94,11 @@ public class SkillTreeController : MonoBehaviour
             GameObject node = hit.collider.gameObject;
             learnSkill(node.GetComponent<NodeController>().getLinkedNode());
         }
+    }
+
+    //Scene Transitions
+    public void toBattlePreps()
+    {
+        SceneManager.LoadSceneAsync("BattlePrep");
     }
 }

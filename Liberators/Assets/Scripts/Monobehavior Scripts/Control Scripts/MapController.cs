@@ -83,6 +83,7 @@ public class MapController : MonoBehaviour
             temp.GetComponent<UnitController>().equippedWeapon = BattleEntryHandler.deployedUnits[i].getWeapon();
             temp.GetComponent<UnitController>().equippedArmor = BattleEntryHandler.deployedUnits[i].getArmor();
             temp.GetComponent<UnitController>().teamNumber = 0;
+            temp.GetComponent<SpriteRenderer>().sprite = BattleEntryHandler.deployedUnits[i].getUnit().getBattleSprite("attack");
             Vector2 unitPos = tileGridPos(spawnLocations[i]);
             temp.GetComponent<Transform>().position = new Vector3(unitPos.x, unitPos.y, -2);
             temp.SetActive(true);
@@ -1036,7 +1037,7 @@ public class MapController : MonoBehaviour
             {
                 result = attackerController.attackUnit(defender.GetComponent<UnitController>(), effect, totalCrit);
             }
-            if (effect.getEffectType() == effectType.DAMAGE)
+            if (effect.getEffectType() == effectType.HEAL)
             {
                 attackerController.healUnit(defender.GetComponent<UnitController>(), effect);
             }

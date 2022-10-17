@@ -17,16 +17,21 @@ public class UnitEntryData
 {
     [SerializeField]
     public Unit unit;
+
     [SerializeField]
     public Weapon weapon;
+
     [SerializeField]
     public Armor armor;
+
+    SkillTreeInstance skillTree;
 
     public UnitEntryData(Unit unit, Weapon weapon, Armor armor)
     {
         this.unit = unit;
         this.weapon = weapon;
         this.armor = armor;
+        skillTree = new SkillTreeInstance(unit.getSkillTree());
     }
 
     public Unit getUnit()
@@ -44,6 +49,11 @@ public class UnitEntryData
         return armor;
     }
 
+    public SkillTreeInstance getSkillTree()
+    {
+        return skillTree;
+    }
+
     public void setUnit(Unit unit)
     {
         this.unit = unit;
@@ -57,5 +67,10 @@ public class UnitEntryData
     public void setArmor(Armor armor)
     {
         this.armor = armor;
+    }
+
+    public void setSkillTree(SkillTreeInstance tree)
+    {
+        skillTree = tree;
     }
 }

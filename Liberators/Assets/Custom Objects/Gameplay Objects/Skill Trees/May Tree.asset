@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: May Tree
   m_EditorClassIdentifier: 
   rootSkill:
-    unlocked: 0
+    unlocked: 1
+    obtained: 0
     childSkills: []
     ability: {fileID: 0}
     nodeCost: 0

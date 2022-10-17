@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90b978b95402f4d1fb4b768fe1927cb8, type: 3}
-  m_Name: StdGuardian1
+  m_Name: StdShieldblade1
   m_EditorClassIdentifier: 
-  weaponName: Improved Blade & Shield
+  weaponName: Improved Shieldblade
   weaponType: 0
   weaponStrength: 10
   weaponHit: 175

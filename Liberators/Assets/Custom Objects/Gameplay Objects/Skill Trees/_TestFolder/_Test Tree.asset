@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: _Test Tree
   m_EditorClassIdentifier: 
   rootSkill:
-    unlocked: 1
-    obtained: 0
+    unlocked: 0
+    obtained: 1
     childSkills:
     - unlocked: 0
-      obtained: 0
+      obtained: 1
       childSkills:
       - unlocked: 0
-        obtained: 0
+        obtained: 1
         childSkills:
-        - unlocked: 0
+        - unlocked: 1
           obtained: 0
           childSkills:
           - unlocked: 0
@@ -37,12 +37,12 @@ MonoBehaviour:
             nodeCost: 13
           ability: {fileID: 11400000, guid: 4e12ea95949374675859b47b155edf29, type: 2}
           nodeCost: 5
-        - unlocked: 0
+        - unlocked: 1
           obtained: 0
           childSkills: []
           ability: {fileID: 11400000, guid: 46ff58360368148e388fffec8bc731ca, type: 2}
           nodeCost: 6
-        - unlocked: 0
+        - unlocked: 1
           obtained: 0
           childSkills: []
           ability: {fileID: 11400000, guid: 6fe1b0847104c406f87522339f789fe2, type: 2}
@@ -50,29 +50,29 @@ MonoBehaviour:
         ability: {fileID: 11400000, guid: e5731f13eccb4404d8eb77e37f9b5881, type: 2}
         nodeCost: 1
       - unlocked: 0
-        obtained: 0
+        obtained: 1
         childSkills:
-        - unlocked: 0
+        - unlocked: 1
           obtained: 0
           childSkills: []
           ability: {fileID: 11400000, guid: 05421bde51dba40edb7e1d7b3866fd52, type: 2}
           nodeCost: 8
-        - unlocked: 0
+        - unlocked: 1
           obtained: 0
           childSkills: []
           ability: {fileID: 11400000, guid: 1d33dfbc43a324f74984d7d86857d20b, type: 2}
           nodeCost: 9
         - unlocked: 0
-          obtained: 0
+          obtained: 1
           childSkills:
-          - unlocked: 0
+          - unlocked: 1
             obtained: 0
             childSkills: []
             ability: {fileID: 11400000, guid: e7437af8344614b30afe4d2b6caffa94, type: 2}
             nodeCost: 13
           ability: {fileID: 11400000, guid: 967e54e5877954b28aaf4c5d5f7b45fb, type: 2}
           nodeCost: 10
-        - unlocked: 0
+        - unlocked: 1
           obtained: 0
           childSkills: []
           ability: {fileID: 11400000, guid: 4df6030200dd14aadaca1c0bb1bd6d0e, type: 2}
