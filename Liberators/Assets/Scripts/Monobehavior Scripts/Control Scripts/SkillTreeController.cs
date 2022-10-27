@@ -23,6 +23,7 @@ public class SkillTreeController : MonoBehaviour
     {
         SkillTreeExitHandler.unitId = SkillTreeEntryHandler.unitId;
         SkillTreeExitHandler.activeTree = activeTree;
+        SkillTreeExitHandler.activated = true;
         SkillTreeEntryHandler.reset();
     }
 

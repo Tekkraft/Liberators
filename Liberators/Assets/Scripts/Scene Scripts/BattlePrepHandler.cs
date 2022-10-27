@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkillTreeExitHandler
+public class BattlePrepHandler
 {
-    public static SkillTreeInstance activeTree;
-    public static int unitId = -1;
+    public static List<UnitEntryData> data;
+
+    public static int skillPointsEarned = 0;
     public static bool activated = false;
 
     public static void reset()
     {
-        activeTree = null;
-        unitId = -1;
+        skillPointsEarned = 0;
         activated = false;
     }
 }

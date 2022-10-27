@@ -4221,10 +4221,10 @@ MonoBehaviour:
   characterUnitData:
   - unit: {fileID: 11400000, guid: 8166ad6f713e14de68d81d38416bf746, type: 2}
     weapon: {fileID: 11400000, guid: 8c1b4b5d9828742d49722a1b9a5c5938, type: 2}
-    armor: {fileID: 11400000, guid: 3aa6db564071e43718bc8e4adaa2fda4, type: 2}
+    armor: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
   - unit: {fileID: 11400000, guid: 499b51155f0cc4a54b9568021990660d, type: 2}
     weapon: {fileID: 11400000, guid: bb1a9d2f66ef8479d98bcd8cbd148a66, type: 2}
-    armor: {fileID: 11400000, guid: 3aa6db564071e43718bc8e4adaa2fda4, type: 2}
+    armor: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
   - unit: {fileID: 0}
     weapon: {fileID: 0}
     armor: {fileID: 0}

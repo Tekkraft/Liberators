@@ -11,6 +11,9 @@ public class AbilityData
     [SerializeField]
     List<EffectInstruction> effectInstructions;
 
+    [SerializeField]
+    int abilityRepeats = 1;
+
     public TargetInstruction getTargetInstruction()
     {
         return targetInstruction;
@@ -19,6 +22,11 @@ public class AbilityData
     public List<EffectInstruction> getEffectInstructions()
     {
         return effectInstructions;
+    }
+
+    public int getAbilityRepeats()
+    {
+        return abilityRepeats;
     }
 }
 

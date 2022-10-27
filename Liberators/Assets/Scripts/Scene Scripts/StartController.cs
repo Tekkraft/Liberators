@@ -23,21 +23,26 @@ public class StartController : MonoBehaviour
         for (int i = 0; i < characterUnitData.Count; i++)
         {
             UnitEntryData data = characterUnitData[i];
-            if (data.getSkillTree() == null && data.getUnit() != null)
+            if (data.getUnit() == null)
             {
-                characterUnitData[i] = new UnitEntryData(data.getUnit(), data.getWeapon(), data.getArmor());
+                data.reconstruct();
             }
         }
     }
 
     void OnEnable()
     {
+        if (BattlePrepHandler.data != null)
+        {
+            characterUnitData = BattlePrepHandler.data;
+        }
         loadSkillTree();
+        reloadBattlePrep();
     }
 
     void OnDisable()
     {
-
+        BattlePrepHandler.data = characterUnitData;
     }
 
     public void enterBattle()
@@ -49,18 +54,37 @@ public class StartController : MonoBehaviour
     public void enterSkillTree()
     {
         SkillTreeEntryHandler.unitId = characterState;
-        SkillTreeEntryHandler.activeTree = characterUnitData[characterState].getSkillTree();
+        SkillTreeEntryHandler.activeTree = characterUnitData[characterState].getUnit().getSkillTree();
         SceneManager.LoadSceneAsync("UnitSkillTree");
+    }
+
+    public void reloadBattlePrep()
+    {
+        if (BattlePrepHandler.activated)
+        {
+            foreach (UnitEntryData data in characterUnitData)
+            {
+                if (data.getUnit() != null && data.getUnit().getSkillTree() != null)
+                {
+                    data.getUnit().getSkillTree().gainSkillPoints(BattlePrepHandler.skillPointsEarned);
+                }
+            }
+            BattlePrepHandler.reset();
+        }
     }
 
     public void loadSkillTree()
     {
-        if (SkillTreeExitHandler.unitId == -1)
+        if (SkillTreeExitHandler.activated)
         {
-            return;
+            if (SkillTreeExitHandler.unitId == -1)
+            {
+                return;
+            }
+            setCharacterState(SkillTreeExitHandler.unitId);
+            characterUnitData[characterState].getUnit().updateSkillTree(SkillTreeExitHandler.activeTree);
+            SkillTreeExitHandler.reset();
         }
-        setCharacterState(SkillTreeExitHandler.unitId);
-        characterUnitData[characterState].setSkillTree(SkillTreeExitHandler.activeTree);
     }
 
     public void setCharacterState(int stateId)

@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class AnimController : MonoBehaviour
 {
+    public GameObject damageText;
     public GameObject unitBase;
     List<GameObject> activeUnits = new List<GameObject>();
     Dictionary<GameObject, GameObject> activeUnitsUI = new Dictionary<GameObject, GameObject>();
     List<GameObject> deadUnits = new List<GameObject>();
+    List<GameObject> damageTextList = new List<GameObject>();
 
     public void createBattleAnimation(List<CombatData> combatSequence)
     {
@@ -60,7 +62,7 @@ public class AnimController : MonoBehaviour
             if (!activeUnits.Contains(leftUnits[i]))
             {
                 GameObject temp = GameObject.Instantiate(unitBase, gameObject.transform);
-                temp.GetComponent<Image>().sprite = leftUnits[i].GetComponent<UnitController>().getUnit().getBattleSprite("idle");
+                temp.GetComponent<Image>().sprite = leftUnits[i].GetComponent<UnitController>().getUnitInstance().getBattleSprite("idle");
                 activeUnitsUI.Add(leftUnits[i], temp);
                 activeUnits.Add(leftUnits[i]);
                 //Will have problems down the line, but can fix later
@@ -72,7 +74,7 @@ public class AnimController : MonoBehaviour
             if (!activeUnits.Contains(rightUnits[i]))
             {
                 GameObject temp = GameObject.Instantiate(unitBase, gameObject.transform);
-                temp.GetComponent<Image>().sprite = rightUnits[i].GetComponent<UnitController>().getUnit().getBattleSprite("idle");
+                temp.GetComponent<Image>().sprite = rightUnits[i].GetComponent<UnitController>().getUnitInstance().getBattleSprite("idle");
                 temp.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 180, 0);
                 activeUnitsUI.Add(rightUnits[i], temp);
                 activeUnits.Add(rightUnits[i]);
@@ -88,13 +90,18 @@ public class AnimController : MonoBehaviour
                 {
                     continue;
                 }
-                activeUnitsUI[step.getActor()].GetComponent<Image>().sprite = step.getActor().GetComponent<UnitController>().getUnit().getBattleSprite(step.getAction());
+                activeUnitsUI[step.getActor()].GetComponent<Image>().sprite = step.getActor().GetComponent<UnitController>().getUnitInstance().getBattleSprite(step.getAction());
+                createDamageText(step);
                 if ((step.getAction() == "dead" || step.getAction() == "dead stagger") && !deadUnits.Contains(step.getActor()))
                 {
                     deadUnits.Add(step.getActor());
                 }
             }
             yield return new WaitForSeconds(1f);
+            for (int i = damageTextList.Count - 1; i >= 0; i--)
+            {
+                GameObject.Destroy(damageTextList[i]);
+            }
             //TEMPORARY CODE
             foreach (AnimationStep step in block.getAnimationSteps())
             {
@@ -102,15 +109,63 @@ public class AnimController : MonoBehaviour
                 {
                     continue;
                 }
-                activeUnitsUI[step.getActor()].GetComponent<Image>().sprite = step.getActor().GetComponent<UnitController>().getUnit().getBattleSprite("idle");
+                activeUnitsUI[step.getActor()].GetComponent<Image>().sprite = step.getActor().GetComponent<UnitController>().getUnitInstance().getBattleSprite("idle");
             }
+            yield return new WaitForSeconds(0.5f);
         }
         terminateAnimation();
     }
 
     public void terminateAnimation()
     {
+        for (int i = damageTextList.Count - 1; i >= 0; i--)
+        {
+            GameObject.Destroy(damageTextList[i]);
+        }
         StopCoroutine("playAnimation");
         GameObject.Destroy(gameObject);
+    }
+
+    void createDamageText(AnimationStep step)
+    {
+        Vector3 translation = new Vector3(0, 60, 0);
+        switch (step.getAction())
+        {
+            case "evade":
+                setupDamageText("MISS", translation, step);
+                break;
+
+            case "block":
+                setupDamageText("BLOCK", translation, step);
+                break;
+
+            case "defend":
+                setupDamageText("-" + step.getEffect(), translation, step);
+                break;
+
+            case "dead":
+                setupDamageText("-" + step.getEffect(), translation, step);
+                break;
+
+            case "stagger":
+                setupDamageText("-" + step.getEffect() + "!", translation, step);
+                break;
+
+            case "dead stagger":
+                setupDamageText("-" + step.getEffect() + "!", translation, step);
+                break;
+        }
+    }
+
+    void setupDamageText(string message, Vector3 translation, AnimationStep step)
+    {
+        GameObject temp = GameObject.Instantiate(damageText, activeUnitsUI[step.getActor()].transform);
+        temp.transform.Translate(translation);
+        temp.GetComponent<TMPro.TextMeshProUGUI>().text = message;
+        damageTextList.Add(temp);
+        if (Mathf.Abs(activeUnitsUI[step.getActor()].GetComponent<RectTransform>().rotation.eulerAngles.y) == 180)
+        {
+            temp.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, Mathf.PI, 0);
+        }
     }
 }

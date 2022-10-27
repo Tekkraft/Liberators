@@ -68,6 +68,7 @@ public class MapController : MonoBehaviour
     void OnDisable()
     {
         BattleEntryHandler.reset();
+        Cursor.visible = true;
     }
 
     //Use this to load key data upon start
@@ -77,16 +78,7 @@ public class MapController : MonoBehaviour
         List<Vector2Int> spawnLocations = mapData.getSpawnLocations();
         for (int i = 0; i < spawnLocations.Count; i++)
         {
-            GameObject temp = GameObject.Instantiate(unitTemplate);
-            temp.SetActive(false);
-            temp.GetComponent<UnitController>().unitObject = BattleEntryHandler.deployedUnits[i].getUnit();
-            temp.GetComponent<UnitController>().equippedWeapon = BattleEntryHandler.deployedUnits[i].getWeapon();
-            temp.GetComponent<UnitController>().equippedArmor = BattleEntryHandler.deployedUnits[i].getArmor();
-            temp.GetComponent<UnitController>().teamNumber = 0;
-            temp.GetComponent<SpriteRenderer>().sprite = BattleEntryHandler.deployedUnits[i].getUnit().getBattleSprite("attack");
-            Vector2 unitPos = tileGridPos(spawnLocations[i]);
-            temp.GetComponent<Transform>().position = new Vector3(unitPos.x, unitPos.y, -2);
-            temp.SetActive(true);
+            placeUnit(BattleEntryHandler.deployedUnits[i], spawnLocations[i]);
         }
     }
 
@@ -503,28 +495,31 @@ public class MapController : MonoBehaviour
         List<CombatData> data = new List<CombatData>();
         foreach (GameObject target in selectedGameObjectTargets)
         {
-            UnitController attackerController = activeUnit.GetComponent<UnitController>();
-            UnitController defenderController = target.GetComponent<UnitController>();
-            int randomChance = Random.Range(0, 100);
-            int[] hitStats = getHitStats(attackerController, defenderController, abilityData.getTargetInstruction());
-            if (randomChance < hitStats[0])
+            for (int i = 0; i < abilityData.getAbilityRepeats(); i++)
             {
-                if (attackerController.getEquippedWeapon().getWeaponStatus())
+                UnitController attackerController = activeUnit.GetComponent<UnitController>();
+                UnitController defenderController = target.GetComponent<UnitController>();
+                int randomChance = Random.Range(0, 100);
+                int[] hitStats = getHitStats(attackerController, defenderController, abilityData.getTargetInstruction());
+                if (randomChance < hitStats[0])
                 {
-                    data.Add(defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attackerController.gameObject));
+                    if (attackerController.getEquippedWeapon().getWeaponStatus())
+                    {
+                        data.Add(defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attackerController.gameObject));
+                    }
+                    List<CombatData> subResults = attackUnit(activeUnit, target, true);
+                    if (subResults != null)
+                    {
+                        data.AddRange(subResults);
+                    }
                 }
-                List<CombatData> subResults = attackUnit(activeUnit, target, true);
-                if (subResults != null)
+                else
                 {
-                    data.AddRange(subResults);
-                }
-            }
-            else
-            {
-                List<CombatData> subResults = attackUnit(activeUnit, target, false);
-                if (subResults != null)
-                {
-                    data.AddRange(subResults);
+                    List<CombatData> subResults = attackUnit(activeUnit, target, false);
+                    if (subResults != null)
+                    {
+                        data.AddRange(subResults);
+                    }
                 }
             }
         }
@@ -1335,6 +1330,21 @@ public class MapController : MonoBehaviour
     public int gridDistanceFromWorld(Vector2 worldPos1, Vector2 worldPos2)
     {
         return gridDistance(gridWorldPos(worldPos1), gridWorldPos(worldPos2));
+    }
+
+    //Unit Construction
+    void placeUnit(UnitEntryData unit, Vector2Int tile)
+    {
+        GameObject temp = GameObject.Instantiate(unitTemplate);
+        temp.SetActive(false);
+        temp.GetComponent<UnitController>().setUnitInstance(unit.getUnit());
+        temp.GetComponent<UnitController>().equippedWeapon = unit.getWeapon();
+        temp.GetComponent<UnitController>().equippedArmor = unit.getArmor();
+        temp.GetComponent<UnitController>().teamNumber = 0;
+        temp.GetComponent<SpriteRenderer>().sprite = unit.getUnit().getBattleSprite("attack");
+        Vector2 unitPos = tileGridPos(tile);
+        temp.GetComponent<Transform>().position = new Vector3(unitPos.x, unitPos.y, -2);
+        temp.SetActive(true);
     }
 
     //Animation Control Functions

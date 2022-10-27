@@ -15,10 +15,10 @@ MonoBehaviour:
   unitName: Lana
   maxHP: 30
   mov: 5
-  str: 3
-  pot: 5
-  acu: 11
-  fin: 7
+  str: 8
+  pot: 4
+  acu: 10
+  fin: 4
   rea: 6
   className: Commander
   prfAbilities: []

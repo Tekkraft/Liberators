@@ -35,3 +35,40 @@ MonoBehaviour:
   playerSpawnLocations:
   - {x: 1, y: 3}
   - {x: 1, y: 4}
+  mapEncoding:
+    bounds: {x: 80, y: 80, z: 1}
+    background: {fileID: 11400000, guid: 2b20f0eb33b764b6f98dc52c690c2ade, type: 2}
+    blocker: {fileID: 11400000, guid: 5fe6b385d786f4e289875e6c69281245, type: 2}
+    mapRects:
+    - rectTile: {fileID: 11400000, guid: 84b206cc544294bbab5763617fcf56f6, type: 2}
+      blocksLineOfSight: 1
+      corner0: {x: -5, y: -5}
+      corner1: {x: 15, y: 9}
+    - rectTile: {fileID: 11400000, guid: 268abf866faff46b5aa8e01698411386, type: 2}
+      blocksLineOfSight: 1
+      corner0: {x: -4, y: -4}
+      corner1: {x: 14, y: 7}
+    - rectTile: {fileID: 11400000, guid: 2b20f0eb33b764b6f98dc52c690c2ade, type: 2}
+      blocksLineOfSight: 0
+      corner0: {x: -4, y: -4}
+      corner1: {x: 14, y: 4}
+    - rectTile: {fileID: 11400000, guid: 268abf866faff46b5aa8e01698411386, type: 2}
+      blocksLineOfSight: 1
+      corner0: {x: 10, y: 3}
+      corner1: {x: 14, y: 5}
+    - rectTile: {fileID: 11400000, guid: 84b206cc544294bbab5763617fcf56f6, type: 2}
+      blocksLineOfSight: 1
+      corner0: {x: 10, y: 6}
+      corner1: {x: 14, y: 7}
+    - rectTile: {fileID: 11400000, guid: 5e034c626e55e46d3bc0dd0d05f43eaf, type: 2}
+      blocksLineOfSight: 0
+      corner0: {x: 12, y: 3}
+      corner1: {x: 12, y: 3}
+    - rectTile: {fileID: 11400000, guid: 84b206cc544294bbab5763617fcf56f6, type: 2}
+      blocksLineOfSight: 1
+      corner0: {x: 8, y: 5}
+      corner1: {x: 4, y: -2}
+    - rectTile: {fileID: 11400000, guid: 268abf866faff46b5aa8e01698411386, type: 2}
+      blocksLineOfSight: 1
+      corner0: {x: -6, y: -5}
+      corner1: {x: -8, y: 9}
