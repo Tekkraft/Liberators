@@ -16,7 +16,7 @@ public class TerrainTileWorld : Tile
     //Can units move past this tile?
     public bool passable = true;
 
-    public int movementCost = 10;
+    public float movementFactor = 1f;
 
     public string getTileName()
     {
@@ -28,9 +28,9 @@ public class TerrainTileWorld : Tile
         return passable;
     }
 
-    public int getMovementCost()
+    public float getMovementFactor()
     {
-        return movementCost;
+        return movementFactor;
     }
 
     public override void RefreshTile(Vector3Int location, ITilemap tilemap)

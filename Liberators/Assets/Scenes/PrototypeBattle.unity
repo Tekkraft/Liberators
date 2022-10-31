@@ -3092,6 +3092,7 @@ GameObject:
   - component: {fileID: 2107954708}
   - component: {fileID: 2107954707}
   - component: {fileID: 2107954706}
+  - component: {fileID: 2107954709}
   m_Layer: 0
   m_Name: Battle Grid
   m_TagString: Untagged
@@ -5905,6 +5906,24 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &2107954709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107954704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d829f30bb714660b281d75d8496e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineOfSightLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  overlayObject: {fileID: 6635731327509979368, guid: 83233230f4f124990b89f85d6e170750, type: 3}
+  mapData: {fileID: 11400000, guid: 7e7c4af863ce9419290f33264ea3e590, type: 2}
+  unitTemplate: {fileID: 7218121907525971602, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
 --- !u!1001 &2137363991
 PrefabInstance:
   m_ObjectHideFlags: 0

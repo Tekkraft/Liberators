@@ -6,6 +6,7 @@ public class AbilityCalculator
 {
     Grid mainGrid;
     MapController mapController;
+    BattleController battleController;
     Vector2Int calculatorPosition;
     Vector2 targetDirection;
     List<int> targetTeams;
@@ -16,6 +17,7 @@ public class AbilityCalculator
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
+        battleController = mainGrid.GetComponentsInChildren<BattleController>()[0];
         linkedAbility = ability;
         calculatorPosition = calcPos;
         this.targetDirection = targetDirection;
@@ -51,7 +53,7 @@ public class AbilityCalculator
         {
             rangeMin += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
         }
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, mapController.getTeamLists(), targetDirection);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, battleController, battleController.getTeamLists(), targetDirection);
         List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, false);
         return hitUnits;
     }
@@ -70,7 +72,7 @@ public class AbilityCalculator
         {
             rangeMin += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
         }
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, mapController.getTeamLists(), targetDirection);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, battleController, battleController.getTeamLists(), targetDirection);
         List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, true);
         return hitUnits;
     }

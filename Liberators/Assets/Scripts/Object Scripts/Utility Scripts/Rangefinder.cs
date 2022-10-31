@@ -8,16 +8,18 @@ public class Rangefinder
     int maxRange;
     bool requiresLOS;
     MapController mapController;
+    BattleController battleController;
     Dictionary<int, List<GameObject>> teamLists;
     Vector2 direction;
 
-    public Rangefinder(int maxRange, int minRange, bool requiresLOS, MapController controller, Dictionary<int, List<GameObject>> teamLists, Vector2 direction)
+    public Rangefinder(int maxRange, int minRange, bool requiresLOS, MapController mapController, BattleController battleController, Dictionary<int, List<GameObject>> teamLists, Vector2 direction)
     {
         this.minRange = minRange;
         this.maxRange = maxRange;
         this.requiresLOS = requiresLOS;
         this.teamLists = teamLists;
-        this.mapController = controller;
+        this.mapController = mapController;
+        this.battleController = battleController;
         this.direction = direction;
     }
 
@@ -38,7 +40,7 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
+            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
             if (targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
             {
                 validTargets.Add(temp);
@@ -64,7 +66,7 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
+            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
             if (!targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
             {
                 validTargets.Add(temp);
@@ -90,7 +92,7 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
+            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
             if (targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
             {
                 validTargets.Add(targetCoordsList[i]);
@@ -116,7 +118,7 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
+            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
             if (!targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
             {
                 validTargets.Add(targetCoordsList[i]);

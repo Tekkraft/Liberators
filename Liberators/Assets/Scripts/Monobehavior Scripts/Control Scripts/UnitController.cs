@@ -9,6 +9,7 @@ public class UnitController : MonoBehaviour
     Vector2Int unitGridPosition;
     Grid mainGrid;
     MapController mapController;
+    BattleController battleController;
     List<GameObject> markerList = new List<GameObject>();
     public int teamNumber = -1;
 
@@ -41,8 +42,9 @@ public class UnitController : MonoBehaviour
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
+        battleController = mainGrid.GetComponentsInChildren<BattleController>()[0];
         unitGridPosition = mapController.gridWorldPos(transform.position);
-        mapController.addUnit(this.gameObject);
+        battleController.addUnit(this.gameObject);
         if (unitObject == null)
         {
             unitObject = new UnitInstance(unitTemplate);
@@ -157,7 +159,7 @@ public class UnitController : MonoBehaviour
         bool crit = false;
         if (Random.Range(0, 100) < critChance)
         {
-            damage = (int)(damage * MapController.critFactor);
+            damage = (int)(damage * BattleController.critFactor);
             crit = true;
         }
         KeyValuePair<int, int> baseData = targetController.takeDamage(damage, attackEffect, equippedWeapon);
@@ -437,7 +439,7 @@ public class UnitController : MonoBehaviour
 
     public List<Vector2Int> pathfinderValidCoords(MovementAbility moveAbility)
     {
-        mapController.getPathfinder().changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getMinMoveRange());
+        mapController.getPathfinder().changeParameters(unitGridPosition, battleController.finalRange(mov, moveAbility), moveAbility.getMinMoveRange());
         mapController.getPathfinder().calculate();
         return mapController.getPathfinder().getValidCoords();
     }
