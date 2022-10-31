@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 using UnityEditor;
 #endif
 
-public class TerrainTile : Tile
+public class TerrainTileWorld : Tile
 {
     public string tileName;
 
@@ -16,8 +16,7 @@ public class TerrainTile : Tile
     //Can units move past this tile?
     public bool passable = true;
 
-    public int hitBonus;
-    public int avoidBonus;
+    public int movementCost = 10;
 
     public string getTileName()
     {
@@ -29,9 +28,9 @@ public class TerrainTile : Tile
         return passable;
     }
 
-    public int[] getBonuses()
+    public int getMovementCost()
     {
-        return new int[] { hitBonus, avoidBonus };
+        return movementCost;
     }
 
     public override void RefreshTile(Vector3Int location, ITilemap tilemap)
@@ -65,19 +64,19 @@ public class TerrainTile : Tile
         }
 
         int borderCase = 0;
-        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(1, 0, 0)) && tilemap.GetTile<TerrainTile>(position + new Vector3Int(1, 0, 0)).tileName.Equals(tileName)))
+        if (!(tilemap.GetTile<TerrainTileWorld>(position + new Vector3Int(1, 0, 0)) && tilemap.GetTile<TerrainTileWorld>(position + new Vector3Int(1, 0, 0)).tileName.Equals(tileName)))
         {
             borderCase += 1;
         }
-        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(-1, 0, 0)) && tilemap.GetTile<TerrainTile>(position + new Vector3Int(-1, 0, 0)).tileName.Equals(tileName)))
+        if (!(tilemap.GetTile<TerrainTileWorld>(position + new Vector3Int(-1, 0, 0)) && tilemap.GetTile<TerrainTileWorld>(position + new Vector3Int(-1, 0, 0)).tileName.Equals(tileName)))
         {
             borderCase += 2;
         }
-        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, 1, 0)) && tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, 1, 0)).tileName.Equals(tileName)))
+        if (!(tilemap.GetTile<TerrainTileWorld>(position + new Vector3Int(0, 1, 0)) && tilemap.GetTile<TerrainTileWorld>(position + new Vector3Int(0, 1, 0)).tileName.Equals(tileName)))
         {
             borderCase += 4;
         }
-        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, -1, 0)) && tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, -1, 0)).tileName.Equals(tileName)))
+        if (!(tilemap.GetTile<TerrainTileWorld>(position + new Vector3Int(0, -1, 0)) && tilemap.GetTile<TerrainTileWorld>(position + new Vector3Int(0, -1, 0)).tileName.Equals(tileName)))
         {
             borderCase += 8;
         }
@@ -88,13 +87,13 @@ public class TerrainTile : Tile
     //"Borrowed" from Unity Documentation
 #if UNITY_EDITOR
     // The following is a helper that adds a menu item to create a TerrainTile Asset
-    [MenuItem("Assets/Create/TerrainTile")]
+    [MenuItem("Assets/Create/TerrainTileWorld")]
     public static void CreateTerrainTile()
     {
-        string path = EditorUtility.SaveFilePanelInProject("Save Terrain Tile", "New Terrain Tile", "Asset", "Save Terrain Tile", "Assets");
+        string path = EditorUtility.SaveFilePanelInProject("Save World Terrain Tile", "New World Terrain Tile", "Asset", "Save World Terrain Tile", "Assets");
         if (path == "")
             return;
-        AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<TerrainTile>(), path);
+        AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<TerrainTileWorld>(), path);
     }
-    #endif
+#endif
 }

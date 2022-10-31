@@ -76,9 +76,13 @@ public class MapController : MonoBehaviour
     {
         BattleExitHandler.reset();
         List<Vector2Int> spawnLocations = mapData.getSpawnLocations();
-        for (int i = 0; i < spawnLocations.Count; i++)
+        for (int i = 0; i < spawnLocations.Count && i < BattleEntryHandler.deployedUnits.Count; i++)
         {
             placeUnit(BattleEntryHandler.deployedUnits[i], spawnLocations[i]);
+        }
+        foreach (Vector2Int cell in mapData.getEnemyData().Keys)
+        {
+            placeUnit(mapData.getEnemyData()[cell], cell);
         }
     }
 

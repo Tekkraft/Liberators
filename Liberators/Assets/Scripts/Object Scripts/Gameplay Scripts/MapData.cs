@@ -41,6 +41,22 @@ public class MapData : ScriptableObject
     [SerializeField]
     List<Vector2Int> playerSpawnLocations;
 
+    [SerializeField]
+    List<Vector2Int> enemySpawnLocations;
+
+    [SerializeField]
+    List<UnitEntryData> enemySpawnData;
+
+    public Dictionary<Vector2Int, UnitEntryData> getEnemyData()
+    {
+        Dictionary<Vector2Int, UnitEntryData> spawnData = new Dictionary<Vector2Int, UnitEntryData>();
+        for (int i = 0; i < enemySpawnLocations.Count && i < enemySpawnData.Count; i++)
+        {
+            spawnData.Add(enemySpawnLocations[i], enemySpawnData[i]);
+        }
+        return spawnData;
+    }
+
     public List<List<int>> getTeamAlignments()
     {
         List<List<int>> alignments = new List<List<int>>();
