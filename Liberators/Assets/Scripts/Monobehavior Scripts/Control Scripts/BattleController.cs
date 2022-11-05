@@ -40,7 +40,6 @@ public class BattleController : MonoBehaviour
     GameObject activeUnit;
 
     //Public Objects
-    public LayerMask lineOfSightLayer;
     public GameObject overlayObject;
     public MapData mapData;
     public GameObject unitTemplate;
@@ -64,6 +63,7 @@ public class BattleController : MonoBehaviour
     //Use this to save key data upon victory
     void OnDisable()
     {
+        BattleExitHandler.unitData = BattleEntryHandler.deployedUnits;
         BattleEntryHandler.reset();
         Cursor.visible = true;
     }
@@ -89,14 +89,17 @@ public class BattleController : MonoBehaviour
         turnPhase = turnPhase.END;
         uiCanvas.GetComponent<UIController>().resetButtons();
         completeAction();
-        List<GameObject> active = teamLists[activeTeam];
-        for (int i = active.Count - 1; i >= 0; i--)
+        if (teamLists.ContainsKey(activeTeam))
         {
-            GameObject unit = active[i];
-            bool dead = unit.GetComponent<UnitController>().endUnitTurn();
-            if (dead)
+            List<GameObject> active = teamLists[activeTeam];
+            for (int i = active.Count - 1; i >= 0; i--)
             {
-                killUnit(unit);
+                GameObject unit = active[i];
+                bool dead = unit.GetComponent<UnitController>().endUnitTurn();
+                if (dead)
+                {
+                    killUnit(unit);
+                }
             }
         }
         activeTeam++;

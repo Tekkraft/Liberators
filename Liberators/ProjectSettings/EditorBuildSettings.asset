@@ -17,5 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UnitSkillTree.unity
     guid: d73b5391166cc42a5a70e53c080ad06c
+  - enabled: 1
+    path: Assets/Scenes/OperationMap.unity
+    guid: 8b1558f0506cb4c8b8f9c4d58fc7f33c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ca0fad2e3a1044d0b9227ce384067d5e, type: 2}

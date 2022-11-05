@@ -9,23 +9,16 @@ public class MapController : MonoBehaviour
     //Main Variabless
     Grid mainGrid;
     Canvas uiCanvas;
-    GameObject cursor;
-    MouseController cursorController;
     Tilemap mainTilemap;
     Pathfinder pathfinder;
 
     //Public Objects
     public LayerMask lineOfSightLayer;
-    public GameObject overlayObject;
-    public MapData mapData;
-    public GameObject unitTemplate;
 
     void Awake()
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         uiCanvas = GameObject.FindObjectOfType<Canvas>();
-        cursor = GameObject.FindGameObjectWithTag("Cursor");
-        cursorController = cursor.GetComponent<MouseController>();
         mainTilemap = mainGrid.GetComponentInChildren<Tilemap>();
         pathfinder = new Pathfinder(new Vector2Int(0, 0), 0, 0, mainTilemap);
     }
@@ -33,7 +26,19 @@ public class MapController : MonoBehaviour
     //Canvas Management
     public bool mouseOverCanvas(Vector2 mousePos)
     {
-        return uiCanvas.GetComponent<UIController>().mouseOverCanvas(mousePos);
+        if (uiCanvas.GetComponent<UIController>())
+        {
+            return uiCanvas.GetComponent<UIController>().mouseOverCanvas(mousePos);
+        } else if (uiCanvas.GetComponent<OperationUIController>())
+        {
+            return uiCanvas.GetComponent<OperationUIController>().mouseOverCanvas(mousePos);
+        }
+        else
+        {
+            int zero = 0;
+            int breaker = 10 / zero;
+            return false;
+        }
     }
 
     //Other Helpers

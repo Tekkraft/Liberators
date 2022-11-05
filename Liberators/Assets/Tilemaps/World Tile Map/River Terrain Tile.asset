@@ -54,4 +54,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 00eb512ea1e664e2ca139a45f9926e3d, type: 3}
   single: 0
   passable: 0
-  movementCost: 100
+  movementFactor: 999

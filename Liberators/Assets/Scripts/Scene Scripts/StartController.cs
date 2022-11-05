@@ -60,17 +60,7 @@ public class StartController : MonoBehaviour
 
     public void reloadBattlePrep()
     {
-        if (BattlePrepHandler.activated)
-        {
-            foreach (UnitEntryData data in characterUnitData)
-            {
-                if (data.getUnit() != null && data.getUnit().getSkillTree() != null)
-                {
-                    data.getUnit().getSkillTree().gainSkillPoints(BattlePrepHandler.skillPointsEarned);
-                }
-            }
-            BattlePrepHandler.reset();
-        }
+        BattlePrepHandler.reset();
     }
 
     public void loadSkillTree()

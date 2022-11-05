@@ -20,8 +20,13 @@ public class EndController : MonoBehaviour
 
     public void restartBattle()
     {
-        BattlePrepHandler.skillPointsEarned = 1;
-        BattlePrepHandler.activated = true;
+        foreach (UnitEntryData data in BattleExitHandler.unitData)
+        {
+            if (data.getUnit() != null && data.getUnit().getSkillTree() != null)
+            {
+                data.getUnit().getSkillTree().gainSkillPoints(1);
+            }
+        }
         SceneManager.LoadSceneAsync("BattlePrep");
     }
 }
