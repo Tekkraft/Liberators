@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -38,6 +38,20 @@ public class SkillTreeController : MonoBehaviour
     {
         skillPointTracker.GetComponent<SkillTreeUISync>().setCurrentSkillPoints(activeTree.getAvailableSkillPoints());
         skillPointTracker.GetComponent<SkillTreeUISync>().setMaxSkillPoints(activeTree.getMaxSkillPoints());
+        //Find root gameobject
+        List<GameObject> children = new List<GameObject>();
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            if (child.gameObject.CompareTag("SkillNode"))
+            {
+                children.Add(child.gameObject);
+            }
+        }
+        foreach (GameObject child in children)
+        {
+            updateNodeBorder(child, activeTree.getUnlockedSkills(), activeTree.getObtainedSkills());
+        }
     }
 
     void drawTree()
@@ -51,13 +65,49 @@ public class SkillTreeController : MonoBehaviour
         GameObject newNode = GameObject.Instantiate(skillNodeObject, parent.transform);
         newNode.SetActive(false);
         newNode.GetComponent<NodeController>().linkedNode = node;
-        newNode.transform.Translate(new Vector3(offset * 4.5f, 2.5f, 0));
+        newNode.transform.Translate(new Vector3(offset * 4.5f, 3.5f, 0));
         newNode.SetActive(true);
         List<float> offsets = getOffsets(node.widthAboveNode(), node.widthOfChildren());
         for (int i = 0; i < node.getChildSkills().Count; i++)
         {
             SkillNode subNode = node.getChildSkills()[i];
             drawNode(subNode, newNode, layer + 1, offsets[i]);
+        }
+    }
+
+    void updateNodeBorder(GameObject root, List<SkillNode> unlocked, List<SkillNode> obtained)
+    {
+        if (unlocked.Contains(root.GetComponent<NodeController>().getLinkedNode()))
+        {
+            if (activeTree.getAvailableSkillPoints() >= root.GetComponent<NodeController>().getLinkedNode().getNodeCost())
+            {
+                root.GetComponent<NodeController>().abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0, 0.7f, 0, 1);
+            }
+            else
+            {
+                root.GetComponent<NodeController>().abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0.7f, 0, 0, 1);
+            }
+        } else if (obtained.Contains(root.GetComponent<NodeController>().getLinkedNode()))
+        {
+            root.GetComponent<NodeController>().abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 1);
+        }
+        else
+        {
+            root.GetComponent<NodeController>().abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0.3f, 0.3f, 0.3f, 1);
+        }
+
+        List<GameObject> children = new List<GameObject>();
+        for (int i = 0; i < root.transform.childCount; i++)
+        {
+            Transform child = root.transform.GetChild(i);
+            if (child.gameObject.CompareTag("SkillNode"))
+            {
+                children.Add(child.gameObject);
+            }
+        }
+        foreach (GameObject child in children)
+        {
+            updateNodeBorder(child, unlocked, obtained);
         }
     }
 

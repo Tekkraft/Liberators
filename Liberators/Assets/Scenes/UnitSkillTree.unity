@@ -167,7 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a819d2c918f443196cc56e77212eb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeTree: {fileID: 11400000, guid: c8c757230537248f5bcde181568a576e, type: 2}
   skillNodeObject: {fileID: 2184332557732710745, guid: b951774319ef542d6a45455ae30726de, type: 3}
   skillPointTracker: {fileID: 1558007911}
 --- !u!114 &582539949
@@ -1095,7 +1094,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1165,7 +1164,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 18aca63c-6a97-489c-962d-5a6ed79f1ab7
+  m_DefaultActionMap: Basic Actions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 1691829950}
 --- !u!114 &1691829954

@@ -9,9 +9,9 @@ public class PreviewController : MonoBehaviour
     {
         GameObject.Find("Unit Name").GetComponent<TextMeshProUGUI>().text = defender.GetComponent<UnitController>().getName();
         GameObject.Find("Ability Name").GetComponent<TextMeshProUGUI>().text = activeAbility.getName();
-        GameObject.Find("Player Hit").GetComponent<TextMeshProUGUI>().text = playerHit.ToString();
+        GameObject.Find("Player Hit").GetComponent<TextMeshProUGUI>().text = Mathf.Min(playerHit, 100).ToString();
         GameObject.Find("Player Damage").GetComponent<TextMeshProUGUI>().text = playerDamage.ToString();
-        GameObject.Find("Player Critical").GetComponent<TextMeshProUGUI>().text = playerCrit.ToString();
+        GameObject.Find("Player Critical").GetComponent<TextMeshProUGUI>().text = Mathf.Max(playerCrit, 0).ToString();
     }
 
     public void setData(GameObject unit)

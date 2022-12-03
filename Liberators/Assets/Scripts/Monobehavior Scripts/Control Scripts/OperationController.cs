@@ -51,25 +51,36 @@ public class OperationController : MonoBehaviour
             }
             squads.Add(temp);
         }
+        List<Vector3> options = new List<Vector3>();
         //Handle battle results if present
         switch (OperationSceneHandler.battleOutcome)
         {
             case battleOutcome.VICTORY:
-                //NOT WORKING
-                squads[OperationSceneHandler.attackerId].transform.Translate(new Vector3(0, 1, 0));
+                destroySquad(squads[OperationSceneHandler.defenderId]);
                 break;
 
             case battleOutcome.SUCCESS:
-                squads[OperationSceneHandler.attackerId].transform.Translate(new Vector3(0, 1, 0));
+                options = availableTranslations(squads[OperationSceneHandler.defenderId].transform.position);
+                if (options.Count == 0)
+                {
+                    destroySquad(squads[OperationSceneHandler.defenderId]);
+                    break;
+                }
+                squads[OperationSceneHandler.defenderId].transform.Translate(options[Random.Range(0, options.Count)]);
                 break;
 
             case battleOutcome.FAILURE:
-                squads[OperationSceneHandler.attackerId].transform.Translate(new Vector3(0, 1, 0));
+                options = availableTranslations(squads[OperationSceneHandler.attackerId].transform.position);
+                if (options.Count == 0)
+                {
+                    destroySquad(squads[OperationSceneHandler.attackerId]);
+                    break;
+                }
+                squads[OperationSceneHandler.attackerId].transform.Translate(options[Random.Range(0,options.Count)]);
                 break;
 
             case battleOutcome.ROUTED:
-                //NOT WORKING
-                squads[OperationSceneHandler.attackerId].transform.Translate(new Vector3(0, 1, 0));
+                destroySquad(squads[OperationSceneHandler.attackerId]);
                 break;
         }
     }
@@ -118,13 +129,42 @@ public class OperationController : MonoBehaviour
         SceneManager.LoadSceneAsync("BattlePrep");
     }
 
-    List<Vector3> availableCoords(Vector3 coords)
+    //Squad Management
+    void destroySquad(GameObject target)
+    {
+        squads.Remove(target);
+        GameObject.Destroy(target);
+    }
+
+    //Helper Functions
+    List<Vector3> availableTranslations(Vector3 coords)
     {
         List<Vector3> possibleCoords = new List<Vector3>();
-        possibleCoords.Add(coords + Vector3.up);
-        possibleCoords.Add(coords + Vector3.down);
-        possibleCoords.Add(coords + Vector3.left);
-        possibleCoords.Add(coords + Vector3.right);
+        possibleCoords.Add(Vector3.up);
+        possibleCoords.Add(Vector3.down);
+        possibleCoords.Add(Vector3.left);
+        possibleCoords.Add(Vector3.right);
+
+        Tilemap operationsTilemap = gameObject.GetComponent<Tilemap>();
+
+        for (int i = possibleCoords.Count - 1; i >= 0; i--)
+        {
+            Vector3 coord = coords + possibleCoords[i];
+            Vector2Int tileCoord = gameObject.GetComponent<MapController>().gridTilePos(coord);
+            if (!operationsTilemap.GetTile<TerrainTileWorld>(new Vector3Int(tileCoord.x, tileCoord.y, 0)).isPassable())
+            {
+                possibleCoords.Remove(possibleCoords[i]);
+                continue;
+            }
+            foreach (GameObject checkSquad in squads)
+            {
+                if ((coord - checkSquad.transform.position).magnitude <= 0.25)
+                {
+                    possibleCoords.Remove(possibleCoords[i]);
+                    break;
+                }
+            }
+        }
 
         return possibleCoords;
     }

@@ -8,6 +8,7 @@ TagManager:
   - Unit
   - Cursor
   - Calculator
+  - SkillNode
   layers:
   - Default
   - TransparentFX

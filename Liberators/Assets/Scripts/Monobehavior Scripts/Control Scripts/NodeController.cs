@@ -10,6 +10,7 @@ public class NodeController : MonoBehaviour
     public GameObject icon;
     public GameObject abilityCost;
     public GameObject abilityName;
+    public GameObject abilityBorder;
 
     // Start is called before the first frame update
     void Start()
