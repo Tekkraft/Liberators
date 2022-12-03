@@ -20,6 +20,15 @@ public class StartController : MonoBehaviour
         overviewCanvas.GetComponent<Canvas>().enabled = true;
         unitCanvas.GetComponent<Canvas>().enabled = false;
         displayBattleOverview();
+    }
+
+    void OnEnable()
+    {
+        BattlePrepHandler.data = OperationSceneHandler.attackerData.unitList;
+        if (BattlePrepHandler.data != null)
+        {
+            characterUnitData = BattlePrepHandler.data;
+        }
         for (int i = 0; i < characterUnitData.Count; i++)
         {
             UnitEntryData data = characterUnitData[i];
@@ -27,14 +36,6 @@ public class StartController : MonoBehaviour
             {
                 data.reconstruct();
             }
-        }
-    }
-
-    void OnEnable()
-    {
-        if (BattlePrepHandler.data != null)
-        {
-            characterUnitData = BattlePrepHandler.data;
         }
         loadSkillTree();
         reloadBattlePrep();

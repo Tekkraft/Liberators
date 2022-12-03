@@ -11,14 +11,16 @@ public class EndController : MonoBehaviour
         if (BattleExitHandler.victory)
         {
             GameObject.Find("Victory Label").GetComponent<TextMeshProUGUI>().text = "Victory!";
+            OperationSceneHandler.battleOutcome = battleOutcome.SUCCESS;
         } else
         {
             GameObject.Find("Victory Label").GetComponent<TextMeshProUGUI>().text = "Defeat...";
+            OperationSceneHandler.battleOutcome = battleOutcome.FAILURE;
         }
         GameObject.Find("Turn Count Label").GetComponent<TextMeshProUGUI>().text = "Turns: " + BattleExitHandler.turn_count;
     }
 
-    public void restartBattle()
+    public void exitScreen()
     {
         foreach (UnitEntryData data in BattleExitHandler.unitData)
         {
@@ -27,6 +29,6 @@ public class EndController : MonoBehaviour
                 data.getUnit().getSkillTree().gainSkillPoints(1);
             }
         }
-        SceneManager.LoadSceneAsync("BattlePrep");
+        SceneManager.LoadSceneAsync("OperationMap");
     }
 }
