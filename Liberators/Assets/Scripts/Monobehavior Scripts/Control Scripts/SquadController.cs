@@ -10,8 +10,7 @@ public class SquadController : MonoBehaviour
     //Instance Variables
     public float baseSpeed;
     public List<UnitEntryData> unitList;
-    [SerializeField]
-    List<Vector2Int> spawnLocations;
+    public List<Vector2Int> spawnLocations;
     bool movementActive = false;
     public int team;
 
@@ -42,6 +41,11 @@ public class SquadController : MonoBehaviour
     {
         baseSpeed = data.baseSpeed;
         unitList = data.unitList;
+        foreach (UnitEntryData dataEntry in unitList)
+        {
+            dataEntry.reconstruct();
+        }
+        spawnLocations = data.spawnLocations;
         team = data.team;
         transform.position = new Vector3(data.position.x, data.position.y, -1);
         gameObject.name = data.name;
@@ -93,8 +97,7 @@ public class SquadData
 {
     public float baseSpeed;
     public List<UnitEntryData> unitList;
-    [SerializeField]
-    List<Vector2Int> spawnLocations;
+    public List<Vector2Int> spawnLocations;
     public int team;
     public Vector2 position;
     public string name;
@@ -107,5 +110,15 @@ public class SquadData
         this.team = team;
         this.position = position;
         this.name = name;
+    }
+
+    public Dictionary<UnitEntryData, Vector2Int> getPairedUnits()
+    {
+        Dictionary<UnitEntryData, Vector2Int> retVal = new Dictionary<UnitEntryData, Vector2Int>();
+        for (int i = 0; i < unitList.Count && i < spawnLocations.Count; i++)
+        {
+            retVal.Add(unitList[i], spawnLocations[i]);
+        }
+        return retVal;
     }
 }

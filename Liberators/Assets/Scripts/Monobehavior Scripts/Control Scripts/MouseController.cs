@@ -69,7 +69,7 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
-        switch (battleController.getTurnPhase())
+         switch (battleController.getTurnPhase())
         {
             case turnPhase.MAIN:
                 if (!battleController.getActiveUnit())

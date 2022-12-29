@@ -50,7 +50,8 @@ public class StartController : MonoBehaviour
     public void enterBattle()
     {
         BattleEntryHandler.deployedUnits = characterUnitData;
-        SceneManager.LoadSceneAsync("PrototypeBattle");
+        BattleEntryHandler.enemyPlacements = OperationSceneHandler.defenderData.getPairedUnits();
+        SceneManager.LoadSceneAsync("StandardBattle");
     }
 
     public void enterSkillTree()

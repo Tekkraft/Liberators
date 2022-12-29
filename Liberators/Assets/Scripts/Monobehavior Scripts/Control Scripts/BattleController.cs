@@ -75,11 +75,11 @@ public class BattleController : MonoBehaviour
         List<Vector2Int> spawnLocations = mapData.getSpawnLocations();
         for (int i = 0; i < spawnLocations.Count && i < BattleEntryHandler.deployedUnits.Count; i++)
         {
-            placeUnit(BattleEntryHandler.deployedUnits[i], spawnLocations[i]);
+            placeUnit(BattleEntryHandler.deployedUnits[i], spawnLocations[i], 0);
         }
-        foreach (Vector2Int cell in mapData.getEnemyData().Keys)
+        foreach (UnitEntryData enemy in BattleEntryHandler.enemyPlacements.Keys)
         {
-            placeUnit(mapData.getEnemyData()[cell], cell);
+            placeUnit(enemy, BattleEntryHandler.enemyPlacements[enemy], 1);
         }
     }
 
@@ -1318,14 +1318,14 @@ public class BattleController : MonoBehaviour
     }
 
     //Unit Construction
-    void placeUnit(UnitEntryData unit, Vector2Int tile)
+    void placeUnit(UnitEntryData unit, Vector2Int tile, int team)
     {
         GameObject temp = GameObject.Instantiate(unitTemplate);
         temp.SetActive(false);
         temp.GetComponent<UnitController>().setUnitInstance(unit.getUnit());
         temp.GetComponent<UnitController>().equippedWeapon = unit.getWeapon();
         temp.GetComponent<UnitController>().equippedArmor = unit.getArmor();
-        temp.GetComponent<UnitController>().teamNumber = 0;
+        temp.GetComponent<UnitController>().teamNumber = team;
         temp.GetComponent<SpriteRenderer>().sprite = unit.getUnit().getBattleSprite("attack");
         Vector2 unitPos = mapController.tileGridPos(tile);
         temp.GetComponent<Transform>().position = new Vector3(unitPos.x, unitPos.y, -2);

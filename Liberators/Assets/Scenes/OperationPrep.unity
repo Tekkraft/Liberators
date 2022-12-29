@@ -262,6 +262,20 @@ MonoBehaviour:
   - unit: {fileID: 0}
     weapon: {fileID: 0}
     armor: {fileID: 0}
+  enemy1List:
+  - unit: {fileID: 11400000, guid: d77b1c3b8fdd94645a7a2adea99fddc8, type: 2}
+    weapon: {fileID: 11400000, guid: b7d726faedd174a85b308f113feccc00, type: 2}
+    armor: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+  - unit: {fileID: 11400000, guid: 3ed7a0f27dbcb47c2b13ab0847d93e08, type: 2}
+    weapon: {fileID: 11400000, guid: bb1a9d2f66ef8479d98bcd8cbd148a66, type: 2}
+    armor: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+  enemy2List:
+  - unit: {fileID: 11400000, guid: 22adf00fc938a4e43874ba6be8990003, type: 2}
+    weapon: {fileID: 11400000, guid: 8c1b4b5d9828742d49722a1b9a5c5938, type: 2}
+    armor: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
+  - unit: {fileID: 11400000, guid: 934cd044b35b7494281b321d6639ae30, type: 2}
+    weapon: {fileID: 11400000, guid: b7d726faedd174a85b308f113feccc00, type: 2}
+    armor: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
 --- !u!1 &820854300
 GameObject:
   m_ObjectHideFlags: 0
