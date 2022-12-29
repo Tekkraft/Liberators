@@ -38,6 +38,7 @@ public class StartController : MonoBehaviour
             }
         }
         loadSkillTree();
+        loadInventory();
         reloadBattlePrep();
     }
 
@@ -59,6 +60,15 @@ public class StartController : MonoBehaviour
         SceneManager.LoadSceneAsync("UnitSkillTree");
     }
 
+    public void enterInventory()
+    {
+        InventoryTransitionController.characterId = characterState;
+        InventoryTransitionController.equippedWeapon = characterUnitData[characterState].getWeapon();
+        InventoryTransitionController.equippedArmor = characterUnitData[characterState].getArmor();
+        InventoryTransitionController.origin = "BattlePrep";
+        SceneManager.LoadSceneAsync("UnitInventory");
+    }
+
     public void reloadBattlePrep()
     {
         BattlePrepHandler.reset();
@@ -76,6 +86,18 @@ public class StartController : MonoBehaviour
             characterUnitData[characterState].getUnit().updateSkillTree(SkillTreeExitHandler.activeTree);
             SkillTreeExitHandler.reset();
         }
+    }
+
+    public void loadInventory()
+    {
+        if (InventoryTransitionController.equippedArmor && InventoryTransitionController.equippedWeapon)
+        {
+            setCharacterState(InventoryTransitionController.characterId);
+            characterUnitData[characterState].setArmor(InventoryTransitionController.equippedArmor);
+            characterUnitData[characterState].setWeapon(InventoryTransitionController.equippedWeapon);
+            displayUnitOverview();
+        }
+        InventoryTransitionController.reset();
     }
 
     public void setCharacterState(int stateId)

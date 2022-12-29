@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon Object", order = 48)]
-public class Weapon : ScriptableObject
+public class Weapon : ScriptableObject, IItem
 {
     [SerializeField]
     string weaponName;
@@ -35,6 +35,11 @@ public class Weapon : ScriptableObject
     public string getName()
     {
         return weaponName;
+    }
+
+    public Sprite getImage()
+    {
+        return null;
     }
 
     public weaponType getWeaponType()

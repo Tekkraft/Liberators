@@ -15,9 +15,6 @@ public class MapData : ScriptableObject
     List<int> AITeams;
 
     [SerializeField]
-    List<RoutCondition> routWinConditions;
-
-    [SerializeField]
     List<ReachCondition> reachWinConditions;
 
     [SerializeField]
@@ -25,9 +22,6 @@ public class MapData : ScriptableObject
 
     [SerializeField]
     List<TimeCondition> timeWinConditions;
-
-    [SerializeField]
-    List<RoutCondition> routLoseConditions;
 
     [SerializeField]
     List<ReachCondition> reachLoseConditions;
@@ -40,22 +34,6 @@ public class MapData : ScriptableObject
 
     [SerializeField]
     List<Vector2Int> playerSpawnLocations;
-
-    [SerializeField]
-    List<Vector2Int> enemySpawnLocations;
-
-    [SerializeField]
-    List<UnitEntryData> enemySpawnData;
-
-    public Dictionary<Vector2Int, UnitEntryData> getEnemyData()
-    {
-        Dictionary<Vector2Int, UnitEntryData> spawnData = new Dictionary<Vector2Int, UnitEntryData>();
-        for (int i = 0; i < enemySpawnLocations.Count && i < enemySpawnData.Count; i++)
-        {
-            spawnData.Add(enemySpawnLocations[i], enemySpawnData[i]);
-        }
-        return spawnData;
-    }
 
     public List<List<int>> getTeamAlignments()
     {
@@ -120,21 +98,6 @@ public class MapData : ScriptableObject
             }
         }
 
-        foreach (RoutCondition team in routWinConditions)
-        {
-            if (teamLists.ContainsKey(team.routTeam))
-            {
-                if (teamLists[team.routTeam].Count == 0)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return true;
-            }
-        }
-
         foreach (TargetCondition target in targetWinConditions)
         {
             if (!unitList.ContainsValue(target.target))
@@ -173,21 +136,6 @@ public class MapData : ScriptableObject
             }
         }
 
-        foreach (RoutCondition team in routLoseConditions)
-        {
-            if (teamLists.ContainsKey(team.routTeam))
-            {
-                if (teamLists[team.routTeam].Count == 0)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return true;
-            }
-        }
-
         foreach (TargetCondition target in targetLoseConditions)
         {
             if (!unitList.ContainsValue(target.target))
@@ -212,12 +160,6 @@ public class MapData : ScriptableObject
 class SublistInt
 {
     public List<int> items;
-}
-
-[System.Serializable]
-class RoutCondition
-{
-    public int routTeam;
 }
 
 [System.Serializable]

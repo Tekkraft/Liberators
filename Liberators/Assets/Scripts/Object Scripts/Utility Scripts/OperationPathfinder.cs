@@ -5,14 +5,14 @@ using UnityEngine.Tilemaps;
 
 public class OperationPathfinder
 {
-    Tilemap map;
+    MapController controller;
     Dictionary<Vector2Int, int> distanceMap = new Dictionary<Vector2Int, int>();
     Dictionary<Vector2Int, List<Vector2Int>> directionMap = new Dictionary<Vector2Int, List<Vector2Int>>();
     Dictionary<int, List<Vector2Int>> scanningQueue = new Dictionary<int, List<Vector2Int>>();
 
-    public OperationPathfinder(Tilemap map)
+    public OperationPathfinder(MapController controller)
     {
-        this.map = map;
+        this.controller = controller;
     }
 
     public void runCalculations(Vector2Int origin)
@@ -39,7 +39,7 @@ public class OperationPathfinder
                 distanceMap.Add(active, distance);
                 Vector2Int offset = new Vector2Int(1, 0);
                 Vector2Int coords = active + offset;
-                TerrainTileWorld tile = map.GetTile<TerrainTileWorld>(asVector3Int(coords));
+                TerrainTileWorld tile = controller.getTileAtPos(asVector3Int(coords)) as TerrainTileWorld;
                 if (tile && tile.isPassable() && !tileSearchedOrQueued(coords))
                 {
                     List<Vector2Int> directions = new List<Vector2Int>(directionMap[active]);
@@ -56,7 +56,7 @@ public class OperationPathfinder
                 }
                 offset = new Vector2Int(-1, 0);
                 coords = active + offset;
-                tile = map.GetTile<TerrainTileWorld>(asVector3Int(coords));
+                tile = controller.getTileAtPos(asVector3Int(coords)) as TerrainTileWorld;
                 if (tile && tile.isPassable() && !tileSearchedOrQueued(coords))
                 {
                     List<Vector2Int> directions = new List<Vector2Int>(directionMap[active]);
@@ -74,7 +74,7 @@ public class OperationPathfinder
                 }
                 offset = new Vector2Int(0, 1);
                 coords = active + offset;
-                tile = map.GetTile<TerrainTileWorld>(asVector3Int(coords));
+                tile = controller.getTileAtPos(asVector3Int(coords)) as TerrainTileWorld;
                 if (tile && tile.isPassable() && !tileSearchedOrQueued(coords))
                 {
                     List<Vector2Int> directions = new List<Vector2Int>(directionMap[active]);
@@ -92,7 +92,7 @@ public class OperationPathfinder
                 }
                 offset = new Vector2Int(0, -1);
                 coords = active + offset;
-                tile = map.GetTile<TerrainTileWorld>(asVector3Int(coords));
+                tile = controller.getTileAtPos(asVector3Int(coords)) as TerrainTileWorld;
                 if (tile && tile.isPassable() && !tileSearchedOrQueued(coords))
                 {
                     List<Vector2Int> directions = new List<Vector2Int>(directionMap[active]);

@@ -11,14 +11,14 @@ public class Pathfinder
     Vector2Int origin;
     int minRange;
     int maxRange;
-    Tilemap gameMap;
+    MapController controller;
 
-    public Pathfinder(Vector2Int origin, int maxRange, int minRange, Tilemap gameMap)
+    public Pathfinder(Vector2Int origin, int maxRange, int minRange, MapController controller)
     {
         this.origin = origin;
         this.minRange = minRange;
         this.maxRange = maxRange;
-        this.gameMap = gameMap;
+        this.controller = controller;
     }
 
     public void changeParameters(Vector2Int origin, int maxRange, int minRange)
@@ -50,13 +50,13 @@ public class Pathfinder
             Vector2Int newCoords = temp.getCoords();
             //+1/- 1 in X
             newCoords.x += 1;
-            TerrainTile tile = gameMap.GetTile<TerrainTile>(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0));
+            TerrainTile tile = controller.getTileAtPos(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0)) as TerrainTile;
             if (tile && tile.isPassable() && !searchedCoords.Contains(newCoords))
             {
                 searchList.AddLast(new CellPair(newCoords, newDist));
             }
             newCoords.x -= 2;
-            tile = gameMap.GetTile<TerrainTile>(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0));
+            tile = controller.getTileAtPos(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0)) as TerrainTile;
             if (tile && tile.isPassable() && !searchedCoords.Contains(newCoords))
             {
                 searchList.AddLast(new CellPair(newCoords, newDist));
@@ -64,13 +64,13 @@ public class Pathfinder
             newCoords.x += 1;
             //+1/-1 in Y
             newCoords.y += 1;
-            tile = gameMap.GetTile<TerrainTile>(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0));
+            tile = controller.getTileAtPos(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0)) as TerrainTile;
             if (tile && tile.isPassable() && !searchedCoords.Contains(newCoords))
             {
                 searchList.AddLast(new CellPair(newCoords, newDist));
             }
             newCoords.y -= 2;
-            tile = gameMap.GetTile<TerrainTile>(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0));
+            tile = controller.getTileAtPos(new Vector3Int(newCoords.x - 1, newCoords.y - 1, 0)) as TerrainTile;
             if (tile && tile.isPassable() && !searchedCoords.Contains(newCoords))
             {
                 searchList.AddLast(new CellPair(newCoords, newDist));

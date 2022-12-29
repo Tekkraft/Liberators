@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Armor", menuName = "Armor Object", order = 49)]
-public class Armor : ScriptableObject
+public class Armor : ScriptableObject, IItem
 {
     [SerializeField]
     string armorName;
@@ -20,6 +20,11 @@ public class Armor : ScriptableObject
     public string getName ()
     {
         return armorName;
+    }
+
+    public Sprite getImage()
+    {
+        return null;
     }
 
     public int[] getDefenses ()

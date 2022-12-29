@@ -9,7 +9,6 @@ public class MapController : MonoBehaviour
     //Main Variabless
     Grid mainGrid;
     Canvas uiCanvas;
-    Tilemap mainTilemap;
     Pathfinder pathfinder;
 
     //Public Objects
@@ -19,8 +18,7 @@ public class MapController : MonoBehaviour
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         uiCanvas = GameObject.FindObjectOfType<Canvas>();
-        mainTilemap = mainGrid.GetComponentInChildren<Tilemap>();
-        pathfinder = new Pathfinder(new Vector2Int(0, 0), 0, 0, mainTilemap);
+        pathfinder = new Pathfinder(new Vector2Int(0, 0), 0, 0, this);
     }
 
     //Canvas Management
@@ -35,8 +33,8 @@ public class MapController : MonoBehaviour
         }
         else
         {
-            int zero = 0;
-            int breaker = 10 / zero;
+            Debug.Log("ERROR: NO UI CONTROLLER DETECTED");
+            Debug.Break();
             return false;
         }
     }
@@ -93,5 +91,10 @@ public class MapController : MonoBehaviour
     public int gridDistanceFromWorld(Vector2 worldPos1, Vector2 worldPos2)
     {
         return gridDistance(gridWorldPos(worldPos1), gridWorldPos(worldPos2));
+    }
+
+    public TileBase getTileAtPos(Vector3Int tilePos)
+    {
+        return gameObject.GetComponent<Tilemap>().GetTile(tilePos);
     }
 }

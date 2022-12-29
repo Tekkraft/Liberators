@@ -18,8 +18,7 @@ public class OperationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pathfinder = new OperationPathfinder(gameObject.GetComponent<Tilemap>());
-        pathfinder.runCalculations(new Vector2Int(0, 0));
+        pathfinder = new OperationPathfinder(gameObject.GetComponent<MapController>());
     }
 
     // Update is called once per frame
@@ -103,15 +102,9 @@ public class OperationController : MonoBehaviour
 
     void checkSkirmish(GameObject unit1, GameObject unit2)
     {
-        if (unit1.transform.position == unit2.transform.position)
+        if (Vector3.Distance(unit1.transform.position,unit2.transform.position) <= 2f/3f)
         {
-            if (unit1.GetComponent<SquadController>().getTeam() == 0)
-            {
-                startSkirmish(unit1, unit2);
-            } else if (unit2.GetComponent<SquadController>().getTeam() == 0)
-            {
-                startSkirmish(unit2, unit1);
-            }
+            startSkirmish(unit1, unit2);
         }
     }
 

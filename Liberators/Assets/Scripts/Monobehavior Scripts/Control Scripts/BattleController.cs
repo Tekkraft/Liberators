@@ -1054,29 +1054,64 @@ public class BattleController : MonoBehaviour
     //End Map Management
     void checkEndGame()
     {
+        if (evaluatePlayerRout())
+        {
+            BattleExitHandler.outcome = battleOutcome.ROUTED;
+            mapEnd();
+            return;
+        }
+        if (evaluateEnemyRout())
+        {
+            BattleExitHandler.outcome = battleOutcome.VICTORY;
+            mapEnd();
+            return;
+        }
         if (mapData.evaluateDefeatConditions(unitList, teamLists, turnNumber))
         {
-            mapDefeat();
+            BattleExitHandler.outcome = battleOutcome.FAILURE;
+            mapEnd();
             return;
         }
         if (mapData.evaluateVictoryConditions(unitList, teamLists, turnNumber))
         {
-            mapVictory();
+            BattleExitHandler.outcome = battleOutcome.SUCCESS;
+            mapEnd();
             return;
         }
     }
 
-    void mapVictory()
+    bool evaluatePlayerRout()
     {
-        BattleExitHandler.victory = true;
-        BattleExitHandler.turn_count = turnNumber;
-        StopAllCoroutines();
-        SceneManager.LoadSceneAsync("BattleEnd");
+        foreach (int team in getAlignedTeams(0))
+        {
+            if (teamLists.ContainsKey(team))
+            {
+                if (teamLists[team].Count != 0)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
-    void mapDefeat()
+    bool evaluateEnemyRout()
     {
-        BattleExitHandler.victory = false;
+        foreach (int team in getNonAlignedTeams(0))
+        {
+            if (teamLists.ContainsKey(team))
+            {
+                if (teamLists[team].Count != 0)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    void mapEnd()
+    {
         BattleExitHandler.turn_count = turnNumber;
         StopAllCoroutines();
         SceneManager.LoadSceneAsync("BattleEnd");
