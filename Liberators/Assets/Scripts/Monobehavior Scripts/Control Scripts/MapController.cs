@@ -12,7 +12,8 @@ public class MapController : MonoBehaviour
     Pathfinder pathfinder;
 
     //Public Objects
-    public LayerMask lineOfSightLayer;
+    [SerializeField]
+    LayerMask lineOfSightLayer;
 
     void Awake()
     {
@@ -96,5 +97,10 @@ public class MapController : MonoBehaviour
     public TileBase getTileAtPos(Vector3Int tilePos)
     {
         return gameObject.GetComponent<Tilemap>().GetTile(tilePos);
+    }
+
+    public LayerMask getLineOfSightLayer()
+    {
+        return lineOfSightLayer;
     }
 }

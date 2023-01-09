@@ -182,16 +182,18 @@ public class Rangefinder
     //Line of Sight Checks
     public bool checkLineCollision(Vector2 originPos, Vector2 targetPos)
     {
+        float offset = Mathf.Sqrt(0.5f);
         Vector2 origin = mapController.tileGridPos(originPos);
         Vector2 target = mapController.tileGridPos(targetPos);
         Vector2 direction = target - origin;
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, direction.magnitude, mapController.lineOfSightLayer);
+        Vector2 displace = direction.normalized * offset;
+        RaycastHit2D hit = Physics2D.Raycast(origin + displace, direction - displace, direction.magnitude - displace.magnitude, mapController.getLineOfSightLayer());
         if (hit.collider)
         {
-            Debug.DrawRay(origin, direction, Color.red, 100);
+            Debug.DrawRay(origin + displace, direction - displace, Color.red, 100);
         } else
         {
-            Debug.DrawRay(origin, direction, Color.white, 100);
+            Debug.DrawRay(origin + displace, direction - displace, Color.white, 100);
         }
         return hit.collider != null;
     }
