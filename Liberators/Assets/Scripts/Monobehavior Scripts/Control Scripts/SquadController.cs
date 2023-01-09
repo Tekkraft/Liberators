@@ -43,7 +43,10 @@ public class SquadController : MonoBehaviour
         unitList = data.unitList;
         foreach (UnitEntryData dataEntry in unitList)
         {
-            dataEntry.reconstruct();
+            if (dataEntry.getUnit() == null)
+            {
+                dataEntry.reconstruct();
+            }
         }
         spawnLocations = data.spawnLocations;
         team = data.team;

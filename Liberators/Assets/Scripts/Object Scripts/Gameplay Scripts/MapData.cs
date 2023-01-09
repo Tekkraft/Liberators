@@ -32,9 +32,6 @@ public class MapData : ScriptableObject
     [SerializeField]
     List<TimeCondition> timeLoseConditions;
 
-    [SerializeField]
-    List<Vector2Int> playerSpawnLocations;
-
     public List<List<int>> getTeamAlignments()
     {
         List<List<int>> alignments = new List<List<int>>();
@@ -72,11 +69,6 @@ public class MapData : ScriptableObject
     public List<int> getAITeams()
     {
         return AITeams;
-    }
-
-    public List<Vector2Int> getSpawnLocations()
-    {
-        return playerSpawnLocations;
     }
 
     public bool evaluateVictoryConditions(Dictionary<Vector2Int, GameObject> unitList, Dictionary<int, List<GameObject>> teamLists, int currentTurn)

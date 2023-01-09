@@ -801,3 +801,1546 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003889 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.54 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 11:21:44.679 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff235651980 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.371 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2373ms)
+		BeginReloadAssembly (214ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (37ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (77ms)
+		EndReloadAssembly (2073ms)
+			LoadAssemblies (175ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (345ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (44ms)
+			SetupLoadedEditorAssemblies (1199ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (239ms)
+				ProcessInitializeOnLoadAttributes (909ms)
+				ProcessInitializeOnLoadMethodAttributes (32ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (36ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.65 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 294.5 MB.
+System memory in use after: 294.7 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3152.
+Total: 3.790584 ms (FindLiveObjects: 0.261375 ms CreateObjectMapping: 0.063750 ms MarkObjects: 3.256208 ms  DeleteObjects: 0.207958 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002563 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.55 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 11:26:09.675 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff233e71df0 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.437 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2438ms)
+		BeginReloadAssembly (230ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (39ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (83ms)
+		EndReloadAssembly (2122ms)
+			LoadAssemblies (181ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (361ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (45ms)
+			SetupLoadedEditorAssemblies (1204ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (245ms)
+				ProcessInitializeOnLoadAttributes (905ms)
+				ProcessInitializeOnLoadMethodAttributes (33ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (37ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.51 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 297.3 MB.
+System memory in use after: 297.6 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3154.
+Total: 2.387583 ms (FindLiveObjects: 0.119000 ms CreateObjectMapping: 0.055375 ms MarkObjects: 2.176083 ms  DeleteObjects: 0.036250 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005029 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.58 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 11:27:49.674 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff2535b16c0 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.590 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2592ms)
+		BeginReloadAssembly (272ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (49ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (106ms)
+		EndReloadAssembly (2231ms)
+			LoadAssemblies (213ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (346ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (46ms)
+			SetupLoadedEditorAssemblies (1300ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (247ms)
+				ProcessInitializeOnLoadAttributes (994ms)
+				ProcessInitializeOnLoadMethodAttributes (39ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (42ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 300.2 MB.
+System memory in use after: 300.4 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3156.
+Total: 2.654084 ms (FindLiveObjects: 0.169333 ms CreateObjectMapping: 0.057667 ms MarkObjects: 2.395666 ms  DeleteObjects: 0.030500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002722 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.60 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 11:34:27.545 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff23520fc00 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.370 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2371ms)
+		BeginReloadAssembly (219ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (40ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (74ms)
+		EndReloadAssembly (2065ms)
+			LoadAssemblies (179ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (349ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (44ms)
+			SetupLoadedEditorAssemblies (1176ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (247ms)
+				ProcessInitializeOnLoadAttributes (873ms)
+				ProcessInitializeOnLoadMethodAttributes (34ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (40ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.48 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 303.0 MB.
+System memory in use after: 303.2 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3158.
+Total: 2.317792 ms (FindLiveObjects: 0.125167 ms CreateObjectMapping: 0.055500 ms MarkObjects: 2.109167 ms  DeleteObjects: 0.026833 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002508 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.55 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 11:36:11.408 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff233eb4e60 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.381 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2383ms)
+		BeginReloadAssembly (224ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (38ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (79ms)
+		EndReloadAssembly (2069ms)
+			LoadAssemblies (181ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (351ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (43ms)
+			SetupLoadedEditorAssemblies (1191ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (239ms)
+				ProcessInitializeOnLoadAttributes (897ms)
+				ProcessInitializeOnLoadMethodAttributes (34ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (36ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.57 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 305.8 MB.
+System memory in use after: 306.0 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3160.
+Total: 2.376417 ms (FindLiveObjects: 0.115042 ms CreateObjectMapping: 0.053208 ms MarkObjects: 2.180792 ms  DeleteObjects: 0.026542 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004719 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.82 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 11:37:39.274 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff253374430 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.316 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2318ms)
+		BeginReloadAssembly (221ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (42ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (75ms)
+		EndReloadAssembly (2016ms)
+			LoadAssemblies (188ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (319ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (41ms)
+			SetupLoadedEditorAssemblies (1159ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (227ms)
+				ProcessInitializeOnLoadAttributes (874ms)
+				ProcessInitializeOnLoadMethodAttributes (37ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (40ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.51 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 308.6 MB.
+System memory in use after: 308.8 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3162.
+Total: 2.425167 ms (FindLiveObjects: 0.152542 ms CreateObjectMapping: 0.089792 ms MarkObjects: 2.156166 ms  DeleteObjects: 0.025792 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 4564.390403 seconds.
+  path: Assets/Scenes/StandardBattle.unity
+  artifactKey: Guid(477f27cd70e9a4279b435f0c66eb4b03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/StandardBattle.unity using Guid(477f27cd70e9a4279b435f0c66eb4b03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f6bca77b676b786cc16a15a8b5644b22') in 0.024223 seconds 
+  Import took 0.033098 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 18.733585 seconds.
+  path: Assets/Scenes/StandardBattle.unity
+  artifactKey: Guid(477f27cd70e9a4279b435f0c66eb4b03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/StandardBattle.unity using Guid(477f27cd70e9a4279b435f0c66eb4b03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '260bc73b8808669ade9f49e420c0b334') in 0.002181 seconds 
+  Import took 0.010004 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.093291 seconds.
+  path: Assets/Scenes/OperationMap.unity
+  artifactKey: Guid(8b1558f0506cb4c8b8f9c4d58fc7f33c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/OperationMap.unity using Guid(8b1558f0506cb4c8b8f9c4d58fc7f33c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '84ecfb3462a510b8c1d43f003e021d8d') in 0.003302 seconds 
+  Import took 0.011662 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.837741 seconds.
+  path: Assets/Scenes/OperationPrep.unity
+  artifactKey: Guid(db37c430da9d247d3a041aef67a391b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/OperationPrep.unity using Guid(db37c430da9d247d3a041aef67a391b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '884c9e896b32d0e69ccf500b83a1f050') in 0.002143 seconds 
+  Import took 0.011870 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003501 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.54 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 11:43:16.413 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff233b408f0 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.445 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2449ms)
+		BeginReloadAssembly (245ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (52ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (78ms)
+		EndReloadAssembly (2116ms)
+			LoadAssemblies (185ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (356ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (43ms)
+			SetupLoadedEditorAssemblies (1224ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (251ms)
+				ProcessInitializeOnLoadAttributes (920ms)
+				ProcessInitializeOnLoadMethodAttributes (34ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (37ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.53 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 311.5 MB.
+System memory in use after: 311.7 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3164.
+Total: 2.640542 ms (FindLiveObjects: 0.167292 ms CreateObjectMapping: 0.057208 ms MarkObjects: 2.380208 ms  DeleteObjects: 0.034250 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002521 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.54 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 11:45:54.063 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff233ee7460 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.374 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2376ms)
+		BeginReloadAssembly (233ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (37ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (87ms)
+		EndReloadAssembly (2053ms)
+			LoadAssemblies (184ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (345ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (44ms)
+			SetupLoadedEditorAssemblies (1165ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (246ms)
+				ProcessInitializeOnLoadAttributes (868ms)
+				ProcessInitializeOnLoadMethodAttributes (32ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (37ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.48 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 314.3 MB.
+System memory in use after: 314.5 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3166.
+Total: 2.333417 ms (FindLiveObjects: 0.120125 ms CreateObjectMapping: 0.052584 ms MarkObjects: 2.137000 ms  DeleteObjects: 0.022792 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005812 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.55 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 11:47:17.242 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff235389b30 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.513 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2515ms)
+		BeginReloadAssembly (234ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (45ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (80ms)
+		EndReloadAssembly (2193ms)
+			LoadAssemblies (201ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (346ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (43ms)
+			SetupLoadedEditorAssemblies (1282ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (246ms)
+				ProcessInitializeOnLoadAttributes (979ms)
+				ProcessInitializeOnLoadMethodAttributes (37ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (42ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.57 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 317.1 MB.
+System memory in use after: 317.3 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3168.
+Total: 2.412250 ms (FindLiveObjects: 0.137083 ms CreateObjectMapping: 0.055791 ms MarkObjects: 2.184458 ms  DeleteObjects: 0.034084 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 883.071909 seconds.
+  path: Assets/Scenes/PrototypeBattle.unity
+  artifactKey: Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/PrototypeBattle.unity using Guid(2cda990e2423bbf4892e6590ba056729) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ced8d17bf1d44af2fba0ccfd2cf85281') in 0.047117 seconds 
+  Import took 0.076119 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.742643 seconds.
+  path: Assets/Scenes/StandardBattle.scenetemplate
+  artifactKey: Guid(74e0a4f6774a94320b099820c40c14fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/StandardBattle.scenetemplate using Guid(74e0a4f6774a94320b099820c40c14fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aefed6042e8f6b1df542ac5ea9fbe27c') in 0.304708 seconds 
+  Import took 0.314306 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 69.295406 seconds.
+  path: Assets/Scenes/Grass Battles
+  artifactKey: Guid(de444821880f94096b3cbcd3e51e8320) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Grass Battles using Guid(de444821880f94096b3cbcd3e51e8320) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f9afe4163cd5a09cbd877d5a048b528') in 0.001171 seconds 
+  Import took 0.006614 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12918.859012 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap
+  artifactKey: Guid(1d7bdd028d69d4c86903ea2d1d4829db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap using Guid(1d7bdd028d69d4c86903ea2d1d4829db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e4fb0e1db7c049d8c201f46d64bfe6b') in 0.003391 seconds 
+  Import took 0.017176 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 7.009976 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_00.png
+  artifactKey: Guid(33b5ac2974e934fa9bbd797810d9a0b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_00.png using Guid(33b5ac2974e934fa9bbd797810d9a0b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd22bd6cab40940ee7fa834893ace9ca0') in 0.574464 seconds 
+  Import took 0.582399 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000272 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_10.png
+  artifactKey: Guid(7c6683b4e30be4960a5f2ca4d2aa9ded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_10.png using Guid(7c6683b4e30be4960a5f2ca4d2aa9ded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3bb59fd659415721e34f1208086f1669') in 0.010149 seconds 
+  Import took 0.015594 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000237 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_13.png
+  artifactKey: Guid(ab636d75d2f464b0fa82b0e215e820be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_13.png using Guid(ab636d75d2f464b0fa82b0e215e820be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '10e49a4d9dccc25a5d698b8a4adf56e9') in 0.007378 seconds 
+  Import took 0.012250 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000204 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_09.png
+  artifactKey: Guid(1e0e7743b000d4ff79b9df0373a57403) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_09.png using Guid(1e0e7743b000d4ff79b9df0373a57403) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3067752e30a6bbe6523b4dc55f714236') in 0.007716 seconds 
+  Import took 0.012113 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000232 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_11.png
+  artifactKey: Guid(82acf2f44153a453ea5f5fd592b1a6f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_11.png using Guid(82acf2f44153a453ea5f5fd592b1a6f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '65d388af92198a27529fe517099a3089') in 0.009165 seconds 
+  Import took 0.014011 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000219 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_15.png
+  artifactKey: Guid(5a0ca1abebe2847d9a2c3eefb94d2f2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_15.png using Guid(5a0ca1abebe2847d9a2c3eefb94d2f2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '83a64867a65ab3c72eab644a6cbfb9c1') in 0.008076 seconds 
+  Import took 0.013448 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000207 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_06.png
+  artifactKey: Guid(ff30990b4145344c1ac3919e5f270790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_06.png using Guid(ff30990b4145344c1ac3919e5f270790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd938c668efac6cc43406589e5d73209e') in 0.007492 seconds 
+  Import took 0.012496 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000235 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_12.png
+  artifactKey: Guid(9bca9d31358d64e26b780ad30e473854) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_12.png using Guid(9bca9d31358d64e26b780ad30e473854) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a7cd104ac6018442a61365d54f36823a') in 0.011358 seconds 
+  Import took 0.018219 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000231 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_02.png
+  artifactKey: Guid(4b71ce51c590c4b0a8e3d018152ad60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_02.png using Guid(4b71ce51c590c4b0a8e3d018152ad60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '389916f2f1118e19423ac230e8c0a5a4') in 0.007879 seconds 
+  Import took 0.013062 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000236 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_20.png
+  artifactKey: Guid(c7dadffc691754209bbe581ec3f12d84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_20.png using Guid(c7dadffc691754209bbe581ec3f12d84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7bb8b79a92b0812db1dd08c505c0476b') in 0.007476 seconds 
+  Import took 0.011809 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000234 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_05.png
+  artifactKey: Guid(b8a21bde9c7e6406e85000ef330fea5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_05.png using Guid(b8a21bde9c7e6406e85000ef330fea5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd70a347e429de58ebbb2f63c3738032c') in 0.007560 seconds 
+  Import took 0.012201 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000239 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_19.png
+  artifactKey: Guid(5bb6e55be45134b68b7e810a0a017eb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_19.png using Guid(5bb6e55be45134b68b7e810a0a017eb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4e9cc82fb51fbae71b49728f2df15532') in 0.008407 seconds 
+  Import took 0.014012 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000192 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_08.png
+  artifactKey: Guid(6c6f2d4a6f0504cb19a6b707c239af62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_08.png using Guid(6c6f2d4a6f0504cb19a6b707c239af62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a186b30ae7bd9ba7d97abf503c0b4002') in 0.007818 seconds 
+  Import took 0.012670 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000194 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_01.png
+  artifactKey: Guid(eda5cedba49e649d38eefbcc4ab70e45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_01.png using Guid(eda5cedba49e649d38eefbcc4ab70e45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c5040b02cc780e0bf7a6c5021edfb306') in 0.007378 seconds 
+  Import took 0.012275 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000230 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_18.png
+  artifactKey: Guid(1e727d90d656b49c99c167898ee8dbf7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_18.png using Guid(1e727d90d656b49c99c167898ee8dbf7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb919f897906a7e99d35ba8d1b820dfb') in 0.007611 seconds 
+  Import took 0.012711 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000254 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_16.png
+  artifactKey: Guid(814b026a14f7e41a594f4e109098061f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_16.png using Guid(814b026a14f7e41a594f4e109098061f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd73de451016a7b1752ee1bd02e6e8f23') in 0.007806 seconds 
+  Import took 0.012599 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000211 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_04.png
+  artifactKey: Guid(efd88ab07da5e463396a6887a4e7bf52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_04.png using Guid(efd88ab07da5e463396a6887a4e7bf52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '115116b17cd049e384d7ba9b7bb13fb9') in 0.007303 seconds 
+  Import took 0.012190 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000189 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_03.png
+  artifactKey: Guid(e279ded2ce7fb40bfbad579d0a89b5c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_03.png using Guid(e279ded2ce7fb40bfbad579d0a89b5c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '30f0af08ab72323c6ee81d171e538db1') in 0.007597 seconds 
+  Import took 0.012286 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000220 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_14.png
+  artifactKey: Guid(6fa9468cf2c4645138efb9a8ff63f108) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_14.png using Guid(6fa9468cf2c4645138efb9a8ff63f108) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2a7286f9de87cb8d5c381fbd6e8defdd') in 0.007677 seconds 
+  Import took 0.012813 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000221 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_07.png
+  artifactKey: Guid(40be914f007fd4840a51e70dd9ba8147) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_07.png using Guid(40be914f007fd4840a51e70dd9ba8147) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cae9a1e6e79804e8a7b41d213461dfcb') in 0.009423 seconds 
+  Import took 0.014511 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000212 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_17.png
+  artifactKey: Guid(77279b8f85b674e2a964cc9d6538bf73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_17.png using Guid(77279b8f85b674e2a964cc9d6538bf73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '108c33101a72124350809b02d660c5fe') in 0.008226 seconds 
+  Import took 0.012589 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 54.238667 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_00.png
+  artifactKey: Guid(33b5ac2974e934fa9bbd797810d9a0b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_00.png using Guid(33b5ac2974e934fa9bbd797810d9a0b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5ca18522779ca01463a8277a1fcb4d07') in 0.009376 seconds 
+  Import took 0.015056 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000178 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_10.png
+  artifactKey: Guid(7c6683b4e30be4960a5f2ca4d2aa9ded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_10.png using Guid(7c6683b4e30be4960a5f2ca4d2aa9ded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f933993e87ecf6681c6d25fb6e33459f') in 0.008287 seconds 
+  Import took 0.012946 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000194 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_13.png
+  artifactKey: Guid(ab636d75d2f464b0fa82b0e215e820be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_13.png using Guid(ab636d75d2f464b0fa82b0e215e820be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d6b39e79050f4c1a8941c79df3c12e1') in 0.008438 seconds 
+  Import took 0.013604 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000176 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_09.png
+  artifactKey: Guid(1e0e7743b000d4ff79b9df0373a57403) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_09.png using Guid(1e0e7743b000d4ff79b9df0373a57403) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4ae0aac7d694f1cecaf224782cf74bb4') in 0.007990 seconds 
+  Import took 0.013344 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000245 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_11.png
+  artifactKey: Guid(82acf2f44153a453ea5f5fd592b1a6f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_11.png using Guid(82acf2f44153a453ea5f5fd592b1a6f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ef93faa37042198b9b8ae6d91309b04') in 0.008494 seconds 
+  Import took 0.013527 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000245 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_15.png
+  artifactKey: Guid(5a0ca1abebe2847d9a2c3eefb94d2f2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_15.png using Guid(5a0ca1abebe2847d9a2c3eefb94d2f2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '803b7229e58881cbc6f70adafbf36ee3') in 0.008060 seconds 
+  Import took 0.012830 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000234 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_06.png
+  artifactKey: Guid(ff30990b4145344c1ac3919e5f270790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_06.png using Guid(ff30990b4145344c1ac3919e5f270790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4542ebb1e9914f88b9420a583e9af856') in 0.008738 seconds 
+  Import took 0.012995 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000183 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_12.png
+  artifactKey: Guid(9bca9d31358d64e26b780ad30e473854) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_12.png using Guid(9bca9d31358d64e26b780ad30e473854) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '047f430e159c8b9a298a96d20bd0a4bf') in 0.008259 seconds 
+  Import took 0.013018 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000258 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_02.png
+  artifactKey: Guid(4b71ce51c590c4b0a8e3d018152ad60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_02.png using Guid(4b71ce51c590c4b0a8e3d018152ad60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '816e7f0b6134bfd1c0ff35ede80fff65') in 0.007864 seconds 
+  Import took 0.013109 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000248 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_20.png
+  artifactKey: Guid(c7dadffc691754209bbe581ec3f12d84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_20.png using Guid(c7dadffc691754209bbe581ec3f12d84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7ba567bfd9c9aafca9f8b411cb52864') in 0.008097 seconds 
+  Import took 0.013016 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000214 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_05.png
+  artifactKey: Guid(b8a21bde9c7e6406e85000ef330fea5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_05.png using Guid(b8a21bde9c7e6406e85000ef330fea5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e21f1ff06f2920954e09dc137721e583') in 0.008824 seconds 
+  Import took 0.014292 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000239 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_19.png
+  artifactKey: Guid(5bb6e55be45134b68b7e810a0a017eb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_19.png using Guid(5bb6e55be45134b68b7e810a0a017eb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dd7f47e9458d639de4925a4549705535') in 0.008496 seconds 
+  Import took 0.014631 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000193 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_08.png
+  artifactKey: Guid(6c6f2d4a6f0504cb19a6b707c239af62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_08.png using Guid(6c6f2d4a6f0504cb19a6b707c239af62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bb3afa836c357a64a6e84bb3cced6ff5') in 0.007979 seconds 
+  Import took 0.012696 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000275 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_01.png
+  artifactKey: Guid(eda5cedba49e649d38eefbcc4ab70e45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_01.png using Guid(eda5cedba49e649d38eefbcc4ab70e45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bf231cb1984e3af3789935facedf7d3d') in 0.007451 seconds 
+  Import took 0.012765 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000317 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_18.png
+  artifactKey: Guid(1e727d90d656b49c99c167898ee8dbf7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_18.png using Guid(1e727d90d656b49c99c167898ee8dbf7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e09f854fcf3b2dbc0df46e12b16fac3c') in 0.007421 seconds 
+  Import took 0.013823 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000220 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_16.png
+  artifactKey: Guid(814b026a14f7e41a594f4e109098061f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_16.png using Guid(814b026a14f7e41a594f4e109098061f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc69b35a50971d0ac5c99aeb58dfe048') in 0.008274 seconds 
+  Import took 0.012992 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000207 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_04.png
+  artifactKey: Guid(efd88ab07da5e463396a6887a4e7bf52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_04.png using Guid(efd88ab07da5e463396a6887a4e7bf52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a81ca7eab1bb8ff889b9a21428128a70') in 0.008142 seconds 
+  Import took 0.012291 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000227 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_03.png
+  artifactKey: Guid(e279ded2ce7fb40bfbad579d0a89b5c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_03.png using Guid(e279ded2ce7fb40bfbad579d0a89b5c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '509ed6a3b3a7bbcb761c813c8faa9093') in 0.007393 seconds 
+  Import took 0.012181 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000221 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_14.png
+  artifactKey: Guid(6fa9468cf2c4645138efb9a8ff63f108) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_14.png using Guid(6fa9468cf2c4645138efb9a8ff63f108) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '219e912e0e4fa2602cd293baf8be5c6d') in 0.008162 seconds 
+  Import took 0.013103 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000220 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_07.png
+  artifactKey: Guid(40be914f007fd4840a51e70dd9ba8147) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_07.png using Guid(40be914f007fd4840a51e70dd9ba8147) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a7f9994b8ee1744c5b91d022c203c82') in 0.007388 seconds 
+  Import took 0.013113 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000307 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_17.png
+  artifactKey: Guid(77279b8f85b674e2a964cc9d6538bf73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/sprite_17.png using Guid(77279b8f85b674e2a964cc9d6538bf73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45a0c08f0547c7cea4b15003df377d8a') in 0.008505 seconds 
+  Import took 0.014011 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 118.274024 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map
+  artifactKey: Guid(f94c2167a15f541e59a8ce8390ca3910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map using Guid(f94c2167a15f541e59a8ce8390ca3910) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57496796f218ae6a93b693d7e935d679') in 0.001205 seconds 
+  Import took 0.006929 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 126.413533 seconds.
+  path: Assets/Grass Terrain Tile.asset
+  artifactKey: Guid(8f9f2e9fa1c534c75a839bc196ca9420) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Grass Terrain Tile.asset using Guid(8f9f2e9fa1c534c75a839bc196ca9420) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '804e0658d0616fe8986dcc4947577805') in 0.012456 seconds 
+  Import took 0.034967 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 24.775204 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/grass_00.png
+  artifactKey: Guid(33b5ac2974e934fa9bbd797810d9a0b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/grass_00.png using Guid(33b5ac2974e934fa9bbd797810d9a0b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9359a69608ae3c1b834ab96549288ccc') in 0.012916 seconds 
+  Import took 0.018391 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.400791 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_00.png
+  artifactKey: Guid(eda5cedba49e649d38eefbcc4ab70e45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_00.png using Guid(eda5cedba49e649d38eefbcc4ab70e45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '004e631510b80d8c3bb985cf45e24e6a') in 0.010839 seconds 
+  Import took 0.016600 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.200834 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_01.png
+  artifactKey: Guid(4b71ce51c590c4b0a8e3d018152ad60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_01.png using Guid(4b71ce51c590c4b0a8e3d018152ad60e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aefc96af9a434bae781825e644ef632e') in 0.008844 seconds 
+  Import took 0.013744 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.642639 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_02.png
+  artifactKey: Guid(e279ded2ce7fb40bfbad579d0a89b5c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_02.png using Guid(e279ded2ce7fb40bfbad579d0a89b5c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2b27cb1b48a7e5e65b878b01cc540a56') in 0.008804 seconds 
+  Import took 0.014509 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.902778 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_03.png
+  artifactKey: Guid(efd88ab07da5e463396a6887a4e7bf52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_03.png using Guid(efd88ab07da5e463396a6887a4e7bf52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe7e180bd8541a66bbc16b2c4946675a') in 0.009015 seconds 
+  Import took 0.014553 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.664606 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_04.png
+  artifactKey: Guid(b8a21bde9c7e6406e85000ef330fea5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_04.png using Guid(b8a21bde9c7e6406e85000ef330fea5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '11227ea99fada5be50807e67598fb136') in 0.009263 seconds 
+  Import took 0.014529 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 11.176420 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_05.png
+  artifactKey: Guid(ff30990b4145344c1ac3919e5f270790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_05.png using Guid(ff30990b4145344c1ac3919e5f270790) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '54408c82e00d5612ea545722cda898ce') in 0.009531 seconds 
+  Import took 0.015340 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.161740 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_06.png
+  artifactKey: Guid(40be914f007fd4840a51e70dd9ba8147) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_06.png using Guid(40be914f007fd4840a51e70dd9ba8147) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7539cac18e83a979961d866cd3e5ce47') in 0.008951 seconds 
+  Import took 0.013975 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.233762 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_07.png
+  artifactKey: Guid(6c6f2d4a6f0504cb19a6b707c239af62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_07.png using Guid(6c6f2d4a6f0504cb19a6b707c239af62) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8788ed55d0eba69a26e724724097b2e0') in 0.009419 seconds 
+  Import took 0.015114 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.946045 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_08.png
+  artifactKey: Guid(1e0e7743b000d4ff79b9df0373a57403) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_08.png using Guid(1e0e7743b000d4ff79b9df0373a57403) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '376e6777e513d92df6faa1fcbaa3f701') in 0.009531 seconds 
+  Import took 0.014975 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.391466 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_09.png
+  artifactKey: Guid(7c6683b4e30be4960a5f2ca4d2aa9ded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_09.png using Guid(7c6683b4e30be4960a5f2ca4d2aa9ded) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7b0cfcff6d23f9d13c02433ab4a1109') in 0.009158 seconds 
+  Import took 0.014042 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.110627 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_10.png
+  artifactKey: Guid(82acf2f44153a453ea5f5fd592b1a6f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_10.png using Guid(82acf2f44153a453ea5f5fd592b1a6f8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e4a85615ba8091174e0d10b84b4ccdf') in 0.009270 seconds 
+  Import took 0.014863 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.366060 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_11.png
+  artifactKey: Guid(9bca9d31358d64e26b780ad30e473854) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_11.png using Guid(9bca9d31358d64e26b780ad30e473854) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3da5417a3d3be17417964e0c6df374d3') in 0.009316 seconds 
+  Import took 0.014545 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.090877 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_12.png
+  artifactKey: Guid(ab636d75d2f464b0fa82b0e215e820be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_12.png using Guid(ab636d75d2f464b0fa82b0e215e820be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b1169981ee3297c7a10c53845975b1ae') in 0.009581 seconds 
+  Import took 0.015980 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.940430 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_13.png
+  artifactKey: Guid(6fa9468cf2c4645138efb9a8ff63f108) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_13.png using Guid(6fa9468cf2c4645138efb9a8ff63f108) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '959adeebaa5f298964b64bcb445a7f17') in 0.009205 seconds 
+  Import took 0.014030 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.090909 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_14.png
+  artifactKey: Guid(5a0ca1abebe2847d9a2c3eefb94d2f2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_14.png using Guid(5a0ca1abebe2847d9a2c3eefb94d2f2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d1f23b0cc8257069413ced6b0f5b19b') in 0.009244 seconds 
+  Import took 0.014300 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.207521 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_15.png
+  artifactKey: Guid(814b026a14f7e41a594f4e109098061f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_15.png using Guid(814b026a14f7e41a594f4e109098061f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '72d6f1579f2d26a0ad801071527148ea') in 0.009308 seconds 
+  Import took 0.014886 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.747133 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_0.png
+  artifactKey: Guid(77279b8f85b674e2a964cc9d6538bf73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_0.png using Guid(77279b8f85b674e2a964cc9d6538bf73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ae12e8663217f738f909956c0ced8aa') in 0.009001 seconds 
+  Import took 0.013642 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.963805 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_00.png
+  artifactKey: Guid(77279b8f85b674e2a964cc9d6538bf73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_00.png using Guid(77279b8f85b674e2a964cc9d6538bf73) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '890ca9ee8583f7bebf3263e200a27351') in 0.008969 seconds 
+  Import took 0.014876 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.629296 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_01.png
+  artifactKey: Guid(1e727d90d656b49c99c167898ee8dbf7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_01.png using Guid(1e727d90d656b49c99c167898ee8dbf7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1244e4ffb48e9b5ae25c1883c8d06e1b') in 0.008728 seconds 
+  Import took 0.014725 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.881280 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_02.png
+  artifactKey: Guid(5bb6e55be45134b68b7e810a0a017eb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_02.png using Guid(5bb6e55be45134b68b7e810a0a017eb4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '76c6979aff133c7bbda14e1717c3d860') in 0.009056 seconds 
+  Import took 0.015064 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.216740 seconds.
+  path: Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_03.png
+  artifactKey: Guid(c7dadffc691754209bbe581ec3f12d84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/Battle Sprites/Grass Terrain Tilemap/bush_face_03.png using Guid(c7dadffc691754209bbe581ec3f12d84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '497d86d7f2740df3e3bc8b4045592f9c') in 0.009223 seconds 
+  Import took 0.014931 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 82.783162 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset
+  artifactKey: Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset using Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '086a7f19ffa6d4d68d0c1965ce1e77f3') in 0.004193 seconds 
+  Import took 0.009644 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.047465 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset
+  artifactKey: Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset using Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '85ed6430fe2a5bff8a23b7f119a8402b') in 0.002622 seconds 
+  Import took 0.007806 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000276 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Grass Terrain Tile.asset
+  artifactKey: Guid(8f9f2e9fa1c534c75a839bc196ca9420) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Grass Terrain Tile.asset using Guid(8f9f2e9fa1c534c75a839bc196ca9420) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0d1c95498162390c30de124165340d18') in 0.002976 seconds 
+  Import took 0.007678 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 151.448326 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset
+  artifactKey: Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset using Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '41c3925672cefda046777ce5286c25cb') in 0.012958 seconds 
+  Import took 0.026014 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.104493 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset
+  artifactKey: Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset using Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c29f708de340804dcff848b7da571f6f') in 0.004006 seconds 
+  Import took 0.011133 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 75.375829 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset
+  artifactKey: Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset using Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'edc7edd5402d9cad480767a8fe9c08bf') in 0.003677 seconds 
+  Import took 0.008921 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 13.000387 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset
+  artifactKey: Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset using Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c3297b95b53c550129a9c2a106bbe63') in 0.003054 seconds 
+  Import took 0.008261 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000279 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset
+  artifactKey: Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset using Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ead377067266fc2bd3886846beee300f') in 0.004484 seconds 
+  Import took 0.011225 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 58.928481 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab
+  artifactKey: Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab using Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '034e3ec2772b709aad6ee02c88d182b3') in 0.114644 seconds 
+  Import took 0.128896 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.149598 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab
+  artifactKey: Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab using Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '914439af6236865f51ec94e532b3e245') in 0.019413 seconds 
+  Import took 0.024686 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 11.942690 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab
+  artifactKey: Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab using Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '50a6c7720c4e788b74c5756184726ec2') in 0.013749 seconds 
+  Import took 0.018481 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.492612 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab
+  artifactKey: Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab using Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27575191694768c154530558f453dba6') in 0.010290 seconds 
+  Import took 0.015439 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 109.326038 seconds.
+  path: Assets/Scenes/Grass Battles/GrassBattle0.unity
+  artifactKey: Guid(0609fe5298b394dac93f1c2dbfd05750) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Grass Battles/GrassBattle0.unity using Guid(0609fe5298b394dac93f1c2dbfd05750) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cbf0364ac2a8fd450373e44a06a995a7') in 0.002298 seconds 
+  Import took 0.007557 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.709614 seconds.
+  path: Assets/Scenes/Scene Templates/StandardBattle.scenetemplate
+  artifactKey: Guid(74e0a4f6774a94320b099820c40c14fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scenes/Scene Templates/StandardBattle.scenetemplate using Guid(74e0a4f6774a94320b099820c40c14fa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '824aec945588a2b64e468da2eb6d6ee3') in 0.098760 seconds 
+  Import took 0.105801 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002609 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.53 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 15:51:24.377 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff253767870 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.421 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2423ms)
+		BeginReloadAssembly (246ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (43ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (84ms)
+		EndReloadAssembly (2090ms)
+			LoadAssemblies (186ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (343ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (45ms)
+			SetupLoadedEditorAssemblies (1204ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (16ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (247ms)
+				ProcessInitializeOnLoadAttributes (902ms)
+				ProcessInitializeOnLoadMethodAttributes (35ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (39ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.50 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 478.4 MB.
+System memory in use after: 478.6 MB.
+
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 3176.
+Total: 2.596167 ms (FindLiveObjects: 0.124709 ms CreateObjectMapping: 0.053834 ms MarkObjects: 2.373333 ms  DeleteObjects: 0.043292 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 378.953469 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab
+  artifactKey: Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab using Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e17b85133bd7800641984d0a4b517238') in 0.146986 seconds 
+  Import took 0.151704 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000263 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset
+  artifactKey: Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset using Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a380100b0ba0258d5d55f4b93a77b207') in 0.005686 seconds 
+  Import took 0.010605 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.519089 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab
+  artifactKey: Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab using Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6d33449dd83386cff5251ca18d116487') in 0.021993 seconds 
+  Import took 0.028335 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 20.114854 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab
+  artifactKey: Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Basic Grass Palette.prefab using Guid(3a9ed7ec83e2743bd8cad033d0aae903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd18441098b7312e6d41fe1899b72bbae') in 0.014443 seconds 
+  Import took 0.019950 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 51.812006 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset
+  artifactKey: Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset using Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e0dc4fc9eed8c638cde8ab4e30ec855') in 0.015984 seconds 
+  Import took 0.035020 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003280 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.55 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 15:56:05.646 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff2350f50e0 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.423 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2425ms)
+		BeginReloadAssembly (220ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (39ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (80ms)
+		EndReloadAssembly (2122ms)
+			LoadAssemblies (178ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (347ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (44ms)
+			SetupLoadedEditorAssemblies (1256ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (15ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (251ms)
+				ProcessInitializeOnLoadAttributes (953ms)
+				ProcessInitializeOnLoadMethodAttributes (34ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (37ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.51 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 481.4 MB.
+System memory in use after: 481.6 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3179.
+Total: 2.442292 ms (FindLiveObjects: 0.169958 ms CreateObjectMapping: 0.057458 ms MarkObjects: 2.188125 ms  DeleteObjects: 0.025500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 249.335196 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset
+  artifactKey: Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset using Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e9dc796ee9a66851baacef7df63d5b82') in 0.029631 seconds 
+  Import took 0.034040 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 217.654889 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset
+  artifactKey: Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset using Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '286313a699b6b2ae66acb07a3b94ea85') in 0.022629 seconds 
+  Import took 0.036748 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 163.043408 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset
+  artifactKey: Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Face Terrain Tile.asset using Guid(4aae8d4bb54c64be9acd7e5a476e6566) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e10ceadf4d94225ffec2e72b33650ac4') in 0.006194 seconds 
+  Import took 0.013526 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000263 seconds.
+  path: Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset
+  artifactKey: Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Tilemaps/Grass Terrain Tile Map/Bush Terrain Tile.asset using Guid(c0ea7f338c2264261aa1ba12fff823d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ebfd5c1d424d422bac7d57727f8d8080') in 0.009001 seconds 
+  Import took 0.012982 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002740 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.54 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-29 16:05:28.780 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff233d7cf00 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.405 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2406ms)
+		BeginReloadAssembly (229ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (41ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (80ms)
+		EndReloadAssembly (2091ms)
+			LoadAssemblies (197ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (343ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (45ms)
+			SetupLoadedEditorAssemblies (1203ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (257ms)
+				ProcessInitializeOnLoadAttributes (891ms)
+				ProcessInitializeOnLoadMethodAttributes (35ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (36ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.54 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 484.2 MB.
+System memory in use after: 484.4 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3181.
+Total: 2.327584 ms (FindLiveObjects: 0.133791 ms CreateObjectMapping: 0.056500 ms MarkObjects: 2.106875 ms  DeleteObjects: 0.029458 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006200 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.56 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2022-12-30 07:38:10.975 Unity[98880:6193846] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7ff235260160 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.922 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2930ms)
+		BeginReloadAssembly (357ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (62ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (127ms)
+		EndReloadAssembly (2438ms)
+			LoadAssemblies (254ms)
+			RebuildTransferFunctionScriptingTraits (1ms)
+			SetupTypeCache (412ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (46ms)
+			SetupLoadedEditorAssemblies (1433ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (17ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (266ms)
+				ProcessInitializeOnLoadAttributes (1105ms)
+				ProcessInitializeOnLoadMethodAttributes (40ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (1ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (40ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.66 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2622 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 486.3 MB.
+System memory in use after: 486.5 MB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3183.
+Total: 3.398875 ms (FindLiveObjects: 0.185333 ms CreateObjectMapping: 0.063542 ms MarkObjects: 3.112000 ms  DeleteObjects: 0.036458 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 

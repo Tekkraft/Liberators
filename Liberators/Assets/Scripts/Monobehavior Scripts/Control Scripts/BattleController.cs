@@ -63,7 +63,10 @@ public class BattleController : MonoBehaviour
     //Use this to save key data upon victory
     void OnDisable()
     {
-        BattleExitHandler.unitData = BattleEntryHandler.deployedUnits;
+        foreach (UnitEntryData unit in BattleEntryHandler.deployedUnits.Keys)
+        {
+            BattleExitHandler.unitData.Add(unit);
+        }
         BattleEntryHandler.reset();
         Cursor.visible = true;
     }
@@ -72,10 +75,9 @@ public class BattleController : MonoBehaviour
     void OnEnable()
     {
         BattleExitHandler.reset();
-        List<Vector2Int> spawnLocations = mapData.getSpawnLocations();
-        for (int i = 0; i < spawnLocations.Count && i < BattleEntryHandler.deployedUnits.Count; i++)
+        foreach (UnitEntryData player in BattleEntryHandler.deployedUnits.Keys)
         {
-            placeUnit(BattleEntryHandler.deployedUnits[i], spawnLocations[i], 0);
+            placeUnit(player, BattleEntryHandler.deployedUnits[player], 0);
         }
         foreach (UnitEntryData enemy in BattleEntryHandler.enemyPlacements.Keys)
         {
