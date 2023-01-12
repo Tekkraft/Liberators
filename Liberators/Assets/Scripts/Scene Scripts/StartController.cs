@@ -15,6 +15,8 @@ public class StartController : MonoBehaviour
     public GameObject overviewCanvas;
     public GameObject unitCanvas;
 
+    Scene battleScene;
+
     void Awake()
     {
         overviewCanvas.GetComponent<Canvas>().enabled = true;
@@ -25,6 +27,7 @@ public class StartController : MonoBehaviour
     void OnEnable()
     {
         BattlePrepHandler.data = OperationSceneHandler.attackerData.unitList;
+        BattlePrepHandler.battleScene = OperationSceneHandler.battleScene;
         if (BattlePrepHandler.data != null)
         {
             characterUnitData = BattlePrepHandler.data;
@@ -45,13 +48,14 @@ public class StartController : MonoBehaviour
     void OnDisable()
     {
         BattlePrepHandler.data = characterUnitData;
+        BattlePrepHandler.battleScene = OperationSceneHandler.battleScene;
     }
 
     public void enterBattle()
     {
         BattleEntryHandler.deployedUnits = OperationSceneHandler.attackerData.getPairedUnits();
         BattleEntryHandler.enemyPlacements = OperationSceneHandler.defenderData.getPairedUnits();
-        SceneManager.LoadSceneAsync("GrassBattle0");
+        SceneManager.LoadSceneAsync(BattlePrepHandler.battleScene);
     }
 
     public void enterSkillTree()

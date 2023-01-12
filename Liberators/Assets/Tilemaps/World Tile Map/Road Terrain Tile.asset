@@ -55,3 +55,5 @@ MonoBehaviour:
   single: 0
   passable: 1
   movementFactor: 3
+  battleMaps:
+  - GrassBattle0

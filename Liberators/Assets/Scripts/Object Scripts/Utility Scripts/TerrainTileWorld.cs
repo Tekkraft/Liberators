@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 public class TerrainTileWorld : Tile
 {
@@ -17,6 +15,9 @@ public class TerrainTileWorld : Tile
     public bool passable = true;
 
     public int movementFactor = 10;
+
+    [SerializeField]
+    List<string> battleMaps;
 
     public string getTileName()
     {
@@ -82,6 +83,11 @@ public class TerrainTileWorld : Tile
         }
 
         tileData.sprite = spriteList[borderCase];
+    }
+
+    public List<string> getBattleMaps()
+    {
+        return battleMaps;
     }
 
     //"Borrowed" from Unity Documentation

@@ -38,4 +38,6 @@ MonoBehaviour:
   spriteList: []
   single: 1
   passable: 1
-  movementCost: 10
+  movementFactor: 10
+  battleMaps:
+  - GrassBattle0

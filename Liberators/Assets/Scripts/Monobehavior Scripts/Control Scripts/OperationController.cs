@@ -104,17 +104,21 @@ public class OperationController : MonoBehaviour
     {
         if (Vector3.Distance(unit1.transform.position,unit2.transform.position) <= 2f/3f)
         {
-            startSkirmish(unit1, unit2);
+            Tilemap operationsTilemap = gameObject.GetComponent<Tilemap>();
+            Vector2Int tileCoord = gameObject.GetComponent<MapController>().gridTilePos(unit1.transform.position);
+            TerrainTileWorld tile = operationsTilemap.GetTile<TerrainTileWorld>(new Vector3Int(tileCoord.x, tileCoord.y, 0));
+            startSkirmish(unit1, unit2, tile);
         }
     }
 
-    void startSkirmish(GameObject squad, GameObject opponent)
+    void startSkirmish(GameObject squad, GameObject opponent, TerrainTileWorld battlefield)
     {
         OperationSceneHandler.reset();
         OperationSceneHandler.attackerData = squad.GetComponent<SquadController>().getSquadData();
         OperationSceneHandler.attackerId = squads.IndexOf(squad);
         OperationSceneHandler.defenderData = opponent.GetComponent<SquadController>().getSquadData();
         OperationSceneHandler.defenderId = squads.IndexOf(opponent);
+        OperationSceneHandler.battleScene = battlefield.getBattleMaps()[Random.Range(0,battlefield.getBattleMaps().Count)];
         foreach (GameObject temp in squads)
         {
             OperationSceneHandler.squadDataList.Add(temp.GetComponent<SquadController>().getSquadData());

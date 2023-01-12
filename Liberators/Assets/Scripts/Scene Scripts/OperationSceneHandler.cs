@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OperationSceneHandler
 {
@@ -10,6 +11,7 @@ public class OperationSceneHandler
     public static int attackerId;
     public static SquadData defenderData;
     public static int defenderId;
+    public static string battleScene;
 
     public static void reset()
     {
