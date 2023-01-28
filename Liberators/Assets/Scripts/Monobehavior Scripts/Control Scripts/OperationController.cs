@@ -39,11 +39,11 @@ public class OperationController : MonoBehaviour
         {
             GameObject temp = GameObject.Instantiate(squadPrefab);
             temp.GetComponent<SquadController>().loadSquadData(data);
-            if (data.team == 0)
+            if (data.team == operationsTeam.PLAYER)
             {
                 temp.GetComponent<SpriteRenderer>().sprite = playerFlag;
             }
-            if (data.team == 1)
+            if (data.team == operationsTeam.ENEMY)
             {
                 temp.GetComponent<SpriteRenderer>().sprite = enemyFlag;
             }
@@ -101,12 +101,15 @@ public class OperationController : MonoBehaviour
 
     void checkSkirmish(GameObject unit1, GameObject unit2)
     {
-        if (Vector3.Distance(unit1.transform.position,unit2.transform.position) <= 2f/3f)
+        if ((unit1.GetComponent<SquadController>().getTeam() == operationsTeam.ENEMY && (unit2.GetComponent<SquadController>().getTeam() == operationsTeam.PLAYER || unit2.GetComponent<SquadController>().getTeam() == operationsTeam.ALLY)) || (unit2.GetComponent<SquadController>().getTeam() == operationsTeam.ENEMY && (unit1.GetComponent<SquadController>().getTeam() == operationsTeam.PLAYER || unit1.GetComponent<SquadController>().getTeam() == operationsTeam.ALLY)))
         {
-            Tilemap operationsTilemap = gameObject.GetComponent<Tilemap>();
-            Vector2Int tileCoord = gameObject.GetComponent<MapController>().gridTilePos(unit1.transform.position);
-            TerrainTileWorld tile = operationsTilemap.GetTile<TerrainTileWorld>(new Vector3Int(tileCoord.x, tileCoord.y, 0));
-            startSkirmish(unit1, unit2, tile);
+            if (Vector3.Distance(unit1.transform.position, unit2.transform.position) <= 2f / 3f)
+            {
+                Tilemap operationsTilemap = gameObject.GetComponent<Tilemap>();
+                Vector2Int tileCoord = gameObject.GetComponent<MapController>().gridTilePos(unit1.transform.position);
+                TerrainTileWorld tile = operationsTilemap.GetTile<TerrainTileWorld>(new Vector3Int(tileCoord.x, tileCoord.y, 0));
+                startSkirmish(unit1, unit2, tile);
+            }
         }
     }
 
@@ -132,7 +135,7 @@ public class OperationController : MonoBehaviour
         GameObject.Destroy(target);
     }
 
-    public GameObject getSquadOfTeam(int targetTeam)
+    public GameObject getSquadOfTeam(operationsTeam targetTeam)
     {
         List<GameObject> validTargets = new List<GameObject>();
         foreach (GameObject temp in squads)

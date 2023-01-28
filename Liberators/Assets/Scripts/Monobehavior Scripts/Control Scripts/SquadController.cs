@@ -11,7 +11,7 @@ public class SquadController : MonoBehaviour
     public float baseSpeed;
     public List<UnitEntryData> unitList;
     public List<Vector2Int> spawnLocations;
-    public int team;
+    public operationsTeam team;
 
     Grid mainGrid;
     MapController mapController;
@@ -136,7 +136,7 @@ public class SquadController : MonoBehaviour
         return unitList;
     }
 
-    public int getTeam()
+    public operationsTeam getTeam()
     {
         return team;
     }
@@ -152,12 +152,12 @@ public class SquadData
     public float baseSpeed;
     public List<UnitEntryData> unitList;
     public List<Vector2Int> spawnLocations;
-    public int team;
+    public operationsTeam team;
     public Vector2 position;
     public string name;
     public operationsAI squadAI;
 
-    public SquadData(float baseSpeed, List<UnitEntryData> unitList, List<Vector2Int> spawnLocations, int team, Vector2 position, string name, operationsAI squadAI)
+    public SquadData(float baseSpeed, List<UnitEntryData> unitList, List<Vector2Int> spawnLocations, operationsTeam team, Vector2 position, string name, operationsAI squadAI)
     {
         this.baseSpeed = baseSpeed;
         this.unitList = unitList;

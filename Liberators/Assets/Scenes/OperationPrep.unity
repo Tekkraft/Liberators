@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a133029cd0eb24548bf3eb1bd27025f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  opsData: {fileID: 11400000, guid: ffe2dbb623c1e42b7a5c0fcf6ad3122c, type: 2}
   unitList:
   - unit: {fileID: 11400000, guid: 8166ad6f713e14de68d81d38416bf746, type: 2}
     weapon: {fileID: 11400000, guid: 8c1b4b5d9828742d49722a1b9a5c5938, type: 2}
