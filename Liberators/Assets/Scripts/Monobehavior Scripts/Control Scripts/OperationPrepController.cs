@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class OperationPrepController : MonoBehaviour
 {
+    [SerializeField]
+    OperationsData opsData;
+
     public List<UnitEntryData> unitList;
 
     public List<UnitEntryData> enemy1List;
@@ -25,6 +28,10 @@ public class OperationPrepController : MonoBehaviour
 
     public void startOperation()
     {
+        foreach (SquadSeralization squad in opsData.getSquads())
+        {
+            OperationSceneHandler.squadDataList.Add(new SquadData(10, squad.getUnits(), squad.getUnitPositions(), 1, squad.getPosition(), squad.getSquadName(), squad.getSquadAI()));
+        }
         SquadData player = new SquadData(10, unitList, new List<Vector2Int>() { new Vector2Int(0, -12), new Vector2Int(0, -11) }, 0, new Vector3(0.5f, 0.5f, -1f), "Player Squad", operationsAI.PLAYER);
         OperationSceneHandler.squadDataList.Add(player);
         SquadData enemy1 = new SquadData(10, enemy1List, new List<Vector2Int>() { new Vector2Int(0, 12), new Vector2Int(0, 11) }, 1, new Vector3(3.5f, 5.5f, -1f), "Enemy Squad 0", operationsAI.WAIT);
