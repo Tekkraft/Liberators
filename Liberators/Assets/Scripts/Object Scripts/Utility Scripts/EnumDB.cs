@@ -34,3 +34,9 @@ public enum turnPhase { START, MAIN, PAUSE, END };
 public enum combatDataType { DAMAGE, HEAL, STATUS };
 
 public enum battleOutcome { UNSAVED, VICTORY, SUCCESS, FAILURE, ROUTED }
+
+public enum battleTeam { PLAYER, ENEMY, ALLY, NEUTRAL};
+
+public enum operationsTeam { PLAYER, ENEMY, ALLY, NEUTRAL};
+
+public enum operationsAI { PLAYER, WAIT, ATTACK, WANDER };

@@ -1120,6 +1120,10 @@ public class BattleController : MonoBehaviour
     }
 
     //Other Helpers
+    public int getBattleTeamCount()
+    {
+        return System.Enum.GetNames(typeof(battleTeam)).Length;
+    }
     public GameObject getUnitFromCoords(Vector2Int coords)
     {
         if (unitList.ContainsKey(coords))

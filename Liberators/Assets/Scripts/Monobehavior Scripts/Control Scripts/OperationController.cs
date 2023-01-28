@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class OperationController : MonoBehaviour
 {
-    bool statePaused;
     OperationPathfinder pathfinder;
     List<GameObject> squads = new List<GameObject>();
 
@@ -131,6 +130,19 @@ public class OperationController : MonoBehaviour
     {
         squads.Remove(target);
         GameObject.Destroy(target);
+    }
+
+    public GameObject getSquadOfTeam(int targetTeam)
+    {
+        List<GameObject> validTargets = new List<GameObject>();
+        foreach (GameObject temp in squads)
+        {
+            if (temp.GetComponent<SquadController>().team == targetTeam)
+            {
+                validTargets.Add(temp);
+            }
+        }
+        return validTargets[Random.Range(0, validTargets.Count)];
     }
 
     //Helper Functions
