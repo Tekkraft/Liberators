@@ -19857,4 +19857,3 @@ MonoBehaviour:
   playerFlag: {fileID: 21300000, guid: b70d2282236ef4d3499221339e13ea7a, type: 3}
   enemyFlag: {fileID: 21300000, guid: ad82ad100c70147dba43d7517ea2778d, type: 3}
   squadPrefab: {fileID: 4708329471064300304, guid: 4b8f1b073e91f4b6ea2c17b3b102c597, type: 3}
-  controller: {fileID: 2025630244}

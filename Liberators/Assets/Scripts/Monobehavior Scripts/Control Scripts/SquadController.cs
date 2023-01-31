@@ -12,6 +12,7 @@ public class SquadController : MonoBehaviour
     public List<UnitEntryData> unitList;
     public List<Vector2Int> spawnLocations;
     public operationsTeam team;
+    public operationsMoveType movementType;
 
     Grid mainGrid;
     MapController mapController;

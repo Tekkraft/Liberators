@@ -41,4 +41,4 @@ public enum operationsTeam { PLAYER, ENEMY, ALLY, NEUTRAL};
 
 public enum operationsAI { PLAYER, WAIT, ATTACK, WANDER };
 
-public enum operationsMoveType { INFANTRY, VEHICLE, TRACKED, WALKED, AERIAL, NAVAL };
+public enum operationsMoveType { INFANTRY, VEHICLE, TRACKED, WALKED, AERIAL, NAVAL, MARINE };

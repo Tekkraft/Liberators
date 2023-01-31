@@ -12,6 +12,7 @@ public class OperationSceneHandler
     public static SquadData defenderData;
     public static int defenderId;
     public static string battleScene;
+    public static OperationsData data;
 
     public static void reset()
     {
@@ -19,5 +20,6 @@ public class OperationSceneHandler
         defenderData = null;
         squadDataList.Clear();
         battleOutcome = battleOutcome.UNSAVED;
+        data = null;
     }
 }

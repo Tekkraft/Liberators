@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class OperationController : MonoBehaviour
 {
+    OperationsData opsData;
     OperationPathfinder pathfinder;
     List<GameObject> squads = new List<GameObject>();
 
@@ -30,6 +31,7 @@ public class OperationController : MonoBehaviour
                 checkSkirmish(squads[i], squads[j]);
             }
         }
+        Debug.Log(checkVictory());
     }
 
     void OnEnable()
@@ -81,6 +83,8 @@ public class OperationController : MonoBehaviour
                 destroySquad(squads[OperationSceneHandler.attackerId]);
                 break;
         }
+        //Load operations data
+        opsData = OperationSceneHandler.data;
     }
 
     void OnDisable()
@@ -148,6 +152,20 @@ public class OperationController : MonoBehaviour
         return validTargets[Random.Range(0, validTargets.Count)];
     }
 
+    //Win-Lose Checks
+    bool checkVictory()
+    {
+        foreach (OperationsReachCondition condition in opsData.getPlayerReachWinConditions())
+        {
+            return checkReachCondition(condition);
+        }
+        foreach (OperationsReachCondition condition in opsData.getEnemyReachWinConditions())
+        {
+            return checkReachCondition(condition);
+        }
+        return false;
+    }
+
     //Helper Functions
     List<Vector3> availableTranslations(Vector3 coords)
     {
@@ -179,5 +197,33 @@ public class OperationController : MonoBehaviour
         }
 
         return possibleCoords;
+    }
+
+    bool checkCorners(Vector2Int corner1, Vector2Int corner2, Vector2Int position)
+    {
+        if ((position.x <= corner1.x && position.x >= corner2.x) || (position.x >= corner1.x && position.x <= corner2.x))
+        {
+            if ((position.y <= corner1.y && position.y >= corner2.y) || (position.y >= corner1.y && position.y <= corner2.y))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Victory Functions
+    bool checkReachCondition(OperationsReachCondition condition)
+    {
+        foreach (GameObject squad in squads)
+        {
+            if (checkCorners(condition.getReachCorners()[0], condition.getReachCorners()[0], gameObject.GetComponent<MapController>().gridWorldPos(squad.transform.position)))
+            {
+                if (squad.GetComponent<SquadController>().getTeam() == condition.getReachTeam())
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

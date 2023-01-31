@@ -37,7 +37,7 @@ public class EndController : MonoBehaviour
             if (data.getUnit() != null && data.getUnit().getSkillTree() != null)
             {
                 data.getUnit().getSkillTree().gainSkillPoints(1);
-             }
+            }
         }
         SceneManager.LoadSceneAsync("OperationMap");
     }

@@ -11,9 +11,30 @@ public class OperationsData : ScriptableObject
     [SerializeField]
     List<SquadSeralization> squadData;
 
+    [SerializeField]
+    List<OperationsReachCondition> playerReachConditions;
+
+    [SerializeField]
+    List<OperationsReachCondition> enemyReachConditions;
+
+    public string getOperationsName()
+    {
+        return operationsName;
+    }
+
     public List<SquadSeralization> getSquads()
     {
         return squadData;
+    }
+
+    public List<OperationsReachCondition> getPlayerReachWinConditions()
+    {
+        return playerReachConditions;
+    }
+
+    public List<OperationsReachCondition> getEnemyReachWinConditions()
+    {
+        return playerReachConditions;
     }
 }
 
@@ -74,5 +95,28 @@ public class SquadSeralization
     public operationsMoveType getMovementType()
     {
         return movementType;
+    }
+}
+
+[System.Serializable]
+public class OperationsReachCondition
+{
+    [SerializeField]
+    Vector2Int corner1;
+
+    [SerializeField]
+    Vector2Int corner2;
+
+    [SerializeField]
+    operationsTeam team;
+
+    public List<Vector2Int> getReachCorners()
+    {
+        return new List<Vector2Int>() { corner1, corner2 };
+    }
+
+    public operationsTeam getReachTeam()
+    {
+        return team;
     }
 }

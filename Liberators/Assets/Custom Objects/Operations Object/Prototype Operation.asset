@@ -29,3 +29,23 @@ MonoBehaviour:
     team: 1
     squadAI: 2
     movementType: 0
+  - squadName: Boss Squad
+    squadPosition: {x: 24.5, y: -0.5}
+    units:
+    - unit: {fileID: 11400000, guid: 8137e75efc459438888e8621baf7a573, type: 2}
+      weapon: {fileID: 11400000, guid: bb1a9d2f66ef8479d98bcd8cbd148a66, type: 2}
+      armor: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+    - unit: {fileID: 11400000, guid: d77b1c3b8fdd94645a7a2adea99fddc8, type: 2}
+      weapon: {fileID: 11400000, guid: b7d726faedd174a85b308f113feccc00, type: 2}
+      armor: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
+    unitPositions:
+    - {x: 0, y: 11}
+    - {x: 0, y: 9}
+    team: 1
+    squadAI: 1
+    movementType: 0
+  playerReachWinConditions:
+  - corner1: {x: 24, y: 0}
+    corner2: {x: 24, y: 0}
+    team: 0
+  enemyReachWinConditions: []
