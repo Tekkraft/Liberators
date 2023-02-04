@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SkillTreeEntryHandler
 {
-    public static SkillTree activeTree;
+    public static SkillTreeInstance activeTree;
+    public static int unitId;
 
     public static void reset()
     {

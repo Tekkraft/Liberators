@@ -15,6 +15,8 @@ public class StartController : MonoBehaviour
     public GameObject overviewCanvas;
     public GameObject unitCanvas;
 
+    Scene battleScene;
+
     void Awake()
     {
         overviewCanvas.GetComponent<Canvas>().enabled = true;
@@ -24,17 +26,83 @@ public class StartController : MonoBehaviour
 
     void OnEnable()
     {
-
+        BattlePrepHandler.data = OperationSceneHandler.attackerData.unitList;
+        BattlePrepHandler.battleScene = OperationSceneHandler.battleScene;
+        if (BattlePrepHandler.data != null)
+        {
+            characterUnitData = BattlePrepHandler.data;
+        }
+        for (int i = 0; i < characterUnitData.Count; i++)
+        {
+            UnitEntryData data = characterUnitData[i];
+            if (data.getUnit() == null)
+            {
+                data.reconstruct();
+            }
+        }
+        loadSkillTree();
+        loadInventory();
+        reloadBattlePrep();
     }
 
     void OnDisable()
     {
-        BattleEntryHandler.deployedUnits = characterUnitData;
+        BattlePrepHandler.data = characterUnitData;
+        BattlePrepHandler.battleScene = OperationSceneHandler.battleScene;
     }
 
     public void enterBattle()
     {
-        SceneManager.LoadSceneAsync("PrototypeBattle");
+        BattleEntryHandler.deployedUnits = OperationSceneHandler.attackerData.getPairedUnits();
+        BattleEntryHandler.enemyPlacements = OperationSceneHandler.defenderData.getPairedUnits();
+        SceneManager.LoadSceneAsync(BattlePrepHandler.battleScene);
+    }
+
+    public void enterSkillTree()
+    {
+        SkillTreeEntryHandler.unitId = characterState;
+        SkillTreeEntryHandler.activeTree = characterUnitData[characterState].getUnit().getSkillTree();
+        SceneManager.LoadSceneAsync("UnitSkillTree");
+    }
+
+    public void enterInventory()
+    {
+        InventoryTransitionController.characterId = characterState;
+        InventoryTransitionController.equippedWeapon = characterUnitData[characterState].getWeapon();
+        InventoryTransitionController.equippedArmor = characterUnitData[characterState].getArmor();
+        InventoryTransitionController.origin = "BattlePrep";
+        SceneManager.LoadSceneAsync("UnitInventory");
+    }
+
+    public void reloadBattlePrep()
+    {
+        BattlePrepHandler.reset();
+    }
+
+    public void loadSkillTree()
+    {
+        if (SkillTreeExitHandler.activated)
+        {
+            if (SkillTreeExitHandler.unitId == -1)
+            {
+                return;
+            }
+            setCharacterState(SkillTreeExitHandler.unitId);
+            characterUnitData[characterState].getUnit().updateSkillTree(SkillTreeExitHandler.activeTree);
+            SkillTreeExitHandler.reset();
+        }
+    }
+
+    public void loadInventory()
+    {
+        if (InventoryTransitionController.equippedArmor && InventoryTransitionController.equippedWeapon)
+        {
+            setCharacterState(InventoryTransitionController.characterId);
+            characterUnitData[characterState].setArmor(InventoryTransitionController.equippedArmor);
+            characterUnitData[characterState].setWeapon(InventoryTransitionController.equippedWeapon);
+            displayUnitOverview();
+        }
+        InventoryTransitionController.reset();
     }
 
     public void setCharacterState(int stateId)

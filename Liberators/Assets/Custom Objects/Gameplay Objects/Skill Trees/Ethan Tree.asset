@@ -13,7 +13,23 @@ MonoBehaviour:
   m_Name: Ethan Tree
   m_EditorClassIdentifier: 
   rootSkill:
-    unlocked: 0
-    childSkills: []
-    ability: {fileID: 0}
-    nodeCost: 0
+    unlocked: 1
+    obtained: 0
+    childSkills:
+    - unlocked: 0
+      obtained: 0
+      childSkills:
+      - unlocked: 0
+        obtained: 0
+        childSkills: []
+        ability: {fileID: 11400000, guid: c58ae745585e6467383dde4bfc68ab78, type: 2}
+        nodeCost: 5
+      - unlocked: 0
+        obtained: 0
+        childSkills: []
+        ability: {fileID: 11400000, guid: 8b6f39b6231ff4e3fa7d0666160bb788, type: 2}
+        nodeCost: 3
+      ability: {fileID: 11400000, guid: c53e5ba27dd764ccf84f722179befd0b, type: 2}
+      nodeCost: 2
+    ability: {fileID: 11400000, guid: 3a9d31cbee13f486c93b3cd92084c6f5, type: 2}
+    nodeCost: 1

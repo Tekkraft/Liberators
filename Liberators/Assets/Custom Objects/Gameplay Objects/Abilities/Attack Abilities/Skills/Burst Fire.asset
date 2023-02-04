@@ -30,10 +30,10 @@ MonoBehaviour:
       minRangeFixed: 1
       maxRange: 0
       maxRangeFixed: 0
-      hitBonus: 100
-      fixedHit: 1
+      hitBonus: -30
+      fixedHit: 0
     effectInstructions:
-    - independentHit: 1
+    - independentHit: 0
       effectTarget:
         targetType: 6
         targetCondition: 3
@@ -45,7 +45,7 @@ MonoBehaviour:
         minRangeFixed: 0
         maxRange: 0
         maxRangeFixed: 0
-        hitBonus: -30
+        hitBonus: 0
         fixedHit: 0
       effectType: 0
       effectDamageType: 0
@@ -56,49 +56,4 @@ MonoBehaviour:
       effectElement: 2
       effectStatus: {fileID: 0}
       effectSpecialRules: []
-    - independentHit: 1
-      effectTarget:
-        targetType: 6
-        targetCondition: 3
-        targetConditionCount: 0
-        conditionFilters: []
-        isMelee: 0
-        requiresLOS: 0
-        minRange: 0
-        minRangeFixed: 0
-        maxRange: 0
-        maxRangeFixed: 0
-        hitBonus: -30
-        fixedHit: 0
-      effectType: 0
-      effectDamageType: 0
-      effectDamageSource: 0
-      effectIntensity: 0
-      effectPercentBonus: 0
-      effectIndependentElement: 0
-      effectElement: 2
-      effectStatus: {fileID: 0}
-      effectSpecialRules: []
-    - independentHit: 1
-      effectTarget:
-        targetType: 6
-        targetCondition: 3
-        targetConditionCount: 0
-        conditionFilters: []
-        isMelee: 0
-        requiresLOS: 0
-        minRange: 0
-        minRangeFixed: 0
-        maxRange: 0
-        maxRangeFixed: 0
-        hitBonus: -30
-        fixedHit: 0
-      effectType: 0
-      effectDamageType: 0
-      effectDamageSource: 0
-      effectIntensity: 0
-      effectPercentBonus: 0
-      effectIndependentElement: 0
-      effectElement: 2
-      effectStatus: {fileID: 0}
-      effectSpecialRules: []
+    abilityRepeats: 3

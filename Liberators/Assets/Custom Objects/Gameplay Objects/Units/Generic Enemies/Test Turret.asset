@@ -22,3 +22,13 @@ MonoBehaviour:
   rea: 0
   className: Dev Turret
   prfAbilities: []
+  unitAnims:
+    idleSprite: {fileID: 0}
+    attackSprite: {fileID: 0}
+    evadeSprite: {fileID: 0}
+    deadStaggerSprite: {fileID: 0}
+    deadSprite: {fileID: 0}
+    blockSprite: {fileID: 0}
+    staggerSprite: {fileID: 0}
+    defendSprite: {fileID: 0}
+  unitSkillTree: {fileID: 11400000, guid: c8c757230537248f5bcde181568a576e, type: 2}

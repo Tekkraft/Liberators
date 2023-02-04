@@ -9,10 +9,12 @@ public class UnitController : MonoBehaviour
     Vector2Int unitGridPosition;
     Grid mainGrid;
     MapController mapController;
+    BattleController battleController;
     List<GameObject> markerList = new List<GameObject>();
-    public int teamNumber = -1;
+    public battleTeam team;
 
-    public Unit unitObject;
+    public Unit unitTemplate;
+    UnitInstance unitObject;
     string unitName;
     int mov;
     int maxHP;
@@ -40,10 +42,15 @@ public class UnitController : MonoBehaviour
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
+        battleController = mainGrid.GetComponentsInChildren<BattleController>()[0];
         unitGridPosition = mapController.gridWorldPos(transform.position);
-        mapController.addUnit(this.gameObject);
-        createUnit(unitObject.getStats(), teamNumber);
-        this.unitName = unitObject.getUnitName();
+        battleController.addUnit(this.gameObject);
+        if (unitObject == null)
+        {
+            unitObject = new UnitInstance(unitTemplate);
+        }
+        createUnit(unitObject.getStats(), team);
+        unitName = unitObject.getUnitName();
         if (basicMovement)
         {
             allAbilities.Add(basicMovement);
@@ -53,19 +60,25 @@ public class UnitController : MonoBehaviour
             allAbilities.AddRange(equippedWeapon.getAbilities());
         }
         allAbilities.AddRange(unitObject.getAbilities());
+        
     }
 
-    public void createUnit(int[] unitStats, int teamNumber)
+    public void createUnit(int[] unitStats, battleTeam team)
     {
-        this.maxHP = unitStats[0];
-        this.mov = unitStats[1];
+        maxHP = unitStats[0];
+        mov = unitStats[1];
         currentHP = this.maxHP;
-        this.str = unitStats[2];
-        this.pot = unitStats[3];
-        this.acu = unitStats[4];
-        this.fin = unitStats[5];
-        this.rea = unitStats[6];
-        this.teamNumber = teamNumber;
+        str = unitStats[2];
+        pot = unitStats[3];
+        acu = unitStats[4];
+        fin = unitStats[5];
+        rea = unitStats[6];
+        this.team = team;
+    }
+
+    public void setUnitInstance(UnitInstance unitInstance)
+    {
+        unitObject = unitInstance;
     }
 
     public int[] getActions()
@@ -98,7 +111,7 @@ public class UnitController : MonoBehaviour
             Status linkedStatus = statuses[i].getStatus();
             if (linkedStatus.getHealthOverTime()[0] > 0)
             {
-                takeDamage(linkedStatus.getHealthOverTime()[0], damageType.TRUE);
+                takeDamage(linkedStatus.getHealthOverTime()[0], linkedStatus.getHealthOverTimeElement());
                 if (currentHP <= 0)
                 {
                     return true;
@@ -146,10 +159,10 @@ public class UnitController : MonoBehaviour
         bool crit = false;
         if (Random.Range(0, 100) < critChance)
         {
-            damage = (int)(damage * MapController.critFactor);
+            damage = (int)(damage * BattleController.critFactor);
             crit = true;
         }
-        KeyValuePair<int, int> baseData = targetController.takeDamage(damage, attackEffect.getEffectDamageType());
+        KeyValuePair<int, int> baseData = targetController.takeDamage(damage, attackEffect, equippedWeapon);
         return new CombatData(gameObject, targetController.gameObject, attackEffect, true, crit, baseData.Key, baseData.Value, baseData.Value - baseData.Key <= 0);
     }
 
@@ -159,13 +172,33 @@ public class UnitController : MonoBehaviour
         targetController.restoreHealth(healing);
     }
 
-    public KeyValuePair<int, int> takeDamage(int damage, damageType damageType)
+    public KeyValuePair<int, int> takeDamage(int damage, element damageElement)
     {
         int startingHP = currentHP;
-        int damageTaken = damage;
+        element effectElement = damageElement;
+        float damageMultiplier = getDamageReduction(effectElement);
+        int damageTaken = Mathf.FloorToInt(damage * damageMultiplier);
+        if (damageTaken < 0)
+        {
+            damageTaken = 0;
+        }
+        currentHP -= damageTaken;
+        return new KeyValuePair<int, int>(damageTaken, startingHP);
+    }
+
+    public KeyValuePair<int, int> takeDamage(int damage, EffectInstruction attackEffect, Weapon attackerWeapon)
+    {
+        int startingHP = currentHP;
+        element effectElement = attackEffect.getEffectElement();
+        if (attackerWeapon && !attackEffect.getEffectIndependentElement())
+        {
+            effectElement = attackerWeapon.getWeaponElement();
+        }
+        float damageMultiplier = getDamageReduction(effectElement);
+        int damageTaken = Mathf.FloorToInt(damage * damageMultiplier);
         if (equippedArmor)
         {
-            switch (damageType)
+            switch (attackEffect.getEffectDamageType())
             {
                 case damageType.PHYSICAL:
                     damageTaken -= equippedArmor.getDefenses()[0];
@@ -256,6 +289,13 @@ public class UnitController : MonoBehaviour
             if (effect.getEffectType() == effectType.DAMAGE)
             {
                 damage += getExpectedDamageInstance(targetController, effect);
+                element effectElement = effect.getEffectElement();
+                if (equippedWeapon && !effect.getEffectIndependentElement())
+                {
+                    effectElement = equippedWeapon.getWeaponElement();
+                }
+                float damageMultiplier = targetController.getDamageReduction(effectElement);
+                damage = Mathf.FloorToInt(damage * damageMultiplier);
             }
         }
         return damage;
@@ -307,12 +347,21 @@ public class UnitController : MonoBehaviour
         return defense;
     }
 
+    public float getDamageReduction(element attackElement)
+    {
+        if (equippedArmor)
+        {
+            return equippedArmor.getElementResist(attackElement);
+        }
+        return 1f;
+    }
+
     public string getName()
     {
         return unitName;
     }
 
-    public Unit getUnit()
+    public UnitInstance getUnitInstance()
     {
         return unitObject;
     }
@@ -327,9 +376,9 @@ public class UnitController : MonoBehaviour
         return new int[] { mov, maxHP, currentHP, str, pot, acu, fin, rea };
     }
 
-    public int getTeam()
+    public battleTeam getTeam()
     {
-        return teamNumber;
+        return team;
     }
 
     public bool moveUnit(Vector2 destination, MovementAbility moveAbility)
@@ -390,7 +439,7 @@ public class UnitController : MonoBehaviour
 
     public List<Vector2Int> pathfinderValidCoords(MovementAbility moveAbility)
     {
-        mapController.getPathfinder().changeParameters(unitGridPosition, mapController.finalRange(mov, moveAbility), moveAbility.getMinMoveRange());
+        mapController.getPathfinder().changeParameters(unitGridPosition, battleController.finalRange(mov, moveAbility), moveAbility.getMinMoveRange());
         mapController.getPathfinder().calculate();
         return mapController.getPathfinder().getValidCoords();
     }

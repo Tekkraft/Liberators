@@ -58,3 +58,4 @@ MonoBehaviour:
       effectElement: 3
       effectStatus: {fileID: 0}
       effectSpecialRules: []
+    abilityRepeats: 1

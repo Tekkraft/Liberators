@@ -10,6 +10,7 @@ public class ButtonController : MonoBehaviour
     GameObject linkedUnit;
     Grid mainGrid;
     MapController mapController;
+    BattleController battleController;
 
     public bool fixedAction;
     public Ability fixedAbility;
@@ -21,6 +22,7 @@ public class ButtonController : MonoBehaviour
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
+        battleController = mainGrid.GetComponentsInChildren<BattleController>()[0];
         if (fixedAction)
         {
             setupButton(fixedAbility, null);
@@ -31,7 +33,7 @@ public class ButtonController : MonoBehaviour
     {
         if (gameObject.GetComponent<Button>().interactable || fixedAction)
         {
-            gameObject.GetComponent<Button>().interactable = mapController.getTurnPhase() == turnPhase.MAIN;
+            gameObject.GetComponent<Button>().interactable = battleController.getTurnPhase() == turnPhase.MAIN;
         }
     }
 
@@ -58,7 +60,7 @@ public class ButtonController : MonoBehaviour
 
     public void setAction()
     {
-        mapController.setActionState(linkedUnit, linkedAbility);
+        battleController.setActionState(linkedUnit, linkedAbility);
     }
 
     public Ability getAbility()

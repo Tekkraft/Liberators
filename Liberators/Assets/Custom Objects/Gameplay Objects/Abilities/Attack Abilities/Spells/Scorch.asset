@@ -56,3 +56,4 @@ MonoBehaviour:
       effectElement: 0
       effectStatus: {fileID: 11400000, guid: 732f05df2eb3742fa96b36ebb1e144d3, type: 2}
       effectSpecialRules: []
+    abilityRepeats: 1

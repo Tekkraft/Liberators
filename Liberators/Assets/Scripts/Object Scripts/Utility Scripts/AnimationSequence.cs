@@ -29,37 +29,37 @@ public class AnimationBlock
     {
         if (dataEntry.getCombatDataType() == combatDataType.DAMAGE)
         {
-            animationSteps.Add(new AnimationStep(dataEntry.getAttacker(), "attack"));
+            animationSteps.Add(new AnimationStep(dataEntry.getAttacker(), "attack", 0));
             if (!dataEntry.getAttackHit())
             {
-                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "evade"));
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "evade", dataEntry.getDamageDealt()));
             }
             else if (dataEntry.getDefenderKilled() && dataEntry.getAttackCrit())
             {
-                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "dead stagger"));
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "dead stagger", dataEntry.getDamageDealt()));
             }
             else if (dataEntry.getDefenderKilled())
             {
-                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "dead"));
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "dead", dataEntry.getDamageDealt()));
             }
             else if (dataEntry.getDamageDealt() <= 0)
             {
-                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "block"));
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "block", dataEntry.getDamageDealt()));
             }
             else if (dataEntry.getAttackCrit())
             {
-                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "stagger"));
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "stagger", dataEntry.getDamageDealt()));
             }
             else
             {
-                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "defend"));
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "defend", dataEntry.getDamageDealt()));
             }
         }
         else if (dataEntry.getCombatDataType() == combatDataType.STATUS)
         {
             if (dataEntry.getStatusInflicted())
             {
-                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "statused"));
+                animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "statused", 0));
             }
         }
     }
@@ -74,11 +74,13 @@ public class AnimationStep
 {
     GameObject actor;
     string action;
+    int effect;
 
-    public AnimationStep(GameObject actor, string action)
+    public AnimationStep(GameObject actor, string action, int effect)
     {
         this.actor = actor;
         this.action = action;
+        this.effect = effect;
     }
 
     public GameObject getActor()
@@ -89,5 +91,10 @@ public class AnimationStep
     public string getAction()
     {
         return action;
+    }
+
+    public int getEffect()
+    {
+        return effect;
     }
 }

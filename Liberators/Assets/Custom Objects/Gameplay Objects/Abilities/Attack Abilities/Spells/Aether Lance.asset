@@ -56,3 +56,4 @@ MonoBehaviour:
       effectElement: 7
       effectStatus: {fileID: 0}
       effectSpecialRules: []
+    abilityRepeats: 1

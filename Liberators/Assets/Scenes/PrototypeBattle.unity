@@ -347,7 +347,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2.5
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -436,7 +436,7 @@ MonoBehaviour:
     m_ActionName: BaseActions/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: BattleActions
+  m_DefaultActionMap: Basic Actions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 519420031}
 --- !u!1 &710441652
@@ -521,7 +521,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &710441655
 MonoBehaviour:
@@ -550,7 +550,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: BattleActions
+  m_DefaultActionMap: Basic Actions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 519420031}
 --- !u!114 &710441656
@@ -741,7 +741,7 @@ RectTransform:
   - {fileID: 907699105}
   - {fileID: 2137363992}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -866,13 +866,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 934cd044b35b7494281b321d6639ae30, type: 2}
     - target: {fileID: 7218121907525971628, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
+      propertyPath: unitTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: 934cd044b35b7494281b321d6639ae30, type: 2}
+    - target: {fileID: 7218121907525971628, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: equippedArmor
       value: 
-      objectReference: {fileID: 11400000, guid: e459947c49cff4f85bac9069f32cd6c1, type: 2}
+      objectReference: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
     - target: {fileID: 7218121907525971628, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: equippedWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 9f3befefb2e6f48559df0495c09436d4, type: 2}
+      objectReference: {fileID: 11400000, guid: b7d726faedd174a85b308f113feccc00, type: 2}
     - target: {fileID: 7218121907525971630, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1061,16 +1065,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 3ed7a0f27dbcb47c2b13ab0847d93e08, type: 2}
     - target: {fileID: 7218121907525971628, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
+      propertyPath: unitTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: 3ed7a0f27dbcb47c2b13ab0847d93e08, type: 2}
+    - target: {fileID: 7218121907525971628, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: equippedArmor
       value: 
-      objectReference: {fileID: 11400000, guid: a06b12de8fb414202a536815199be438, type: 2}
+      objectReference: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
     - target: {fileID: 7218121907525971628, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: equippedWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 146b1a602db594554823ca1f9065b237, type: 2}
+      objectReference: {fileID: 11400000, guid: bb1a9d2f66ef8479d98bcd8cbd148a66, type: 2}
     - target: {fileID: 7218121907525971630, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7218121907525971630, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2934,16 +2942,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 22adf00fc938a4e43874ba6be8990003, type: 2}
     - target: {fileID: 7218121907525971628, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
+      propertyPath: unitTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: 22adf00fc938a4e43874ba6be8990003, type: 2}
+    - target: {fileID: 7218121907525971628, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: equippedArmor
       value: 
-      objectReference: {fileID: 11400000, guid: 3aa6db564071e43718bc8e4adaa2fda4, type: 2}
+      objectReference: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
     - target: {fileID: 7218121907525971628, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: equippedWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 8a784cef8487c49eea4173e4e6b9d2e0, type: 2}
+      objectReference: {fileID: 11400000, guid: 8c1b4b5d9828742d49722a1b9a5c5938, type: 2}
     - target: {fileID: 7218121907525971630, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7218121907525971630, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3003,6 +3015,7 @@ GameObject:
   - component: {fileID: 2107954708}
   - component: {fileID: 2107954707}
   - component: {fileID: 2107954706}
+  - component: {fileID: 2107954709}
   m_Layer: 0
   m_Name: Battle Grid
   m_TagString: Untagged
@@ -3039,9 +3052,6 @@ MonoBehaviour:
   lineOfSightLayer:
     serializedVersion: 2
     m_Bits: 128
-  overlayObject: {fileID: 6635731327509979368, guid: 83233230f4f124990b89f85d6e170750, type: 3}
-  mapData: {fileID: 11400000, guid: 7e7c4af863ce9419290f33264ea3e590, type: 2}
-  unitTemplate: {fileID: 7218121907525971602, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
 --- !u!483693784 &2107954707
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -5816,6 +5826,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &2107954709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107954704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4d829f30bb714660b281d75d8496e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  overlayObject: {fileID: 6635731327509979368, guid: 83233230f4f124990b89f85d6e170750, type: 3}
+  mapData: {fileID: 11400000, guid: 7e7c4af863ce9419290f33264ea3e590, type: 2}
+  unitTemplate: {fileID: 7218121907525971602, guid: e5da7ac0b21ac4f119b4c47046e815cf, type: 3}
 --- !u!1001 &2137363991
 PrefabInstance:
   m_ObjectHideFlags: 0

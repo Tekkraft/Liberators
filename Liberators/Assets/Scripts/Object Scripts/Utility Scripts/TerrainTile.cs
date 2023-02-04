@@ -14,7 +14,7 @@ public class TerrainTile : Tile
     public bool single;
 
     //Can units move past this tile?
-    public bool passable;
+    public bool passable = true;
 
     public int hitBonus;
     public int avoidBonus;
@@ -64,6 +64,7 @@ public class TerrainTile : Tile
             return;
         }
 
+        //Add to border case if tile absent
         int borderCase = 0;
         if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(1, 0, 0)) && tilemap.GetTile<TerrainTile>(position + new Vector3Int(1, 0, 0)).tileName.Equals(tileName)))
         {

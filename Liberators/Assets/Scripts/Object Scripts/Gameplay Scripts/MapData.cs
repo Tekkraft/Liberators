@@ -15,9 +15,6 @@ public class MapData : ScriptableObject
     List<int> AITeams;
 
     [SerializeField]
-    List<RoutCondition> routWinConditions;
-
-    [SerializeField]
     List<ReachCondition> reachWinConditions;
 
     [SerializeField]
@@ -27,9 +24,6 @@ public class MapData : ScriptableObject
     List<TimeCondition> timeWinConditions;
 
     [SerializeField]
-    List<RoutCondition> routLoseConditions;
-
-    [SerializeField]
     List<ReachCondition> reachLoseConditions;
 
     [SerializeField]
@@ -37,9 +31,6 @@ public class MapData : ScriptableObject
 
     [SerializeField]
     List<TimeCondition> timeLoseConditions;
-
-    [SerializeField]
-    List<Vector2Int> playerSpawnLocations;
 
     public List<List<int>> getTeamAlignments()
     {
@@ -80,12 +71,7 @@ public class MapData : ScriptableObject
         return AITeams;
     }
 
-    public List<Vector2Int> getSpawnLocations()
-    {
-        return playerSpawnLocations;
-    }
-
-    public bool evaluateVictoryConditions(Dictionary<Vector2Int, GameObject> unitList, Dictionary<int, List<GameObject>> teamLists, int currentTurn)
+    public bool evaluateVictoryConditions(Dictionary<Vector2Int, GameObject> unitList, int currentTurn)
     {
         foreach (ReachCondition zone in reachWinConditions)
         {
@@ -101,21 +87,6 @@ public class MapData : ScriptableObject
                         }
                     }
                 }
-            }
-        }
-
-        foreach (RoutCondition team in routWinConditions)
-        {
-            if (teamLists.ContainsKey(team.routTeam))
-            {
-                if (teamLists[team.routTeam].Count == 0)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return true;
             }
         }
 
@@ -138,7 +109,7 @@ public class MapData : ScriptableObject
         return false;
     }
 
-    public bool evaluateDefeatConditions(Dictionary<Vector2Int, GameObject> unitList, Dictionary<int, List<GameObject>> teamLists, int currentTurn)
+    public bool evaluateDefeatConditions(Dictionary<Vector2Int, GameObject> unitList, int currentTurn)
     {
         foreach (ReachCondition zone in reachLoseConditions)
         {
@@ -154,21 +125,6 @@ public class MapData : ScriptableObject
                         }
                     }
                 }
-            }
-        }
-
-        foreach (RoutCondition team in routLoseConditions)
-        {
-            if (teamLists.ContainsKey(team.routTeam))
-            {
-                if (teamLists[team.routTeam].Count == 0)
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return true;
             }
         }
 
@@ -199,17 +155,11 @@ class SublistInt
 }
 
 [System.Serializable]
-class RoutCondition
-{
-    public int routTeam;
-}
-
-[System.Serializable]
 class ReachCondition
 {
     public Vector2 corner1;
     public Vector2 corner2;
-    public int targetTeam = -1;
+    public battleTeam targetTeam;
 }
 
 [System.Serializable]

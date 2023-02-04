@@ -8,59 +8,15 @@ public class SkillTree : ScriptableObject
     [SerializeField]
     SkillNode rootSkill;
 
-    int skillPoints = 0;
-    int maxSkillPoints = 0;
-
     public SkillNode getRootSkill()
     {
         return rootSkill;
-    }
-
-    public void gainSkillPoints(int earned)
-    {
-        skillPoints += earned;
-        maxSkillPoints += earned;
-    }
-
-    public void resetSkillPoints()
-    {
-        skillPoints = maxSkillPoints;
-        rootSkill.disableSkill();
-        rootSkill.enableSkill();
-    }
-
-    public List<Ability> getUnlockedAbilities()
-    {
-        return rootSkill.getUnlockedAbilities();
-    }
-
-    public bool unlockAbility(SkillNode skill)
-    {
-        if (skill.isUnlocked() && skill.getNodeCost() <= skillPoints)
-        {
-            skill.enableSkill();
-            return true;
-        }
-        return false;
-    }
-
-    public int getAvailableSkillPoints()
-    {
-        return skillPoints;
-    }
-
-    public int getMaxSkillPoints()
-    {
-        return maxSkillPoints;
     }
 }
 
 [System.Serializable]
 public class SkillNode
 {
-    [SerializeField]
-    bool unlocked;
-
     [SerializeField]
     List<SkillNode> childSkills;
 
@@ -69,11 +25,6 @@ public class SkillNode
 
     [SerializeField]
     int nodeCost;
-
-    public bool isUnlocked()
-    {
-        return unlocked;
-    }
 
     public List<SkillNode> getChildSkills()
     {
@@ -90,34 +41,35 @@ public class SkillNode
         return nodeCost;
     }
 
-    public void disableSkill()
+    //Returns the total width above this node
+    public int widthAboveNode()
     {
-        if (unlocked)
+        int width = 0;
+        foreach (SkillNode child in childSkills)
         {
-            unlocked = false;
-            foreach (SkillNode node in childSkills)
+            int childWidth = child.widthAboveNode();
+            if (childWidth == 0)
             {
-                node.disableSkill();
+                childWidth = 1;
             }
+            width += childWidth;
         }
+        return width;
     }
 
-    public void enableSkill()
+    //Returns the total width of this node's children
+    public List<int> widthOfChildren()
     {
-        unlocked = true;
-    }
-
-    public List<Ability> getUnlockedAbilities()
-    {
-        List<Ability> abilities = new List<Ability>();
-        if (unlocked)
+        List<int> widths = new List<int>();
+        foreach (SkillNode child in childSkills)
         {
-            abilities.Add(ability);
-            foreach (SkillNode node in childSkills)
+            int childWidth = child.widthAboveNode();
+            if (childWidth == 0)
             {
-                abilities.AddRange(node.getUnlockedAbilities());
+                childWidth = 1;
             }
+            widths.Add(childWidth);
         }
-        return abilities;
+        return widths;
     }
 }

@@ -8,21 +8,23 @@ public class Rangefinder
     int maxRange;
     bool requiresLOS;
     MapController mapController;
-    Dictionary<int, List<GameObject>> teamLists;
+    BattleController battleController;
+    Dictionary<battleTeam, List<GameObject>> teamLists;
     Vector2 direction;
 
-    public Rangefinder(int maxRange, int minRange, bool requiresLOS, MapController controller, Dictionary<int, List<GameObject>> teamLists, Vector2 direction)
+    public Rangefinder(int maxRange, int minRange, bool requiresLOS, MapController mapController, BattleController battleController, Dictionary<battleTeam, List<GameObject>> teamLists, Vector2 direction)
     {
         this.minRange = minRange;
         this.maxRange = maxRange;
         this.requiresLOS = requiresLOS;
         this.teamLists = teamLists;
-        this.mapController = controller;
+        this.mapController = mapController;
+        this.battleController = battleController;
         this.direction = direction;
     }
 
     //Conversions
-    public List<GameObject> generateTargetsOfTeam(Vector2 originCoords, List<int> targetTeams, bool beamMode)
+    public List<GameObject> generateTargetsOfTeam(Vector2 originCoords, battleTeam team, bool beamMode)
     {
         List<GameObject> validTargets = new List<GameObject>();
 
@@ -38,17 +40,33 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
-            if (targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
+            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
+            switch (team)
             {
-                validTargets.Add(temp);
+                case battleTeam.PLAYER:
+                case battleTeam.ALLY:
+                    if (temp.GetComponent<UnitController>().getTeam() == battleTeam.PLAYER || temp.GetComponent<UnitController>().getTeam() == battleTeam.ALLY)
+                    {
+                        validTargets.Add(temp);
+                    }
+                    break;
+
+                case battleTeam.ENEMY:
+                    if (temp.GetComponent<UnitController>().getTeam() == battleTeam.ENEMY)
+                    {
+                        validTargets.Add(temp);
+                    }
+                    break;
+
+                case battleTeam.NEUTRAL:
+                    validTargets.Add(temp);
+                    break;
             }
         }
-
         return validTargets;
     }
 
-    public List<GameObject> generateTargetsNotOfTeam(Vector2 originCoords, List<int> targetTeams, bool beamMode)
+    public List<GameObject> generateTargetsNotOfTeam(Vector2 originCoords, battleTeam team, bool beamMode)
     {
         List<GameObject> validTargets = new List<GameObject>();
 
@@ -64,17 +82,34 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
-            if (!targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
+            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
+            switch (team)
             {
-                validTargets.Add(temp);
+                case battleTeam.PLAYER:
+                case battleTeam.ALLY:
+                    if (temp.GetComponent<UnitController>().getTeam() == battleTeam.ENEMY)
+                    {
+                        validTargets.Add(temp);
+                    }
+                    break;
+
+                case battleTeam.ENEMY:
+                    if (temp.GetComponent<UnitController>().getTeam() == battleTeam.PLAYER || temp.GetComponent<UnitController>().getTeam() == battleTeam.ALLY)
+                    {
+                        validTargets.Add(temp);
+                    }
+                    break;
+
+                case battleTeam.NEUTRAL:
+                    validTargets.Add(temp);
+                    break;
             }
         }
 
         return validTargets;
     }
 
-    public List<Vector2Int> generateCoordsOfTeam(Vector2 originCoords, List<int> targetTeams, bool beamMode)
+    public List<Vector2Int> generateCoordsOfTeam(Vector2 originCoords, battleTeam team, bool beamMode)
     {
         List<Vector2Int> validTargets = new List<Vector2Int>();
 
@@ -90,17 +125,34 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
-            if (targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
+            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
+            switch (team)
             {
-                validTargets.Add(targetCoordsList[i]);
+                case battleTeam.PLAYER:
+                case battleTeam.ALLY:
+                    if (temp.GetComponent<UnitController>().getTeam() == battleTeam.PLAYER || temp.GetComponent<UnitController>().getTeam() == battleTeam.ALLY)
+                    {
+                        validTargets.Add(targetCoordsList[i]);
+                    }
+                    break;
+
+                case battleTeam.ENEMY:
+                    if (temp.GetComponent<UnitController>().getTeam() == battleTeam.ENEMY)
+                    {
+                        validTargets.Add(targetCoordsList[i]);
+                    }
+                    break;
+
+                case battleTeam.NEUTRAL:
+                    validTargets.Add(targetCoordsList[i]);
+                    break;
             }
         }
 
         return validTargets;
     }
 
-    public List<Vector2Int> generateCoordsNotOfTeam(Vector2 originCoords, List<int> targetTeams, bool beamMode)
+    public List<Vector2Int> generateCoordsNotOfTeam(Vector2 originCoords, battleTeam team, bool beamMode)
     {
         List<Vector2Int> validTargets = new List<Vector2Int>();
 
@@ -116,10 +168,27 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = mapController.getUnitFromCoords(targetCoordsList[i]);
-            if (!targetTeams.Contains(temp.GetComponent<UnitController>().getTeam()))
+            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
+            switch (team)
             {
-                validTargets.Add(targetCoordsList[i]);
+                case battleTeam.PLAYER:
+                case battleTeam.ALLY:
+                    if (temp.GetComponent<UnitController>().getTeam() == battleTeam.ENEMY)
+                    {
+                        validTargets.Add(targetCoordsList[i]);
+                    }
+                    break;
+
+                case battleTeam.ENEMY:
+                    if (temp.GetComponent<UnitController>().getTeam() == battleTeam.PLAYER || temp.GetComponent<UnitController>().getTeam() == battleTeam.ALLY)
+                    {
+                        validTargets.Add(targetCoordsList[i]);
+                    }
+                    break;
+
+                case battleTeam.NEUTRAL:
+                    validTargets.Add(targetCoordsList[i]);
+                    break;
             }
         }
 
@@ -130,9 +199,9 @@ public class Rangefinder
     public List<Vector2Int> validTargetCoords(Vector2 originCoords, int maxRange, int minRange, bool losRequired)
     {
         List<GameObject> unitList = new List<GameObject>();
-        for (int i = 0; i < teamLists.Count; i++)
+        foreach (battleTeam team in teamLists.Keys)
         {
-            unitList.AddRange(teamLists[i]);
+            unitList.AddRange(teamLists[team]);
         }
         for (int i = unitList.Count - 1; i >= 0; i--)
         {
@@ -180,16 +249,19 @@ public class Rangefinder
     //Line of Sight Checks
     public bool checkLineCollision(Vector2 originPos, Vector2 targetPos)
     {
+        //TODO: Identify best offset value
+        float offset = Mathf.Sqrt(2 * Mathf.Pow(0.6f, 2));
         Vector2 origin = mapController.tileGridPos(originPos);
         Vector2 target = mapController.tileGridPos(targetPos);
         Vector2 direction = target - origin;
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, direction.magnitude, mapController.lineOfSightLayer);
+        Vector2 displace = direction.normalized * offset;
+        RaycastHit2D hit = Physics2D.Raycast(origin + displace, direction - displace, direction.magnitude - displace.magnitude, mapController.getLineOfSightLayer());
         if (hit.collider)
         {
-            Debug.DrawRay(origin, direction, Color.red, 100);
+            Debug.DrawRay(origin + displace, direction - displace, Color.red, 100);
         } else
         {
-            Debug.DrawRay(origin, direction, Color.white, 100);
+            Debug.DrawRay(origin + displace, direction - displace, Color.white, 100);
         }
         return hit.collider != null;
     }

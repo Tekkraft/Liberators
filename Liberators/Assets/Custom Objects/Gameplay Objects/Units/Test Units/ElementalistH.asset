@@ -31,3 +31,4 @@ MonoBehaviour:
     blockSprite: {fileID: 21300000, guid: 298687ad732b94fa0a27fcf549101187, type: 3}
     staggerSprite: {fileID: 21300000, guid: 0a0cdd7fb943840b89dd66bf659215a4, type: 3}
     defendSprite: {fileID: 21300000, guid: 2d59f57b97c0e4ebbb0efc6bccebb547, type: 3}
+  unitSkillTree: {fileID: 11400000, guid: c8c757230537248f5bcde181568a576e, type: 2}
