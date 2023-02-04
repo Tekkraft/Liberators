@@ -31,7 +31,10 @@ public class OperationController : MonoBehaviour
                 checkSkirmish(squads[i], squads[j]);
             }
         }
-        Debug.Log(checkVictory());
+        if (opsData != null)
+        {
+            Debug.Log(checkVictory());
+        }
     }
 
     void OnEnable()

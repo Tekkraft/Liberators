@@ -6,11 +6,12 @@ public class SquadAIController : MonoBehaviour
 {
     public operationsAI squadAI;
     bool inactive = true;
+    bool disabled = true;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        StartCoroutine(startTimer());
     }
 
     // Update is called once per frame
@@ -20,7 +21,7 @@ public class SquadAIController : MonoBehaviour
         {
             inactive = true;
         }
-        if (inactive)
+        if (inactive && !disabled)
         {
             aiCycle();
         }
@@ -45,5 +46,12 @@ public class SquadAIController : MonoBehaviour
         OperationController operationController = gameObject.GetComponent<SquadController>().getOperationController();
         GameObject target = operationController.getSquadOfTeam(0);
         operationController.moveSquadToLocation(gameObject, operationController.gameObject.GetComponent<MapController>().gridTilePos(target.transform.position));
+    }
+
+    IEnumerator startTimer()
+    {
+        disabled = true;
+        yield return new WaitForSeconds(3f);
+        disabled = false;
     }
 }

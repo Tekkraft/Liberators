@@ -71,7 +71,7 @@ public class MapData : ScriptableObject
         return AITeams;
     }
 
-    public bool evaluateVictoryConditions(Dictionary<Vector2Int, GameObject> unitList, Dictionary<int, List<GameObject>> teamLists, int currentTurn)
+    public bool evaluateVictoryConditions(Dictionary<Vector2Int, GameObject> unitList, int currentTurn)
     {
         foreach (ReachCondition zone in reachWinConditions)
         {
@@ -109,7 +109,7 @@ public class MapData : ScriptableObject
         return false;
     }
 
-    public bool evaluateDefeatConditions(Dictionary<Vector2Int, GameObject> unitList, Dictionary<int, List<GameObject>> teamLists, int currentTurn)
+    public bool evaluateDefeatConditions(Dictionary<Vector2Int, GameObject> unitList, int currentTurn)
     {
         foreach (ReachCondition zone in reachLoseConditions)
         {
@@ -159,7 +159,7 @@ class ReachCondition
 {
     public Vector2 corner1;
     public Vector2 corner2;
-    public int targetTeam = -1;
+    public battleTeam targetTeam;
 }
 
 [System.Serializable]

@@ -9,11 +9,11 @@ public class AbilityCalculator
     BattleController battleController;
     Vector2Int calculatorPosition;
     Vector2 targetDirection;
-    List<int> targetTeams;
+    battleTeam targetTeam;
 
     CombatAbility linkedAbility;
 
-    public AbilityCalculator(List<int> targetTeams, CombatAbility ability, Vector2Int calcPos, Vector2 targetDirection)
+    public AbilityCalculator(battleTeam targetTeam, CombatAbility ability, Vector2Int calcPos, Vector2 targetDirection)
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
@@ -21,7 +21,7 @@ public class AbilityCalculator
         linkedAbility = ability;
         calculatorPosition = calcPos;
         this.targetDirection = targetDirection;
-        this.targetTeams = targetTeams;
+        this.targetTeam = targetTeam;
     }
 
     public List<GameObject> getAffectedUnits(TargetInstruction targetInstruction, UnitController attackingUnit)
@@ -54,7 +54,7 @@ public class AbilityCalculator
             rangeMin += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
         }
         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, battleController, battleController.getTeamLists(), targetDirection);
-        List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, false);
+        List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeam, false);
         return hitUnits;
     }
 
@@ -73,7 +73,7 @@ public class AbilityCalculator
             rangeMin += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
         }
         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, battleController, battleController.getTeamLists(), targetDirection);
-        List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeams, true);
+        List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeam, true);
         return hitUnits;
     }
 }

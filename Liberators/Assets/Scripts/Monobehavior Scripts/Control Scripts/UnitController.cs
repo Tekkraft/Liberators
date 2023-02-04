@@ -11,7 +11,7 @@ public class UnitController : MonoBehaviour
     MapController mapController;
     BattleController battleController;
     List<GameObject> markerList = new List<GameObject>();
-    public int teamNumber = -1;
+    public battleTeam team;
 
     public Unit unitTemplate;
     UnitInstance unitObject;
@@ -49,7 +49,7 @@ public class UnitController : MonoBehaviour
         {
             unitObject = new UnitInstance(unitTemplate);
         }
-        createUnit(unitObject.getStats(), teamNumber);
+        createUnit(unitObject.getStats(), team);
         unitName = unitObject.getUnitName();
         if (basicMovement)
         {
@@ -63,7 +63,7 @@ public class UnitController : MonoBehaviour
         
     }
 
-    public void createUnit(int[] unitStats, int teamNumber)
+    public void createUnit(int[] unitStats, battleTeam team)
     {
         maxHP = unitStats[0];
         mov = unitStats[1];
@@ -73,7 +73,7 @@ public class UnitController : MonoBehaviour
         acu = unitStats[4];
         fin = unitStats[5];
         rea = unitStats[6];
-        this.teamNumber = teamNumber;
+        this.team = team;
     }
 
     public void setUnitInstance(UnitInstance unitInstance)
@@ -376,9 +376,9 @@ public class UnitController : MonoBehaviour
         return new int[] { mov, maxHP, currentHP, str, pot, acu, fin, rea };
     }
 
-    public int getTeam()
+    public battleTeam getTeam()
     {
-        return teamNumber;
+        return team;
     }
 
     public bool moveUnit(Vector2 destination, MovementAbility moveAbility)

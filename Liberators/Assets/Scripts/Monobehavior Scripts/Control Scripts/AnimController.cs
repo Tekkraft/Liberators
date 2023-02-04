@@ -30,7 +30,7 @@ public class AnimController : MonoBehaviour
             terminateAnimation();
             yield break;
         }
-        int activeTeam = sequence.getSequence()[0].getAnimationSteps()[0].getActor().GetComponent<UnitController>().getTeam();
+        battleTeam activeTeam = sequence.getSequence()[0].getAnimationSteps()[0].getActor().GetComponent<UnitController>().getTeam();
         List<GameObject> leftUnits = new List<GameObject>();
         List<GameObject> rightUnits = new List<GameObject>();
         foreach (AnimationBlock block in sequence.getSequence())

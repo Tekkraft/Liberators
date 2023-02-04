@@ -14,10 +14,9 @@ public class BattleController : MonoBehaviour
 
     //Main Variabless
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
-    Dictionary<int, List<GameObject>> teamLists = new Dictionary<int, List<GameObject>>();
-    List<List<int>> teamAlignments = new List<List<int>>();
-    int eliminatedTeams = 0;
-    int activeTeam = 0;
+    Dictionary<battleTeam, List<GameObject>> teamLists = new Dictionary<battleTeam, List<GameObject>>();
+    battleTeam activeTeam;
+    battleTeam firstTeam;
     int turnNumber = 1;
 
     MapController mapController;
@@ -50,7 +49,7 @@ public class BattleController : MonoBehaviour
         uiCanvas = GameObject.FindObjectOfType<Canvas>();
         cursor = GameObject.FindGameObjectWithTag("Cursor");
         cursorController = cursor.GetComponent<MouseController>();
-        teamAlignments = mapData.getTeamAlignments();
+        //teamAlignments = mapData.getTeamAlignments();
     }
 
     // Start is called before the first frame update
@@ -58,6 +57,11 @@ public class BattleController : MonoBehaviour
     {
         turnPhase = turnPhase.START;
         StartCoroutine(bannerTimer());
+        //TODO: Change to iterate on enum?
+        teamLists.Add(battleTeam.PLAYER, new List<GameObject>());
+        teamLists.Add(battleTeam.ENEMY, new List<GameObject>());
+        teamLists.Add(battleTeam.ALLY, new List<GameObject>());
+        teamLists.Add(battleTeam.NEUTRAL, new List<GameObject>());
     }
 
     //Use this to save key data upon victory
@@ -77,12 +81,15 @@ public class BattleController : MonoBehaviour
         BattleExitHandler.reset();
         foreach (UnitEntryData player in BattleEntryHandler.deployedUnits.Keys)
         {
-            placeUnit(player, BattleEntryHandler.deployedUnits[player], 0);
+            placeUnit(player, BattleEntryHandler.deployedUnits[player], battleTeam.PLAYER);
         }
         foreach (UnitEntryData enemy in BattleEntryHandler.enemyPlacements.Keys)
         {
-            placeUnit(enemy, BattleEntryHandler.enemyPlacements[enemy], 1);
+            placeUnit(enemy, BattleEntryHandler.enemyPlacements[enemy], battleTeam.ENEMY);
         }
+        //TODO: ADD ALLY FOREACH
+        activeTeam = battleTeam.PLAYER;
+        firstTeam = battleTeam.PLAYER;
     }
 
     //Turn Management
@@ -104,20 +111,15 @@ public class BattleController : MonoBehaviour
                 }
             }
         }
-        activeTeam++;
-        while (!teamLists.ContainsKey(activeTeam))
+        activeTeam = nextTeam();
+        if (activeTeam == firstTeam)
         {
-            if (teamLists.Count + eliminatedTeams < activeTeam)
-            {
-                activeTeam = -1;
-                turnNumber++;
-            }
-            activeTeam++;
+            turnNumber++;
         }
         checkEndGame();
         turnPhase = turnPhase.START;
         StartCoroutine(bannerTimer());
-        if (mapData.getAITeams().Contains(activeTeam))
+        if (activeTeam != battleTeam.PLAYER)
         {
             StartCoroutine(runAIPhase(teamLists[activeTeam]));
         }
@@ -194,7 +196,7 @@ public class BattleController : MonoBehaviour
                             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
                         }
                         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, this, teamLists, direction);
-                        List<GameObject> validTargets = rangefinder.generateTargetsNotOfTeam(activeUnit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetInstruction.getTargetType() == targetType.BEAM);
+                        List<GameObject> validTargets = rangefinder.generateTargetsNotOfTeam(activeUnit.GetComponent<UnitController>().getUnitPos(), activeTeam, targetInstruction.getTargetType() == targetType.BEAM);
                         if (validTargets.Count <= 0)
                         {
                             active.GetComponent<AIController>().disableActions(activeAbility);
@@ -251,7 +253,7 @@ public class BattleController : MonoBehaviour
         nextPhase();
     }
 
-    public int getActiveTeam()
+    public battleTeam getActiveTeam()
     {
         return activeTeam;
     }
@@ -445,20 +447,20 @@ public class BattleController : MonoBehaviour
             {
                 if (filter.getTargetFilter() == targetFilter.ENEMY && !enemyFilter)
                 {
-                    targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
+                    targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), activeTeam, targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
                     enemyFilter = true;
                     noFilter = false;
                 }
                 if (filter.getTargetFilter() == targetFilter.ALLY && !allyFilter)
                 {
-                    targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(unit.GetComponent<UnitController>().getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.GREEN);
+                    targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(unit.GetComponent<UnitController>().getUnitPos(), activeTeam, targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.GREEN);
                     allyFilter = true;
                     noFilter = false;
                 }
             }
             if (noFilter)
             {
-                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), new List<int>(), targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
+                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), battleTeam.NEUTRAL, targetCondition.getTargetType() == targetType.BEAM), MarkerController.Markers.RED);
             }
         }
 
@@ -626,7 +628,7 @@ public class BattleController : MonoBehaviour
                     case targetType.BEAM:
                         if (activeOverlay)
                         {
-                            AbilityCalculator calculator = new AbilityCalculator(getSpecificTeamList(getActiveTeam(), targetInstruction), getActiveCombatAbility(), activeUnit.GetComponent<UnitController>().getUnitPos(), activeOverlay.GetComponent<OverlayController>().getOverlayDirection());
+                            AbilityCalculator calculator = new AbilityCalculator(getFilterTeam(targetInstruction, activeTeam), getActiveCombatAbility(), activeUnit.GetComponent<UnitController>().getUnitPos(), activeOverlay.GetComponent<OverlayController>().getOverlayDirection());
                             List<GameObject> targetLine = calculator.getAffectedUnits(targetInstruction, activeUnit.GetComponent<UnitController>());
                             foreach (GameObject target in targetLine)
                             {
@@ -746,7 +748,7 @@ public class BattleController : MonoBehaviour
         {
             if (filter.getTargetFilter() == targetFilter.ENEMY && !enemyFilter)
             {
-                if (rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
+                if (rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), activeTeam, targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
                 {
                     selectedGameObjectTargets.Add(addition);
                 }
@@ -755,7 +757,7 @@ public class BattleController : MonoBehaviour
             }
             if (filter.getTargetFilter() == targetFilter.ALLY && !allyFilter)
             {
-                if (rangefinder.generateTargetsOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
+                if (rangefinder.generateTargetsOfTeam(selectedController.getUnitPos(), activeTeam, targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
                 {
                     selectedGameObjectTargets.Add(addition);
                 }
@@ -765,7 +767,7 @@ public class BattleController : MonoBehaviour
         }
         if (noFilter)
         {
-            if (rangefinder.generateTargetsOfTeam(selectedController.getUnitPos(), new List<int>(), targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
+            if (rangefinder.generateTargetsOfTeam(selectedController.getUnitPos(), battleTeam.NEUTRAL, targetCondition.getTargetType() == targetType.BEAM).Contains(addition))
             {
                 selectedGameObjectTargets.Add(addition);
             }
@@ -819,7 +821,7 @@ public class BattleController : MonoBehaviour
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetCondition.getLOSRequired(), mapController, this, teamLists, direction);
-        List<GameObject> potentialTargets = rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), false);
+        List<GameObject> potentialTargets = rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), activeTeam, false);
         if (duplicatesAllowed)
         {
             while (selectedGameObjectTargets.Count <= targetCondition.getTargetConditionCount())
@@ -892,7 +894,7 @@ public class BattleController : MonoBehaviour
             direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
         }
         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetCondition.getLOSRequired(), mapController, this, teamLists, direction);
-        List<GameObject> potentialTargets = rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), getAlignedTeams(activeTeam), false);
+        List<GameObject> potentialTargets = rangefinder.generateTargetsNotOfTeam(selectedController.getUnitPos(), activeTeam, false);
         selectedGameObjectTargets.AddRange(potentialTargets);
     }
 
@@ -930,11 +932,7 @@ public class BattleController : MonoBehaviour
     public void addUnit(GameObject unit)
     {
         unitList.Add(unit.GetComponent<UnitController>().getUnitPos(), unit);
-        int team = unit.GetComponent<UnitController>().getTeam();
-        if (!teamLists.ContainsKey(team))
-        {
-            teamLists.Add(team, new List<GameObject>());
-        }
+        battleTeam team = unit.GetComponent<UnitController>().getTeam();
         teamLists[team].Add(unit);
     }
 
@@ -971,8 +969,7 @@ public class BattleController : MonoBehaviour
             target.Add(selectedController.gameObject);
             return target;
         }
-        List<int> teamList = getSpecificTeamList(activeTeam, targetInstruction);
-        AbilityCalculator calculator = new AbilityCalculator(teamList, calculateAbility, cursorController.getGridPos(), direction);
+        AbilityCalculator calculator = new AbilityCalculator(getFilterTeam(targetInstruction, activeTeam), calculateAbility, cursorController.getGridPos(), direction);
         List<GameObject> hitUnits = calculator.getAffectedUnits(targetInstruction, selectedController);
         return hitUnits;
     }
@@ -1068,13 +1065,13 @@ public class BattleController : MonoBehaviour
             mapEnd();
             return;
         }
-        if (mapData.evaluateDefeatConditions(unitList, teamLists, turnNumber))
+        if (mapData.evaluateDefeatConditions(unitList, turnNumber))
         {
             BattleExitHandler.outcome = battleOutcome.FAILURE;
             mapEnd();
             return;
         }
-        if (mapData.evaluateVictoryConditions(unitList, teamLists, turnNumber))
+        if (mapData.evaluateVictoryConditions(unitList, turnNumber))
         {
             BattleExitHandler.outcome = battleOutcome.SUCCESS;
             mapEnd();
@@ -1084,32 +1081,12 @@ public class BattleController : MonoBehaviour
 
     bool evaluatePlayerRout()
     {
-        foreach (int team in getAlignedTeams(0))
-        {
-            if (teamLists.ContainsKey(team))
-            {
-                if (teamLists[team].Count != 0)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return teamLists[battleTeam.ALLY].Count == 0 && teamLists[battleTeam.PLAYER].Count == 0;
     }
 
     bool evaluateEnemyRout()
     {
-        foreach (int team in getNonAlignedTeams(0))
-        {
-            if (teamLists.ContainsKey(team))
-            {
-                if (teamLists[team].Count != 0)
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return teamLists[battleTeam.ENEMY].Count == 0;
     }
 
     void mapEnd()
@@ -1144,7 +1121,7 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    public Dictionary<int, List<GameObject>> getTeamLists()
+    public Dictionary<battleTeam, List<GameObject>> getTeamLists()
     {
         return teamLists;
     }
@@ -1153,69 +1130,10 @@ public class BattleController : MonoBehaviour
     {
         Vector2Int location = deadUnit.GetComponent<UnitController>().getUnitPos();
         unitList.Remove(location);
-        int team = deadUnit.GetComponent<UnitController>().getTeam();
+        battleTeam team = deadUnit.GetComponent<UnitController>().getTeam();
         teamLists[team].Remove(deadUnit);
-        if (teamLists[team].Count <= 0)
-        {
-            teamLists.Remove(team);
-            eliminatedTeams++;
-        }
         checkEndGame();
         GameObject.Destroy(deadUnit);
-    }
-
-    public List<int> getSpecificTeamList(int primaryTeam, TargetInstruction targetInstruction)
-    {
-        List<int> teamList = getAllTeams();
-        foreach (TargetFilter filter in targetInstruction.getConditionFilters())
-        {
-            if (filter.getTargetFilter() == targetFilter.ENEMY)
-            {
-                teamList = getNonAlignedTeams(activeTeam);
-                break;
-            }
-            else if (filter.getTargetFilter() == targetFilter.ALLY)
-            {
-                teamList = getAlignedTeams(activeTeam);
-                break;
-            }
-        }
-        return teamList;
-    }
-
-    List<int> getAlignedTeams(int team)
-    {
-        foreach (List<int> temp in teamAlignments)
-        {
-            if (temp.Contains(team))
-            {
-                return temp;
-            }
-        }
-        return new List<int>();
-    }
-
-    List<int> getNonAlignedTeams(int team)
-    {
-        List<int> unalignedTeams = new List<int>();
-        foreach (List<int> temp in teamAlignments)
-        {
-            if (!temp.Contains(team))
-            {
-                unalignedTeams.AddRange(temp);
-            }
-        }
-        return unalignedTeams;
-    }
-
-    List<int> getAllTeams()
-    {
-        List<int> allTeams = new List<int>();
-        foreach (List<int> temp in teamAlignments)
-        {
-            allTeams.AddRange(temp);
-        }
-        return allTeams;
     }
 
     public Pathfinder getPathfinder()
@@ -1254,6 +1172,34 @@ public class BattleController : MonoBehaviour
     public GameObject getActiveOverlay()
     {
         return activeOverlay;
+    }
+
+    public battleTeam getFilterTeam(TargetInstruction instruction, battleTeam actingTeam)
+    {
+        foreach (TargetFilter filter in instruction.getConditionFilters())
+        {
+            if (filter.getTargetFilter() == targetFilter.ENEMY)
+            {
+                if (actingTeam == battleTeam.ENEMY)
+                {
+                    return battleTeam.PLAYER;
+                } else if (actingTeam == battleTeam.PLAYER || actingTeam == battleTeam.ALLY)
+                {
+                    return battleTeam.ENEMY;
+                }
+            } else if (filter.getTargetFilter() == targetFilter.ALLY)
+            {
+                if (actingTeam == battleTeam.PLAYER || actingTeam == battleTeam.ALLY)
+                {
+                    return battleTeam.PLAYER;
+                }
+                else if (actingTeam == battleTeam.ENEMY)
+                {
+                    return battleTeam.ENEMY;
+                }
+            }
+        }
+        return battleTeam.NEUTRAL;
     }
 
     //Stat Math
@@ -1323,15 +1269,34 @@ public class BattleController : MonoBehaviour
         return new int[] { totalHit, totalCrit };
     }
 
+    //Turn Control
+    battleTeam nextTeam()
+    {
+        switch (activeTeam)
+        {
+            case battleTeam.PLAYER:
+                return battleTeam.ENEMY;
+
+            case battleTeam.ENEMY:
+                return battleTeam.ALLY;
+
+            case battleTeam.ALLY:
+                return battleTeam.PLAYER;
+
+            default:
+                return battleTeam.PLAYER;
+        }
+    }
+
     //Unit Construction
-    void placeUnit(UnitEntryData unit, Vector2Int tile, int team)
+    void placeUnit(UnitEntryData unit, Vector2Int tile, battleTeam team)
     {
         GameObject temp = GameObject.Instantiate(unitTemplate);
         temp.SetActive(false);
         temp.GetComponent<UnitController>().setUnitInstance(unit.getUnit());
         temp.GetComponent<UnitController>().equippedWeapon = unit.getWeapon();
         temp.GetComponent<UnitController>().equippedArmor = unit.getArmor();
-        temp.GetComponent<UnitController>().teamNumber = team;
+        temp.GetComponent<UnitController>().team = team;
         temp.GetComponent<SpriteRenderer>().sprite = unit.getUnit().getBattleSprite("attack");
         Vector2 unitPos = mapController.tileGridPos(tile);
         temp.GetComponent<Transform>().position = new Vector3(unitPos.x, unitPos.y, -2);
