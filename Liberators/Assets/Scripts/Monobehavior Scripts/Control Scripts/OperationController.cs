@@ -33,7 +33,10 @@ public class OperationController : MonoBehaviour
         }
         if (opsData != null)
         {
-            Debug.Log(checkVictory());
+            if (checkVictory())
+            {
+                SceneManager.LoadSceneAsync("OperationEnd");
+            }
         }
     }
 
@@ -47,6 +50,8 @@ public class OperationController : MonoBehaviour
             if (data.team == operationsTeam.PLAYER)
             {
                 temp.GetComponent<SpriteRenderer>().sprite = playerFlag;
+                temp.GetComponent<SquadAIController>().forceStart();
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<OperationCameraController>().ForceCameraPosition(temp.transform.position);
             }
             if (data.team == operationsTeam.ENEMY)
             {
@@ -63,13 +68,26 @@ public class OperationController : MonoBehaviour
                 break;
 
             case battleOutcome.SUCCESS:
-                options = availableTranslations(squads[OperationSceneHandler.defenderId].transform.position);
-                if (options.Count == 0)
+                if (!squads[OperationSceneHandler.defenderId].GetComponent<SquadController>().isSquadAnchored())
                 {
-                    destroySquad(squads[OperationSceneHandler.defenderId]);
-                    break;
+                    options = availableTranslations(squads[OperationSceneHandler.defenderId].transform.position);
+                    if (options.Count == 0)
+                    {
+                        destroySquad(squads[OperationSceneHandler.defenderId]);
+                        break;
+                    }
+                    squads[OperationSceneHandler.defenderId].transform.Translate(options[Random.Range(0, options.Count)]);
+                } else
+                {
+                    options = availableTranslations(squads[OperationSceneHandler.attackerId].transform.position);
+                    if (options.Count == 0 || squads[OperationSceneHandler.attackerId].GetComponent<SquadController>().isSquadAnchored())
+                    {
+                        //Note: Defending squad is destroyed if attacker cannot be pushed for any reason
+                        destroySquad(squads[OperationSceneHandler.defenderId]);
+                        break;
+                    }
+                    squads[OperationSceneHandler.attackerId].transform.Translate(options[Random.Range(0, options.Count)]);
                 }
-                squads[OperationSceneHandler.defenderId].transform.Translate(options[Random.Range(0, options.Count)]);
                 break;
 
             case battleOutcome.FAILURE:

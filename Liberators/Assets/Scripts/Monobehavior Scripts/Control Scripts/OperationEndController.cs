@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OperationEndController : MonoBehaviour
 {
@@ -14,5 +15,10 @@ public class OperationEndController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void RestartOperation()
+    {
+        SceneManager.LoadSceneAsync("OperationPrep");
     }
 }

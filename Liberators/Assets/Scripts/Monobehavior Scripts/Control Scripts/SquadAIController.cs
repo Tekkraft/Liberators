@@ -54,4 +54,10 @@ public class SquadAIController : MonoBehaviour
         yield return new WaitForSeconds(3f);
         disabled = false;
     }
+
+    public void forceStart()
+    {
+        disabled = false;
+        StopCoroutine("startTimer");
+    }
 }

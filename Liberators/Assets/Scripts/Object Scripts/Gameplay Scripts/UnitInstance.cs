@@ -7,6 +7,7 @@ public class UnitInstance
     Unit baseUnit;
 
     int maxHP;
+    int currentHP;
     int mov;
     int str;
     int pot;
@@ -20,6 +21,7 @@ public class UnitInstance
     {
         this.baseUnit = baseUnit;
         maxHP = baseUnit.getStats()[0];
+        currentHP = maxHP;
         mov = baseUnit.getStats()[1];
         str = baseUnit.getStats()[2];
         pot = baseUnit.getStats()[3];
@@ -38,6 +40,20 @@ public class UnitInstance
     public int[] getStats()
     {
         return new int[] { maxHP, mov, str, pot, acu, fin, rea };
+    }
+
+    public int getCurrentHP()
+    {
+        return currentHP;
+    }
+
+    public void setCurrentHP(int newHP)
+    {
+        currentHP = newHP;
+        if (currentHP > maxHP)
+        {
+            currentHP = maxHP;
+        }
     }
 
     public List<Ability> getAbilities()
@@ -70,6 +86,7 @@ public class UnitInstance
             return;
         }
         maxHP += stats[0];
+        currentHP += stats[0];
         mov += stats[1];
         str += stats[2];
         pot += stats[3];

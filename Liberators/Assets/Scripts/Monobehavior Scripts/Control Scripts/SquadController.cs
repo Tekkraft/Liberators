@@ -13,6 +13,7 @@ public class SquadController : MonoBehaviour
     public List<Vector2Int> spawnLocations;
     public operationsTeam team;
     public operationsMoveType movementType;
+    public bool squadAnchored = false;
 
     Grid mainGrid;
     MapController mapController;
@@ -42,7 +43,7 @@ public class SquadController : MonoBehaviour
     {
         //TODO: Possible overlap problem if transform snapping not addressed
         Vector3 snapTransform = transform.position = new Vector3(Mathf.RoundToInt(transform.position.x + 0.5f) - 0.5f, Mathf.RoundToInt(transform.position.y + 0.5f) - 0.5f, -1);
-        return new SquadData(baseSpeed, unitList, spawnLocations, team, snapTransform, gameObject.name, gameObject.GetComponent<SquadAIController>().squadAI);
+        return new SquadData(baseSpeed, unitList, spawnLocations, team, snapTransform, gameObject.name, gameObject.GetComponent<SquadAIController>().squadAI, squadAnchored);
     }
 
     public void loadSquadData(SquadData data)
@@ -146,6 +147,11 @@ public class SquadController : MonoBehaviour
     {
         return operationController;
     }
+
+    public bool isSquadAnchored()
+    {
+        return squadAnchored;
+    }
 }
 
 public class SquadData
@@ -157,8 +163,9 @@ public class SquadData
     public Vector2 position;
     public string name;
     public operationsAI squadAI;
+    public bool squadAnchored;
 
-    public SquadData(float baseSpeed, List<UnitEntryData> unitList, List<Vector2Int> spawnLocations, operationsTeam team, Vector2 position, string name, operationsAI squadAI)
+    public SquadData(float baseSpeed, List<UnitEntryData> unitList, List<Vector2Int> spawnLocations, operationsTeam team, Vector2 position, string name, operationsAI squadAI, bool squadAnchored)
     {
         this.baseSpeed = baseSpeed;
         this.unitList = unitList;
@@ -167,6 +174,7 @@ public class SquadData
         this.position = position;
         this.name = name;
         this.squadAI = squadAI;
+        this.squadAnchored = squadAnchored;
     }
 
     public Dictionary<UnitEntryData, Vector2Int> getPairedUnits()

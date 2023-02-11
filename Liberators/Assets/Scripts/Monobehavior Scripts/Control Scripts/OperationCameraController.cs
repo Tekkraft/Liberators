@@ -43,4 +43,9 @@ public class OperationCameraController : MonoBehaviour
     {
         cameraMove = value;
     }
+
+    public void ForceCameraPosition(Vector2 position)
+    {
+        transform.position = new Vector3(position.x, position.y, transform.position.z);
+    }
 }

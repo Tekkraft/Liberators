@@ -69,6 +69,12 @@ public class BattleController : MonoBehaviour
     {
         foreach (UnitEntryData unit in BattleEntryHandler.deployedUnits.Keys)
         {
+            unit.doPostBattleHealing();
+            BattleExitHandler.unitData.Add(unit);
+        }
+        foreach (UnitEntryData unit in BattleEntryHandler.enemyPlacements.Keys)
+        {
+            unit.doPostBattleHealing();
             BattleExitHandler.unitData.Add(unit);
         }
         BattleEntryHandler.reset();

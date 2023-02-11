@@ -27,6 +27,8 @@ public enum statusType { BUFF, DEBUFF, NONE }
 
 public enum weaponType { MELEE, GUN, FOCUS, SPECIAL };
 
+public enum weaponHandClass { OneHanded, TwoHanded, MainHand, OffHand };
+
 public enum actionPhase { INACTIVE, PREPARE, EXECUTE };
 
 public enum turnPhase { START, MAIN, PAUSE, END };

@@ -49,7 +49,7 @@ public class UnitController : MonoBehaviour
         {
             unitObject = new UnitInstance(unitTemplate);
         }
-        createUnit(unitObject.getStats(), team);
+        createUnit(unitObject.getStats(), team, unitObject.getCurrentHP());
         unitName = unitObject.getUnitName();
         if (basicMovement)
         {
@@ -63,11 +63,11 @@ public class UnitController : MonoBehaviour
         
     }
 
-    public void createUnit(int[] unitStats, battleTeam team)
+    public void createUnit(int[] unitStats, battleTeam team, int startingHP)
     {
         maxHP = unitStats[0];
         mov = unitStats[1];
-        currentHP = this.maxHP;
+        currentHP = startingHP;
         str = unitStats[2];
         pot = unitStats[3];
         acu = unitStats[4];
@@ -172,6 +172,7 @@ public class UnitController : MonoBehaviour
         targetController.restoreHealth(healing);
     }
 
+    //Passive Damage
     public KeyValuePair<int, int> takeDamage(int damage, element damageElement)
     {
         int startingHP = currentHP;
@@ -183,9 +184,11 @@ public class UnitController : MonoBehaviour
             damageTaken = 0;
         }
         currentHP -= damageTaken;
+        unitObject.setCurrentHP(currentHP);
         return new KeyValuePair<int, int>(damageTaken, startingHP);
     }
 
+    //Attack Damage
     public KeyValuePair<int, int> takeDamage(int damage, EffectInstruction attackEffect, Weapon attackerWeapon)
     {
         int startingHP = currentHP;
@@ -213,6 +216,7 @@ public class UnitController : MonoBehaviour
             damageTaken = 0;
         }
         currentHP -= damageTaken;
+        unitObject.setCurrentHP(currentHP);
         return new KeyValuePair<int, int>(damageTaken, startingHP);
     }
 
@@ -223,6 +227,7 @@ public class UnitController : MonoBehaviour
         {
             currentHP = maxHP;
         }
+        unitObject.setCurrentHP(currentHP);
     }
 
     public CombatData inflictStatus(Status newStatus, GameObject source)

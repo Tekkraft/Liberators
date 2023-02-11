@@ -62,6 +62,9 @@ public class SquadSeralization
     [SerializeField]
     operationsMoveType movementType;
 
+    [SerializeField]
+    bool squadAnchored;
+
     public string getSquadName()
     {
         return squadName;
@@ -95,6 +98,11 @@ public class SquadSeralization
     public operationsMoveType getMovementType()
     {
         return movementType;
+    }
+
+    public bool getSquadAnchored()
+    {
+        return squadAnchored;
     }
 }
 
