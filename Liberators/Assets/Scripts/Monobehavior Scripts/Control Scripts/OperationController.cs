@@ -133,7 +133,13 @@ public class OperationController : MonoBehaviour
                 Tilemap operationsTilemap = gameObject.GetComponent<Tilemap>();
                 Vector2Int tileCoord = gameObject.GetComponent<MapController>().gridTilePos(unit1.transform.position);
                 TerrainTileWorld tile = operationsTilemap.GetTile<TerrainTileWorld>(new Vector3Int(tileCoord.x, tileCoord.y, 0));
-                startSkirmish(unit1, unit2, tile);
+                if (unit2.GetComponent<SquadController>().getTeam() == operationsTeam.PLAYER)
+                {
+                    startSkirmish(unit2, unit1, tile);
+                } else
+                {
+                    startSkirmish(unit1, unit2, tile);
+                }
             }
         }
     }

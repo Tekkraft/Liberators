@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapon Object", order = 48)]
-public class Weapon : ScriptableObject, IItem
+public class Weapon : ScriptableObject
 {
     [SerializeField]
     string weaponName;
 
     [SerializeField]
-    weaponType weaponType;
+    Sprite weaponIcon;
+
+    [SerializeField]
+    EquipHandClass handClass;
+
+    [SerializeField]
+    EquipBaseClass baseClass;
+
+    [SerializeField]
+    EquipDamageClass damageClass;
 
     [SerializeField]
     int weaponStrength;
@@ -32,37 +41,47 @@ public class Weapon : ScriptableObject, IItem
     [SerializeField]
     Status weaponStatus;
 
-    public string getName()
+    public string GetName()
     {
         return weaponName;
     }
 
-    public Sprite getImage()
+    public Sprite GetSprite()
     {
-        return null;
+        return weaponIcon;
     }
 
-    public weaponType getWeaponType()
+    public EquipHandClass GetHandClass()
     {
-        return weaponType;
+        return handClass;
     }
 
-    public int[] getWeaponStats()
+    public EquipBaseClass GetBaseClass()
+    {
+        return baseClass;
+    }
+
+    public EquipDamageClass GetDamageClass()
+    {
+        return damageClass;
+    }
+
+    public int[] GetWeaponStats()
     {
         return new int[] { weaponStrength, weaponHit, weaponCrit, weaponRange };
     }
 
-    public element getWeaponElement()
+    public element GetWeaponElement()
     {
         return weaponElement;
     }
 
-    public List<Ability> getAbilities()
+    public List<Ability> GetAbilities()
     {
         return abilities;
     }
 
-    public Status getWeaponStatus()
+    public Status GetWeaponStatus()
     {
         return weaponStatus;
     }

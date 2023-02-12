@@ -56,7 +56,7 @@ public class BattleController : MonoBehaviour
     void Start()
     {
         turnPhase = turnPhase.START;
-        StartCoroutine(bannerTimer());
+        StartCoroutine(BannerTimer());
         //TODO: Change to iterate on enum?
         teamLists.Add(battleTeam.PLAYER, new List<GameObject>());
         teamLists.Add(battleTeam.ENEMY, new List<GameObject>());
@@ -87,11 +87,11 @@ public class BattleController : MonoBehaviour
         BattleExitHandler.reset();
         foreach (UnitEntryData player in BattleEntryHandler.deployedUnits.Keys)
         {
-            placeUnit(player, BattleEntryHandler.deployedUnits[player], battleTeam.PLAYER);
+            PlaceUnit(player, BattleEntryHandler.deployedUnits[player], battleTeam.PLAYER);
         }
         foreach (UnitEntryData enemy in BattleEntryHandler.enemyPlacements.Keys)
         {
-            placeUnit(enemy, BattleEntryHandler.enemyPlacements[enemy], battleTeam.ENEMY);
+            PlaceUnit(enemy, BattleEntryHandler.enemyPlacements[enemy], battleTeam.ENEMY);
         }
         //TODO: ADD ALLY FOREACH
         activeTeam = battleTeam.PLAYER;
@@ -99,11 +99,11 @@ public class BattleController : MonoBehaviour
     }
 
     //Turn Management
-    void nextPhase()
+    void NextPhase()
     {
         turnPhase = turnPhase.END;
         uiCanvas.GetComponent<UIController>().resetButtons();
-        completeAction();
+        CompleteAction();
         if (teamLists.ContainsKey(activeTeam))
         {
             List<GameObject> active = teamLists[activeTeam];
@@ -113,25 +113,25 @@ public class BattleController : MonoBehaviour
                 bool dead = unit.GetComponent<UnitController>().endUnitTurn();
                 if (dead)
                 {
-                    killUnit(unit);
+                    KillUnit(unit);
                 }
             }
         }
-        activeTeam = nextTeam();
+        activeTeam = NextTeam();
         if (activeTeam == firstTeam)
         {
             turnNumber++;
         }
-        checkEndGame();
+        CheckEndGame();
         turnPhase = turnPhase.START;
-        StartCoroutine(bannerTimer());
+        StartCoroutine(BannerTimer());
         if (activeTeam != battleTeam.PLAYER)
         {
-            StartCoroutine(runAIPhase(teamLists[activeTeam]));
+            StartCoroutine(RunAIPhase(teamLists[activeTeam]));
         }
     }
 
-    IEnumerator runAIPhase(List<GameObject> units)
+    IEnumerator RunAIPhase(List<GameObject> units)
     {
         while (turnPhase != turnPhase.MAIN)
         {
@@ -167,14 +167,14 @@ public class BattleController : MonoBehaviour
                 {
                     break;
                 }
-                setActionState(active, selectedAbility);
+                SetActionState(active, selectedAbility);
                 if (activeAbility.getAbilityType() == actionType.COMBAT)
                 {
                     AbilityData selectedData = (selectedAbility as CombatAbility).getAbilityData();
                     //TEMPORARY MEASURE - REMOVE WHEN BEAMS VALID ABILITY
                     if (selectedData.getTargetInstruction().getTargetType() == targetType.BEAM)
                     {
-                        completeAction();
+                        CompleteAction();
                         continue;
                     }
                     else
@@ -184,12 +184,12 @@ public class BattleController : MonoBehaviour
                         int rangeMax = targetInstruction.getMaxRange();
                         if (!targetInstruction.getMaxRangeFixed())
                         {
-                            rangeMax += targetController.getEquippedWeapon().getWeaponStats()[3];
+                            rangeMax += targetController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
                         }
                         int rangeMin = targetInstruction.getMinRange();
                         if (!targetInstruction.getMinRangeFixed())
                         {
-                            rangeMax += targetController.getEquippedWeapon().getWeaponStats()[3];
+                            rangeMax += targetController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
                         }
                         if (targetInstruction.getIsMelee())
                         {
@@ -226,7 +226,7 @@ public class BattleController : MonoBehaviour
                                         GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(selectedAbility as CombatAbility, validTargets);
                                         if (target)
                                         {
-                                            combatTargeting(target, targetInstruction, new Vector2(0, 0));
+                                            CombatTargeting(target, targetInstruction, new Vector2(0, 0));
                                             break;
                                         }
                                     }
@@ -242,29 +242,29 @@ public class BattleController : MonoBehaviour
                             GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(selectedAbility as CombatAbility, validTargets);
                             if (target)
                             {
-                                combatTargeting(target, targetInstruction, new Vector2(0, 0));
+                                CombatTargeting(target, targetInstruction, new Vector2(0, 0));
                             }
                         }
                     }
                 }
                 else if (activeAbility.getAbilityType() == actionType.MOVE)
                 {
-                    executeAction(activeUnit, mapController.tileGridPos(activeUnit.GetComponent<AIController>().getMoveTarget(activeAbility as MovementAbility)));
+                    ExecuteAction(activeUnit, mapController.tileGridPos(activeUnit.GetComponent<AIController>().getMoveTarget(activeAbility as MovementAbility)));
                 }
                 yield return new WaitForSeconds(0.5f);
             }
             active.GetComponent<AIController>().resetActions();
         }
         yield return new WaitUntil(() => turnPhase == turnPhase.MAIN);
-        nextPhase();
+        NextPhase();
     }
 
-    public battleTeam getActiveTeam()
+    public battleTeam GetActiveTeam()
     {
         return activeTeam;
     }
 
-    IEnumerator bannerTimer()
+    IEnumerator BannerTimer()
     {
         int bannerTime = 15;
         uiCanvas.GetComponent<UIController>().changeBanner("Team " + activeTeam, bannerTime);
@@ -275,23 +275,23 @@ public class BattleController : MonoBehaviour
         turnPhase = turnPhase.MAIN;
     }
 
-    public turnPhase getTurnPhase()
+    public turnPhase GetTurnPhase()
     {
         return turnPhase;
     }
 
-    public void setTurnPhase(turnPhase phase)
+    public void SetTurnPhase(turnPhase phase)
     {
         turnPhase = phase;
     }
 
-    public actionPhase getActionPhase()
+    public actionPhase GetActionPhase()
     {
         return actionPhase;
     }
 
     //Action Management
-    public void setActionState(GameObject unit, Ability ability)
+    public void SetActionState(GameObject unit, Ability ability)
     {
         if (ability)
         {
@@ -303,7 +303,7 @@ public class BattleController : MonoBehaviour
         }
         if (actionState == actionType.END)
         {
-            nextPhase();
+            NextPhase();
         }
         if (!unit)
         {
@@ -311,45 +311,45 @@ public class BattleController : MonoBehaviour
         }
         activeAbility = ability;
         activeUnit = unit;
-        actionSetup(unit);
+        ActionSetup(unit);
     }
 
-    public actionType getActionState()
+    public actionType GetActionState()
     {
         return actionState;
     }
 
-    public void actionSetup(GameObject targetUnit)
+    public void ActionSetup(GameObject targetUnit)
     {
         switch (actionState)
         {
             case actionType.MOVE:
-                movePrepare(targetUnit);
+                MovePrepare(targetUnit);
                 break;
 
             case actionType.COMBAT:
-                combatPrepare(targetUnit);
+                CombatPrepare(targetUnit);
                 break;
         }
     }
 
-    public void executeAction(GameObject targetUnit, Vector2 tileDestination)
+    public void ExecuteAction(GameObject targetUnit, Vector2 tileDestination)
     {
         switch (actionState)
         {
             case actionType.MOVE:
-                moveAction(tileDestination);
+                MoveAction(tileDestination);
                 break;
 
             case actionType.COMBAT:
-                combatAction(targetUnit);
+                CombatAction(targetUnit);
                 break;
         }
-        completeAction();
+        CompleteAction();
     }
 
     //Action Handling
-    public void completeAction()
+    public void CompleteAction()
     {
         selectedGameObjectTargets.Clear();
         selectedPointTargets.Clear();
@@ -366,7 +366,7 @@ public class BattleController : MonoBehaviour
         uiCanvas.GetComponent<UIController>().clearButtons();
     }
 
-    void movePrepare(GameObject unit)
+    void MovePrepare(GameObject unit)
     {
         if (activeAbility.getAbilityType() != actionType.MOVE)
         {
@@ -382,23 +382,23 @@ public class BattleController : MonoBehaviour
         targetController.createMoveMarkers(calculateAbility, MarkerController.Markers.BLUE);
     }
 
-    void moveAction(Vector2 tileDestination)
+    void MoveAction(Vector2 tileDestination)
     {
         UnitController activeController = activeUnit.GetComponent<UnitController>();
         if (activeController.checkActions(activeAbility.getAPCost()))
         {
             return;
         }
-        bool clear = moveUnit(activeUnit, tileDestination);
-        completeAction();
+        bool clear = MoveUnit(activeUnit, tileDestination);
+        CompleteAction();
         if (clear)
         {
             bool done = activeController.useActions(activeAbility.getAPCost());
         }
-        checkEndGame();
+        CheckEndGame();
     }
 
-    void combatPrepare(GameObject unit)
+    void CombatPrepare(GameObject unit)
     {
         if (!unit || !activeAbility)
         {
@@ -416,12 +416,12 @@ public class BattleController : MonoBehaviour
         int rangeMax = abilityData.getTargetInstruction().getMaxRange();
         if (!targetCondition.getMaxRangeFixed())
         {
-            rangeMax += targetController.getEquippedWeapon().getWeaponStats()[3];
+            rangeMax += targetController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         int rangeMin = targetCondition.getMinRange();
         if (!abilityData.getTargetInstruction().getMinRangeFixed())
         {
-            rangeMin += targetController.getEquippedWeapon().getWeaponStats()[3];
+            rangeMin += targetController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         if (targetCondition.getIsMelee())
         {
@@ -472,16 +472,16 @@ public class BattleController : MonoBehaviour
 
     }
 
-    void combatAction(GameObject targetUnit)
+    void CombatAction(GameObject targetUnit)
     {
         if (!activeAbility)
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         if (activeAbility.getAbilityType() != actionType.COMBAT)
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
@@ -490,12 +490,12 @@ public class BattleController : MonoBehaviour
         TargetInstruction targetCondition = abilityData.getTargetInstruction();
         if ((targetCondition.getTargetType() == targetType.TARGET && !targetUnit) || (targetCondition.getTargetType() == targetType.SELF && targetUnit != activeUnit))
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         if (selectedController.checkActions(activeAbility.getAPCost()))
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         actionPhase = actionPhase.EXECUTE;
@@ -508,14 +508,14 @@ public class BattleController : MonoBehaviour
                 UnitController attackerController = activeUnit.GetComponent<UnitController>();
                 UnitController defenderController = target.GetComponent<UnitController>();
                 int randomChance = Random.Range(0, 100);
-                int[] hitStats = getHitStats(attackerController, defenderController, abilityData.getTargetInstruction());
+                int[] hitStats = GetHitStats(attackerController, defenderController, abilityData.getTargetInstruction());
                 if (randomChance < hitStats[0])
                 {
-                    if (attackerController.getEquippedWeapon().getWeaponStatus())
+                    if (attackerController.GetEquippedWeapons().Item1.GetInstanceWeaponStatus())
                     {
-                        data.Add(defenderController.inflictStatus(attackerController.getEquippedWeapon().getWeaponStatus(), attackerController.gameObject));
+                        data.Add(defenderController.inflictStatus(attackerController.GetEquippedWeapons().Item1.GetInstanceWeaponStatus(), attackerController.gameObject));
                     }
-                    List<CombatData> subResults = attackUnit(activeUnit, target, true);
+                    List<CombatData> subResults = AttackUnit(activeUnit, target, true);
                     if (subResults != null)
                     {
                         data.AddRange(subResults);
@@ -523,7 +523,7 @@ public class BattleController : MonoBehaviour
                 }
                 else
                 {
-                    List<CombatData> subResults = attackUnit(activeUnit, target, false);
+                    List<CombatData> subResults = AttackUnit(activeUnit, target, false);
                     if (subResults != null)
                     {
                         data.AddRange(subResults);
@@ -531,13 +531,13 @@ public class BattleController : MonoBehaviour
                 }
             }
         }
-        startAnimation(data);
-        completeAction();
+        StartAnimation(data);
+        CompleteAction();
         selectedController.useActions(activeAbility.getAPCost());
     }
 
     //Targeting Functions
-    public void combatTargeting(GameObject targetUnit, TargetInstruction targetInstruction, Vector2 tilePosition)
+    public void CombatTargeting(GameObject targetUnit, TargetInstruction targetInstruction, Vector2 tilePosition)
     {
         switch (targetInstruction.getTargetCondition())
         {
@@ -545,8 +545,8 @@ public class BattleController : MonoBehaviour
                 switch (targetInstruction.getTargetType())
                 {
                     case targetType.TARGET:
-                        randomUnitTargets(true);
-                        executeAction(targetUnit, tilePosition);
+                        RandomUnitTargets(true);
+                        ExecuteAction(targetUnit, tilePosition);
                         break;
 
                     case targetType.BEAM:
@@ -583,8 +583,8 @@ public class BattleController : MonoBehaviour
                 switch (targetInstruction.getTargetType())
                 {
                     case targetType.TARGET:
-                        randomUnitTargets(false);
-                        executeAction(targetUnit, tilePosition);
+                        RandomUnitTargets(false);
+                        ExecuteAction(targetUnit, tilePosition);
                         break;
 
                     case targetType.BEAM:
@@ -623,10 +623,10 @@ public class BattleController : MonoBehaviour
                     case targetType.TARGET:
                         if (targetUnit)
                         {
-                            addUnitToTargets(targetUnit);
-                            if (getGameObjectTargets().Count >= getActiveCombatAbility().getAbilityData().getTargetInstruction().getTargetConditionCount())
+                            AddUnitToTargets(targetUnit);
+                            if (GetGameObjectTargets().Count >= GetActiveCombatAbility().getAbilityData().getTargetInstruction().getTargetConditionCount())
                             {
-                                executeAction(targetUnit, tilePosition);
+                                ExecuteAction(targetUnit, tilePosition);
                             }
                         }
                         break;
@@ -634,13 +634,13 @@ public class BattleController : MonoBehaviour
                     case targetType.BEAM:
                         if (activeOverlay)
                         {
-                            AbilityCalculator calculator = new AbilityCalculator(getFilterTeam(targetInstruction, activeTeam), getActiveCombatAbility(), activeUnit.GetComponent<UnitController>().getUnitPos(), activeOverlay.GetComponent<OverlayController>().getOverlayDirection());
+                            AbilityCalculator calculator = new AbilityCalculator(GetFilterTeam(targetInstruction, activeTeam), GetActiveCombatAbility(), activeUnit.GetComponent<UnitController>().getUnitPos(), activeOverlay.GetComponent<OverlayController>().getOverlayDirection());
                             List<GameObject> targetLine = calculator.getAffectedUnits(targetInstruction, activeUnit.GetComponent<UnitController>());
                             foreach (GameObject target in targetLine)
                             {
-                                addUnitToTargets(target);
+                                AddUnitToTargets(target);
                             }
-                            executeAction(targetUnit, tilePosition);
+                            ExecuteAction(targetUnit, tilePosition);
                         }
                         break;
 
@@ -674,8 +674,8 @@ public class BattleController : MonoBehaviour
                 switch (targetInstruction.getTargetType())
                 {
                     case targetType.TARGET:
-                        allUnitTargets();
-                        executeAction(targetUnit, tilePosition);
+                        AllPointTargets();
+                        ExecuteAction(targetUnit, tilePosition);
                         break;
 
                     case targetType.BEAM:
@@ -710,16 +710,16 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    public void addUnitToTargets(GameObject addition)
+    public void AddUnitToTargets(GameObject addition)
     {
         if (!activeAbility)
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         if (activeAbility.getAbilityType() != actionType.COMBAT)
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
@@ -729,12 +729,12 @@ public class BattleController : MonoBehaviour
         int rangeMax = abilityData.getTargetInstruction().getMaxRange();
         if (!targetCondition.getMaxRangeFixed())
         {
-            rangeMax += selectedController.getEquippedWeapon().getWeaponStats()[3];
+            rangeMax += selectedController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         int rangeMin = targetCondition.getMinRange();
         if (!abilityData.getTargetInstruction().getMinRangeFixed())
         {
-            rangeMin += selectedController.getEquippedWeapon().getWeaponStats()[3];
+            rangeMin += selectedController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         if (targetCondition.getIsMelee())
         {
@@ -780,26 +780,26 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    public void addTileToTargets(Vector2Int tile)
+    public void AddTileToTargets(Vector2Int tile)
     {
 
     }
 
-    public void addPointToTargets(Vector2 position)
+    public void AddPointToTargets(Vector2 position)
     {
 
     }
 
-    public void randomUnitTargets(bool duplicatesAllowed)
+    public void RandomUnitTargets(bool duplicatesAllowed)
     {
         if (!activeAbility)
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         if (activeAbility.getAbilityType() != actionType.COMBAT)
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
@@ -809,12 +809,12 @@ public class BattleController : MonoBehaviour
         int rangeMax = abilityData.getTargetInstruction().getMaxRange();
         if (!targetCondition.getMaxRangeFixed())
         {
-            rangeMax += selectedController.getEquippedWeapon().getWeaponStats()[3];
+            rangeMax += selectedController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         int rangeMin = targetCondition.getMinRange();
         if (!abilityData.getTargetInstruction().getMinRangeFixed())
         {
-            rangeMin += selectedController.getEquippedWeapon().getWeaponStats()[3];
+            rangeMin += selectedController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         if (targetCondition.getIsMelee())
         {
@@ -853,26 +853,26 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    public void randomTileTargets(bool duplicatesAllowed)
+    public void RandomTileTargets(bool duplicatesAllowed)
     {
 
     }
 
-    public void randomPointTargets(bool duplicatesAllowed)
+    public void RandomPointTargets(bool duplicatesAllowed)
     {
 
     }
 
-    public void allUnitTargets()
+    public void AllPointTargets()
     {
         if (!activeAbility)
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         if (activeAbility.getAbilityType() != actionType.COMBAT)
         {
-            completeAction();
+            CompleteAction();
             return;
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
@@ -882,12 +882,12 @@ public class BattleController : MonoBehaviour
         int rangeMax = abilityData.getTargetInstruction().getMaxRange();
         if (!targetCondition.getMaxRangeFixed())
         {
-            rangeMax += selectedController.getEquippedWeapon().getWeaponStats()[3];
+            rangeMax += selectedController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         int rangeMin = targetCondition.getMinRange();
         if (!abilityData.getTargetInstruction().getMinRangeFixed())
         {
-            rangeMin += selectedController.getEquippedWeapon().getWeaponStats()[3];
+            rangeMin += selectedController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         if (targetCondition.getIsMelee())
         {
@@ -904,28 +904,28 @@ public class BattleController : MonoBehaviour
         selectedGameObjectTargets.AddRange(potentialTargets);
     }
 
-    public void allTileTargets()
+    public void AllTileTargets()
     {
 
     }
 
-    public List<GameObject> getGameObjectTargets()
+    public List<GameObject> GetGameObjectTargets()
     {
         return selectedGameObjectTargets;
     }
 
-    public List<Vector2Int> getTileTargets()
+    public List<Vector2Int> GetTileTargets()
     {
         return selectedTileTargets;
     }
 
-    public List<Vector2> getPointTargets()
+    public List<Vector2> GetPointTargets()
     {
         return selectedPointTargets;
     }
 
     //Unit Management
-    public List<GameObject> getUnits()
+    public List<GameObject> GetUnits()
     {
         List<GameObject> allUnits = new List<GameObject>();
         foreach (KeyValuePair<Vector2Int, GameObject> temp in unitList)
@@ -935,21 +935,21 @@ public class BattleController : MonoBehaviour
         return allUnits;
     }
 
-    public void addUnit(GameObject unit)
+    public void AddUnit(GameObject unit)
     {
         unitList.Add(unit.GetComponent<UnitController>().getUnitPos(), unit);
         battleTeam team = unit.GetComponent<UnitController>().getTeam();
         teamLists[team].Add(unit);
     }
 
-    public bool moveUnit(GameObject unit, Vector2 coords)
+    public bool MoveUnit(GameObject unit, Vector2 coords)
     {
         if (activeAbility.getAbilityType() != actionType.MOVE)
         {
             return false;
         }
         MovementAbility calculateAbility = activeAbility as MovementAbility;
-        if (getUnitFromCoords(mapController.gridTilePos(coords)) && getUnitFromCoords(mapController.gridTilePos(coords)) != gameObject)
+        if (GetUnitFromCoords(mapController.gridTilePos(coords)) && GetUnitFromCoords(mapController.gridTilePos(coords)) != gameObject)
         {
             return false;
         }
@@ -967,7 +967,7 @@ public class BattleController : MonoBehaviour
         return moved;
     }
 
-    public List<GameObject> getHitUnits(CombatAbility calculateAbility, TargetInstruction targetInstruction, UnitController selectedController, Vector2 direction)
+    public List<GameObject> GetHitUnits(CombatAbility calculateAbility, TargetInstruction targetInstruction, UnitController selectedController, Vector2 direction)
     {
         if (targetInstruction.getTargetType() == targetType.NONE)
         {
@@ -975,12 +975,12 @@ public class BattleController : MonoBehaviour
             target.Add(selectedController.gameObject);
             return target;
         }
-        AbilityCalculator calculator = new AbilityCalculator(getFilterTeam(targetInstruction, activeTeam), calculateAbility, cursorController.getGridPos(), direction);
+        AbilityCalculator calculator = new AbilityCalculator(GetFilterTeam(targetInstruction, activeTeam), calculateAbility, cursorController.getGridPos(), direction);
         List<GameObject> hitUnits = calculator.getAffectedUnits(targetInstruction, selectedController);
         return hitUnits;
     }
 
-    public List<CombatData> attackUnit(GameObject attacker, GameObject defender, bool overallHit)
+    public List<CombatData> AttackUnit(GameObject attacker, GameObject defender, bool overallHit)
     {
         List<CombatData> retVal = new List<CombatData>();
         //CANNOT DO BEAM AOEs
@@ -993,22 +993,22 @@ public class BattleController : MonoBehaviour
         List<EffectInstruction> effectList = abilityData.getEffectInstructions();
         foreach (EffectInstruction effect in effectList)
         {
-            List<GameObject> hitUnits = getHitUnits(calculateAbility, effect.getEffectTarget(), defender.GetComponent<UnitController>(), new Vector2());
+            List<GameObject> hitUnits = GetHitUnits(calculateAbility, effect.getEffectTarget(), defender.GetComponent<UnitController>(), new Vector2());
             foreach (GameObject target in hitUnits)
             {
-                CombatData result = applyEffect(attacker, target, effect, overallHit);
+                CombatData result = ApplyEffect(attacker, target, effect, overallHit);
                 retVal.Add(result);
             }
         }
         return retVal;
     }
 
-    public CombatData applyEffect(GameObject attacker, GameObject defender, EffectInstruction effect, bool overallHit)
+    public CombatData ApplyEffect(GameObject attacker, GameObject defender, EffectInstruction effect, bool overallHit)
     {
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
         int randomChance = Random.Range(0, 100);
-        int[] hitStats = getHitStats(attackerController, defenderController, effect.getEffectTarget());
+        int[] hitStats = GetHitStats(attackerController, defenderController, effect.getEffectTarget());
         int totalHit = hitStats[0];
         int totalCrit = hitStats[1];
         CombatData result = new CombatData(attacker, defender, effect, false, false, 0, attacker.GetComponent<UnitController>().getStats()[2], false);
@@ -1057,45 +1057,45 @@ public class BattleController : MonoBehaviour
     }
 
     //End Map Management
-    void checkEndGame()
+    void CheckEndGame()
     {
-        if (evaluatePlayerRout())
+        if (EvaluatePlayerRout())
         {
             BattleExitHandler.outcome = battleOutcome.ROUTED;
-            mapEnd();
+            MapEnd();
             return;
         }
-        if (evaluateEnemyRout())
+        if (EvaluateEnemyRout())
         {
             BattleExitHandler.outcome = battleOutcome.VICTORY;
-            mapEnd();
+            MapEnd();
             return;
         }
         if (mapData.evaluateDefeatConditions(unitList, turnNumber))
         {
             BattleExitHandler.outcome = battleOutcome.FAILURE;
-            mapEnd();
+            MapEnd();
             return;
         }
         if (mapData.evaluateVictoryConditions(unitList, turnNumber))
         {
             BattleExitHandler.outcome = battleOutcome.SUCCESS;
-            mapEnd();
+            MapEnd();
             return;
         }
     }
 
-    bool evaluatePlayerRout()
+    bool EvaluatePlayerRout()
     {
         return teamLists[battleTeam.ALLY].Count == 0 && teamLists[battleTeam.PLAYER].Count == 0;
     }
 
-    bool evaluateEnemyRout()
+    bool EvaluateEnemyRout()
     {
         return teamLists[battleTeam.ENEMY].Count == 0;
     }
 
-    void mapEnd()
+    void MapEnd()
     {
         BattleExitHandler.turn_count = turnNumber;
         StopAllCoroutines();
@@ -1103,11 +1103,12 @@ public class BattleController : MonoBehaviour
     }
 
     //Other Helpers
-    public int getBattleTeamCount()
+    public int GetBattleTeamCount()
     {
         return System.Enum.GetNames(typeof(battleTeam)).Length;
     }
-    public GameObject getUnitFromCoords(Vector2Int coords)
+
+    public GameObject GetUnitFromCoords(Vector2Int coords)
     {
         if (unitList.ContainsKey(coords))
         {
@@ -1116,43 +1117,43 @@ public class BattleController : MonoBehaviour
         return null;
     }
 
-    public void killDead(List<CombatData> combatResults)
+    public void KillDead(List<CombatData> combatResults)
     {
         foreach (CombatData data in combatResults)
         {
             if (data.getDefenderKilled() && unitList.ContainsKey(data.getDefender().GetComponent<UnitController>().getUnitPos()))
             {
-                killUnit(data.getDefender());
+                KillUnit(data.getDefender());
             }
         }
     }
 
-    public Dictionary<battleTeam, List<GameObject>> getTeamLists()
+    public Dictionary<battleTeam, List<GameObject>> GetTeamLists()
     {
         return teamLists;
     }
 
-    public void killUnit(GameObject deadUnit)
+    public void KillUnit(GameObject deadUnit)
     {
         Vector2Int location = deadUnit.GetComponent<UnitController>().getUnitPos();
         unitList.Remove(location);
         battleTeam team = deadUnit.GetComponent<UnitController>().getTeam();
         teamLists[team].Remove(deadUnit);
-        checkEndGame();
+        CheckEndGame();
         GameObject.Destroy(deadUnit);
     }
 
-    public Pathfinder getPathfinder()
+    public Pathfinder GetPathfinder()
     {
         return pathfinder;
     }
 
-    public Ability getActiveAbility()
+    public Ability GetActiveAbility()
     {
         return activeAbility;
     }
 
-    public CombatAbility getActiveCombatAbility()
+    public CombatAbility GetActiveCombatAbility()
     {
         if (activeAbility.getAbilityType() == actionType.COMBAT)
         {
@@ -1161,7 +1162,7 @@ public class BattleController : MonoBehaviour
         return null;
     }
 
-    public MovementAbility getActiveMovementAbility()
+    public MovementAbility GetActiveMovementAbility()
     {
         if (activeAbility.getAbilityType() == actionType.MOVE)
         {
@@ -1170,17 +1171,17 @@ public class BattleController : MonoBehaviour
         return null;
     }
 
-    public GameObject getActiveUnit()
+    public GameObject GetActiveUnit()
     {
         return activeUnit;
     }
 
-    public GameObject getActiveOverlay()
+    public GameObject GetActiveOverlay()
     {
         return activeOverlay;
     }
 
-    public battleTeam getFilterTeam(TargetInstruction instruction, battleTeam actingTeam)
+    public battleTeam GetFilterTeam(TargetInstruction instruction, battleTeam actingTeam)
     {
         foreach (TargetFilter filter in instruction.getConditionFilters())
         {
@@ -1209,12 +1210,12 @@ public class BattleController : MonoBehaviour
     }
 
     //Stat Math
-    public int finalRange(int baseRange, MovementAbility ability)
+    public int FinalRange(int baseRange, MovementAbility ability)
     {
         return Mathf.FloorToInt((baseRange + ability.getFlatMoveBonus()) * ((ability.getPercentMoveBonus() / 100f) + 1f));
     }
 
-    public int[] getHitStats(UnitController attackerController, UnitController defenderController, TargetInstruction targetInstruction)
+    public int[] GetHitStats(UnitController attackerController, UnitController defenderController, TargetInstruction targetInstruction)
     {
         int effectiveHit;
         int effectiveAvoid;
@@ -1252,9 +1253,9 @@ public class BattleController : MonoBehaviour
             {
                 effectiveHit = (int)(attackerController.getStats()[6] * hitFactor + targetInstruction.getHitBonus());
             }
-            if (attackerController.equippedWeapon)
+            if (attackerController.GetEquippedWeapons().Item1 != null)
             {
-                effectiveHit += attackerController.equippedWeapon.getWeaponStats()[1];
+                effectiveHit += attackerController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[1];
             }
             totalHit = effectiveHit - effectiveAvoid;
         }
@@ -1276,7 +1277,7 @@ public class BattleController : MonoBehaviour
     }
 
     //Turn Control
-    battleTeam nextTeam()
+    battleTeam NextTeam()
     {
         switch (activeTeam)
         {
@@ -1295,12 +1296,13 @@ public class BattleController : MonoBehaviour
     }
 
     //Unit Construction
-    void placeUnit(UnitEntryData unit, Vector2Int tile, battleTeam team)
+    void PlaceUnit(UnitEntryData unit, Vector2Int tile, battleTeam team)
     {
         GameObject temp = GameObject.Instantiate(unitTemplate);
         temp.SetActive(false);
         temp.GetComponent<UnitController>().setUnitInstance(unit.getUnit());
-        temp.GetComponent<UnitController>().equippedWeapon = unit.getWeapon();
+        temp.GetComponent<UnitController>().equippedMainHandWeapon = unit.getWeapons().Item1;
+        temp.GetComponent<UnitController>().equippedOffHandWeapon = unit.getWeapons().Item2;
         temp.GetComponent<UnitController>().equippedArmor = unit.getArmor();
         temp.GetComponent<UnitController>().team = team;
         temp.GetComponent<SpriteRenderer>().sprite = unit.getUnit().getBattleSprite("attack");
@@ -1310,17 +1312,17 @@ public class BattleController : MonoBehaviour
     }
 
     //Animation Control Functions
-    public void startAnimation(List<CombatData> combatSequence)
+    public void StartAnimation(List<CombatData> combatSequence)
     {
         turnPhase = turnPhase.PAUSE;
         uiCanvas.GetComponent<UIController>().displayBattleAnimation(combatSequence);
-        StartCoroutine(postAnimCleanup(combatSequence));
+        StartCoroutine(PostAnimCleanup(combatSequence));
     }
 
-    IEnumerator postAnimCleanup(List<CombatData> combatSequence)
+    IEnumerator PostAnimCleanup(List<CombatData> combatSequence)
     {
         yield return new WaitWhile(() => uiCanvas.GetComponent<UIController>().hasAnimation());
-        killDead(combatSequence);
+        KillDead(combatSequence);
         turnPhase = turnPhase.MAIN;
     }
 }

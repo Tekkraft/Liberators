@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: StdMedium0
   m_EditorClassIdentifier: 
   armorName: Standard Battle Armor
+  armorIcon: {fileID: 0}
   armorDefense: 2
   armorMagDefense: 0
+  armorGrade: 2
+  armorResistances: []

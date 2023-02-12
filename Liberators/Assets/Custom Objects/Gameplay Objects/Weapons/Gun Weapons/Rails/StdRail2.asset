@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: StdRail2
   m_EditorClassIdentifier: 
   weaponName: Advanced Marksman Rail
-  weaponType: 1
+  weaponIcon: {fileID: 0}
+  handClass: 1
+  baseClass: 1
+  damageClass: 0
   weaponStrength: 20
   weaponHit: 125
   weaponCrit: 25

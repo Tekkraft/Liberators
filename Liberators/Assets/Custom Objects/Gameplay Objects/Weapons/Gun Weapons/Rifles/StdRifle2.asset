@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: StdRifle2
   m_EditorClassIdentifier: 
   weaponName: Advanced Battle Rifle
-  weaponType: 1
+  weaponIcon: {fileID: 0}
+  handClass: 1
+  baseClass: 1
+  damageClass: 1
   weaponStrength: 10
   weaponHit: 90
   weaponCrit: 0

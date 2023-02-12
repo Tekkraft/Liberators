@@ -6,27 +6,50 @@ using TMPro;
 
 public class StartController : MonoBehaviour
 {
-    //-1: Home/Overview
-    //Rest proceed in array order 0-7
-    int characterState = -1;
+    List<UnitEntryData> characterUnitData = new List<UnitEntryData>();
+    int characterIndex = 0;
 
-    public List<UnitEntryData> characterUnitData;
+    [SerializeField]
+    GameObject mainScreen;
 
-    public GameObject overviewCanvas;
-    public GameObject unitCanvas;
+    [SerializeField]
+    GameObject unitListScreen;
 
-    Scene battleScene;
+    [SerializeField]
+    GameObject unitSpecificScreen;
+
+    [SerializeField]
+    GameObject unitOverviewScreen;
+
+    //0 - Title
+    [SerializeField]
+    List<GameObject> mainScreenUIElements;
+
+    //0 - Title
+    [SerializeField]
+    List<GameObject> unitListScreenUIElements;
+
+    //0 - Title
+    [SerializeField]
+    List<GameObject> unitSpecificScreenUIElements;
+
+    //0 - Title
+    [SerializeField]
+    List<GameObject> unitOverviewScreenUIElements;
 
     void Awake()
     {
-        overviewCanvas.GetComponent<Canvas>().enabled = true;
-        unitCanvas.GetComponent<Canvas>().enabled = false;
-        displayBattleOverview();
+        ChangePage(BattleMenuPage.main);
     }
 
     void OnEnable()
     {
-        BattlePrepHandler.data = OperationSceneHandler.attackerData.unitList;
+        if (OperationSceneHandler.attackerData != null)
+        {
+            BattlePrepHandler.data = OperationSceneHandler.attackerData.unitList;
+        }
+        //TODO: Fix error with invalid/empty/null scene
+        //Possibly no issue?
         BattlePrepHandler.battleScene = OperationSceneHandler.battleScene;
         if (BattlePrepHandler.data != null)
         {
@@ -40,9 +63,9 @@ public class StartController : MonoBehaviour
                 data.reconstruct();
             }
         }
-        loadSkillTree();
-        loadInventory();
-        reloadBattlePrep();
+        LoadSkillTree();
+        LoadInventory();
+        ReloadBattlePrep();
     }
 
     void OnDisable()
@@ -51,105 +74,138 @@ public class StartController : MonoBehaviour
         BattlePrepHandler.battleScene = OperationSceneHandler.battleScene;
     }
 
-    public void enterBattle()
+    public void EnterBattle()
     {
         BattleEntryHandler.deployedUnits = OperationSceneHandler.attackerData.getPairedUnits();
         BattleEntryHandler.enemyPlacements = OperationSceneHandler.defenderData.getPairedUnits();
         SceneManager.LoadSceneAsync(BattlePrepHandler.battleScene);
     }
 
-    public void enterSkillTree()
+    public void EnterSkillTree()
     {
-        SkillTreeEntryHandler.unitId = characterState;
-        SkillTreeEntryHandler.activeTree = characterUnitData[characterState].getUnit().getSkillTree();
+        SkillTreeEntryHandler.characterIndex = characterIndex;
+        SkillTreeEntryHandler.activeTree = characterUnitData[characterIndex].getUnit().getSkillTree();
         SceneManager.LoadSceneAsync("UnitSkillTree");
     }
 
-    public void enterInventory()
+    public void EnterInventory()
     {
-        InventoryTransitionController.characterId = characterState;
-        InventoryTransitionController.equippedWeapon = characterUnitData[characterState].getWeapon();
-        InventoryTransitionController.equippedArmor = characterUnitData[characterState].getArmor();
+        InventoryTransitionController.characterIndex = characterIndex;
+        InventoryTransitionController.equippedWeapon = characterUnitData[characterIndex].getWeapons().Item1;
+        InventoryTransitionController.equippedArmor = characterUnitData[characterIndex].getArmor();
         InventoryTransitionController.origin = "BattlePrep";
         SceneManager.LoadSceneAsync("UnitInventory");
     }
 
-    public void reloadBattlePrep()
+    public void ReloadBattlePrep()
     {
         BattlePrepHandler.reset();
     }
 
-    public void loadSkillTree()
+    public void LoadSkillTree()
     {
         if (SkillTreeExitHandler.activated)
         {
-            if (SkillTreeExitHandler.unitId == -1)
-            {
-                return;
-            }
-            setCharacterState(SkillTreeExitHandler.unitId);
-            characterUnitData[characterState].getUnit().updateSkillTree(SkillTreeExitHandler.activeTree);
+            characterUnitData[characterIndex].getUnit().updateSkillTree(SkillTreeExitHandler.activeTree);
+            LoadUnitPage(SkillTreeExitHandler.characterIndex);
             SkillTreeExitHandler.reset();
         }
     }
 
-    public void loadInventory()
+    public void LoadInventory()
     {
-        if (InventoryTransitionController.equippedArmor && InventoryTransitionController.equippedWeapon)
+        if (InventoryTransitionController.equippedArmor != null && InventoryTransitionController.equippedWeapon != null)
         {
-            setCharacterState(InventoryTransitionController.characterId);
-            characterUnitData[characterState].setArmor(InventoryTransitionController.equippedArmor);
-            characterUnitData[characterState].setWeapon(InventoryTransitionController.equippedWeapon);
-            displayUnitOverview();
+            characterUnitData[characterIndex].setArmor(InventoryTransitionController.equippedArmor);
+            characterUnitData[characterIndex].setWeapon(InventoryTransitionController.equippedWeapon, true);
+            LoadUnitPage(InventoryTransitionController.characterIndex);
         }
         InventoryTransitionController.reset();
     }
 
-    public void setCharacterState(int stateId)
+    void ChangePage(BattleMenuPage newPage)
     {
-        characterState = stateId;
-        if (characterState == -1)
+        switch (newPage)
         {
-            overviewCanvas.GetComponent<Canvas>().enabled = true;
-            unitCanvas.GetComponent<Canvas>().enabled = false;
-            displayBattleOverview();
-        }
-        else if (characterState >= 0 && characterState <= 7)
-        {
-            overviewCanvas.GetComponent<Canvas>().enabled = false;
-            unitCanvas.GetComponent<Canvas>().enabled = true;
-            displayUnitOverview();
+            case BattleMenuPage.main:
+                mainScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                unitListScreen.GetComponent<RectTransform>().localPosition = new Vector3(0, mainScreen.GetComponent<RectTransform>().sizeDelta.y * 1.1f, 0);
+                unitSpecificScreen.GetComponent<RectTransform>().localPosition = new Vector3(0, -unitSpecificScreen.GetComponent<RectTransform>().sizeDelta.y * 1.1f, 0);
+                unitOverviewScreen.GetComponent<RectTransform>().localPosition = new Vector3(unitOverviewScreen.GetComponent<RectTransform>().sizeDelta.x * 1.1f, 0, 0);
+                break;
+
+            case BattleMenuPage.unit:
+                mainScreen.GetComponent<RectTransform>().localPosition = new Vector3(-mainScreen.GetComponent<RectTransform>().sizeDelta.x * 1.1f, 0, 0);
+                unitListScreen.GetComponent<RectTransform>().localPosition = new Vector3(0, unitListScreen.GetComponent<RectTransform>().sizeDelta.y * 1.1f, 0);
+                unitSpecificScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                unitOverviewScreen.GetComponent<RectTransform>().localPosition = new Vector3(unitOverviewScreen.GetComponent<RectTransform>().sizeDelta.x * 1.1f, 0, 0);
+                break;
+
+            case BattleMenuPage.list:
+                mainScreen.GetComponent<RectTransform>().localPosition = new Vector3(-mainScreen.GetComponent<RectTransform>().sizeDelta.x * 1.1f, 0, 0);
+                unitListScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                unitSpecificScreen.GetComponent<RectTransform>().localPosition = new Vector3(0, -unitSpecificScreen.GetComponent<RectTransform>().sizeDelta.y * 1.1f, 0);
+                unitOverviewScreen.GetComponent<RectTransform>().localPosition = new Vector3(unitOverviewScreen.GetComponent<RectTransform>().sizeDelta.x * 1.1f, 0, 0);
+                break;
+
+            case BattleMenuPage.overview:
+                mainScreen.GetComponent<RectTransform>().localPosition = new Vector3(-mainScreen.GetComponent<RectTransform>().sizeDelta.x * 1.1f, 0, 0);
+                unitListScreen.GetComponent<RectTransform>().localPosition = new Vector3(0, unitListScreen.GetComponent<RectTransform>().sizeDelta.y * 1.1f, 0);
+                unitSpecificScreen.GetComponent<RectTransform>().localPosition = new Vector3(0, -unitSpecificScreen.GetComponent<RectTransform>().sizeDelta.y * 1.1f, 0);
+                unitOverviewScreen.GetComponent<RectTransform>().localPosition = Vector3.zero;
+                break;
         }
     }
 
-    public int getCharacterState()
+    public void LoadMainPage()
     {
-        return characterState;
+        ChangePage(BattleMenuPage.main);
     }
 
-    void displayBattleOverview()
+    public void LoadUnitListPage()
     {
-
+        ChangePage(BattleMenuPage.list);
     }
 
-    void displayUnitOverview()
+    public void LoadUnitPage()
     {
-        GameObject.Find("UC Unit Name").GetComponent<TextMeshProUGUI>().text = characterUnitData[characterState].getUnit().getUnitName();
-        if (characterUnitData[characterState].getWeapon())
+        ChangePage(BattleMenuPage.unit);
+        unitSpecificScreenUIElements[0].GetComponent<TextMeshProUGUI>().text = characterUnitData[characterIndex].getUnit().getUnitName();
+    }
+
+    public void LoadUnitPage(int index)
+    {
+        if (index < characterUnitData.Count && index >= 0)
         {
-            GameObject.Find("UC Weapon Name").GetComponent<TextMeshProUGUI>().text = characterUnitData[characterState].getWeapon().getName();
+            characterIndex = index;
         }
-        else
+        ChangePage(BattleMenuPage.unit);
+        unitSpecificScreenUIElements[0].GetComponent<TextMeshProUGUI>().text = characterUnitData[characterIndex].getUnit().getUnitName();
+    }
+
+    public void LoadUnitOverviewPage()
+    {
+        ChangePage(BattleMenuPage.overview);
+        unitOverviewScreenUIElements[0].GetComponent<TextMeshProUGUI>().text = characterUnitData[characterIndex].getUnit().getUnitName();
+    }
+
+    public void NextUnit()
+    {
+        characterIndex++;
+        if (characterIndex > characterUnitData.Count)
         {
-            GameObject.Find("UC Weapon Name").GetComponent<TextMeshProUGUI>().text = "No Equipped Weapon";
+            characterIndex = 0;
         }
-        if (characterUnitData[characterState].getArmor())
+        LoadUnitPage();
+    }
+
+    public void PreviousUnit()
+    {
+        characterIndex--;
+        if (characterIndex < 0)
         {
-            GameObject.Find("UC Armor Name").GetComponent<TextMeshProUGUI>().text = characterUnitData[characterState].getArmor().getName();
+            characterIndex = characterUnitData.Count - 1;
         }
-        else
-        {
-            GameObject.Find("UC Armor Name").GetComponent<TextMeshProUGUI>().text = "No Equipped Armor";
-        }
+        LoadUnitPage();
     }
 }

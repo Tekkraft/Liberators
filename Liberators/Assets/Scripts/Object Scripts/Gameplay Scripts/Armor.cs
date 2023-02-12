@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Armor", menuName = "Armor Object", order = 49)]
-public class Armor : ScriptableObject, IItem
+public class Armor : ScriptableObject
 {
     [SerializeField]
     string armorName;
+
+    [SerializeField]
+    Sprite armorIcon;
 
     [SerializeField]
     int armorDefense;
@@ -15,34 +18,42 @@ public class Armor : ScriptableObject, IItem
     int armorMagDefense;
 
     [SerializeField]
+    ArmorGrade armorGrade;
+
+    [SerializeField]
     List<ArmorResistPair> armorResistances;
 
-    public string getName ()
+    public string GetName ()
     {
         return armorName;
     }
 
-    public Sprite getImage()
+    public Sprite GetSprite()
     {
-        return null;
+        return armorIcon;
     }
 
-    public int[] getDefenses ()
+    public ArmorGrade GetArmorGrade()
+    {
+        return armorGrade;
+    }
+
+    public int[] GetDefenses ()
     {
         return new int[] { armorDefense, armorMagDefense };
     }
 
-    public float getElementResist(element searchElement)
+    public float GetElementResist(element searchElement)
     {
-        ArmorResistPair value = containsElement(searchElement);
+        ArmorResistPair value = ContainsElement(searchElement);
         if (value != null)
         {
-            return value.resistPercent;
+            return value.GetResistPercent();
         }
         return 1f;
     }
 
-    ArmorResistPair containsElement(element searchElement)
+    ArmorResistPair ContainsElement(element searchElement)
     {
         if (armorResistances == null)
         {
@@ -50,7 +61,7 @@ public class Armor : ScriptableObject, IItem
         }
         foreach (ArmorResistPair value in armorResistances)
         {
-            if (value.armorElement == searchElement)
+            if (value.GetElement() == searchElement)
             {
                 return value;
             }
@@ -62,8 +73,18 @@ public class Armor : ScriptableObject, IItem
 [System.Serializable]
 class ArmorResistPair {
     [SerializeField]
-    public element armorElement;
+    element armorElement;
 
     [SerializeField]
-    public float resistPercent;
+    float resistPercent;
+
+    public element GetElement()
+    {
+        return armorElement;
+    }
+
+    public float GetResistPercent()
+    {
+        return resistPercent;
+    }
 }

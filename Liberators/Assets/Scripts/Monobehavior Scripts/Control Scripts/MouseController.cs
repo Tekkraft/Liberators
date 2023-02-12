@@ -40,19 +40,19 @@ public class MouseController : MonoBehaviour
         gridPosition = mapController.gridTilePos(tilePosition);
         Cursor.visible = mapController.mouseOverCanvas(cursorPosition);
         uiController.unHoverUnit();
-        uiController.hoverUnit(battleController.getUnitFromCoords(gridPosition));
-        if (battleController.getActionPhase() == actionPhase.PREPARE)
+        uiController.hoverUnit(battleController.GetUnitFromCoords(gridPosition));
+        if (battleController.GetActionPhase() == actionPhase.PREPARE)
         {
-            GameObject hoveredUnit = battleController.getUnitFromCoords(gridPosition);
+            GameObject hoveredUnit = battleController.GetUnitFromCoords(gridPosition);
             activeHover = hoveredUnit;
             if (hoveredUnit && !uiController.hasPreview())
             {
-                attackPreview(battleController.getActiveUnit(), hoveredUnit, battleController.getActiveCombatAbility());
+                attackPreview(battleController.GetActiveUnit(), hoveredUnit, battleController.GetActiveCombatAbility());
             }
             else if (hoveredUnit && !hoveredUnit.Equals(activeHover))
             {
                 uiController.clearPreview();
-                attackPreview(battleController.getActiveUnit(), hoveredUnit, battleController.getActiveCombatAbility());
+                attackPreview(battleController.GetActiveUnit(), hoveredUnit, battleController.GetActiveCombatAbility());
             }
             else if (!hoveredUnit)
             {
@@ -69,17 +69,18 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
-         switch (battleController.getTurnPhase())
-        {
+        switch (battleController.GetTurnPhase())
+         {
             case turnPhase.MAIN:
-                if (!battleController.getActiveUnit())
+                Debug.Log(battleController.GetActiveUnit());
+                if (!battleController.GetActiveUnit())
                 {
-                    GameObject targetUnit = battleController.getUnitFromCoords(gridPosition);
+                    GameObject targetUnit = battleController.GetUnitFromCoords(gridPosition);
                     if (targetUnit)
                     {
-                        if (!battleController.getActiveUnit())
+                        if (!battleController.GetActiveUnit())
                         {
-                            if (battleController.getActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
+                            if (battleController.GetActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
                             {
                                 return;
                             }
@@ -88,13 +89,13 @@ public class MouseController : MonoBehaviour
                         }
                     }
                 }
-                if (battleController.getActiveAbility())
+                if (battleController.GetActiveAbility())
                 {
-                    if (battleController.getActiveAbility().getAbilityType() == actionType.MOVE)
+                    if (battleController.GetActiveAbility().getAbilityType() == actionType.MOVE)
                     {
                         moveAbilityTargeting();
                     }
-                    else if (battleController.getActiveAbility().getAbilityType() == actionType.COMBAT)
+                    else if (battleController.GetActiveAbility().getAbilityType() == actionType.COMBAT)
                     {
                         combatAbilityTargeting();
                     }
@@ -109,14 +110,14 @@ public class MouseController : MonoBehaviour
 
     void OnCursorAlternate()
     {
-        switch (battleController.getTurnPhase())
+        switch (battleController.GetTurnPhase())
         {
             case turnPhase.MAIN:
-                switch (battleController.getActionPhase())
+                switch (battleController.GetActionPhase())
                 {
                     case actionPhase.PREPARE:
                         //Cancel action
-                        battleController.completeAction();
+                        battleController.CompleteAction();
                         break;
 
                     case actionPhase.EXECUTE:
@@ -125,7 +126,7 @@ public class MouseController : MonoBehaviour
 
                     case actionPhase.INACTIVE:
                         //Open unit data
-                        getUnitData(battleController.getUnitFromCoords(gridPosition));
+                        getUnitData(battleController.GetUnitFromCoords(gridPosition));
                         break;
 
                     default:
@@ -136,7 +137,7 @@ public class MouseController : MonoBehaviour
 
             case turnPhase.PAUSE:
                 uiController.clearPreview();
-                battleController.setTurnPhase(turnPhase.MAIN);
+                battleController.SetTurnPhase(turnPhase.MAIN);
                 break;
 
             default:
@@ -168,7 +169,7 @@ public class MouseController : MonoBehaviour
         }
         UnitController attackerController = attacker.GetComponent<UnitController>();
         UnitController defenderController = defender.GetComponent<UnitController>();
-        int[] hitStats = battleController.getHitStats(attackerController, defenderController, activeAbility.getAbilityData().getTargetInstruction());
+        int[] hitStats = battleController.GetHitStats(attackerController, defenderController, activeAbility.getAbilityData().getTargetInstruction());
         GameObject activePreview = uiCanvas.GetComponent<UIController>().displayPreview(defender, activeAbility, hitStats[0], attackerController.getExpectedDamage(defenderController, activeAbility.getAbilityData()), hitStats[1]);
         RectTransform previewTransform = activePreview.GetComponent<RectTransform>();
         if (!mouseOnLeft())
@@ -188,22 +189,22 @@ public class MouseController : MonoBehaviour
     //Helper Functions
     void combatAbilityTargeting()
     {
-        GameObject targetUnit = battleController.getUnitFromCoords(gridPosition);
-        if (battleController.getActiveUnit())
+        GameObject targetUnit = battleController.GetUnitFromCoords(gridPosition);
+        if (battleController.GetActiveUnit())
         {
-            CombatAbility combatAbility = battleController.getActiveCombatAbility();
+            CombatAbility combatAbility = battleController.GetActiveCombatAbility();
             TargetInstruction targetInstruction = combatAbility.getAbilityData().getTargetInstruction();
-            battleController.combatTargeting(targetUnit, targetInstruction, tilePosition);
+            battleController.CombatTargeting(targetUnit, targetInstruction, tilePosition);
         }
     }
 
     void moveAbilityTargeting()
     {
-        if (battleController.getActiveUnit())
+        if (battleController.GetActiveUnit())
         {
-            if (battleController.getActiveAbility().getAbilityType() == actionType.MOVE)
+            if (battleController.GetActiveAbility().getAbilityType() == actionType.MOVE)
             {
-                battleController.executeAction(null, tilePosition);
+                battleController.ExecuteAction(null, tilePosition);
             }
         }
     }
@@ -215,7 +216,7 @@ public class MouseController : MonoBehaviour
         {
             return;
         }
-        battleController.setTurnPhase(turnPhase.PAUSE);
+        battleController.SetTurnPhase(turnPhase.PAUSE);
         uiCanvas.GetComponent<UIController>().displayUnitDataPreview(unit);
     }
 }

@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: StdShieldblade2
   m_EditorClassIdentifier: 
   weaponName: Advanced Shieldblade
-  weaponType: 0
+  weaponIcon: {fileID: 0}
+  handClass: 1
+  baseClass: 0
+  damageClass: 1
   weaponStrength: 15
   weaponHit: 200
   weaponCrit: 0

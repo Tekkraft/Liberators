@@ -32,8 +32,11 @@ public class UnitController : MonoBehaviour
     public Ability basicMovement;
     public Ability passUnitAbility;
     public Ability endTurnAbility;
-    public Weapon equippedWeapon;
-    public Armor equippedArmor;
+
+    public WeaponInstance equippedMainHandWeapon;
+    public WeaponInstance equippedOffHandWeapon;
+    public ArmorInstance equippedArmor;
+
     List<Ability> allAbilities = new List<Ability>();
 
     List<StatusInstance> statuses = new List<StatusInstance>();
@@ -44,7 +47,7 @@ public class UnitController : MonoBehaviour
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
         battleController = mainGrid.GetComponentsInChildren<BattleController>()[0];
         unitGridPosition = mapController.gridWorldPos(transform.position);
-        battleController.addUnit(this.gameObject);
+        battleController.AddUnit(this.gameObject);
         if (unitObject == null)
         {
             unitObject = new UnitInstance(unitTemplate);
@@ -55,12 +58,16 @@ public class UnitController : MonoBehaviour
         {
             allAbilities.Add(basicMovement);
         }
-        if (equippedWeapon)
+        if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
         {
-            allAbilities.AddRange(equippedWeapon.getAbilities());
+            allAbilities.AddRange(equippedMainHandWeapon.GetInstanceAbilities());
+        }
+        if (equippedOffHandWeapon != null && !equippedOffHandWeapon.NullCheckBase())
+        {
+            allAbilities.AddRange(equippedOffHandWeapon.GetInstanceAbilities());
         }
         allAbilities.AddRange(unitObject.getAbilities());
-        
+        Debug.Log(allAbilities.Count);
     }
 
     public void createUnit(int[] unitStats, battleTeam team, int startingHP)
@@ -143,12 +150,12 @@ public class UnitController : MonoBehaviour
         return allAbilities;
     }
 
-    public Weapon getEquippedWeapon()
+    public (WeaponInstance, WeaponInstance) GetEquippedWeapons()
     {
-        return equippedWeapon;
+        return (equippedMainHandWeapon, equippedOffHandWeapon);
     }
 
-    public Armor getEquippedArmor()
+    public ArmorInstance GetEquippedArmor()
     {
         return equippedArmor;
     }
@@ -162,7 +169,7 @@ public class UnitController : MonoBehaviour
             damage = (int)(damage * BattleController.critFactor);
             crit = true;
         }
-        KeyValuePair<int, int> baseData = targetController.takeDamage(damage, attackEffect, equippedWeapon);
+        KeyValuePair<int, int> baseData = targetController.takeDamage(damage, attackEffect, equippedMainHandWeapon);
         return new CombatData(gameObject, targetController.gameObject, attackEffect, true, crit, baseData.Key, baseData.Value, baseData.Value - baseData.Key <= 0);
     }
 
@@ -189,25 +196,25 @@ public class UnitController : MonoBehaviour
     }
 
     //Attack Damage
-    public KeyValuePair<int, int> takeDamage(int damage, EffectInstruction attackEffect, Weapon attackerWeapon)
+    public KeyValuePair<int, int> takeDamage(int damage, EffectInstruction attackEffect, WeaponInstance attackerWeapon)
     {
         int startingHP = currentHP;
         element effectElement = attackEffect.getEffectElement();
-        if (attackerWeapon && !attackEffect.getEffectIndependentElement())
+        if (attackerWeapon != null && !attackerWeapon.NullCheckBase() && !attackEffect.getEffectIndependentElement())
         {
-            effectElement = attackerWeapon.getWeaponElement();
+            effectElement = attackerWeapon.GetInstanceWeaponElement();
         }
         float damageMultiplier = getDamageReduction(effectElement);
         int damageTaken = Mathf.FloorToInt(damage * damageMultiplier);
-        if (equippedArmor)
+        if (equippedArmor != null && !equippedArmor.NullCheckBase())
         {
             switch (attackEffect.getEffectDamageType())
             {
                 case damageType.PHYSICAL:
-                    damageTaken -= equippedArmor.getDefenses()[0];
+                    damageTaken -= equippedArmor.GetInstanceDefenses()[0];
                     break;
                 case damageType.MAGIC:
-                    damageTaken -= equippedArmor.getDefenses()[1];
+                    damageTaken -= equippedArmor.GetInstanceDefenses()[1];
                     break;
             }
         }
@@ -266,9 +273,9 @@ public class UnitController : MonoBehaviour
     public int getAttack(EffectInstruction attackEffect)
     {
         int damage = 0;
-        if (equippedWeapon)
+        if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
         {
-            damage += equippedWeapon.getWeaponStats()[0];
+            damage += equippedMainHandWeapon.GetInstanceWeaponStats()[0];
         }
         switch (attackEffect.getEffectDamageSource())
         {
@@ -295,9 +302,9 @@ public class UnitController : MonoBehaviour
             {
                 damage += getExpectedDamageInstance(targetController, effect);
                 element effectElement = effect.getEffectElement();
-                if (equippedWeapon && !effect.getEffectIndependentElement())
+                if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase() && !effect.getEffectIndependentElement())
                 {
-                    effectElement = equippedWeapon.getWeaponElement();
+                    effectElement = equippedMainHandWeapon.GetInstanceWeaponElement();
                 }
                 float damageMultiplier = targetController.getDamageReduction(effectElement);
                 damage = Mathf.FloorToInt(damage * damageMultiplier);
@@ -309,9 +316,9 @@ public class UnitController : MonoBehaviour
     public int getExpectedDamageInstance(UnitController targetController, EffectInstruction attackEffect)
     {
         int damage = 0;
-        if (equippedWeapon)
+        if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
         {
-            damage += equippedWeapon.getWeaponStats()[0];
+            damage += equippedMainHandWeapon.GetInstanceWeaponStats()[0];
         }
         switch (attackEffect.getEffectDamageSource())
         {
@@ -337,15 +344,15 @@ public class UnitController : MonoBehaviour
     public int getDefense(EffectInstruction attackEffect)
     {
         int defense = 0;
-        if (equippedArmor)
+        if (equippedArmor != null && !equippedArmor.NullCheckBase())
         {
             switch (attackEffect.getEffectDamageType())
             {
                 case damageType.PHYSICAL:
-                    defense += equippedArmor.getDefenses()[0];
+                    defense += equippedArmor.GetInstanceDefenses()[0];
                     break;
                 case damageType.MAGIC:
-                    defense += equippedArmor.getDefenses()[1];
+                    defense += equippedArmor.GetInstanceDefenses()[1];
                     break;
             }
         }
@@ -354,9 +361,9 @@ public class UnitController : MonoBehaviour
 
     public float getDamageReduction(element attackElement)
     {
-        if (equippedArmor)
+        if (equippedArmor != null && !equippedArmor.NullCheckBase())
         {
-            return equippedArmor.getElementResist(attackElement);
+            return equippedArmor.GetInstanceElementResist(attackElement);
         }
         return 1f;
     }
@@ -444,7 +451,7 @@ public class UnitController : MonoBehaviour
 
     public List<Vector2Int> pathfinderValidCoords(MovementAbility moveAbility)
     {
-        mapController.getPathfinder().changeParameters(unitGridPosition, battleController.finalRange(mov, moveAbility), moveAbility.getMinMoveRange());
+        mapController.getPathfinder().changeParameters(unitGridPosition, battleController.FinalRange(mov, moveAbility), moveAbility.getMinMoveRange());
         mapController.getPathfinder().calculate();
         return mapController.getPathfinder().getValidCoords();
     }

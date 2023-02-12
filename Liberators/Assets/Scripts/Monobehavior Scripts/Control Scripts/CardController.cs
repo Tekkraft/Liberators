@@ -15,14 +15,14 @@ public class CardController : MonoBehaviour
     [SerializeField]
     GameObject cardButton;
 
-    IItem item;
+    ItemInstance item;
     InventoryController inventory;
 
-    public void setup(IItem item, InventoryController inventory)
+    public void setup(ItemInstance item, InventoryController inventory)
     {
         this.item = item;
-        cardName.GetComponent<TextMeshProUGUI>().text = item.getName();
-        //TODO: Implement Sprite implementation
+        cardName.GetComponent<TextMeshProUGUI>().text = item.GetInstanceName();
+        cardImage.GetComponent<Image>().sprite = item.GetInstanceSprite();
         this.inventory = inventory;
     }
 
@@ -31,7 +31,7 @@ public class CardController : MonoBehaviour
         cardButton.GetComponent<Button>().interactable = !cardButton.GetComponent<Button>().interactable;
     }
 
-    public IItem getItem()
+    public ItemInstance getItem()
     {
         return item;
     }

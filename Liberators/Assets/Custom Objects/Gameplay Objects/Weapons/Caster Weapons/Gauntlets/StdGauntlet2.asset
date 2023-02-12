@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: StdGauntlet2
   m_EditorClassIdentifier: 
   weaponName: Advanced Caster Gauntlet
-  weaponType: 2
+  weaponIcon: {fileID: 0}
+  handClass: 2
+  baseClass: 2
+  damageClass: 2
   weaponStrength: 6
   weaponHit: 150
   weaponCrit: 0

@@ -2735,18 +2735,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0cbb51a72ade4f2e8a0ad06871992d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons:
-  - {fileID: 11400000, guid: bb1a9d2f66ef8479d98bcd8cbd148a66, type: 2}
-  - {fileID: 11400000, guid: 2e78a066333e04f96be463786aaa35e3, type: 2}
-  - {fileID: 11400000, guid: 8c1b4b5d9828742d49722a1b9a5c5938, type: 2}
-  - {fileID: 11400000, guid: b7d726faedd174a85b308f113feccc00, type: 2}
-  - {fileID: 11400000, guid: 7e7a26753b21648f19241f4afb5fa7d6, type: 2}
-  - {fileID: 11400000, guid: 71b83fa2811674b94a6faf792e93d33e, type: 2}
-  armors:
-  - {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
-  - {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
-  - {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-  - {fileID: 11400000, guid: 4b94dcde69b4642238ee6fba5d717e28, type: 2}
   card: {fileID: 6066481368907613396, guid: df8e565d6d0804bc3a91ef09e9abdcaf, type: 3}
   weaponList: {fileID: 1920229369}
   armorList: {fileID: 434275514}

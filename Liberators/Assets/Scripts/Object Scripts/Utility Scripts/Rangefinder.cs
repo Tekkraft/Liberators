@@ -40,7 +40,7 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
+            GameObject temp = battleController.GetUnitFromCoords(targetCoordsList[i]);
             switch (team)
             {
                 case battleTeam.PLAYER:
@@ -82,7 +82,7 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
+            GameObject temp = battleController.GetUnitFromCoords(targetCoordsList[i]);
             switch (team)
             {
                 case battleTeam.PLAYER:
@@ -125,7 +125,7 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
+            GameObject temp = battleController.GetUnitFromCoords(targetCoordsList[i]);
             switch (team)
             {
                 case battleTeam.PLAYER:
@@ -168,7 +168,7 @@ public class Rangefinder
 
         for (int i = 0; i < targetCoordsList.Count; i++)
         {
-            GameObject temp = battleController.getUnitFromCoords(targetCoordsList[i]);
+            GameObject temp = battleController.GetUnitFromCoords(targetCoordsList[i]);
             switch (team)
             {
                 case battleTeam.PLAYER:

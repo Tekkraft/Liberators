@@ -36,14 +36,12 @@ public class OperationPrepController : MonoBehaviour
         {
             OperationSceneHandler.squadDataList.Add(new SquadData(10, squad.getUnits(), squad.getUnitPositions(), squad.getTeam(), squad.getPosition(), squad.getSquadName(), squad.getSquadAI(), squad.getSquadAnchored()));
         }
-        SquadData player = new SquadData(10, unitList, new List<Vector2Int>() { new Vector2Int(0, -12), new Vector2Int(0, -11) }, operationsTeam.PLAYER, new Vector3(-22.5f, -14.5f, -1f), "Player Squad", operationsAI.PLAYER, false);
+        SquadData player = new SquadData(10, PlayerRoster.GetFullUnitEntryData(), new List<Vector2Int>() { new Vector2Int(0, -12), new Vector2Int(0, -11) }, operationsTeam.PLAYER, new Vector3(-22.5f, -14.5f, -1f), "Player Squad", operationsAI.PLAYER, false);
         OperationSceneHandler.squadDataList.Add(player);
-        SquadData enemy1 = new SquadData(10, enemy1List, new List<Vector2Int>() { new Vector2Int(0, 12), new Vector2Int(0, 11) }, operationsTeam.ENEMY, new Vector3(3.5f, 5.5f, -1f), "Enemy Squad 0", operationsAI.WAIT, false);
+        /*
+        SquadData enemy1 = new SquadData(10, enemy1List, new List<Vector2Int>() { new Vector2Int(0, 12), new Vector2Int(0, 11) }, operationsTeam.ENEMY, new Vector3(-22.5f, -13.5f, -1f), "Enemy Squad", operationsAI.ATTACK, false);
         OperationSceneHandler.squadDataList.Add(enemy1);
-        SquadData enemy2 = new SquadData(10, enemy2List, new List<Vector2Int>() { new Vector2Int(1, 12), new Vector2Int(-1, 12) }, operationsTeam.ENEMY, new Vector3(2.5f, -2.5f, -1f), "Enemy Squad 1", operationsAI.WANDER, false);
-        OperationSceneHandler.squadDataList.Add(enemy2);
-        SquadData enemy3 = new SquadData(10, enemy2List, new List<Vector2Int>() { new Vector2Int(0, 12), new Vector2Int(0, 10) }, operationsTeam.ENEMY, new Vector3(6.5f, -5.5f, -1f), "Enemy Squad 2", operationsAI.ATTACK, false);
-        OperationSceneHandler.squadDataList.Add(enemy3);
+        */
         OperationSceneHandler.data = opsData;
         SceneManager.LoadSceneAsync("OperationMap");
     }

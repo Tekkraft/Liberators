@@ -46,14 +46,14 @@ public class AbilityCalculator
         int rangeMax = targetInstruction.getMaxRange();
         if (!targetInstruction.getMaxRangeFixed())
         {
-            rangeMax += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
+            rangeMax += attackingUnit.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         int rangeMin = targetInstruction.getMinRange();
         if (!targetInstruction.getMinRangeFixed())
         {
-            rangeMin += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
+            rangeMin += attackingUnit.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, battleController, battleController.getTeamLists(), targetDirection);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, battleController, battleController.GetTeamLists(), targetDirection);
         List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeam, false);
         return hitUnits;
     }
@@ -65,14 +65,14 @@ public class AbilityCalculator
         int rangeMax = targetInstruction.getMaxRange();
         if (!targetInstruction.getMaxRangeFixed())
         {
-            rangeMax += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
+            rangeMax += attackingUnit.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
         int rangeMin = targetInstruction.getMinRange();
         if (!targetInstruction.getMinRangeFixed())
         {
-            rangeMin += attackingUnit.getEquippedWeapon().getWeaponStats()[3];
+            rangeMin += attackingUnit.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
         }
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, battleController, battleController.getTeamLists(), targetDirection);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, battleController, battleController.GetTeamLists(), targetDirection);
         List<GameObject> hitUnits = rangefinder.generateTargetsOfTeam(calculatorPosition, targetTeam, true);
         return hitUnits;
     }

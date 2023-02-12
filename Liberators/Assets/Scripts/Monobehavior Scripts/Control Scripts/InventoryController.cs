@@ -7,19 +7,13 @@ using UnityEngine.SceneManagement;
 public class InventoryController : MonoBehaviour
 {
     //Unit Specific
-    Weapon equippedWeapon;
+    WeaponInstance equippedWeapon;
 
-    Armor equippedArmor;
+    ArmorInstance equippedArmor;
 
     string loadScene;
 
     //Globals
-    [SerializeField]
-    List<Weapon> weapons;
-
-    [SerializeField]
-    List<Armor> armors;
-
     [SerializeField]
     GameObject card;
 
@@ -35,17 +29,20 @@ public class InventoryController : MonoBehaviour
     [SerializeField]
     GameObject armorLabel;
 
-    Dictionary<IItem, GameObject> itemCards = new Dictionary<IItem, GameObject>();
+    Dictionary<ItemInstance, GameObject> itemCards = new Dictionary<ItemInstance, GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
+        List<WeaponInstance> weapons = PlayerInventory.GetWeapons();
+        List<ArmorInstance> armors = PlayerInventory.GetArmors();
+
         equippedWeapon = InventoryTransitionController.equippedWeapon;
         equippedArmor = InventoryTransitionController.equippedArmor;
         loadScene = InventoryTransitionController.origin;
 
-        weaponLabel.GetComponent<TextMeshProUGUI>().text = equippedWeapon.getName();
-        armorLabel.GetComponent<TextMeshProUGUI>().text = equippedArmor.getName();
+        weaponLabel.GetComponent<TextMeshProUGUI>().text = equippedWeapon.GetInstanceName();
+        armorLabel.GetComponent<TextMeshProUGUI>().text = equippedArmor.GetInstanceName();
 
         for (int i = 0; i < weapons.Count; i++)
         {
@@ -80,21 +77,21 @@ public class InventoryController : MonoBehaviour
         
     }
 
-    public void updateItem(IItem item)
+    public void updateItem(ItemInstance item)
     {
         if (item is Weapon)
         {
             itemCards[equippedWeapon].GetComponent<CardController>().toggleItem();
-            equippedWeapon = item as Weapon;
+            equippedWeapon = item as WeaponInstance;
             itemCards[equippedWeapon].GetComponent<CardController>().toggleItem();
-            weaponLabel.GetComponent<TextMeshProUGUI>().text = equippedWeapon.getName();
+            weaponLabel.GetComponent<TextMeshProUGUI>().text = equippedWeapon.GetInstanceName();
         }
         else if (item is Armor)
         {
             itemCards[equippedArmor].GetComponent<CardController>().toggleItem();
-            equippedArmor = item as Armor;
+            equippedArmor = item as ArmorInstance;
             itemCards[equippedArmor].GetComponent<CardController>().toggleItem();
-            armorLabel.GetComponent<TextMeshProUGUI>().text = equippedArmor.getName();
+            armorLabel.GetComponent<TextMeshProUGUI>().text = equippedArmor.GetInstanceName();
         }
     }
 

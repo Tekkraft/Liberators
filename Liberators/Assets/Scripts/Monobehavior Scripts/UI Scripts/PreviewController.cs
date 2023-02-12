@@ -26,7 +26,7 @@ public class PreviewController : MonoBehaviour
         GameObject.Find("Finesse Stat").GetComponent<TextMeshProUGUI>().text = unitController.getStats()[6].ToString();
         GameObject.Find("Reaction Stat").GetComponent<TextMeshProUGUI>().text = unitController.getStats()[7].ToString();
         GameObject.Find("Movement Stat").GetComponent<TextMeshProUGUI>().text = unitController.getStats()[0].ToString();
-        GameObject.Find("Weapon Name").GetComponent<TextMeshProUGUI>().text = unitController.getEquippedWeapon().getName();
-        GameObject.Find("Armor Name").GetComponent<TextMeshProUGUI>().text = unitController.getEquippedArmor().getName();
+        GameObject.Find("Weapon Name").GetComponent<TextMeshProUGUI>().text = unitController.GetEquippedWeapons().Item1.GetInstanceName();
+        GameObject.Find("Armor Name").GetComponent<TextMeshProUGUI>().text = unitController.GetEquippedArmor().GetInstanceName();
     }
 }

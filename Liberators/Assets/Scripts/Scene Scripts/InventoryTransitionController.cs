@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class InventoryTransitionController
 {
-    public static Weapon equippedWeapon;
+    public static WeaponInstance equippedWeapon;
 
-    public static Armor equippedArmor;
+    public static ArmorInstance equippedArmor;
 
-    public static int characterId;
+    public static int characterIndex;
+
+    public static BattleMenuPage menuPage;
 
     public static string origin;
 
@@ -16,7 +18,8 @@ public class InventoryTransitionController
     {
         equippedArmor = null;
         equippedWeapon = null;
-        characterId = -1;
+        characterIndex = 0;
         origin = null;
+        menuPage = BattleMenuPage.main;
     }
 }

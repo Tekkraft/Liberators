@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: StdLight2
   m_EditorClassIdentifier: 
   armorName: Advanced Scout Armor
+  armorIcon: {fileID: 0}
   armorDefense: 3
   armorMagDefense: 3
+  armorGrade: 1
+  armorResistances: []

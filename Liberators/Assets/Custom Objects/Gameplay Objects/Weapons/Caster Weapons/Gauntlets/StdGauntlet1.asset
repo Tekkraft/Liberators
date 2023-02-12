@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: StdGauntlet1
   m_EditorClassIdentifier: 
   weaponName: Improved Caster Gauntlet
-  weaponType: 2
+  weaponIcon: {fileID: 0}
+  handClass: 2
+  baseClass: 2
+  damageClass: 2
   weaponStrength: 4
   weaponHit: 120
   weaponCrit: 0

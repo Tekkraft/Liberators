@@ -25,9 +25,13 @@ public enum actionType { NONE, MOVE, COMBAT, MISC, WAIT, END };
 
 public enum statusType { BUFF, DEBUFF, NONE }
 
-public enum weaponType { MELEE, GUN, FOCUS, SPECIAL };
+public enum EquipHandClass { oneHanded, twoHanded, flexible, mainHand, offHand };
 
-public enum weaponHandClass { OneHanded, TwoHanded, MainHand, OffHand };
+public enum EquipBaseClass { blade, gun, focus, shield };
+
+public enum EquipDamageClass { kinetic, energy, aether };
+
+public enum ArmorGrade { none, light, medium, heavy, superheavy };
 
 public enum actionPhase { INACTIVE, PREPARE, EXECUTE };
 
@@ -44,3 +48,7 @@ public enum operationsTeam { PLAYER, ENEMY, ALLY, NEUTRAL};
 public enum operationsAI { PLAYER, WAIT, ATTACK, WANDER };
 
 public enum operationsMoveType { INFANTRY, VEHICLE, TRACKED, WALKED, AERIAL, NAVAL, MARINE };
+
+public enum RosterCharacter { lana, ethan, saei, vaue, may, runli, colin, hanaei}
+
+public enum BattleMenuPage { main, list, unit, overview };

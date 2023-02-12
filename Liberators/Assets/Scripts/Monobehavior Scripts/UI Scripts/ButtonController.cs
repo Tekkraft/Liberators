@@ -33,7 +33,7 @@ public class ButtonController : MonoBehaviour
     {
         if (gameObject.GetComponent<Button>().interactable || fixedAction)
         {
-            gameObject.GetComponent<Button>().interactable = battleController.getTurnPhase() == turnPhase.MAIN;
+            gameObject.GetComponent<Button>().interactable = battleController.GetTurnPhase() == turnPhase.MAIN;
         }
     }
 
@@ -60,7 +60,7 @@ public class ButtonController : MonoBehaviour
 
     public void setAction()
     {
-        battleController.setActionState(linkedUnit, linkedAbility);
+        battleController.SetActionState(linkedUnit, linkedAbility);
     }
 
     public Ability getAbility()

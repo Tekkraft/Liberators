@@ -21,7 +21,7 @@ public class SkillTreeController : MonoBehaviour
 
     void OnDisable()
     {
-        SkillTreeExitHandler.unitId = SkillTreeEntryHandler.unitId;
+        SkillTreeExitHandler.characterIndex = SkillTreeEntryHandler.characterIndex;
         SkillTreeExitHandler.activeTree = activeTree;
         SkillTreeExitHandler.activated = true;
         SkillTreeEntryHandler.reset();

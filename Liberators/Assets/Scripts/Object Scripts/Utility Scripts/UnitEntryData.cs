@@ -10,18 +10,22 @@ public class UnitEntryData
     UnitInstance unitInstance;
 
     [SerializeField]
-    public Weapon weapon;
+    public WeaponInstance mainHandWeapon;
 
     [SerializeField]
-    public Armor armor;
+    public WeaponInstance offHandWeapon;
+
+    [SerializeField]
+    public ArmorInstance armor;
 
     SkillTreeInstance skillTree;
 
-    public UnitEntryData(Unit unit, Weapon weapon, Armor armor)
+    public UnitEntryData(Unit unit, WeaponInstance mainHandWeapon, WeaponInstance offHandWeapon, ArmorInstance armor)
     {
         this.unit = unit;
         unitInstance = new UnitInstance(unit);
-        this.weapon = weapon;
+        this.mainHandWeapon = mainHandWeapon;
+        this.offHandWeapon = offHandWeapon;
         this.armor = armor;
         skillTree = new SkillTreeInstance(unit.getSkillTree());
     }
@@ -54,12 +58,12 @@ public class UnitEntryData
         return unitInstance;
     }
 
-    public Weapon getWeapon()
+    public (WeaponInstance, WeaponInstance) getWeapons()
     {
-        return weapon;
+        return (mainHandWeapon, offHandWeapon);
     }
 
-    public Armor getArmor()
+    public ArmorInstance getArmor()
     {
         return armor;
     }
@@ -69,12 +73,19 @@ public class UnitEntryData
         this.unitInstance = unitInstance;
     }
 
-    public void setWeapon(Weapon weapon)
+    public void setWeapon(WeaponInstance weapon, bool mainSlot)
     {
-        this.weapon = weapon;
+        if (mainSlot)
+        {
+            mainHandWeapon = weapon;
+        }
+        else
+        {
+            offHandWeapon = weapon;
+        }
     }
 
-    public void setArmor(Armor armor)
+    public void setArmor(ArmorInstance armor)
     {
         this.armor = armor;
     }

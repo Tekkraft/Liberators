@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: StdHeavy0
   m_EditorClassIdentifier: 
   armorName: Standard Heavy Armor
+  armorIcon: {fileID: 0}
   armorDefense: 4
   armorMagDefense: -2
+  armorGrade: 3
+  armorResistances: []
