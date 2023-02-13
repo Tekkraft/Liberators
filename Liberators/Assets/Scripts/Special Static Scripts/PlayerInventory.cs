@@ -41,4 +41,14 @@ public class PlayerInventory
         }
         return armors;
     }
+
+    public static void PullItem(ItemInstance item)
+    {
+        inventory.Remove(item);
+    }
+
+    public static void PushItem(ItemInstance item)
+    {
+        inventory.Add(item);
+    }
 }

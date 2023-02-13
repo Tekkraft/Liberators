@@ -6,8 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class InventoryController : MonoBehaviour
 {
+    static int rowItems = 11;
+
     //Unit Specific
-    WeaponInstance equippedWeapon;
+    WeaponInstance equippedMainHandWeapon;
+
+    WeaponInstance equippedOffHandWeapon;
 
     ArmorInstance equippedArmor;
 
@@ -15,90 +19,104 @@ public class InventoryController : MonoBehaviour
 
     //Globals
     [SerializeField]
-    GameObject card;
+    GameObject inventoryItem;
 
     [SerializeField]
-    GameObject weaponList;
+    GameObject inventoryFrame;
 
     [SerializeField]
-    GameObject armorList;
+    GameObject mainhandLabel;
 
     [SerializeField]
-    GameObject weaponLabel;
+    GameObject offhandLabel;
 
     [SerializeField]
     GameObject armorLabel;
 
-    Dictionary<ItemInstance, GameObject> itemCards = new Dictionary<ItemInstance, GameObject>();
+    [SerializeField]
+    GameObject mainhandSlot;
+
+    [SerializeField]
+    GameObject offhandSlot;
+
+    [SerializeField]
+    GameObject armorSlot;
 
     // Start is called before the first frame update
     void Start()
     {
-        List<WeaponInstance> weapons = PlayerInventory.GetWeapons();
-        List<ArmorInstance> armors = PlayerInventory.GetArmors();
+        List<ItemInstance> inventory = PlayerInventory.GetInventory();
 
-        equippedWeapon = InventoryTransitionController.equippedWeapon;
+        equippedMainHandWeapon = InventoryTransitionController.equippedWeapon;
         equippedArmor = InventoryTransitionController.equippedArmor;
         loadScene = InventoryTransitionController.origin;
 
-        weaponLabel.GetComponent<TextMeshProUGUI>().text = equippedWeapon.GetInstanceName();
-        armorLabel.GetComponent<TextMeshProUGUI>().text = equippedArmor.GetInstanceName();
-
-        for (int i = 0; i < weapons.Count; i++)
+        float multiplier = 0;
+        float offset = 0;
+        int index;
+        for (index = 0; index < inventory.Count; index++)
         {
-            GameObject temp = GameObject.Instantiate(card, weaponList.GetComponent<RectTransform>());
-            temp.GetComponent<CardController>().setup(weapons[i], this);
-            if (weapons[i] == equippedWeapon)
+            int xPos = index % rowItems;
+            int yPos = Mathf.FloorToInt(index / rowItems);
+            GameObject temp = GameObject.Instantiate(inventoryItem, inventoryFrame.transform);
+            temp.GetComponent<InventoryItemController>().InitializeItem(inventory[index], new Vector2Int(xPos, yPos), inventoryFrame.transform, transform);
+            if (multiplier == 0)
             {
-                temp.GetComponent<CardController>().toggleItem();
+                multiplier = temp.GetComponent<RectTransform>().sizeDelta.y + (7 * (temp.GetComponent<RectTransform>().sizeDelta.y / 32));
+                offset = 7 * (temp.GetComponent<RectTransform>().sizeDelta.y / 32);
             }
-            temp.transform.Translate(Vector3.down * 50 * i);
-            itemCards.Add(weapons[i], temp);
         }
-        weaponList.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, weapons.Count * 50);
-
-        for (int i = 0; i < armors.Count; i++)
+        if (equippedMainHandWeapon != null)
         {
-            GameObject temp = GameObject.Instantiate(card, armorList.GetComponent<RectTransform>());
-            temp.GetComponent<CardController>().setup(armors[i], this);
-            if (armors[i] == equippedArmor)
-            {
-                temp.GetComponent<CardController>().toggleItem();
-            }
-            temp.transform.Translate(Vector3.down * 50 * i);
-            itemCards.Add(armors[i], temp);
+            index++;
+            int xPos = index % rowItems;
+            int yPos = Mathf.FloorToInt(index / rowItems);
+            GameObject temp = GameObject.Instantiate(inventoryItem, inventoryFrame.transform);
+            temp.GetComponent<InventoryItemController>().InitializeItem(equippedMainHandWeapon, new Vector2Int(xPos, yPos), inventoryFrame.transform, transform);
+            mainhandSlot.GetComponent<InventoryItemSlotController>().AddItemToSlot(temp);
         }
-        armorList.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, armors.Count * 50);
+        if (equippedOffHandWeapon != null)
+        {
+            index++;
+            int xPos = index % rowItems;
+            int yPos = Mathf.FloorToInt(index / rowItems);
+            GameObject temp = GameObject.Instantiate(inventoryItem, inventoryFrame.transform);
+            temp.GetComponent<InventoryItemController>().InitializeItem(equippedOffHandWeapon, new Vector2Int(xPos, yPos), inventoryFrame.transform, transform);
+            offhandSlot.GetComponent<InventoryItemSlotController>().AddItemToSlot(temp);
+        }
+        if (equippedArmor != null)
+        {
+            index++;
+            int xPos = index % rowItems;
+            int yPos = Mathf.FloorToInt(index / rowItems);
+            GameObject temp = GameObject.Instantiate(inventoryItem, inventoryFrame.transform);
+            temp.GetComponent<InventoryItemController>().InitializeItem(equippedArmor, new Vector2Int(xPos, yPos), inventoryFrame.transform, transform);
+            armorSlot.GetComponent<InventoryItemSlotController>().AddItemToSlot(temp);
+        }
+        inventoryFrame.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, multiplier * Mathf.Ceil(index / 11) + offset * 2);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void updateItem(ItemInstance item)
-    {
-        if (item is Weapon)
+        if (mainhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
         {
-            itemCards[equippedWeapon].GetComponent<CardController>().toggleItem();
-            equippedWeapon = item as WeaponInstance;
-            itemCards[equippedWeapon].GetComponent<CardController>().toggleItem();
-            weaponLabel.GetComponent<TextMeshProUGUI>().text = equippedWeapon.GetInstanceName();
+            mainhandLabel.GetComponent<TextMeshProUGUI>().text = mainhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem().GetInstanceName();
         }
-        else if (item is Armor)
+        if (offhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
         {
-            itemCards[equippedArmor].GetComponent<CardController>().toggleItem();
-            equippedArmor = item as ArmorInstance;
-            itemCards[equippedArmor].GetComponent<CardController>().toggleItem();
-            armorLabel.GetComponent<TextMeshProUGUI>().text = equippedArmor.GetInstanceName();
+            offhandLabel.GetComponent<TextMeshProUGUI>().text = offhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem().GetInstanceName();
+        }
+        if (armorSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
+        {
+            armorLabel.GetComponent<TextMeshProUGUI>().text = armorSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem().GetInstanceName();
         }
     }
 
-    public void exitInventory()
+    public void ExitInventory()
     {
-        InventoryTransitionController.equippedArmor = equippedArmor;
-        InventoryTransitionController.equippedWeapon = equippedWeapon;
+        InventoryTransitionController.equippedArmor = armorSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as ArmorInstance;
+        InventoryTransitionController.equippedWeapon = mainhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as WeaponInstance;
         SceneManager.LoadSceneAsync(loadScene);
     }
 }
