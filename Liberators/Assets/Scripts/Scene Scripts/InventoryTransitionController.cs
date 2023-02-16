@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class InventoryTransitionController
 {
-    public static WeaponInstance equippedWeapon;
+    public static WeaponInstance equippedMainHandWeapon;
+
+    public static WeaponInstance equippedOffHandWeapon;
 
     public static ArmorInstance equippedArmor;
 
@@ -14,12 +16,16 @@ public class InventoryTransitionController
 
     public static string origin;
 
+    public static bool activated;
+
     public static void reset()
     {
         equippedArmor = null;
-        equippedWeapon = null;
+        equippedMainHandWeapon = null;
+        equippedOffHandWeapon = null;
         characterIndex = 0;
         origin = null;
         menuPage = BattleMenuPage.main;
+        activated = false;
     }
 }

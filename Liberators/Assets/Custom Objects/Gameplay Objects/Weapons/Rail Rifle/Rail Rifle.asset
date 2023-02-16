@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b978b95402f4d1fb4b768fe1927cb8, type: 3}
+  m_Name: Rail Rifle
+  m_EditorClassIdentifier: 
+  weaponName: Rail Rifle
+  weaponIcon: {fileID: -8977559433556632837, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
+  handClass: 1
+  baseClass: 1
+  damageClass: 0
+  weaponStrength: 20
+  weaponHit: 200
+  weaponCrit: 0
+  weaponRange: 9
+  weaponElement: 1
+  abilities:
+  - {fileID: 11400000, guid: 35f1f534c9690467e9daf3c6b7d14e3d, type: 2}
+  - {fileID: 11400000, guid: e1b870350d3fd4231a6b4b9cd688cf04, type: 2}
+  weaponStatus: {fileID: 0}

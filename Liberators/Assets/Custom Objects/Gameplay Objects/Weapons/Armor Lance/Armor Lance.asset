@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b978b95402f4d1fb4b768fe1927cb8, type: 3}
+  m_Name: Armor Lance
+  m_EditorClassIdentifier: 
+  weaponName: Armor Lance
+  weaponIcon: {fileID: -2759347359006325258, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
+  handClass: 1
+  baseClass: 1
+  damageClass: 0
+  weaponStrength: 40
+  weaponHit: 80
+  weaponCrit: 0
+  weaponRange: 12
+  weaponElement: 1
+  abilities:
+  - {fileID: 11400000, guid: 539e9c3cf2aae4ba3bb79a296920efa0, type: 2}
+  weaponStatus: {fileID: 0}

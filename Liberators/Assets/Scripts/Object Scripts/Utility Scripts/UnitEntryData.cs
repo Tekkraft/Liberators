@@ -46,11 +46,7 @@ public class UnitEntryData
 
     public void doPostBattleHealing()
     {
-        Debug.Log(unitInstance.getCurrentHP());
-        Debug.Log(Mathf.CeilToInt(unitInstance.getStats()[0] * 0.1f));
-        Debug.Log(unitInstance.getCurrentHP() + Mathf.CeilToInt(unitInstance.getStats()[0] * 0.1f));
         unitInstance.setCurrentHP(unitInstance.getCurrentHP() + Mathf.CeilToInt(unitInstance.getStats()[0] * 0.1f));
-        Debug.Log(unitInstance.getCurrentHP());
     }
 
     public UnitInstance getUnit()

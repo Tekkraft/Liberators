@@ -87,10 +87,18 @@ public class BattleController : MonoBehaviour
         BattleExitHandler.reset();
         foreach (UnitEntryData player in BattleEntryHandler.deployedUnits.Keys)
         {
+            if (player.getUnit().getCurrentHP() <= 0)
+            {
+                continue;
+            }
             PlaceUnit(player, BattleEntryHandler.deployedUnits[player], battleTeam.PLAYER);
         }
         foreach (UnitEntryData enemy in BattleEntryHandler.enemyPlacements.Keys)
         {
+            if (enemy.getUnit().getCurrentHP() <= 0)
+            {
+                continue;
+            }
             PlaceUnit(enemy, BattleEntryHandler.enemyPlacements[enemy], battleTeam.ENEMY);
         }
         //TODO: ADD ALLY FOREACH
@@ -102,6 +110,7 @@ public class BattleController : MonoBehaviour
     void NextPhase()
     {
         turnPhase = turnPhase.END;
+        actionPhase = actionPhase.INACTIVE;
         uiCanvas.GetComponent<UIController>().resetButtons();
         CompleteAction();
         if (teamLists.ContainsKey(activeTeam))
@@ -137,8 +146,16 @@ public class BattleController : MonoBehaviour
         {
             yield return new WaitForSeconds(0.1f);
         }
+        rescanEnemies(units);
         foreach (GameObject active in units)
         {
+            if (active.GetComponent<UnitController>().getHealth()[1] / active.GetComponent<UnitController>().getHealth()[0] > 0.5f)
+            {
+                active.GetComponent<AIController>().SetAIMode(AIMode.attack);
+            } else
+            {
+                active.GetComponent<AIController>().SetAIMode(AIMode.flee);
+            }
             while (uiCanvas.GetComponent<UIController>().hasAnimation())
             {
                 yield return new WaitForSeconds(0.1f);
@@ -203,6 +220,7 @@ public class BattleController : MonoBehaviour
                         }
                         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetInstruction.getLOSRequired(), mapController, this, teamLists, direction);
                         List<GameObject> validTargets = rangefinder.generateTargetsNotOfTeam(activeUnit.GetComponent<UnitController>().getUnitPos(), activeTeam, targetInstruction.getTargetType() == targetType.BEAM);
+                        Debug.Log(validTargets.Count);
                         if (validTargets.Count <= 0)
                         {
                             active.GetComponent<AIController>().disableActions(activeAbility);
@@ -227,6 +245,7 @@ public class BattleController : MonoBehaviour
                                         if (target)
                                         {
                                             CombatTargeting(target, targetInstruction, new Vector2(0, 0));
+                                            active.GetComponent<AIController>().resetActions();
                                             break;
                                         }
                                     }
@@ -243,13 +262,32 @@ public class BattleController : MonoBehaviour
                             if (target)
                             {
                                 CombatTargeting(target, targetInstruction, new Vector2(0, 0));
+                                active.GetComponent<AIController>().resetActions();
                             }
                         }
                     }
                 }
                 else if (activeAbility.getAbilityType() == actionType.MOVE)
                 {
-                    ExecuteAction(activeUnit, mapController.tileGridPos(activeUnit.GetComponent<AIController>().getMoveTarget(activeAbility as MovementAbility)));
+                    Vector2Int destination = activeUnit.GetComponent<AIController>().getMoveTarget(activeAbility as MovementAbility);
+                    Debug.Log(destination + "?" + active.GetComponent<UnitController>().getUnitPos());
+                    if (destination == active.GetComponent<UnitController>().getUnitPos())
+                    {
+                        active.GetComponent<AIController>().disableActions(activeAbility);
+                        continue;
+                    }
+                    if (destination == new Vector2Int(int.MaxValue, int.MaxValue))
+                    {
+                        active.GetComponent<AIController>().disableActions(activeAbility);
+                        continue;
+                    }
+                    bool retVal = ExecuteAction(activeUnit, mapController.tileGridPos(destination));
+                    if (!retVal)
+                    {
+                        active.GetComponent<AIController>().disableActions(activeAbility);
+                        continue;
+                    }
+                    active.GetComponent<AIController>().resetActions();
                 }
                 yield return new WaitForSeconds(0.5f);
             }
@@ -333,12 +371,13 @@ public class BattleController : MonoBehaviour
         }
     }
 
-    public void ExecuteAction(GameObject targetUnit, Vector2 tileDestination)
+    public bool ExecuteAction(GameObject targetUnit, Vector2 tileDestination)
     {
+        bool retVal = true;
         switch (actionState)
         {
             case actionType.MOVE:
-                MoveAction(tileDestination);
+                retVal = MoveAction(tileDestination);
                 break;
 
             case actionType.COMBAT:
@@ -346,6 +385,7 @@ public class BattleController : MonoBehaviour
                 break;
         }
         CompleteAction();
+        return retVal;
     }
 
     //Action Handling
@@ -382,12 +422,12 @@ public class BattleController : MonoBehaviour
         targetController.createMoveMarkers(calculateAbility, MarkerController.Markers.BLUE);
     }
 
-    void MoveAction(Vector2 tileDestination)
+    bool MoveAction(Vector2 tileDestination)
     {
         UnitController activeController = activeUnit.GetComponent<UnitController>();
         if (activeController.checkActions(activeAbility.getAPCost()))
         {
-            return;
+            return false;
         }
         bool clear = MoveUnit(activeUnit, tileDestination);
         CompleteAction();
@@ -396,6 +436,7 @@ public class BattleController : MonoBehaviour
             bool done = activeController.useActions(activeAbility.getAPCost());
         }
         CheckEndGame();
+        return clear;
     }
 
     void CombatPrepare(GameObject unit)
@@ -1126,6 +1167,7 @@ public class BattleController : MonoBehaviour
                 KillUnit(data.getDefender());
             }
         }
+        rescanEnemies(teamLists[activeTeam]);
     }
 
     public Dictionary<battleTeam, List<GameObject>> GetTeamLists()
@@ -1295,6 +1337,23 @@ public class BattleController : MonoBehaviour
         }
     }
 
+    //AI Help
+    public void rescanEnemies(List<GameObject> units)
+    {
+        AICoordinator.clearSeenEnemies();
+        foreach (GameObject check in units)
+        {
+            Rangefinder rangefinder = new Rangefinder(int.MaxValue, 0, true, mapController, this, teamLists, Vector2.zero);
+            foreach (GameObject target in rangefinder.generateTargetsNotOfTeam(check.transform.position, activeTeam, false))
+            {
+                if (!AICoordinator.seenEnemies.Contains(target))
+                {
+                    AICoordinator.seenEnemies.Add(target);
+                }
+            }
+        }
+    }
+
     //Unit Construction
     void PlaceUnit(UnitEntryData unit, Vector2Int tile, battleTeam team)
     {
@@ -1305,7 +1364,7 @@ public class BattleController : MonoBehaviour
         temp.GetComponent<UnitController>().equippedOffHandWeapon = unit.getWeapons().Item2;
         temp.GetComponent<UnitController>().equippedArmor = unit.getArmor();
         temp.GetComponent<UnitController>().team = team;
-        temp.GetComponent<SpriteRenderer>().sprite = unit.getUnit().getBattleSprite("attack");
+        temp.GetComponent<SpriteRenderer>().sprite = unit.getUnit().getBattleSprite("idle");
         Vector2 unitPos = mapController.tileGridPos(tile);
         temp.GetComponent<Transform>().position = new Vector3(unitPos.x, unitPos.y, -2);
         temp.SetActive(true);

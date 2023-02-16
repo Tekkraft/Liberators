@@ -21,15 +21,14 @@ MonoBehaviour:
   fin: 7
   rea: 5
   className: Aetherist
-  prfAbilities:
-  - {fileID: 11400000, guid: 4df6030200dd14aadaca1c0bb1bd6d0e, type: 2}
+  prfAbilities: []
   unitAnims:
-    idleSprite: {fileID: 21300000, guid: bafe57b5903ae444984ff2aa81259e1e, type: 3}
-    attackSprite: {fileID: 21300000, guid: 16f4c56eae74545478e0c6554edecf3e, type: 3}
-    evadeSprite: {fileID: 21300000, guid: 6b7dc73d359ca4ebfa7b1a07ffc31919, type: 3}
-    deadStaggerSprite: {fileID: 21300000, guid: 02d5f0ded43d94bdc9f74117ad107548, type: 3}
-    deadSprite: {fileID: 21300000, guid: faaeef5a7eaa74ee89f65e2f1c9db968, type: 3}
-    blockSprite: {fileID: 21300000, guid: 7169decf8faba4d5db6c24ae643077eb, type: 3}
-    staggerSprite: {fileID: 21300000, guid: 5e527985b8f0d4c8c917247b8eefe563, type: 3}
-    defendSprite: {fileID: 21300000, guid: 10a535d2bfb094fd1a56690e6bdb0a2f, type: 3}
+    idleSprite: {fileID: 8341302756163138630, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    attackSprite: {fileID: 2718792872221462440, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    evadeSprite: {fileID: -2364894958581640247, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    deadStaggerSprite: {fileID: 2632605535437302247, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    deadSprite: {fileID: 2632605535437302247, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    blockSprite: {fileID: -2364894958581640247, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    staggerSprite: {fileID: 8498311267477073250, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    defendSprite: {fileID: 8498311267477073250, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
   unitSkillTree: {fileID: 11400000, guid: b2ad19e04a991429bb14d3b71dbb5910, type: 2}

@@ -72,7 +72,6 @@ public class MouseController : MonoBehaviour
         switch (battleController.GetTurnPhase())
          {
             case turnPhase.MAIN:
-                Debug.Log(battleController.GetActiveUnit());
                 if (!battleController.GetActiveUnit())
                 {
                     GameObject targetUnit = battleController.GetUnitFromCoords(gridPosition);
@@ -122,6 +121,7 @@ public class MouseController : MonoBehaviour
 
                     case actionPhase.EXECUTE:
                         //Skip animation
+                        uiController.terminateBattleAnimation();
                         break;
 
                     case actionPhase.INACTIVE:

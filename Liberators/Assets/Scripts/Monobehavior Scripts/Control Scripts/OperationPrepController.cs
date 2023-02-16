@@ -36,12 +36,8 @@ public class OperationPrepController : MonoBehaviour
         {
             OperationSceneHandler.squadDataList.Add(new SquadData(10, squad.getUnits(), squad.getUnitPositions(), squad.getTeam(), squad.getPosition(), squad.getSquadName(), squad.getSquadAI(), squad.getSquadAnchored()));
         }
-        SquadData player = new SquadData(10, PlayerRoster.GetFullUnitEntryData(), new List<Vector2Int>() { new Vector2Int(0, -12), new Vector2Int(0, -11) }, operationsTeam.PLAYER, new Vector3(-22.5f, -14.5f, -1f), "Player Squad", operationsAI.PLAYER, false);
+        SquadData player = new SquadData(10, PlayerRoster.GetFullUnitEntryData(), new List<Vector2Int>() { new Vector2Int(1, -12), new Vector2Int(1, -11), new Vector2Int(2, -12), new Vector2Int(2, -11), new Vector2Int(-1, -12), new Vector2Int(-1, -11), new Vector2Int(-2, -12), new Vector2Int(-2, -11) }, operationsTeam.PLAYER, new Vector3(-22.5f, -14.5f, -1f), "Player Squad", operationsAI.PLAYER, false);
         OperationSceneHandler.squadDataList.Add(player);
-        /*
-        SquadData enemy1 = new SquadData(10, enemy1List, new List<Vector2Int>() { new Vector2Int(0, 12), new Vector2Int(0, 11) }, operationsTeam.ENEMY, new Vector3(-22.5f, -13.5f, -1f), "Enemy Squad", operationsAI.ATTACK, false);
-        OperationSceneHandler.squadDataList.Add(enemy1);
-        */
         OperationSceneHandler.data = opsData;
         SceneManager.LoadSceneAsync("OperationMap");
     }

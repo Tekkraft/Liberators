@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd53bbf90d6841ebbf4701357c3916a, type: 3}
+  m_Name: Runli
+  m_EditorClassIdentifier: 
+  unitName: Runli
+  maxHP: 23
+  mov: 5
+  str: 1
+  pot: 12
+  acu: 4
+  fin: 7
+  rea: 9
+  className: Elementalist
+  prfAbilities: []
+  unitAnims:
+    idleSprite: {fileID: 8341302756163138630, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    attackSprite: {fileID: 2718792872221462440, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    evadeSprite: {fileID: -2364894958581640247, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    deadStaggerSprite: {fileID: 2632605535437302247, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    deadSprite: {fileID: 2632605535437302247, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    blockSprite: {fileID: -2364894958581640247, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    staggerSprite: {fileID: 8498311267477073250, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+    defendSprite: {fileID: 8498311267477073250, guid: d9be8c36337684cf8ba643d5804e1bf6, type: 3}
+  unitSkillTree: {fileID: 11400000, guid: 0c3951d29d5dc4af0a46078adb464615, type: 2}

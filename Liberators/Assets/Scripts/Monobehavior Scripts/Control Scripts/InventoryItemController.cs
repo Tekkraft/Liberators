@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     ItemInstance linkedItem;
     Vector2Int homePosition;
@@ -13,6 +13,7 @@ public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHa
     bool slotted;
     bool droppedInSlot = false;
     bool itemDisabled = false;
+    InventoryController inventoryController;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,7 @@ public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHa
         
     }
 
-    public void InitializeItem(ItemInstance linkedItem, Vector2Int homePosition, Transform originalParent, Transform mainCanvas)
+    public void InitializeItem(ItemInstance linkedItem, Vector2Int homePosition, Transform originalParent, Transform mainCanvas, InventoryController inventoryController)
     {
         this.linkedItem = linkedItem;
         GetComponent<Image>().sprite = this.linkedItem.GetInstanceSprite();
@@ -35,6 +36,7 @@ public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHa
         this.mainCanvas = mainCanvas;
         transform.localPosition = CalculateFromHomePosition();
         slotted = false;
+        this.inventoryController = inventoryController;
     }
 
     public void OnBeginDrag(PointerEventData pointerEventData)
@@ -84,6 +86,11 @@ public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHa
         this.slotted = slotted;
     }
 
+    public bool GetSlotted()
+    {
+        return slotted;
+    }
+
     public void SetDroppedInSlot(bool droppedInSlot)
     {
         this.droppedInSlot = droppedInSlot;
@@ -107,6 +114,16 @@ public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHa
             GetComponent<CanvasGroup>().blocksRaycasts = true;
             GetComponent<Image>().color = Color.white;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        inventoryController.SetItemHoverText(linkedItem.GetInstanceName());
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        inventoryController.ClearItemHoverText();
     }
 
     //Index from 0

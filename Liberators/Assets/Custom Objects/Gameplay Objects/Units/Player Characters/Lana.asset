@@ -23,12 +23,12 @@ MonoBehaviour:
   className: Commander
   prfAbilities: []
   unitAnims:
-    idleSprite: {fileID: 21300000, guid: 088623d810e204b18a0a4c0ad4a1e93c, type: 3}
-    attackSprite: {fileID: 21300000, guid: 266ba2f143f4340f5a41b2242b936bbd, type: 3}
-    evadeSprite: {fileID: 21300000, guid: 408eadea8fd8b4f9fadd034dbcd6e5b9, type: 3}
-    deadStaggerSprite: {fileID: 21300000, guid: 0ab7f1405d28f47419eaca9942d0f045, type: 3}
-    deadSprite: {fileID: 21300000, guid: a77a147af9bc346f29f685593bac70f0, type: 3}
-    blockSprite: {fileID: 21300000, guid: 4eb2b7468a77a4a23af218789733d03a, type: 3}
-    staggerSprite: {fileID: 21300000, guid: dc8727c491b7f40efa794938332535c4, type: 3}
-    defendSprite: {fileID: 21300000, guid: ce74671bc076544479f7b94b32210880, type: 3}
+    idleSprite: {fileID: 5965223715722230172, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    attackSprite: {fileID: -3965553791654645862, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    evadeSprite: {fileID: -2184746243887318803, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    deadStaggerSprite: {fileID: -1080405199259181101, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    deadSprite: {fileID: -1080405199259181101, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    blockSprite: {fileID: -2184746243887318803, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    staggerSprite: {fileID: -4428211977501768585, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    defendSprite: {fileID: -4428211977501768585, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
   unitSkillTree: {fileID: 11400000, guid: 7253139acbaa74051af81ee0f3401525, type: 2}

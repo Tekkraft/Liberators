@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b978b95402f4d1fb4b768fe1927cb8, type: 3}
+  m_Name: Arc Battleaxe
+  m_EditorClassIdentifier: 
+  weaponName: Arc Battleaxe
+  weaponIcon: {fileID: -2973636079576764248, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
+  handClass: 1
+  baseClass: 0
+  damageClass: 1
+  weaponStrength: 30
+  weaponHit: 75
+  weaponCrit: 10
+  weaponRange: 0
+  weaponElement: 1
+  abilities:
+  - {fileID: 11400000, guid: 338317a6c8eb54259a6fff68ca33f948, type: 2}
+  - {fileID: 11400000, guid: 31e9dee7080a34460a958bc161f6c362, type: 2}
+  weaponStatus: {fileID: 0}

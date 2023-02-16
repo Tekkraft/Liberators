@@ -657,7 +657,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1282047763}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1841.7002, y: 161.2847, z: -7582.2744}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -679,7 +679,7 @@ MonoBehaviour:
     battleData:
       unit: {fileID: 11400000, guid: 8166ad6f713e14de68d81d38416bf746, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 8c1b4b5d9828742d49722a1b9a5c5938, type: 2}
+        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -696,7 +696,7 @@ MonoBehaviour:
     battleData:
       unit: {fileID: 11400000, guid: 499b51155f0cc4a54b9568021990660d, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: bb1a9d2f66ef8479d98bcd8cbd148a66, type: 2}
+        weaponBase: {fileID: 11400000, guid: c3dbc947c99aa4555b32bf5f9590d483, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -711,9 +711,9 @@ MonoBehaviour:
         instanceSprite: {fileID: 0}
   saeiData:
     battleData:
-      unit: {fileID: 0}
+      unit: {fileID: 11400000, guid: 85e65d7afe69042159e6b1509dd1a14e, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 0}
+        weaponBase: {fileID: 11400000, guid: 97ae5405b6027448e80054c8e1ddcd8b, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -723,14 +723,14 @@ MonoBehaviour:
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 0}
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
   vaueData:
     battleData:
-      unit: {fileID: 0}
+      unit: {fileID: 11400000, guid: 3d2401bdbe9b64877af68bc5f8533c99, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 0}
+        weaponBase: {fileID: 11400000, guid: d23daf8f209a64dc5a2b19cb7ce27fa3, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -740,14 +740,14 @@ MonoBehaviour:
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 0}
+        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
   mayData:
     battleData:
-      unit: {fileID: 0}
+      unit: {fileID: 11400000, guid: bd42a7b9b3d6f478589988ad92a88597, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 0}
+        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -757,14 +757,14 @@ MonoBehaviour:
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 0}
+        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
   runliData:
     battleData:
-      unit: {fileID: 0}
+      unit: {fileID: 11400000, guid: b45d036fef93445f29c852b37f37b332, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 0}
+        weaponBase: {fileID: 11400000, guid: 4722034b8c9224110a4f534e13155876, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -774,14 +774,14 @@ MonoBehaviour:
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 0}
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
   colinData:
     battleData:
-      unit: {fileID: 0}
+      unit: {fileID: 11400000, guid: 1b9ef72a3dff64d32af3f1d0b62c6c10, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 0}
+        weaponBase: {fileID: 11400000, guid: d3f7c403475d54f058ce6469ca30aa70, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -791,14 +791,14 @@ MonoBehaviour:
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 0}
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
   hanaeiData:
     battleData:
-      unit: {fileID: 0}
+      unit: {fileID: 11400000, guid: 94200c73dc8bc4db794cc99483b8e2e5, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 0}
+        weaponBase: {fileID: 11400000, guid: 78e0900287a3c470a86d8a3643c2c2f1, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -808,16 +808,75 @@ MonoBehaviour:
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 0}
+        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
   weapons:
-  - weaponBase: {fileID: 11400000, guid: bb1a9d2f66ef8479d98bcd8cbd148a66, type: 2}
+  - weaponBase: {fileID: 11400000, guid: d23daf8f209a64dc5a2b19cb7ce27fa3, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: 97ae5405b6027448e80054c8e1ddcd8b, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: c3dbc947c99aa4555b32bf5f9590d483, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: 78e0900287a3c470a86d8a3643c2c2f1, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: d3f7c403475d54f058ce6469ca30aa70, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: 4722034b8c9224110a4f534e13155876, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: 7deaf6480d81c442d920a004e51a70d1, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: 7deaf6480d81c442d920a004e51a70d1, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: 974e8a9e002254315812ad8abbb38a21, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  - weaponBase: {fileID: 11400000, guid: 974e8a9e002254315812ad8abbb38a21, type: 2}
     instanceName: 
     instanceSprite: {fileID: 0}
     upgradeCapacity: 0
   armors:
   - armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+  - armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+  - armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+  - armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+  - armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+  - armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
     instanceName: 
     instanceSprite: {fileID: 0}
 --- !u!1 &1706864692

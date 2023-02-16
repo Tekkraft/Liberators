@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd53bbf90d6841ebbf4701357c3916a, type: 3}
+  m_Name: Hostile Caster
+  m_EditorClassIdentifier: 
+  unitName: Enemy
+  maxHP: 20
+  mov: 5
+  str: 3
+  pot: 11
+  acu: 8
+  fin: 7
+  rea: 6
+  className: Caster
+  prfAbilities: []
+  unitAnims:
+    idleSprite: {fileID: 1627186122408601981, guid: 800bd2e32ed2d43858ba45fbf3fc6691, type: 3}
+    attackSprite: {fileID: -524211404310065540, guid: 800bd2e32ed2d43858ba45fbf3fc6691, type: 3}
+    evadeSprite: {fileID: 8262157704358061848, guid: 800bd2e32ed2d43858ba45fbf3fc6691, type: 3}
+    deadStaggerSprite: {fileID: 217624142982381981, guid: 800bd2e32ed2d43858ba45fbf3fc6691, type: 3}
+    deadSprite: {fileID: 217624142982381981, guid: 800bd2e32ed2d43858ba45fbf3fc6691, type: 3}
+    blockSprite: {fileID: 8262157704358061848, guid: 800bd2e32ed2d43858ba45fbf3fc6691, type: 3}
+    staggerSprite: {fileID: 7101572130279693825, guid: 800bd2e32ed2d43858ba45fbf3fc6691, type: 3}
+    defendSprite: {fileID: 7101572130279693825, guid: 800bd2e32ed2d43858ba45fbf3fc6691, type: 3}
+  unitSkillTree: {fileID: 11400000, guid: c8c757230537248f5bcde181568a576e, type: 2}

@@ -14,6 +14,8 @@ public class InventoryItemSlotController : MonoBehaviour, IDropHandler
 
     GameObject currentItem;
 
+    InventoryController inventoryController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +25,18 @@ public class InventoryItemSlotController : MonoBehaviour, IDropHandler
     // Update is called once per frame
     void Update()
     {
-        
+        if (currentItem)
+        {
+            if (!currentItem.GetComponent<InventoryItemController>().GetSlotted())
+            {
+                currentItem = null;
+            }
+        }
+    }
+
+    public void InitializeSlot(InventoryController inventoryController)
+    {
+        this.inventoryController = inventoryController;
     }
 
     public void OnDrop(PointerEventData pointerEventData)
@@ -46,6 +59,18 @@ public class InventoryItemSlotController : MonoBehaviour, IDropHandler
         {
             return;
         }
+        KickItemFromSlot();
+        item.GetComponent<InventoryItemController>().SetSlotted(true);
+        item.GetComponent<InventoryItemController>().SetDroppedInSlot(true);
+        item.transform.SetParent(transform);
+        item.GetComponent<InventoryItemController>().ResetPosition();
+        PlayerInventory.PullItem(item.GetComponent<InventoryItemController>().GetLinkedItem());
+        currentItem = item;
+        inventoryController.ValidateEquipment();
+    }
+
+    public void KickItemFromSlot()
+    {
         if (currentItem != null)
         {
             currentItem.GetComponent<InventoryItemController>().SetSlotted(false);
@@ -53,12 +78,6 @@ public class InventoryItemSlotController : MonoBehaviour, IDropHandler
             PlayerInventory.PushItem(currentItem.GetComponent<InventoryItemController>().GetLinkedItem());
             currentItem = null;
         }
-        item.GetComponent<InventoryItemController>().SetSlotted(true);
-        item.GetComponent<InventoryItemController>().SetDroppedInSlot(true);
-        item.transform.SetParent(transform);
-        item.GetComponent<InventoryItemController>().ResetPosition();
-        PlayerInventory.PullItem(item.GetComponent<InventoryItemController>().GetLinkedItem());
-        currentItem = item;
     }
 
     public GameObject GetCurrentItem()

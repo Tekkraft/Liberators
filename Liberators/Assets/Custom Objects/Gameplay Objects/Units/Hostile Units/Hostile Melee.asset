@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd53bbf90d6841ebbf4701357c3916a, type: 3}
+  m_Name: Hostile Melee
+  m_EditorClassIdentifier: 
+  unitName: Enemy
+  maxHP: 40
+  mov: 5
+  str: 10
+  pot: 3
+  acu: 6
+  fin: 6
+  rea: 6
+  className: Soldier
+  prfAbilities: []
+  unitAnims:
+    idleSprite: {fileID: -5485416651559738898, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    attackSprite: {fileID: -1125667106224686872, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    evadeSprite: {fileID: -1474733479245878889, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    deadStaggerSprite: {fileID: -23036815260366909, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    deadSprite: {fileID: -23036815260366909, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    blockSprite: {fileID: -1474733479245878889, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    staggerSprite: {fileID: 1839775356003820687, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    defendSprite: {fileID: 1839775356003820687, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+  unitSkillTree: {fileID: 11400000, guid: c8c757230537248f5bcde181568a576e, type: 2}

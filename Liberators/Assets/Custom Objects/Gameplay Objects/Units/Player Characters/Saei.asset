@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd53bbf90d6841ebbf4701357c3916a, type: 3}
+  m_Name: Saei
+  m_EditorClassIdentifier: 
+  unitName: Saei
+  maxHP: 22
+  mov: 6
+  str: 5
+  pot: 1
+  acu: 7
+  fin: 7
+  rea: 10
+  className: Ranger
+  prfAbilities: []
+  unitAnims:
+    idleSprite: {fileID: -4649713806198240, guid: 31272e492a72447b9982afd492b04173, type: 3}
+    attackSprite: {fileID: -6871569294672437071, guid: 31272e492a72447b9982afd492b04173, type: 3}
+    evadeSprite: {fileID: -7815662512492399648, guid: 31272e492a72447b9982afd492b04173, type: 3}
+    deadStaggerSprite: {fileID: -4873660917513836598, guid: 31272e492a72447b9982afd492b04173, type: 3}
+    deadSprite: {fileID: -4873660917513836598, guid: 31272e492a72447b9982afd492b04173, type: 3}
+    blockSprite: {fileID: -7815662512492399648, guid: 31272e492a72447b9982afd492b04173, type: 3}
+    staggerSprite: {fileID: 3091950421606835104, guid: 31272e492a72447b9982afd492b04173, type: 3}
+    defendSprite: {fileID: 3091950421606835104, guid: 31272e492a72447b9982afd492b04173, type: 3}
+  unitSkillTree: {fileID: 11400000, guid: a91383c167e9b469393b29c5adf54086, type: 2}

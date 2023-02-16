@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06ee35cf9cf8c49c5b86c7d2feb16252, type: 3}
+  m_Name: Wave Caster Primary Attack
+  m_EditorClassIdentifier: 
+  abilityName: Cantrip Burst
+  abilitySprite: {fileID: 8656958160885653508, guid: 6a293d27b735b484e91629383135b8bb, type: 3}
+  abilityAP: 0
+  abilityType: 0
+  equipHandRequirement: 
+  equipBaseRequirement: 
+  equipDamageRequirement: 
+  abilityData:
+    targetInstruction:
+      targetType: 2
+      targetCondition: 3
+      targetConditionCount: 1
+      conditionFilters:
+      - targetFilter: 0
+        filterStat: 0
+      isMelee: 0
+      requiresLOS: 1
+      minRange: 0
+      minRangeFixed: 1
+      maxRange: 5
+      maxRangeFixed: 0
+      hitBonus: 100
+      fixedHit: 1
+    effectInstructions:
+    - independentHit: 0
+      effectTarget:
+        targetType: 6
+        targetCondition: 3
+        targetConditionCount: 0
+        conditionFilters: []
+        isMelee: 0
+        requiresLOS: 0
+        minRange: 0
+        minRangeFixed: 1
+        maxRange: 0
+        maxRangeFixed: 1
+        hitBonus: 0
+        fixedHit: 0
+      effectType: 0
+      effectDamageType: 1
+      effectDamageSource: 1
+      effectIntensity: 0
+      effectPercentBonus: 0
+      effectIndependentElement: 0
+      effectElement: 0
+      effectStatus: {fileID: 0}
+      effectSpecialRules: []
+    abilityRepeats: 1

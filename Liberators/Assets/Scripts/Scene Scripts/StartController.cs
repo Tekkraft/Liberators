@@ -65,7 +65,8 @@ public class StartController : MonoBehaviour
         }
         LoadSkillTree();
         LoadInventory();
-        ReloadBattlePrep();
+        BattlePrepHandler.data = characterUnitData;
+        OperationSceneHandler.attackerData.unitList = BattlePrepHandler.data;
     }
 
     void OnDisable()
@@ -91,21 +92,18 @@ public class StartController : MonoBehaviour
     public void EnterInventory()
     {
         InventoryTransitionController.characterIndex = characterIndex;
-        InventoryTransitionController.equippedWeapon = characterUnitData[characterIndex].getWeapons().Item1;
+        InventoryTransitionController.equippedMainHandWeapon = characterUnitData[characterIndex].getWeapons().Item1;
+        InventoryTransitionController.equippedOffHandWeapon = characterUnitData[characterIndex].getWeapons().Item2;
         InventoryTransitionController.equippedArmor = characterUnitData[characterIndex].getArmor();
         InventoryTransitionController.origin = "BattlePrep";
         SceneManager.LoadSceneAsync("UnitInventory");
-    }
-
-    public void ReloadBattlePrep()
-    {
-        BattlePrepHandler.reset();
     }
 
     public void LoadSkillTree()
     {
         if (SkillTreeExitHandler.activated)
         {
+            characterIndex = SkillTreeExitHandler.characterIndex;
             characterUnitData[characterIndex].getUnit().updateSkillTree(SkillTreeExitHandler.activeTree);
             LoadUnitPage(SkillTreeExitHandler.characterIndex);
             SkillTreeExitHandler.reset();
@@ -114,10 +112,12 @@ public class StartController : MonoBehaviour
 
     public void LoadInventory()
     {
-        if (InventoryTransitionController.equippedArmor != null && InventoryTransitionController.equippedWeapon != null)
+        if (InventoryTransitionController.activated)
         {
+            characterIndex = InventoryTransitionController.characterIndex;
             characterUnitData[characterIndex].setArmor(InventoryTransitionController.equippedArmor);
-            characterUnitData[characterIndex].setWeapon(InventoryTransitionController.equippedWeapon, true);
+            characterUnitData[characterIndex].setWeapon(InventoryTransitionController.equippedMainHandWeapon, true);
+            characterUnitData[characterIndex].setWeapon(InventoryTransitionController.equippedOffHandWeapon, false);
             LoadUnitPage(InventoryTransitionController.characterIndex);
         }
         InventoryTransitionController.reset();
@@ -192,7 +192,7 @@ public class StartController : MonoBehaviour
     public void NextUnit()
     {
         characterIndex++;
-        if (characterIndex > characterUnitData.Count)
+        if (characterIndex >= characterUnitData.Count)
         {
             characterIndex = 0;
         }

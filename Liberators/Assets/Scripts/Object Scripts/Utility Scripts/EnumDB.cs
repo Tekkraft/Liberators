@@ -23,7 +23,9 @@ public enum element { IMPACT, KINETIC, BALLISTIC, EXPLOSIVE, LASER, PLASMA, IONI
 
 public enum actionType { NONE, MOVE, COMBAT, MISC, WAIT, END };
 
-public enum statusType { BUFF, DEBUFF, NONE }
+public enum statusType { BUFF, DEBUFF, NONE };
+
+public enum AIMode { idle, attack, flee }
 
 public enum EquipHandClass { oneHanded, twoHanded, flexible, mainHand, offHand };
 

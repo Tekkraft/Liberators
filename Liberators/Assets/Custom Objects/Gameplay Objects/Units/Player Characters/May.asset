@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd53bbf90d6841ebbf4701357c3916a, type: 3}
+  m_Name: May
+  m_EditorClassIdentifier: 
+  unitName: May
+  maxHP: 36
+  mov: 5
+  str: 9
+  pot: 4
+  acu: 6
+  fin: 10
+  rea: 2
+  className: Engineer
+  prfAbilities: []
+  unitAnims:
+    idleSprite: {fileID: -7448831447757097585, guid: 05670d6749bca4ca180829c33a9a185e, type: 3}
+    attackSprite: {fileID: 2715276286607755652, guid: 05670d6749bca4ca180829c33a9a185e, type: 3}
+    evadeSprite: {fileID: -8862308231583350705, guid: 05670d6749bca4ca180829c33a9a185e, type: 3}
+    deadStaggerSprite: {fileID: -5142428364221516412, guid: 05670d6749bca4ca180829c33a9a185e, type: 3}
+    deadSprite: {fileID: -5142428364221516412, guid: 05670d6749bca4ca180829c33a9a185e, type: 3}
+    blockSprite: {fileID: -8862308231583350705, guid: 05670d6749bca4ca180829c33a9a185e, type: 3}
+    staggerSprite: {fileID: 5954105944881904684, guid: 05670d6749bca4ca180829c33a9a185e, type: 3}
+    defendSprite: {fileID: 5954105944881904684, guid: 05670d6749bca4ca180829c33a9a185e, type: 3}
+  unitSkillTree: {fileID: 11400000, guid: 81f60d18895e54402960e0cc5e9954e0, type: 2}

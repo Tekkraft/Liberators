@@ -6,6 +6,8 @@ public class AIController : MonoBehaviour
 {
     UnitController hostController;
     List<Ability> disabledAbilities = new List<Ability>();
+    AIMode currentAIMode = AIMode.idle;
+    int abilityStep = 1;
 
     void Awake()
     {
@@ -26,7 +28,36 @@ public class AIController : MonoBehaviour
         {
             return null;
         }
-        return validAbilities[Random.Range(0, validAbilities.Count)];
+        Ability returnValue;
+        switch (currentAIMode)
+        {
+            case AIMode.attack:
+                if (abilityStep < validAbilities.Count)
+                {
+                    returnValue = validAbilities[abilityStep];
+                    abilityStep++;
+                    return returnValue;
+                } else
+                {
+                    abilityStep = 1;
+                    return validAbilities[0];
+                }
+
+            case AIMode.flee:
+                if (abilityStep < validAbilities.Count)
+                {
+                    returnValue = validAbilities[abilityStep];
+                    abilityStep++;
+                    return returnValue;
+                } else
+                {
+                    abilityStep = 1;
+                    return validAbilities[0];
+                }
+
+            default:
+                return validAbilities[Random.Range(0, validAbilities.Count)];
+        }
     }
 
     public GameObject getGameObjectTarget(CombatAbility activeAbility, List<GameObject> targets)
@@ -60,7 +91,74 @@ public class AIController : MonoBehaviour
     public Vector2Int getMoveTarget(MovementAbility activeAbility)
     {
         List<Vector2Int> validTiles = hostController.pathfinderValidCoords(activeAbility);
-        return validTiles[Random.Range(0,validTiles.Count)];
+        if (validTiles.Count == 0)
+        {
+            return Vector2Int.zero;
+        }
+        float currentDistance;
+        Vector2Int destination;
+        bool skip;
+        switch (currentAIMode)
+        {
+            case AIMode.attack:
+                currentDistance = float.MaxValue;
+                destination = new Vector2Int(int.MaxValue, int.MaxValue);
+                skip = false;
+                foreach (Vector2Int tile in validTiles)
+                {
+                    if (skip)
+                    {
+                        skip = false;
+                        continue;
+                    }
+                    foreach (GameObject enemy in AICoordinator.seenEnemies)
+                    {
+                        float distance = Mathf.Abs((enemy.GetComponent<UnitController>().getUnitPos() - tile).magnitude);
+                        if (distance == 0)
+                        {
+                            skip = true;
+                            break;
+                        }
+                        if (distance < currentDistance)
+                        {
+                            currentDistance = distance;
+                            destination = tile;
+                        }
+                    }
+                }
+                return destination;
+
+            case AIMode.flee:
+                currentDistance = float.MinValue;
+                destination = new Vector2Int(int.MaxValue, int.MaxValue);
+                skip = false;
+                foreach (Vector2Int tile in validTiles)
+                {
+                    if (skip)
+                    {
+                        skip = false;
+                        continue;
+                    }
+                    foreach (GameObject enemy in AICoordinator.seenEnemies)
+                    {
+                        float distance = Mathf.Abs((enemy.GetComponent<UnitController>().getUnitPos() - tile).magnitude);
+                        if (distance == 0)
+                        {
+                            skip = true;
+                            break;
+                        }
+                        if (distance > currentDistance)
+                        {
+                            currentDistance = distance;
+                            destination = tile;
+                        }
+                    }
+                }
+                return destination;
+
+            default:
+                return validTiles[Random.Range(0, validTiles.Count)];
+        }
     }
 
     public void disableActions(Ability ability)
@@ -71,5 +169,15 @@ public class AIController : MonoBehaviour
     public void resetActions()
     {
         disabledAbilities.Clear();
+    }
+
+    public void SetAIMode(AIMode mode)
+    {
+        currentAIMode = mode;
+    }
+
+    public AIMode GetAIMode()
+    {
+        return currentAIMode;
     }
 }

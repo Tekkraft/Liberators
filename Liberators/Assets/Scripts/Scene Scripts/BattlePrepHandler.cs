@@ -8,9 +8,4 @@ public class BattlePrepHandler
     public static List<UnitEntryData> data;
 
     public static string battleScene;
-
-    public static void reset()
-    {
-        
-    }
 }

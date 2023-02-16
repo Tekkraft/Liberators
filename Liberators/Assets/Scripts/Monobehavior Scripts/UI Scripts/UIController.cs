@@ -76,7 +76,8 @@ public class UIController : MonoBehaviour
     {
         clearButtons();
         int count = allAbilities.Count;
-        float spacing = 4f + button.GetComponent<RectTransform>().rect.height;
+        float ratio = button.GetComponent<RectTransform>().sizeDelta.x / 32;
+        float spacing = (4f + button.GetComponent<RectTransform>().sizeDelta.x) * ratio;
         if (count % 2 == 0)
         {
             for (int i = -count / 2; i < count / 2; i++)
@@ -161,6 +162,7 @@ public class UIController : MonoBehaviour
     public GameObject displayUnitDataPreview(GameObject unit)
     {
         activePreview = GameObject.Instantiate(unitDataPreview, transform);
+        activePreview.transform.SetParent(transform, false);
         activePreview.GetComponent<PreviewController>().setData(unit);
         return activePreview;
     }
@@ -174,7 +176,10 @@ public class UIController : MonoBehaviour
 
     public void terminateBattleAnimation()
     {
-        activeAnimation.GetComponent<AnimController>().terminateAnimation();
+        if (activeAnimation)
+        {
+            activeAnimation.GetComponent<AnimController>().terminateAnimation();
+        }
     }
 
     public void clearPreview()

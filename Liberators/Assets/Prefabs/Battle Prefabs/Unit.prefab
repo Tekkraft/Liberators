@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: be780a7de6fee492081353f2195b2e3f, type: 3}
+  m_Sprite: {fileID: 9003107376833893370, guid: 7aec34a410edf4bc984e632ea4ae1c76, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,13 +98,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marker: {fileID: 6958815629102385123, guid: b76a23c86aaa145c28439c9b6fa22512, type: 3}
-  teamNumber: -1
-  unitObject: {fileID: 11400000, guid: cd8d8bcbd3a8d4aef8cc06abb78ad856, type: 2}
+  team: 0
+  unitTemplate: {fileID: 0}
   basicMovement: {fileID: 11400000, guid: 282e41814c0c94219bc771108b1e5bf9, type: 2}
   passUnitAbility: {fileID: 11400000, guid: d227c9dd105bf4968b983901904c1487, type: 2}
   endTurnAbility: {fileID: 11400000, guid: 581b533f39259440ab967d0802ff9eb4, type: 2}
-  equippedWeapon: {fileID: 0}
-  equippedArmor: {fileID: 0}
+  equippedMainHandWeapon:
+    weaponBase: {fileID: 0}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  equippedOffHandWeapon:
+    weaponBase: {fileID: 0}
+    instanceName: 
+    instanceSprite: {fileID: 0}
+    upgradeCapacity: 0
+  equippedArmor:
+    armorBase: {fileID: 0}
+    instanceName: 
+    instanceSprite: {fileID: 0}
 --- !u!114 &4582344943212309389
 MonoBehaviour:
   m_ObjectHideFlags: 0

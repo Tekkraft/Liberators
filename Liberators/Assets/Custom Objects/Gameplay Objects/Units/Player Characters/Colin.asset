@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cd53bbf90d6841ebbf4701357c3916a, type: 3}
+  m_Name: Colin
+  m_EditorClassIdentifier: 
+  unitName: Colin
+  maxHP: 32
+  mov: 4
+  str: 6
+  pot: 4
+  acu: 11
+  fin: 10
+  rea: 4
+  className: Sniper
+  prfAbilities: []
+  unitAnims:
+    idleSprite: {fileID: 5965223715722230172, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    attackSprite: {fileID: -3965553791654645862, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    evadeSprite: {fileID: -2184746243887318803, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    deadStaggerSprite: {fileID: -1080405199259181101, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    deadSprite: {fileID: -1080405199259181101, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    blockSprite: {fileID: -2184746243887318803, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    staggerSprite: {fileID: -4428211977501768585, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    defendSprite: {fileID: -4428211977501768585, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+  unitSkillTree: {fileID: 11400000, guid: d87b7e7017e3d4f5bb2146b11c97f3a9, type: 2}

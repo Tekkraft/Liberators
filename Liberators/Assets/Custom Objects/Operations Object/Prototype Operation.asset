@@ -14,12 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   operationsName: Test Operation
   squadData:
-  - squadName: Enemy Squad 0
-    squadPosition: {x: -10.5, y: 5.5}
+  - squadName: Enemy Squad Alpha
+    squadPosition: {x: -10.5, y: 8.5}
     units:
-    - unit: {fileID: 11400000, guid: 8137e75efc459438888e8621baf7a573, type: 2}
+    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: bb1a9d2f66ef8479d98bcd8cbd148a66, type: 2}
+        weaponBase: {fileID: 11400000, guid: c3dbc947c99aa4555b32bf5f9590d483, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -32,9 +47,156 @@ MonoBehaviour:
         armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: d77b1c3b8fdd94645a7a2adea99fddc8, type: 2}
+    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: b7d726faedd174a85b308f113feccc00, type: 2}
+        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: f6081fe3fb7464d678304a7f7034382a, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 97ae5405b6027448e80054c8e1ddcd8b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    unitPositions:
+    - {x: 0, y: 11}
+    - {x: -1, y: 10}
+    - {x: 0, y: 9}
+    - {x: 1, y: 10}
+    team: 1
+    squadAI: 2
+    movementType: 0
+    squadAnchored: 0
+  - squadName: Boss Squad
+    squadPosition: {x: 24.5, y: -0.5}
+    units:
+    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: d23daf8f209a64dc5a2b19cb7ce27fa3, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: d23daf8f209a64dc5a2b19cb7ce27fa3, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 4722034b8c9224110a4f534e13155876, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 4722034b8c9224110a4f534e13155876, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: d3f7c403475d54f058ce6469ca30aa70, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: d3f7c403475d54f058ce6469ca30aa70, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -48,18 +210,24 @@ MonoBehaviour:
         instanceName: 
         instanceSprite: {fileID: 0}
     unitPositions:
-    - {x: 0, y: 11}
-    - {x: 0, y: 9}
+    - {x: 1, y: 9}
+    - {x: -1, y: 9}
+    - {x: 1, y: 10}
+    - {x: -1, y: 10}
+    - {x: 2, y: 10}
+    - {x: -2, y: 10}
+    - {x: 1, y: 11}
+    - {x: -1, y: 11}
     team: 1
-    squadAI: 2
+    squadAI: 1
     movementType: 0
-    squadAnchored: 0
-  - squadName: Boss Squad
-    squadPosition: {x: 24.5, y: -0.5}
+    squadAnchored: 1
+  - squadName: Enemy Test Squad 1
+    squadPosition: {x: -22.5, y: -12.5}
     units:
-    - unit: {fileID: 11400000, guid: 8137e75efc459438888e8621baf7a573, type: 2}
+    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: bb1a9d2f66ef8479d98bcd8cbd148a66, type: 2}
+        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -72,9 +240,9 @@ MonoBehaviour:
         armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: d77b1c3b8fdd94645a7a2adea99fddc8, type: 2}
+    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: b7d726faedd174a85b308f113feccc00, type: 2}
+        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -93,6 +261,153 @@ MonoBehaviour:
     team: 1
     squadAI: 1
     movementType: 0
-    squadAnchored: 1
-  playerReachConditions: []
+    squadAnchored: 0
+  - squadName: Enemy Squad Beta
+    squadPosition: {x: -10.5, y: 5.5}
+    units:
+    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: c3dbc947c99aa4555b32bf5f9590d483, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: f6081fe3fb7464d678304a7f7034382a, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 97ae5405b6027448e80054c8e1ddcd8b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    unitPositions:
+    - {x: 0, y: 11}
+    - {x: -1, y: 10}
+    - {x: 0, y: 9}
+    - {x: 1, y: 10}
+    team: 1
+    squadAI: 2
+    movementType: 0
+    squadAnchored: 0
+  - squadName: Enemy Squad Gamma
+    squadPosition: {x: 24.5, y: 0.5}
+    units:
+    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: c3dbc947c99aa4555b32bf5f9590d483, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    - unit: {fileID: 11400000, guid: f6081fe3fb7464d678304a7f7034382a, type: 2}
+      mainHandWeapon:
+        weaponBase: {fileID: 11400000, guid: 97ae5405b6027448e80054c8e1ddcd8b, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      offHandWeapon:
+        weaponBase: {fileID: 0}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+        upgradeCapacity: 0
+      armor:
+        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
+        instanceName: 
+        instanceSprite: {fileID: 0}
+    unitPositions:
+    - {x: 0, y: 11}
+    - {x: -1, y: 10}
+    - {x: 0, y: 9}
+    - {x: 1, y: 10}
+    team: 1
+    squadAI: 2
+    movementType: 0
+    squadAnchored: 0
+  playerReachConditions:
+  - corner1: {x: 25, y: 0}
+    corner2: {x: 25, y: 0}
+    team: 0
   enemyReachConditions: []

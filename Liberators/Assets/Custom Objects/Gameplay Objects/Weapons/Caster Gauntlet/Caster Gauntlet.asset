@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90b978b95402f4d1fb4b768fe1927cb8, type: 3}
+  m_Name: Caster Gauntlet
+  m_EditorClassIdentifier: 
+  weaponName: Caster Gauntlet
+  weaponIcon: {fileID: -4213184575724999638, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
+  handClass: 2
+  baseClass: 2
+  damageClass: 2
+  weaponStrength: 10
+  weaponHit: 100
+  weaponCrit: 0
+  weaponRange: 0
+  weaponElement: 8
+  abilities:
+  - {fileID: 11400000, guid: c03e701e575b34ca7b22bf75e0dd7fa1, type: 2}
+  weaponStatus: {fileID: 0}

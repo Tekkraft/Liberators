@@ -67,7 +67,6 @@ public class UnitController : MonoBehaviour
             allAbilities.AddRange(equippedOffHandWeapon.GetInstanceAbilities());
         }
         allAbilities.AddRange(unitObject.getAbilities());
-        Debug.Log(allAbilities.Count);
     }
 
     public void createUnit(int[] unitStats, battleTeam team, int startingHP)

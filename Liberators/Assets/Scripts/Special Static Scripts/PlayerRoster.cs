@@ -30,13 +30,13 @@ public class PlayerRoster
         List<UnitEntryData> dataList = new List<UnitEntryData>
         {
             lanaData.GetUnitEntryData(),
-            ethanData.GetUnitEntryData()//,
-            //saeiData.GetUnitEntryData(),
-            //vaueData.GetUnitEntryData(),
-            //mayData.GetUnitEntryData(),
-            //runliData.GetUnitEntryData(),
-            //colinData.GetUnitEntryData(),
-            //hanaeiData.GetUnitEntryData()
+            ethanData.GetUnitEntryData(),
+            saeiData.GetUnitEntryData(),
+            vaueData.GetUnitEntryData(),
+            mayData.GetUnitEntryData(),
+            runliData.GetUnitEntryData(),
+            colinData.GetUnitEntryData(),
+            hanaeiData.GetUnitEntryData()
         };
         return dataList;
     }
