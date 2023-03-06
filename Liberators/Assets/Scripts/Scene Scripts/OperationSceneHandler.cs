@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class OperationSceneHandler
 {
     public static List<SquadData> squadDataList = new List<SquadData>();
-    public static battleOutcome battleOutcome = battleOutcome.UNSAVED;
+    public static BattleOutcome battleOutcome = BattleOutcome.UNSAVED;
     public static SquadData attackerData;
     public static int attackerId;
     public static SquadData defenderData;
@@ -19,7 +19,7 @@ public class OperationSceneHandler
         attackerData = null;
         defenderData = null;
         squadDataList.Clear();
-        battleOutcome = battleOutcome.UNSAVED;
+        battleOutcome = BattleOutcome.UNSAVED;
         data = null;
     }
 }

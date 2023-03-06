@@ -21,6 +21,9 @@ public class Weapon : ScriptableObject
     EquipDamageClass damageClass;
 
     [SerializeField]
+    EquipSizeClass sizeClass;
+
+    [SerializeField]
     int weaponStrength;
 
     [SerializeField]
@@ -33,7 +36,7 @@ public class Weapon : ScriptableObject
     int weaponRange;
 
     [SerializeField]
-    element weaponElement;
+    DamageElement weaponElement;
 
     [SerializeField]
     List<Ability> abilities;
@@ -66,12 +69,17 @@ public class Weapon : ScriptableObject
         return damageClass;
     }
 
+    public EquipSizeClass GetSizeClass()
+    {
+        return sizeClass;
+    }
+
     public int[] GetWeaponStats()
     {
         return new int[] { weaponStrength, weaponHit, weaponCrit, weaponRange };
     }
 
-    public element GetWeaponElement()
+    public DamageElement GetWeaponElement()
     {
         return weaponElement;
     }

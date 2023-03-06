@@ -40,3 +40,5 @@ MonoBehaviour:
   passable: 1
   hitBonus: 0
   avoidBonus: 0
+  matchFlags: []
+  idFlag: Grass

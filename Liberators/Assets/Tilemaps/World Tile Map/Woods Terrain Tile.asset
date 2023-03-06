@@ -56,4 +56,4 @@ MonoBehaviour:
   passable: 1
   movementFactor: 30
   battleMaps:
-  - GrassBattle0
+  - ForestBattle0

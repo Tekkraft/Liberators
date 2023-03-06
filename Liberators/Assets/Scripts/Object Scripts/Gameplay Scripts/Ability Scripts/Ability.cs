@@ -15,7 +15,7 @@ public class Ability : ScriptableObject
     int abilityAP;
 
     [SerializeField]
-    actionType abilityType;
+    ActionType abilityType;
 
     [SerializeField]
     List<EquipHandClass> equipHandRequirement;
@@ -25,6 +25,9 @@ public class Ability : ScriptableObject
 
     [SerializeField]
     List<EquipDamageClass> equipDamageRequirement;
+
+    [SerializeField]
+    List<EquipSizeClass> equipSizeRequirement;
 
     public string getName()
     {
@@ -41,7 +44,7 @@ public class Ability : ScriptableObject
         return abilityAP;
     }
 
-    public actionType getAbilityType()
+    public ActionType getAbilityType()
     {
         return abilityType;
     }
@@ -59,5 +62,10 @@ public class Ability : ScriptableObject
     public List<EquipDamageClass> GetDamageRequirements()
     {
         return equipDamageRequirement;
+    }
+
+    public List<EquipSizeClass> GetSizeRequirements()
+    {
+        return equipSizeRequirement;
     }
 }

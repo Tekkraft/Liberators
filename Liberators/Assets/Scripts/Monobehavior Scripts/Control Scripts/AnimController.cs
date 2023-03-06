@@ -30,7 +30,7 @@ public class AnimController : MonoBehaviour
             terminateAnimation();
             yield break;
         }
-        battleTeam activeTeam = sequence.getSequence()[0].getAnimationSteps()[0].getActor().GetComponent<UnitController>().getTeam();
+        BattleTeam activeTeam = sequence.getSequence()[0].getAnimationSteps()[0].getActor().GetComponent<UnitController>().getTeam();
         List<GameObject> leftUnits = new List<GameObject>();
         List<GameObject> rightUnits = new List<GameObject>();
         foreach (AnimationBlock block in sequence.getSequence())
@@ -160,7 +160,8 @@ public class AnimController : MonoBehaviour
     void setupDamageText(string message, Vector3 translation, AnimationStep step)
     {
         GameObject temp = GameObject.Instantiate(damageText, activeUnitsUI[step.getActor()].transform);
-        temp.transform.Translate(translation);
+        float ratio = temp.GetComponent<RectTransform>().sizeDelta.y / 25;
+        temp.GetComponent<RectTransform>().localPosition = translation * ratio;
         temp.GetComponent<TMPro.TextMeshProUGUI>().text = message;
         damageTextList.Add(temp);
         if (Mathf.Abs(activeUnitsUI[step.getActor()].GetComponent<RectTransform>().rotation.eulerAngles.y) == 180)

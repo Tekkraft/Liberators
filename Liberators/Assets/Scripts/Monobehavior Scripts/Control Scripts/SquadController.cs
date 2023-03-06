@@ -11,8 +11,8 @@ public class SquadController : MonoBehaviour
     public float baseSpeed;
     public List<UnitEntryData> unitList;
     public List<Vector2Int> spawnLocations;
-    public operationsTeam team;
-    public operationsMoveType movementType;
+    public OperationsTeam team;
+    public OperationsMoveType movementType;
     public bool squadAnchored = false;
 
     Grid mainGrid;
@@ -138,7 +138,7 @@ public class SquadController : MonoBehaviour
         return unitList;
     }
 
-    public operationsTeam getTeam()
+    public OperationsTeam getTeam()
     {
         return team;
     }
@@ -159,13 +159,13 @@ public class SquadData
     public float baseSpeed;
     public List<UnitEntryData> unitList;
     public List<Vector2Int> spawnLocations;
-    public operationsTeam team;
+    public OperationsTeam team;
     public Vector2 position;
     public string name;
-    public operationsAI squadAI;
+    public OperationsAI squadAI;
     public bool squadAnchored;
 
-    public SquadData(float baseSpeed, List<UnitEntryData> unitList, List<Vector2Int> spawnLocations, operationsTeam team, Vector2 position, string name, operationsAI squadAI, bool squadAnchored)
+    public SquadData(float baseSpeed, List<UnitEntryData> unitList, List<Vector2Int> spawnLocations, OperationsTeam team, Vector2 position, string name, OperationsAI squadAI, bool squadAnchored)
     {
         this.baseSpeed = baseSpeed;
         this.unitList = unitList;

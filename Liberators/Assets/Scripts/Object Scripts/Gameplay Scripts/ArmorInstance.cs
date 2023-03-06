@@ -52,7 +52,7 @@ public class ArmorInstance : ItemInstance
         return armorBase.GetDefenses();
     }
 
-    public float GetInstanceElementResist(element searchElement)
+    public float GetInstanceElementResist(DamageElement searchElement)
     {
         return armorBase.GetElementResist(searchElement);
     }

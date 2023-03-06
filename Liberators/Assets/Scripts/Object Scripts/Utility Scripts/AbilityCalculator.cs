@@ -9,11 +9,11 @@ public class AbilityCalculator
     BattleController battleController;
     Vector2Int calculatorPosition;
     Vector2 targetDirection;
-    battleTeam targetTeam;
+    BattleTeam targetTeam;
 
     CombatAbility linkedAbility;
 
-    public AbilityCalculator(battleTeam targetTeam, CombatAbility ability, Vector2Int calcPos, Vector2 targetDirection)
+    public AbilityCalculator(BattleTeam targetTeam, CombatAbility ability, Vector2Int calcPos, Vector2 targetDirection)
     {
         mainGrid = GameObject.FindObjectOfType<Grid>();
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
@@ -24,9 +24,9 @@ public class AbilityCalculator
         this.targetTeam = targetTeam;
     }
 
-    public List<GameObject> getAffectedUnits(TargetInstruction targetInstruction, UnitController attackingUnit)
+    public List<GameObject> getAffectedUnits(TargetInstructionInstance targetInstruction, UnitController attackingUnit)
     {
-        if (targetInstruction.getTargetType() != targetType.BEAM)
+        if (targetInstruction.getTargetType() != TargetType.BEAM)
         {
             return checkAOERange(targetInstruction, attackingUnit);
         }
@@ -41,7 +41,7 @@ public class AbilityCalculator
 
     }
 
-    List<GameObject> checkAOERange(TargetInstruction targetInstruction, UnitController attackingUnit)
+    List<GameObject> checkAOERange(TargetInstructionInstance targetInstruction, UnitController attackingUnit)
     {
         int rangeMax = targetInstruction.getMaxRange();
         if (!targetInstruction.getMaxRangeFixed())
@@ -61,7 +61,7 @@ public class AbilityCalculator
     List<GameObject> checkBeamRange(UnitController attackingUnit)
     {
         AbilityData abilityData = linkedAbility.getAbilityData();
-        TargetInstruction targetInstruction = abilityData.getTargetInstruction();
+        TargetInstructionInstance targetInstruction = abilityData.getTargetInstruction();
         int rangeMax = targetInstruction.getMaxRange();
         if (!targetInstruction.getMaxRangeFixed())
         {

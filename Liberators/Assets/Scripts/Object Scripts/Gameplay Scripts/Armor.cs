@@ -43,7 +43,7 @@ public class Armor : ScriptableObject
         return new int[] { armorDefense, armorMagDefense };
     }
 
-    public float GetElementResist(element searchElement)
+    public float GetElementResist(DamageElement searchElement)
     {
         ArmorResistPair value = ContainsElement(searchElement);
         if (value != null)
@@ -53,7 +53,7 @@ public class Armor : ScriptableObject
         return 1f;
     }
 
-    ArmorResistPair ContainsElement(element searchElement)
+    ArmorResistPair ContainsElement(DamageElement searchElement)
     {
         if (armorResistances == null)
         {
@@ -73,12 +73,12 @@ public class Armor : ScriptableObject
 [System.Serializable]
 class ArmorResistPair {
     [SerializeField]
-    element armorElement;
+    DamageElement armorElement;
 
     [SerializeField]
     float resistPercent;
 
-    public element GetElement()
+    public DamageElement GetElement()
     {
         return armorElement;
     }

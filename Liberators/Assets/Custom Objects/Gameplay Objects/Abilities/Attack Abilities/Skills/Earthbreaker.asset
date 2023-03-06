@@ -16,6 +16,9 @@ MonoBehaviour:
   abilitySprite: {fileID: 21300000, guid: f97e95fd29d5a43c6bb6357584f3e914, type: 3}
   abilityAP: 2
   abilityType: 2
+  equipHandRequirement: 
+  equipBaseRequirement: 
+  equipDamageRequirement: 
   abilityData:
     targetInstruction:
       targetType: 2

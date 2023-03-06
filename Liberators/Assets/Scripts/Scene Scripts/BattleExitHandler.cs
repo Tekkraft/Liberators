@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BattleExitHandler
 {
-    public static battleOutcome outcome = battleOutcome.UNSAVED;
+    public static BattleOutcome outcome = BattleOutcome.UNSAVED;
     public static int turn_count = 0;
     public static List<UnitEntryData> unitData = new List<UnitEntryData>();
     public static int playerUnitsRemaining;
@@ -12,7 +12,7 @@ public class BattleExitHandler
 
     public static void reset()
     {
-        outcome = battleOutcome.UNSAVED;
+        outcome = BattleOutcome.UNSAVED;
         turn_count = 0;
         unitData = new List<UnitEntryData>();
         playerUnitsRemaining = 0;

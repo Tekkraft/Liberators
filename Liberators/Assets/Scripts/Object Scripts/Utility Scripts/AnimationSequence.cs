@@ -27,7 +27,7 @@ public class AnimationBlock
 
     public AnimationBlock(CombatData dataEntry)
     {
-        if (dataEntry.getCombatDataType() == combatDataType.DAMAGE)
+        if (dataEntry.getCombatDataType() == CombatDataType.DAMAGE)
         {
             animationSteps.Add(new AnimationStep(dataEntry.getAttacker(), "attack", 0));
             if (!dataEntry.getAttackHit())
@@ -55,7 +55,7 @@ public class AnimationBlock
                 animationSteps.Add(new AnimationStep(dataEntry.getDefender(), "defend", dataEntry.getDamageDealt()));
             }
         }
-        else if (dataEntry.getCombatDataType() == combatDataType.STATUS)
+        else if (dataEntry.getCombatDataType() == CombatDataType.STATUS)
         {
             if (dataEntry.getStatusInflicted())
             {

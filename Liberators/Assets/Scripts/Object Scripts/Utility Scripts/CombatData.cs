@@ -5,17 +5,17 @@ using UnityEngine;
 public class CombatData
 {
     GameObject attacker, defender;
-    EffectInstruction attackEffect;
+    EffectInstructionInstance attackEffect;
     bool attackHit, attackCrit;
     int damageDealt, startingHP, endingHP;
     bool defenderKilled;
     Status status;
     bool statusInflicted;
-    combatDataType combatDataType;
+    CombatDataType combatDataType;
 
-    public CombatData(GameObject attacker, GameObject defender, EffectInstruction attackEffect, bool attackHit, bool attackCrit, int damageDealt, int startingHP, bool defenderKilled)
+    public CombatData(GameObject attacker, GameObject defender, EffectInstructionInstance attackEffect, bool attackHit, bool attackCrit, int damageDealt, int startingHP, bool defenderKilled)
     {
-        combatDataType = combatDataType.DAMAGE;
+        combatDataType = CombatDataType.DAMAGE;
         this.attacker = attacker;
         this.defender = defender;
         this.attackEffect = attackEffect;
@@ -29,7 +29,7 @@ public class CombatData
 
     public CombatData(GameObject attacker, GameObject defender, Status status, bool statusInflicted)
     {
-        combatDataType = combatDataType.STATUS;
+        combatDataType = CombatDataType.STATUS;
         this.attacker = attacker;
         this.defender = defender;
         this.status = status;
@@ -46,7 +46,7 @@ public class CombatData
         return defender;
     }
 
-    public EffectInstruction getEffectInstruction()
+    public EffectInstructionInstance getEffectInstruction()
     {
         return attackEffect;
     }
@@ -91,7 +91,7 @@ public class CombatData
         return statusInflicted;
     }
 
-    public combatDataType getCombatDataType()
+    public CombatDataType getCombatDataType()
     {
         return combatDataType;
     }

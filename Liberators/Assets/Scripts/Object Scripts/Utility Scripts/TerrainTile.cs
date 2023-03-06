@@ -10,14 +10,23 @@ public class TerrainTile : Tile
 {
     public string tileName;
 
-    public List<Sprite> spriteList;
-    public bool single;
+    [SerializeField]
+    List<Sprite> spriteList;
+
+    [SerializeField]
+    bool single;
 
     //Can units move past this tile?
     public bool passable = true;
 
     public int hitBonus;
     public int avoidBonus;
+
+    [SerializeField]
+    List<string> matchFlags;
+
+    [SerializeField]
+    string idFlag;
 
     public string getTileName()
     {
@@ -66,24 +75,34 @@ public class TerrainTile : Tile
 
         //Add to border case if tile absent
         int borderCase = 0;
-        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(1, 0, 0)) && tilemap.GetTile<TerrainTile>(position + new Vector3Int(1, 0, 0)).tileName.Equals(tileName)))
+        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(1, 0, 0)) && matchFlags.Contains(tilemap.GetTile<TerrainTile>(position + new Vector3Int(1, 0, 0)).GetIDFlag())))
         {
             borderCase += 1;
         }
-        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(-1, 0, 0)) && tilemap.GetTile<TerrainTile>(position + new Vector3Int(-1, 0, 0)).tileName.Equals(tileName)))
+        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(-1, 0, 0)) && matchFlags.Contains(tilemap.GetTile<TerrainTile>(position + new Vector3Int(-1, 0, 0)).GetIDFlag())))
         {
             borderCase += 2;
         }
-        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, 1, 0)) && tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, 1, 0)).tileName.Equals(tileName)))
+        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, 1, 0)) && matchFlags.Contains(tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, 1, 0)).GetIDFlag())))
         {
             borderCase += 4;
         }
-        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, -1, 0)) && tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, -1, 0)).tileName.Equals(tileName)))
+        if (!(tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, -1, 0)) && matchFlags.Contains(tilemap.GetTile<TerrainTile>(position + new Vector3Int(0, -1, 0)).GetIDFlag())))
         {
             borderCase += 8;
         }
 
         tileData.sprite = spriteList[borderCase];
+    }
+
+    public List<string> GetMatchFlags()
+    {
+        return matchFlags;
+    }
+
+    public string GetIDFlag()
+    {
+        return idFlag;
     }
 
     //"Borrowed" from Unity Documentation

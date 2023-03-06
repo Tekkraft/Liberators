@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c92ac47b0374eb5becdf2af4456ab0, type: 3}
+  m_Name: Road Core Terrain Tile
+  m_EditorClassIdentifier: 
+  m_Sprite: {fileID: 21300000, guid: 2a302b755ba4045348ace398f20ec5fb, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Transform:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
+  m_InstancedGameObject: {fileID: 0}
+  m_Flags: 1
+  m_ColliderType: 1
+  tileName: Road
+  spriteList:
+  - {fileID: 21300000, guid: 0815be87a573d45c9b83c1b3fc564116, type: 3}
+  - {fileID: 21300000, guid: 0a961c7e8de844b70bbc68e2efaef41b, type: 3}
+  - {fileID: 21300000, guid: a9b5f0490b4f34b128f3e65e9775957c, type: 3}
+  - {fileID: 21300000, guid: 1f6924717ffe1475592135adaef465e3, type: 3}
+  - {fileID: 21300000, guid: 3e648e1d4e20f4635ac5e30c06651d36, type: 3}
+  - {fileID: 21300000, guid: 51bf4c64196f94417b17ae09a0829cc3, type: 3}
+  - {fileID: 21300000, guid: 7e08b3acd5687467d9aa0e8f234148bd, type: 3}
+  - {fileID: 21300000, guid: ca091a5290956426796cdd1e705393bc, type: 3}
+  - {fileID: 21300000, guid: f2412dc374b0248df83e48f5a9ca69cc, type: 3}
+  - {fileID: 21300000, guid: 0184801218fba4b2fa05eaf337ba8c5b, type: 3}
+  - {fileID: 21300000, guid: 9b12cbccddb2f4b0b8a83ea6a7390d7e, type: 3}
+  - {fileID: 21300000, guid: d4822030c454c4a8db25d709aaff9120, type: 3}
+  - {fileID: 21300000, guid: 507cbf8f8b84841ffb0c2f561917ae06, type: 3}
+  - {fileID: 21300000, guid: d2ab1fab96b5a40d1a9f1ca40203603c, type: 3}
+  - {fileID: 21300000, guid: 58704fd9a52274716a836a2a35e96d6d, type: 3}
+  - {fileID: 21300000, guid: 2a302b755ba4045348ace398f20ec5fb, type: 3}
+  single: 0
+  passable: 1
+  hitBonus: 0
+  avoidBonus: 0
+  matchFlags:
+  - RoadCore
+  idFlag: RoadCore

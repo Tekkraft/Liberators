@@ -56,3 +56,6 @@ MonoBehaviour:
   passable: 1
   hitBonus: 0
   avoidBonus: 20
+  matchFlags:
+  - Bush
+  idFlag: Bush

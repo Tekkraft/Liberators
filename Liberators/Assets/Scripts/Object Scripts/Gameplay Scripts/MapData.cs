@@ -18,7 +18,7 @@ public class MapData : ScriptableObject
     List<ReachCondition> reachWinConditions;
 
     [SerializeField]
-    List<TargetCondition> targetWinConditions;
+    List<DefeatCondition> targetWinConditions;
 
     [SerializeField]
     List<TimeCondition> timeWinConditions;
@@ -27,7 +27,7 @@ public class MapData : ScriptableObject
     List<ReachCondition> reachLoseConditions;
 
     [SerializeField]
-    List<TargetCondition> targetLoseConditions;
+    List<DefeatCondition> targetLoseConditions;
 
     [SerializeField]
     List<TimeCondition> timeLoseConditions;
@@ -90,7 +90,7 @@ public class MapData : ScriptableObject
             }
         }
 
-        foreach (TargetCondition target in targetWinConditions)
+        foreach (DefeatCondition target in targetWinConditions)
         {
             if (!unitList.ContainsValue(target.target))
             {
@@ -128,7 +128,7 @@ public class MapData : ScriptableObject
             }
         }
 
-        foreach (TargetCondition target in targetLoseConditions)
+        foreach (DefeatCondition target in targetLoseConditions)
         {
             if (!unitList.ContainsValue(target.target))
             {
@@ -159,11 +159,11 @@ class ReachCondition
 {
     public Vector2 corner1;
     public Vector2 corner2;
-    public battleTeam targetTeam;
+    public BattleTeam targetTeam;
 }
 
 [System.Serializable]
-class TargetCondition
+class DefeatCondition
 {
     public GameObject target;
 }

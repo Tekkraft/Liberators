@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c92ac47b0374eb5becdf2af4456ab0, type: 3}
+  m_Name: Tree Tile
+  m_EditorClassIdentifier: 
+  m_Sprite: {fileID: 21300000, guid: 4cf91b5e04b1c4572b325f5a4e44d40b, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Transform:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
+  m_InstancedGameObject: {fileID: 0}
+  m_Flags: 1
+  m_ColliderType: 1
+  tileName: 
+  spriteList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: a5e98440b2d944cfc91567ed6509e36c, type: 3}
+  - {fileID: 21300000, guid: 4cf91b5e04b1c4572b325f5a4e44d40b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: 9af45a1367bc848b4ae5de8f47f2ac92, type: 3}
+  - {fileID: 21300000, guid: b88a7f59bd0a2482b934b2d8c234e83f, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 21300000, guid: e7bd7454b3bb14718bbb5895b0a28e36, type: 3}
+  single: 0
+  passable: 0
+  hitBonus: 0
+  avoidBonus: 0
+  matchFlags:
+  - Tree
+  idFlag: Tree

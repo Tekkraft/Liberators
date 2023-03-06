@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ButtonController : MonoBehaviour
 {
-    actionType linkedAction;
+    ActionType linkedAction;
     Ability linkedAbility;
     GameObject linkedUnit;
     Grid mainGrid;
@@ -33,7 +33,7 @@ public class ButtonController : MonoBehaviour
     {
         if (gameObject.GetComponent<Button>().interactable || fixedAction)
         {
-            gameObject.GetComponent<Button>().interactable = battleController.GetTurnPhase() == turnPhase.MAIN;
+            gameObject.GetComponent<Button>().interactable = battleController.GetTurnPhase() == TurnPhase.MAIN;
         }
     }
 
@@ -49,10 +49,10 @@ public class ButtonController : MonoBehaviour
         linkedAction = linkedAbility.getAbilityType();
         switch (linkedAction)
         {
-            case actionType.MOVE:
+            case ActionType.MOVE:
                 gameObject.transform.GetChild(0).GetComponent<Image>().sprite = moveSprite;
                 break;
-            case actionType.COMBAT:
+            case ActionType.COMBAT:
                 gameObject.transform.GetChild(0).GetComponent<Image>().sprite = combatSprite;
                 break;
         }

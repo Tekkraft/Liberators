@@ -35,5 +35,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OperationEnd.unity
     guid: 65b9a003a1e0b47e4b87e1ad316614ed
+  - enabled: 1
+    path: Assets/Scenes/Road Battles/RoadBattle0.unity
+    guid: c514a54db816a4c8a899052898cd4c49
+  - enabled: 1
+    path: Assets/Scenes/Road Battles/RoadBattle1.unity
+    guid: b74be7875cb8e467dae880d8b4959915
+  - enabled: 1
+    path: Assets/Scenes/Forest Battles/ForestBattle0.unity
+    guid: b5cb37be1d8804aae8c91d8a3b01b475
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ca0fad2e3a1044d0b9227ce384067d5e, type: 2}

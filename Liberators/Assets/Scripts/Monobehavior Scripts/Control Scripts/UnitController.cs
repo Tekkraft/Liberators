@@ -11,7 +11,7 @@ public class UnitController : MonoBehaviour
     MapController mapController;
     BattleController battleController;
     List<GameObject> markerList = new List<GameObject>();
-    public battleTeam team;
+    public BattleTeam team;
 
     public Unit unitTemplate;
     UnitInstance unitObject;
@@ -69,7 +69,7 @@ public class UnitController : MonoBehaviour
         allAbilities.AddRange(unitObject.getAbilities());
     }
 
-    public void createUnit(int[] unitStats, battleTeam team, int startingHP)
+    public void createUnit(int[] unitStats, BattleTeam team, int startingHP)
     {
         maxHP = unitStats[0];
         mov = unitStats[1];
@@ -159,7 +159,7 @@ public class UnitController : MonoBehaviour
         return equippedArmor;
     }
 
-    public CombatData attackUnit(UnitController targetController, EffectInstruction attackEffect, int critChance)
+    public CombatData attackUnit(UnitController targetController, EffectInstructionInstance attackEffect, int critChance)
     {
         int damage = getAttack(attackEffect);
         bool crit = false;
@@ -172,17 +172,17 @@ public class UnitController : MonoBehaviour
         return new CombatData(gameObject, targetController.gameObject, attackEffect, true, crit, baseData.Key, baseData.Value, baseData.Value - baseData.Key <= 0);
     }
 
-    public void healUnit(UnitController targetController, EffectInstruction healEffect)
+    public void healUnit(UnitController targetController, EffectInstructionInstance healEffect)
     {
         int healing = getHealing(healEffect);
         targetController.restoreHealth(healing);
     }
 
     //Passive Damage
-    public KeyValuePair<int, int> takeDamage(int damage, element damageElement)
+    public KeyValuePair<int, int> takeDamage(int damage, DamageElement damageElement)
     {
         int startingHP = currentHP;
-        element effectElement = damageElement;
+        DamageElement effectElement = damageElement;
         float damageMultiplier = getDamageReduction(effectElement);
         int damageTaken = Mathf.FloorToInt(damage * damageMultiplier);
         if (damageTaken < 0)
@@ -195,10 +195,10 @@ public class UnitController : MonoBehaviour
     }
 
     //Attack Damage
-    public KeyValuePair<int, int> takeDamage(int damage, EffectInstruction attackEffect, WeaponInstance attackerWeapon)
+    public KeyValuePair<int, int> takeDamage(int damage, EffectInstructionInstance attackEffect, WeaponInstance attackerWeapon)
     {
         int startingHP = currentHP;
-        element effectElement = attackEffect.getEffectElement();
+        DamageElement effectElement = attackEffect.getEffectElement();
         if (attackerWeapon != null && !attackerWeapon.NullCheckBase() && !attackEffect.getEffectIndependentElement())
         {
             effectElement = attackerWeapon.GetInstanceWeaponElement();
@@ -250,7 +250,7 @@ public class UnitController : MonoBehaviour
         return new CombatData(source, gameObject, newStatus, true);
     }
 
-    public int getHealing(EffectInstruction healEffect)
+    public int getHealing(EffectInstructionInstance healEffect)
     {
         int healing = 0;
         switch (healEffect.getEffectDamageSource())
@@ -269,7 +269,7 @@ public class UnitController : MonoBehaviour
         return healing;
     }
 
-    public int getAttack(EffectInstruction attackEffect)
+    public int getAttack(EffectInstructionInstance attackEffect)
     {
         int damage = 0;
         if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
@@ -295,12 +295,12 @@ public class UnitController : MonoBehaviour
     public int getExpectedDamage(UnitController targetController, AbilityData abilityData)
     {
         int damage = 0;
-        foreach (EffectInstruction effect in abilityData.getEffectInstructions())
+        foreach (EffectInstructionInstance effect in abilityData.getEffectInstructions())
         {
-            if (effect.getEffectType() == effectType.DAMAGE)
+            if (effect.getEffectType() == EffectType.DAMAGE)
             {
                 damage += getExpectedDamageInstance(targetController, effect);
-                element effectElement = effect.getEffectElement();
+                DamageElement effectElement = effect.getEffectElement();
                 if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase() && !effect.getEffectIndependentElement())
                 {
                     effectElement = equippedMainHandWeapon.GetInstanceWeaponElement();
@@ -312,7 +312,7 @@ public class UnitController : MonoBehaviour
         return damage;
     }
 
-    public int getExpectedDamageInstance(UnitController targetController, EffectInstruction attackEffect)
+    public int getExpectedDamageInstance(UnitController targetController, EffectInstructionInstance attackEffect)
     {
         int damage = 0;
         if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
@@ -340,7 +340,7 @@ public class UnitController : MonoBehaviour
         return damage;
     }
 
-    public int getDefense(EffectInstruction attackEffect)
+    public int getDefense(EffectInstructionInstance attackEffect)
     {
         int defense = 0;
         if (equippedArmor != null && !equippedArmor.NullCheckBase())
@@ -358,7 +358,7 @@ public class UnitController : MonoBehaviour
         return defense;
     }
 
-    public float getDamageReduction(element attackElement)
+    public float getDamageReduction(DamageElement attackElement)
     {
         if (equippedArmor != null && !equippedArmor.NullCheckBase())
         {
@@ -387,7 +387,7 @@ public class UnitController : MonoBehaviour
         return new int[] { mov, maxHP, currentHP, str, pot, acu, fin, rea };
     }
 
-    public battleTeam getTeam()
+    public BattleTeam getTeam()
     {
         return team;
     }

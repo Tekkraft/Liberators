@@ -15,6 +15,8 @@ public class UIController : MonoBehaviour
     public GameObject combatPreview;
     public GameObject unitDataPreview;
     public GameObject animationPanel;
+    [SerializeField]
+    GameObject uiBaseBar;
 
     GameObject activeBanner;
     GameObject activePreview;
@@ -82,18 +84,18 @@ public class UIController : MonoBehaviour
         {
             for (int i = -count / 2; i < count / 2; i++)
             {
-                GameObject newButton = GameObject.Instantiate(button, transform);
+                GameObject newButton = GameObject.Instantiate(button, uiBaseBar.GetComponent<RectTransform>());
                 allButtons.Add(newButton);
-                newButton.transform.Translate(new Vector2((spacing / 2 + spacing * i), 0));
+                newButton.GetComponent<RectTransform>().localPosition = new Vector2(spacing / 2 + spacing * i, -2 * ratio);
             }
         }
         else
         {
             for (int i = (-count + 1) / 2; i < (count + 1) / 2; i++)
             {
-                GameObject newButton = GameObject.Instantiate(button, transform);
+                GameObject newButton = GameObject.Instantiate(button, uiBaseBar.GetComponent<RectTransform>());
                 allButtons.Add(newButton);
-                newButton.transform.Translate(new Vector2((spacing * i), 0));
+                newButton.GetComponent<RectTransform>().localPosition = new Vector2(spacing * i, -2 * ratio);
             }
         }
         for (int i = 0; i < allButtons.Count; i++)

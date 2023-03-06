@@ -82,12 +82,17 @@ public class WeaponInstance : ItemInstance
         return weaponBase.GetDamageClass();
     }
 
+    public EquipSizeClass GetInstanceSizeClass()
+    {
+        return weaponBase.GetSizeClass();
+    }
+
     public int[] GetInstanceWeaponStats()
     {
         return weaponBase.GetWeaponStats();
     }
 
-    public element GetInstanceWeaponElement()
+    public DamageElement GetInstanceWeaponElement()
     {
         return weaponBase.GetWeaponElement();
     }

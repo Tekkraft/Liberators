@@ -10,19 +10,19 @@ public class EndController : MonoBehaviour
     {
         switch (BattleExitHandler.outcome)
         {
-            case battleOutcome.VICTORY:
+            case BattleOutcome.VICTORY:
                 GameObject.Find("Victory Label").GetComponent<TextMeshProUGUI>().text = "Total Victory!";
                 break;
 
-            case battleOutcome.ROUTED:
+            case BattleOutcome.ROUTED:
                 GameObject.Find("Victory Label").GetComponent<TextMeshProUGUI>().text = "Routed...";
                 break;
 
-            case battleOutcome.SUCCESS:
+            case BattleOutcome.SUCCESS:
                 GameObject.Find("Victory Label").GetComponent<TextMeshProUGUI>().text = "Victory!";
                 break;
 
-            case battleOutcome.FAILURE:
+            case BattleOutcome.FAILURE:
                 GameObject.Find("Victory Label").GetComponent<TextMeshProUGUI>().text = "Defeat...";
                 break;
         }

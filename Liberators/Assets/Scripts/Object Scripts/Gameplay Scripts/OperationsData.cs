@@ -54,13 +54,13 @@ public class SquadSeralization
     List<Vector2Int> unitPositions;
 
     [SerializeField]
-    operationsTeam team;
+    OperationsTeam team;
 
     [SerializeField]
-    operationsAI squadAI;
+    OperationsAI squadAI;
 
     [SerializeField]
-    operationsMoveType movementType;
+    OperationsMoveType movementType;
 
     [SerializeField]
     bool squadAnchored;
@@ -85,17 +85,17 @@ public class SquadSeralization
         return unitPositions;
     }
 
-    public operationsTeam getTeam()
+    public OperationsTeam getTeam()
     {
         return team;
     }
 
-    public operationsAI getSquadAI()
+    public OperationsAI getSquadAI()
     {
         return squadAI;
     }
 
-    public operationsMoveType getMovementType()
+    public OperationsMoveType getMovementType()
     {
         return movementType;
     }
@@ -116,14 +116,14 @@ public class OperationsReachCondition
     Vector2Int corner2;
 
     [SerializeField]
-    operationsTeam team;
+    OperationsTeam team;
 
     public List<Vector2Int> getReachCorners()
     {
         return new List<Vector2Int>() { corner1, corner2 };
     }
 
-    public operationsTeam getReachTeam()
+    public OperationsTeam getReachTeam()
     {
         return team;
     }

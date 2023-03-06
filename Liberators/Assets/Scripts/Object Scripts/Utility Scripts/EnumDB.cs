@@ -11,19 +11,19 @@ public enum damageType { PHYSICAL, MAGIC, TRUE }
  * Projectile - Moving hitbox, almost always has some sort of ramp up/down
  * Self - User only
  */
-public enum targetType { POINT, TILE, TARGET, BEAM, PROJECTILE, SELF, NONE }
+public enum TargetType { POINT, TILE, TARGET, BEAM, PROJECTILE, SELF, NONE }
 
-public enum targetCondition { RANDOMDUPE, RANDOMUNIQUE, SELECTED, ALL }
+public enum TargetCondition { RANDOMDUPE, RANDOMUNIQUE, SELECTED, ALL }
 
-public enum targetFilter { ENEMY, ALLY, HPPERC }
+public enum TargetFilter { ENEMY, ALLY, HPPERC }
 
-public enum effectType { DAMAGE, HEAL, STATUS, INVOKE, MOVE }
+public enum EffectType { DAMAGE, HEAL, STATUS, INVOKE, MOVE }
 
-public enum element { IMPACT, KINETIC, BALLISTIC, EXPLOSIVE, LASER, PLASMA, IONIC, AETHER, FORCE, LIGHT, DARK, FIRE, WATER, WIND, ENERGY, ICE, EARTH, WILD }
+public enum DamageElement { normal, aether, force, light, dark, fire, water, wind, energy, ice, earth, wild }
 
-public enum actionType { NONE, MOVE, COMBAT, MISC, WAIT, END };
+public enum ActionType { NONE, MOVE, COMBAT, MISC, WAIT, END };
 
-public enum statusType { BUFF, DEBUFF, NONE };
+public enum StatusType { BUFF, DEBUFF, NONE };
 
 public enum AIMode { idle, attack, flee }
 
@@ -33,23 +33,25 @@ public enum EquipBaseClass { blade, gun, focus, shield };
 
 public enum EquipDamageClass { kinetic, energy, aether };
 
+public enum EquipSizeClass { small, medium, large }
+
 public enum ArmorGrade { none, light, medium, heavy, superheavy };
 
-public enum actionPhase { INACTIVE, PREPARE, EXECUTE };
+public enum ActionPhase { INACTIVE, PREPARE, EXECUTE };
 
-public enum turnPhase { START, MAIN, PAUSE, END };
+public enum TurnPhase { START, MAIN, PAUSE, END };
 
-public enum combatDataType { DAMAGE, HEAL, STATUS };
+public enum CombatDataType { DAMAGE, HEAL, STATUS };
 
-public enum battleOutcome { UNSAVED, VICTORY, SUCCESS, FAILURE, ROUTED }
+public enum BattleOutcome { UNSAVED, VICTORY, SUCCESS, FAILURE, ROUTED }
 
-public enum battleTeam { PLAYER, ENEMY, ALLY, NEUTRAL};
+public enum BattleTeam { PLAYER, ENEMY, ALLY, NEUTRAL};
 
-public enum operationsTeam { PLAYER, ENEMY, ALLY, NEUTRAL};
+public enum OperationsTeam { PLAYER, ENEMY, ALLY, NEUTRAL};
 
-public enum operationsAI { PLAYER, WAIT, ATTACK, WANDER };
+public enum OperationsAI { PLAYER, WAIT, ATTACK, WANDER };
 
-public enum operationsMoveType { INFANTRY, VEHICLE, TRACKED, WALKED, AERIAL, NAVAL, MARINE };
+public enum OperationsMoveType { INFANTRY, VEHICLE, TRACKED, WALKED, AERIAL, NAVAL, MARINE };
 
 public enum RosterCharacter { lana, ethan, saei, vaue, may, runli, colin, hanaei}
 

@@ -16,6 +16,9 @@ MonoBehaviour:
   abilitySprite: {fileID: 21300000, guid: 536e70552918546a8b3571aea6c482d6, type: 3}
   abilityAP: 1
   abilityType: 2
+  equipHandRequirement: 
+  equipBaseRequirement: 
+  equipDamageRequirement: 
   abilityData:
     targetInstruction:
       targetType: 2
@@ -55,7 +58,7 @@ MonoBehaviour:
       effectIntensity: 0
       effectPercentBonus: -25
       effectIndependentElement: 1
-      effectElement: 3
+      effectElement: 0
       effectStatus: {fileID: 0}
       effectSpecialRules: []
     abilityRepeats: 1

@@ -47,13 +47,13 @@ public class OperationController : MonoBehaviour
         {
             GameObject temp = GameObject.Instantiate(squadPrefab);
             temp.GetComponent<SquadController>().loadSquadData(data);
-            if (data.team == operationsTeam.PLAYER)
+            if (data.team == OperationsTeam.PLAYER)
             {
                 temp.GetComponent<SpriteRenderer>().sprite = playerFlag;
                 temp.GetComponent<SquadAIController>().forceStart();
                 GameObject.FindGameObjectWithTag("MainCamera").GetComponent<OperationCameraController>().ForceCameraPosition(temp.transform.position);
             }
-            if (data.team == operationsTeam.ENEMY)
+            if (data.team == OperationsTeam.ENEMY)
             {
                 temp.GetComponent<SpriteRenderer>().sprite = enemyFlag;
             }
@@ -63,11 +63,11 @@ public class OperationController : MonoBehaviour
         //Handle battle results if present
         switch (OperationSceneHandler.battleOutcome)
         {
-            case battleOutcome.VICTORY:
+            case BattleOutcome.VICTORY:
                 destroySquad(squads[OperationSceneHandler.defenderId]);
                 break;
 
-            case battleOutcome.SUCCESS:
+            case BattleOutcome.SUCCESS:
                 if (!squads[OperationSceneHandler.defenderId].GetComponent<SquadController>().isSquadAnchored())
                 {
                     options = availableTranslations(squads[OperationSceneHandler.defenderId].transform.position);
@@ -90,7 +90,7 @@ public class OperationController : MonoBehaviour
                 }
                 break;
 
-            case battleOutcome.FAILURE:
+            case BattleOutcome.FAILURE:
                 options = availableTranslations(squads[OperationSceneHandler.attackerId].transform.position);
                 if (options.Count == 0)
                 {
@@ -100,7 +100,7 @@ public class OperationController : MonoBehaviour
                 squads[OperationSceneHandler.attackerId].transform.Translate(options[Random.Range(0,options.Count)]);
                 break;
 
-            case battleOutcome.ROUTED:
+            case BattleOutcome.ROUTED:
                 destroySquad(squads[OperationSceneHandler.attackerId]);
                 break;
         }
@@ -126,14 +126,14 @@ public class OperationController : MonoBehaviour
 
     void checkSkirmish(GameObject unit1, GameObject unit2)
     {
-        if ((unit1.GetComponent<SquadController>().getTeam() == operationsTeam.ENEMY && (unit2.GetComponent<SquadController>().getTeam() == operationsTeam.PLAYER || unit2.GetComponent<SquadController>().getTeam() == operationsTeam.ALLY)) || (unit2.GetComponent<SquadController>().getTeam() == operationsTeam.ENEMY && (unit1.GetComponent<SquadController>().getTeam() == operationsTeam.PLAYER || unit1.GetComponent<SquadController>().getTeam() == operationsTeam.ALLY)))
+        if ((unit1.GetComponent<SquadController>().getTeam() == OperationsTeam.ENEMY && (unit2.GetComponent<SquadController>().getTeam() == OperationsTeam.PLAYER || unit2.GetComponent<SquadController>().getTeam() == OperationsTeam.ALLY)) || (unit2.GetComponent<SquadController>().getTeam() == OperationsTeam.ENEMY && (unit1.GetComponent<SquadController>().getTeam() == OperationsTeam.PLAYER || unit1.GetComponent<SquadController>().getTeam() == OperationsTeam.ALLY)))
         {
             if (Vector3.Distance(unit1.transform.position, unit2.transform.position) <= 2f / 3f)
             {
                 Tilemap operationsTilemap = gameObject.GetComponent<Tilemap>();
                 Vector2Int tileCoord = gameObject.GetComponent<MapController>().gridTilePos(unit1.transform.position);
                 TerrainTileWorld tile = operationsTilemap.GetTile<TerrainTileWorld>(new Vector3Int(tileCoord.x, tileCoord.y, 0));
-                if (unit2.GetComponent<SquadController>().getTeam() == operationsTeam.PLAYER)
+                if (unit2.GetComponent<SquadController>().getTeam() == OperationsTeam.PLAYER)
                 {
                     startSkirmish(unit2, unit1, tile);
                 } else
@@ -166,7 +166,7 @@ public class OperationController : MonoBehaviour
         GameObject.Destroy(target);
     }
 
-    public GameObject getSquadOfTeam(operationsTeam targetTeam)
+    public GameObject getSquadOfTeam(OperationsTeam targetTeam)
     {
         List<GameObject> validTargets = new List<GameObject>();
         foreach (GameObject temp in squads)

@@ -6,20 +6,20 @@ using UnityEngine;
 public class AbilityData
 {
     [SerializeField]
-    TargetInstruction targetInstruction;
+    TargetInstructionInstance targetInstruction;
 
     [SerializeField]
-    List<EffectInstruction> effectInstructions;
+    List<EffectInstructionInstance> effectInstructions;
 
     [SerializeField]
     int abilityRepeats = 1;
 
-    public TargetInstruction getTargetInstruction()
+    public TargetInstructionInstance getTargetInstruction()
     {
         return targetInstruction;
     }
 
-    public List<EffectInstruction> getEffectInstructions()
+    public List<EffectInstructionInstance> getEffectInstructions()
     {
         return effectInstructions;
     }
@@ -31,19 +31,19 @@ public class AbilityData
 }
 
 [System.Serializable]
-public class TargetInstruction
+public class TargetInstructionInstance
 {
     [SerializeField]
-    targetType targetType = targetType.NONE;
+    TargetType targetType = TargetType.NONE;
 
     [SerializeField]
-    targetCondition targetCondition;
+    TargetCondition targetCondition;
 
     [SerializeField]
     int targetConditionCount = 1;
 
     [SerializeField]
-    List<TargetFilter> conditionFilters;
+    List<TargetFilterInstance> conditionFilters;
 
     [SerializeField]
     bool isMelee = false;
@@ -69,12 +69,12 @@ public class TargetInstruction
     [SerializeField]
     bool fixedHit;
 
-    public targetType getTargetType()
+    public TargetType getTargetType()
     {
         return targetType;
     }
 
-    public targetCondition getTargetCondition()
+    public TargetCondition getTargetCondition()
     {
         return targetCondition;
     }
@@ -114,7 +114,7 @@ public class TargetInstruction
         return maxRangeFixed;
     }
 
-    public List<TargetFilter> getConditionFilters()
+    public List<TargetFilterInstance> getConditionFilters()
     {
         return conditionFilters;
     }
@@ -131,17 +131,17 @@ public class TargetInstruction
 }
 
 [System.Serializable]
-public class EffectInstruction
+public class EffectInstructionInstance
 {
     //SELF in this step refers to original target
     [SerializeField]
     bool independentHit;
 
     [SerializeField]
-    TargetInstruction effectTarget;
+    TargetInstructionInstance effectTarget;
 
     [SerializeField]
-    effectType effectType;
+    EffectType effectType;
 
     [SerializeField]
     damageType effectDamageType;
@@ -159,7 +159,7 @@ public class EffectInstruction
     bool effectIndependentElement = false;
 
     [SerializeField]
-    element effectElement;
+    DamageElement effectElement;
 
     [SerializeField]
     Status effectStatus;
@@ -172,12 +172,12 @@ public class EffectInstruction
         return independentHit;
     }
 
-    public TargetInstruction getEffectTarget()
+    public TargetInstructionInstance getEffectTarget()
     {
         return effectTarget;
     }
 
-    public effectType getEffectType()
+    public EffectType getEffectType()
     {
         return effectType;
     }
@@ -207,7 +207,7 @@ public class EffectInstruction
         return effectIndependentElement;
     }
 
-    public element getEffectElement()
+    public DamageElement getEffectElement()
     {
         return effectElement;
     }
@@ -224,15 +224,15 @@ public class EffectInstruction
 }
 
 [System.Serializable]
-public class TargetFilter
+public class TargetFilterInstance
 {
     [SerializeField]
-    targetFilter targetFilter;
+    TargetFilter targetFilter;
 
     [SerializeField]
     float filterStat = 0;
 
-    public targetFilter getTargetFilter()
+    public TargetFilter getTargetFilter()
     {
         return targetFilter;
     }

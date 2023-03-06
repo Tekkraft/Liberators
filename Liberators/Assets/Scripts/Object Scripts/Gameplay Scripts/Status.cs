@@ -12,7 +12,7 @@ public class Status : ScriptableObject
     int statusDuration;
 
     [SerializeField]
-    statusType statusType;
+    StatusType statusType;
 
     [SerializeField]
     bool statusVisible;
@@ -54,7 +54,7 @@ public class Status : ScriptableObject
     int healingOverTime;
 
     [SerializeField]
-    element healthChangeElement;
+    DamageElement healthChangeElement;
 
     //Action Changes
     [SerializeField]
@@ -84,7 +84,7 @@ public class Status : ScriptableObject
         return statusDuration;
     }
 
-    public statusType getStatusType()
+    public StatusType getStatusType()
     {
         return statusType;
     }
@@ -114,7 +114,7 @@ public class Status : ScriptableObject
         return new int[] { damageOverTime, healingOverTime };
     }
 
-    public element getHealthOverTimeElement()
+    public DamageElement getHealthOverTimeElement()
     {
         return healthChangeElement;
     }

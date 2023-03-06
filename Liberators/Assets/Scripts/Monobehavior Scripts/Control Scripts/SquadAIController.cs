@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SquadAIController : MonoBehaviour
 {
-    public operationsAI squadAI;
+    public OperationsAI squadAI;
     bool inactive = true;
     bool disabled = true;
 
@@ -31,12 +31,12 @@ public class SquadAIController : MonoBehaviour
     {
         switch (squadAI)
         {
-            case operationsAI.ATTACK:
+            case OperationsAI.ATTACK:
                 attackAI();
                 inactive = false;
                 break;
 
-            case operationsAI.WANDER:
+            case OperationsAI.WANDER:
                 break;
         }
     }
