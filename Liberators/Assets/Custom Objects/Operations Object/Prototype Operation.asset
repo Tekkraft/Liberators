@@ -86,6 +86,7 @@ MonoBehaviour:
     squadAI: 2
     movementType: 0
     squadAnchored: 0
+    overrideBattlefield: 
   - squadName: Boss Squad
     squadPosition: {x: 24.5, y: -0.5}
     units:
@@ -222,6 +223,7 @@ MonoBehaviour:
     squadAI: 1
     movementType: 0
     squadAnchored: 1
+    overrideBattlefield: RoadBattle0
   - squadName: Enemy Test Squad 1
     squadPosition: {x: -22.5, y: -12.5}
     units:
@@ -242,7 +244,7 @@ MonoBehaviour:
         instanceSprite: {fileID: 0}
     - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
       mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
+        weaponBase: {fileID: 11400000, guid: 4722034b8c9224110a4f534e13155876, type: 2}
         instanceName: 
         instanceSprite: {fileID: 0}
         upgradeCapacity: 0
@@ -262,6 +264,7 @@ MonoBehaviour:
     squadAI: 1
     movementType: 0
     squadAnchored: 0
+    overrideBattlefield: 
   - squadName: Enemy Squad Beta
     squadPosition: {x: -10.5, y: 5.5}
     units:
@@ -334,6 +337,7 @@ MonoBehaviour:
     squadAI: 2
     movementType: 0
     squadAnchored: 0
+    overrideBattlefield: 
   - squadName: Enemy Squad Gamma
     squadPosition: {x: 24.5, y: 0.5}
     units:
@@ -406,6 +410,7 @@ MonoBehaviour:
     squadAI: 2
     movementType: 0
     squadAnchored: 0
+    overrideBattlefield: 
   playerReachConditions:
   - corner1: {x: 25, y: 0}
     corner2: {x: 25, y: 0}

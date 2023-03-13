@@ -126,14 +126,14 @@ public class OperationController : MonoBehaviour
 
     void checkSkirmish(GameObject unit1, GameObject unit2)
     {
-        if ((unit1.GetComponent<SquadController>().getTeam() == OperationsTeam.ENEMY && (unit2.GetComponent<SquadController>().getTeam() == OperationsTeam.PLAYER || unit2.GetComponent<SquadController>().getTeam() == OperationsTeam.ALLY)) || (unit2.GetComponent<SquadController>().getTeam() == OperationsTeam.ENEMY && (unit1.GetComponent<SquadController>().getTeam() == OperationsTeam.PLAYER || unit1.GetComponent<SquadController>().getTeam() == OperationsTeam.ALLY)))
+        if ((unit1.GetComponent<SquadController>().GetTeam() == OperationsTeam.ENEMY && (unit2.GetComponent<SquadController>().GetTeam() == OperationsTeam.PLAYER || unit2.GetComponent<SquadController>().GetTeam() == OperationsTeam.ALLY)) || (unit2.GetComponent<SquadController>().GetTeam() == OperationsTeam.ENEMY && (unit1.GetComponent<SquadController>().GetTeam() == OperationsTeam.PLAYER || unit1.GetComponent<SquadController>().GetTeam() == OperationsTeam.ALLY)))
         {
             if (Vector3.Distance(unit1.transform.position, unit2.transform.position) <= 2f / 3f)
             {
                 Tilemap operationsTilemap = gameObject.GetComponent<Tilemap>();
                 Vector2Int tileCoord = gameObject.GetComponent<MapController>().gridTilePos(unit1.transform.position);
                 TerrainTileWorld tile = operationsTilemap.GetTile<TerrainTileWorld>(new Vector3Int(tileCoord.x, tileCoord.y, 0));
-                if (unit2.GetComponent<SquadController>().getTeam() == OperationsTeam.PLAYER)
+                if (unit2.GetComponent<SquadController>().GetTeam() == OperationsTeam.PLAYER)
                 {
                     startSkirmish(unit2, unit1, tile);
                 } else
@@ -152,6 +152,14 @@ public class OperationController : MonoBehaviour
         OperationSceneHandler.defenderData = opponent.GetComponent<SquadController>().getSquadData();
         OperationSceneHandler.defenderId = squads.IndexOf(opponent);
         OperationSceneHandler.battleScene = battlefield.getBattleMaps()[Random.Range(0,battlefield.getBattleMaps().Count)];
+        if (squad.GetComponent<SquadController>().GetOverrideBattlefield() != null && squad.GetComponent<SquadController>().GetOverrideBattlefield() != "")
+        {
+            OperationSceneHandler.battleScene = squad.GetComponent<SquadController>().GetOverrideBattlefield();
+        }
+        if (opponent.GetComponent<SquadController>().GetOverrideBattlefield() != null && opponent.GetComponent<SquadController>().GetOverrideBattlefield() != "")
+        {
+            OperationSceneHandler.battleScene = opponent.GetComponent<SquadController>().GetOverrideBattlefield();
+        }
         foreach (GameObject temp in squads)
         {
             OperationSceneHandler.squadDataList.Add(temp.GetComponent<SquadController>().getSquadData());
@@ -171,7 +179,7 @@ public class OperationController : MonoBehaviour
         List<GameObject> validTargets = new List<GameObject>();
         foreach (GameObject temp in squads)
         {
-            if (temp.GetComponent<SquadController>().team == targetTeam)
+            if (temp.GetComponent<SquadController>().GetTeam() == targetTeam)
             {
                 validTargets.Add(temp);
             }
@@ -245,7 +253,7 @@ public class OperationController : MonoBehaviour
         {
             if (checkCorners(condition.getReachCorners()[0], condition.getReachCorners()[0], gameObject.GetComponent<MapController>().gridWorldPos(squad.transform.position)))
             {
-                if (squad.GetComponent<SquadController>().getTeam() == condition.getReachTeam())
+                if (squad.GetComponent<SquadController>().GetTeam() == condition.getReachTeam())
                 {
                     return true;
                 }

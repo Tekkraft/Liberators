@@ -8,12 +8,13 @@ public class SquadController : MonoBehaviour
     static float timeToCrossTile = 1.5f;
 
     //Instance Variables
-    public float baseSpeed;
-    public List<UnitEntryData> unitList;
-    public List<Vector2Int> spawnLocations;
-    public OperationsTeam team;
-    public OperationsMoveType movementType;
-    public bool squadAnchored = false;
+    float baseSpeed;
+    List<UnitEntryData> unitList;
+    List<Vector2Int> spawnLocations;
+    OperationsTeam team;
+    OperationsMoveType movementType;
+    bool squadAnchored = false;
+    string overrideBattlefield;
 
     Grid mainGrid;
     MapController mapController;
@@ -43,7 +44,7 @@ public class SquadController : MonoBehaviour
     {
         //TODO: Possible overlap problem if transform snapping not addressed
         Vector3 snapTransform = transform.position = new Vector3(Mathf.RoundToInt(transform.position.x + 0.5f) - 0.5f, Mathf.RoundToInt(transform.position.y + 0.5f) - 0.5f, -1);
-        return new SquadData(baseSpeed, unitList, spawnLocations, team, snapTransform, gameObject.name, gameObject.GetComponent<SquadAIController>().squadAI, squadAnchored);
+        return new SquadData(baseSpeed, unitList, spawnLocations, team, snapTransform, gameObject.name, gameObject.GetComponent<SquadAIController>().squadAI, squadAnchored, overrideBattlefield);
     }
 
     public void loadSquadData(SquadData data)
@@ -138,7 +139,7 @@ public class SquadController : MonoBehaviour
         return unitList;
     }
 
-    public OperationsTeam getTeam()
+    public OperationsTeam GetTeam()
     {
         return team;
     }
@@ -152,20 +153,26 @@ public class SquadController : MonoBehaviour
     {
         return squadAnchored;
     }
+
+    public string GetOverrideBattlefield()
+    {
+        return overrideBattlefield;
+    }
 }
 
 public class SquadData
 {
-    public float baseSpeed;
-    public List<UnitEntryData> unitList;
-    public List<Vector2Int> spawnLocations;
-    public OperationsTeam team;
-    public Vector2 position;
-    public string name;
-    public OperationsAI squadAI;
-    public bool squadAnchored;
+    public float baseSpeed { get; }
+    public List<UnitEntryData> unitList { get; set; }
+    public List<Vector2Int> spawnLocations { get; }
+    public OperationsTeam team { get; }
+    public Vector2 position { get; }
+    public string name { get; }
+    public OperationsAI squadAI { get; }
+    public bool squadAnchored { get; }
+    public string overrideBattlefield { get; }
 
-    public SquadData(float baseSpeed, List<UnitEntryData> unitList, List<Vector2Int> spawnLocations, OperationsTeam team, Vector2 position, string name, OperationsAI squadAI, bool squadAnchored)
+    public SquadData(float baseSpeed, List<UnitEntryData> unitList, List<Vector2Int> spawnLocations, OperationsTeam team, Vector2 position, string name, OperationsAI squadAI, bool squadAnchored, string overrideBattlefield)
     {
         this.baseSpeed = baseSpeed;
         this.unitList = unitList;
@@ -175,6 +182,7 @@ public class SquadData
         this.name = name;
         this.squadAI = squadAI;
         this.squadAnchored = squadAnchored;
+        this.overrideBattlefield = overrideBattlefield;
     }
 
     public Dictionary<UnitEntryData, Vector2Int> getPairedUnits()

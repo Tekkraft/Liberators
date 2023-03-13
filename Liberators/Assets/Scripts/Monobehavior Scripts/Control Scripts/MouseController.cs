@@ -69,6 +69,10 @@ public class MouseController : MonoBehaviour
 
     void OnCursorPrimary()
     {
+        if (uiController.mouseOverCanvas(cursorPosition))
+        {
+            return;
+        }
         switch (battleController.GetTurnPhase())
          {
             case TurnPhase.MAIN:
@@ -92,11 +96,11 @@ public class MouseController : MonoBehaviour
                 {
                     if (battleController.GetActiveAbility().getAbilityType() == ActionType.MOVE)
                     {
-                        moveAbilityTargeting();
+                        MoveAbilityTargeting();
                     }
                     else if (battleController.GetActiveAbility().getAbilityType() == ActionType.COMBAT)
                     {
-                        combatAbilityTargeting();
+                        CombatAbilityTargeting();
                     }
                 }
                 break;
@@ -126,7 +130,7 @@ public class MouseController : MonoBehaviour
 
                     case ActionPhase.INACTIVE:
                         //Open unit data
-                        getUnitData(battleController.GetUnitFromCoords(gridPosition));
+                        GetUnitData(battleController.GetUnitFromCoords(gridPosition));
                         break;
 
                     default:
@@ -146,17 +150,17 @@ public class MouseController : MonoBehaviour
         }
     }
 
-    public Vector2Int getGridPos()
+    public Vector2Int GetGridPos()
     {
         return gridPosition;
     }
 
-    public Vector2 getWorldPos()
+    public Vector2 GetWorldPos()
     {
         return worldPosition;
     }
 
-    public bool mouseOnLeft()
+    public bool MouseOnLeft()
     {
         return (cursorPosition.x / Screen.width) < 0.5;
     }
@@ -172,7 +176,7 @@ public class MouseController : MonoBehaviour
         int[] hitStats = battleController.GetHitStats(attackerController, defenderController, activeAbility.getAbilityData().getTargetInstruction());
         GameObject activePreview = uiCanvas.GetComponent<UIController>().displayPreview(defender, activeAbility, hitStats[0], attackerController.getExpectedDamage(defenderController, activeAbility.getAbilityData()), hitStats[1]);
         RectTransform previewTransform = activePreview.GetComponent<RectTransform>();
-        if (!mouseOnLeft())
+        if (!MouseOnLeft())
         {
             previewTransform.anchorMax = new Vector2(0, 0.5f);
             previewTransform.anchorMin = new Vector2(0, 0.5f);
@@ -187,7 +191,7 @@ public class MouseController : MonoBehaviour
     }
 
     //Helper Functions
-    void combatAbilityTargeting()
+    void CombatAbilityTargeting()
     {
         GameObject targetUnit = battleController.GetUnitFromCoords(gridPosition);
         if (battleController.GetActiveUnit())
@@ -198,7 +202,7 @@ public class MouseController : MonoBehaviour
         }
     }
 
-    void moveAbilityTargeting()
+    void MoveAbilityTargeting()
     {
         if (battleController.GetActiveUnit())
         {
@@ -210,7 +214,7 @@ public class MouseController : MonoBehaviour
     }
 
     //Pull up unit data UI and disable all main game input
-    void getUnitData(GameObject unit)
+    void GetUnitData(GameObject unit)
     {
         if (!unit)
         {

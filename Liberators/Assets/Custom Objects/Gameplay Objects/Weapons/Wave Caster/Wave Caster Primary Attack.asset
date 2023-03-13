@@ -14,15 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Cantrip Burst
   abilitySprite: {fileID: 8656958160885653508, guid: 6a293d27b735b484e91629383135b8bb, type: 3}
-  abilityAP: 0
-  abilityType: 0
+  abilityAP: 1
+  abilityType: 2
   equipHandRequirement: 
   equipBaseRequirement: 
   equipDamageRequirement: 
+  equipSizeRequirement: 
   abilityData:
     targetInstruction:
       targetType: 2
-      targetCondition: 3
+      targetCondition: 2
       targetConditionCount: 1
       conditionFilters:
       - targetFilter: 0

@@ -65,44 +65,52 @@ public class SquadSeralization
     [SerializeField]
     bool squadAnchored;
 
-    public string getSquadName()
+    [SerializeField]
+    string overrideBattlefield;
+
+    public string GetSquadName()
     {
         return squadName;
     }
 
-    public Vector2 getPosition()
+    public Vector2 GetPosition()
     {
         return squadPosition;
     }
 
-    public List<UnitEntryData> getUnits()
+    public List<UnitEntryData> GetUnits()
     {
         return units;
     }
 
-    public List<Vector2Int> getUnitPositions()
+    public List<Vector2Int> GetUnitPositions()
     {
         return unitPositions;
     }
 
-    public OperationsTeam getTeam()
+    public OperationsTeam GetTeam()
     {
         return team;
     }
 
-    public OperationsAI getSquadAI()
+    public OperationsAI GetSquadAI()
     {
         return squadAI;
     }
 
-    public OperationsMoveType getMovementType()
+    public OperationsMoveType GetMovementType()
     {
         return movementType;
     }
 
-    public bool getSquadAnchored()
+    public bool GetSquadAnchored()
     {
         return squadAnchored;
+    }
+
+    public string GetOverrideBattlefield()
+    {
+        return overrideBattlefield;
     }
 }
 

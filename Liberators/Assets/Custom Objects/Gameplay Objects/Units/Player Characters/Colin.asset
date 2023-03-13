@@ -23,7 +23,7 @@ MonoBehaviour:
   className: Sniper
   prfAbilities: []
   unitAnims:
-    idleSprite: {fileID: 5965223715722230172, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
+    idleSprite: {fileID: 8557108054184545537, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
     attackSprite: {fileID: -3965553791654645862, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
     evadeSprite: {fileID: -2184746243887318803, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}
     deadStaggerSprite: {fileID: -1080405199259181101, guid: 0a247513eecd047f49cb1a1e5b30a970, type: 3}

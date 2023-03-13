@@ -6,6 +6,7 @@ public class AIController : MonoBehaviour
 {
     UnitController hostController;
     List<Ability> disabledAbilities = new List<Ability>();
+    List<Vector2Int> blockedTiles = new List<Vector2Int>();
     AIMode currentAIMode = AIMode.idle;
     int abilityStep = 1;
 
@@ -111,6 +112,10 @@ public class AIController : MonoBehaviour
                         skip = false;
                         continue;
                     }
+                    if (blockedTiles.Contains(tile))
+                    {
+                        continue;
+                    }
                     foreach (GameObject enemy in AICoordinator.seenEnemies)
                     {
                         float distance = Mathf.Abs((enemy.GetComponent<UnitController>().getUnitPos() - tile).magnitude);
@@ -137,6 +142,10 @@ public class AIController : MonoBehaviour
                     if (skip)
                     {
                         skip = false;
+                        continue;
+                    }
+                    if (blockedTiles.Contains(tile))
+                    {
                         continue;
                     }
                     foreach (GameObject enemy in AICoordinator.seenEnemies)
@@ -167,6 +176,16 @@ public class AIController : MonoBehaviour
     }
 
     public void resetActions()
+    {
+        disabledAbilities.Clear();
+    }
+
+    public void blockTiles(Vector2Int tile)
+    {
+        blockedTiles.Add(tile);
+    }
+
+    public void resetBlockedTiles()
     {
         disabledAbilities.Clear();
     }

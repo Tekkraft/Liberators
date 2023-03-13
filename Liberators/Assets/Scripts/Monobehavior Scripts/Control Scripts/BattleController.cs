@@ -8,9 +8,9 @@ public class BattleController : MonoBehaviour
 {
     //Special Constants
     public static int reactThreshold = 10; //Minimum threshold for evasion bonuses for ranged attacks. No threshold for melee attacks.
-    public static float hitFactor = 2;
-    public static float avoidFactor = 1;
-    public static float critFactor = 2;
+    public static float hitFactor = 2f;
+    public static float avoidFactor = 1f;
+    public static float critFactor = 2f;
 
     //Main Variabless
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
@@ -43,6 +43,8 @@ public class BattleController : MonoBehaviour
     public MapData mapData;
     public GameObject unitTemplate;
 
+    Coroutine aiTurn;
+
     void Awake()
     {
         mapController = gameObject.GetComponent<MapController>();
@@ -66,6 +68,7 @@ public class BattleController : MonoBehaviour
     //Use this to save key data upon victory
     void OnDisable()
     {
+        AICoordinator.clearSeenEnemies();
         foreach (UnitEntryData unit in BattleEntryHandler.deployedUnits.Keys)
         {
             unit.doPostBattleHealing();
@@ -110,8 +113,13 @@ public class BattleController : MonoBehaviour
     {
         turnPhase = TurnPhase.END;
         actionPhase = ActionPhase.INACTIVE;
+        if (aiTurn != null)
+        {
+            StopCoroutine(aiTurn);
+        }
         uiCanvas.GetComponent<UIController>().resetButtons();
         CompleteAction();
+        AICoordinator.clearSeenEnemies();
         if (teamLists.ContainsKey(activeTeam))
         {
             List<GameObject> active = teamLists[activeTeam];
@@ -126,6 +134,10 @@ public class BattleController : MonoBehaviour
             }
         }
         activeTeam = NextTeam();
+        while (teamLists[activeTeam].Count == 0)
+        {
+            activeTeam = NextTeam();
+        }
         if (activeTeam == firstTeam)
         {
             turnNumber++;
@@ -135,7 +147,7 @@ public class BattleController : MonoBehaviour
         StartCoroutine(BannerTimer());
         if (activeTeam != BattleTeam.PLAYER)
         {
-            StartCoroutine(RunAIPhase(teamLists[activeTeam]));
+            aiTurn = StartCoroutine(RunAIPhase(teamLists[activeTeam]));
         }
     }
 
@@ -170,6 +182,8 @@ public class BattleController : MonoBehaviour
                 if (ability.getAPCost() < cheapest)
                 {
                     cheapest = ability.getAPCost();
+                    Debug.Log(ability.getName());
+                    Debug.Log(ability.getAPCost());
                 }
             }
             while (active.GetComponent<UnitController>().getActions()[1] >= cheapest)
@@ -269,7 +283,6 @@ public class BattleController : MonoBehaviour
                 else if (activeAbility.getAbilityType() == ActionType.MOVE)
                 {
                     Vector2Int destination = activeUnit.GetComponent<AIController>().getMoveTarget(activeAbility as MovementAbility);
-                    Debug.Log(destination + "?" + active.GetComponent<UnitController>().getUnitPos());
                     if (destination == active.GetComponent<UnitController>().getUnitPos())
                     {
                         active.GetComponent<AIController>().disableActions(activeAbility);
@@ -283,9 +296,10 @@ public class BattleController : MonoBehaviour
                     bool retVal = ExecuteAction(activeUnit, mapController.tileGridPos(destination));
                     if (!retVal)
                     {
-                        active.GetComponent<AIController>().disableActions(activeAbility);
+                        active.GetComponent<AIController>().blockTiles(destination);
                         continue;
                     }
+                    active.GetComponent<AIController>().resetBlockedTiles();
                     active.GetComponent<AIController>().resetActions();
                 }
                 yield return new WaitForSeconds(0.5f);
@@ -1015,7 +1029,7 @@ public class BattleController : MonoBehaviour
             target.Add(selectedController.gameObject);
             return target;
         }
-        AbilityCalculator calculator = new AbilityCalculator(GetFilterTeam(targetInstruction, activeTeam), calculateAbility, cursorController.getGridPos(), direction);
+        AbilityCalculator calculator = new AbilityCalculator(GetFilterTeam(targetInstruction, activeTeam), calculateAbility, cursorController.GetGridPos(), direction);
         List<GameObject> hitUnits = calculator.getAffectedUnits(targetInstruction, selectedController);
         return hitUnits;
     }

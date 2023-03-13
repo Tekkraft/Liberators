@@ -37,7 +37,7 @@ public class OverlayController : MonoBehaviour
             transform.localPosition = new Vector3(0, 0, 0);
             transform.rotation = originRotation;
             Vector2 originV2 = new Vector2(origin.x, origin.y);
-            Vector2 destination = cursorController.getWorldPos();
+            Vector2 destination = cursorController.GetWorldPos();
             Vector2 target = (destination - originV2).normalized * transform.localScale.x;
             overlayDirection = target;
             float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
