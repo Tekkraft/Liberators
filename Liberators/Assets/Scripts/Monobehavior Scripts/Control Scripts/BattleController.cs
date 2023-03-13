@@ -177,13 +177,12 @@ public class BattleController : MonoBehaviour
                 //TEMPORARY MEASURE - REMOVE WHEN BEAMS VALID ABILITY
                 if (ability.getAbilityType() == ActionType.COMBAT && (ability as CombatAbility).getAbilityData().getTargetInstruction().getTargetType() == TargetType.BEAM)
                 {
+                    active.GetComponent<AIController>().disableActions(activeAbility);
                     continue;
                 }
                 if (ability.getAPCost() < cheapest)
                 {
                     cheapest = ability.getAPCost();
-                    Debug.Log(ability.getName());
-                    Debug.Log(ability.getAPCost());
                 }
             }
             while (active.GetComponent<UnitController>().getActions()[1] >= cheapest)
@@ -204,6 +203,7 @@ public class BattleController : MonoBehaviour
                     //TEMPORARY MEASURE - REMOVE WHEN BEAMS VALID ABILITY
                     if (selectedData.getTargetInstruction().getTargetType() == TargetType.BEAM)
                     {
+                        active.GetComponent<AIController>().disableActions(activeAbility);
                         CompleteAction();
                         continue;
                     }
