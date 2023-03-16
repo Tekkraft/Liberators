@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Type is either "active" or "passive"-->
+<abilityScript type="active">
+    <!--Currently supports only FIRST tag in targeting-->
+    <targeting>
+        <!--Targets a different selected unit-->
+        <unit>
+            <!--Range tag is required, however min="0", max="0", and sight="true" are assumed if left blank.-->
+            <range max="0" extendMax="true"/>
+            <!--Team tag is required, however filter="all" is assumed if left blank.-->
+            <team filter="enemy"/>
+            <!--Count tag is NOT required, however targets="1", selectManual="true", infinite="false", and duplicate="false" are assumed if left blank.-->
+            <count />
+            <!--The following tags are not required, and no default value is assumed-->
+            <require>
+                <!--Valid targets must fulfill these conditions-->
+            </require>
+            <forbid>
+                <!--Valid targets must NOT fulfill these conditions-->
+            </forbid>
+            <special>
+                <!--Special unit filter conditions go here-->
+            </special>
+        </unit>
+        <!--Targets all units in a line-->
+        <beam>
+            <!--Range tag is required, however min="0" and max="infinite" are assumed if left blank. All other tags are assumed "0" or "false".-->
+            <range max="0" extendMax="true"/>
+            <!--Team tag is required, however filter="all" is assumed if left blank.-->
+            <team filter="enemy"/>
+            <!--Count tag is NOT required, however targets="1", select="manual", and duplicate="false" are assumed if left blank.-->
+            <count />
+            <!--Block tag is NOT required, however terrain="true" and unit="false" are assumed if left blank-->
+            <block />
+            <!--The following tags are not required, and no default value is assumed-->
+            <require>
+                <!--Valid targets must fulfill these conditions-->
+            </require>
+            <forbid>
+                <!--Valid targets must NOT fulfill these conditions-->
+            </forbid>
+            <special>
+                <!--Special unit filter conditions go here-->
+            </special>
+        </beam>
+        <!--Targets the original caster-->
+        <self>
+            <!--The following tags are not required, and no default value is assumed-->
+            <require>
+                <!--Unit must fulfill these conditions-->
+            </require>
+            <forbid>
+                <!--Unit must NOT fulfill these conditions-->
+            </forbid>
+            <special>
+                <!--Special unit filter conditions go here-->
+            </special>
+        </self>
+    </targeting>
+    <effects>
+        <!--Deals damage to each currently selected target-->
+        <!--value attribute is required. element="weapon", source="neutral", type="true", and melee="false" are assumed if left blank-->
+        <damage value="0"/>
+        <!--Applies status to each currently selected target-->
+        <!--id attribute is required. intensity="0" and duration="1" are assumed if left blank-->
+        <status id="0"/>
+        <!--Heals HP to each currently selected target-->
+        <!--value attribute is required. No other default values are assumed-->
+        <heal value="0"/>
+        <!--Move selected unit to a selected tile-->
+        <!--ref attribute is required.-->
+        <move ref="caster"/>
+        <!--Push selected unit in a specific direction. Snap to nearest tile when done-->
+        <!--direction attribute is required.-->
+        <push direction="random"/>
+        <!--Reference attributes-->
+        <!--hit: Changes hit rate of effect. Assumed to be 100 if left blank-->
+        <!--true_hit: True if effect can never miss-->
+        <damage value="0" trueHit="true"/>
+        <!--Selects new targets relative to each currently selected target-->
+        <select>
+            <!--Selects targets within a certain given area-->
+            <aoe>
+                <!--Area tag is required, however type="circle" is assumed if left blank-->
+                <!--Direction attribute is required for certain non-circle area types-->
+                <area />
+                <!--Range tag and max attribute are required, however min="0" is assumed if left blank.-->
+                <range max="0"/>
+                <!--Team tag is required, however filter="all" is assumed if left blank.-->
+                <team filter="enemy"/>
+                <!--Count tag is NOT required, however targets="all", and duplicate="true" are assumed if left blank.-->
+                <count />
+                <!--The following tags are not required, and no default value is assumed-->
+                <require>
+                    <!--Valid targets must fulfill these conditions-->
+                </require>
+                <forbid>
+                    <!--Valid targets must NOT fulfill these conditions-->
+                </forbid>
+                <special>
+                    <!--Special unit filter conditions go here-->
+                </special>
+                <effects>
+                    <!--Same as parent effects tag, terminating or select tags go here-->
+                </effects>
+            </aoe>
+        </select>
+    </effects>
+</abilityScript>

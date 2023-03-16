@@ -172,9 +172,25 @@ public class UnitController : MonoBehaviour
         return new CombatData(gameObject, targetController.gameObject, attackEffect, true, crit, baseData.Key, baseData.Value, baseData.Value - baseData.Key <= 0);
     }
 
+    public void attackUnitA(UnitController targetController, DamageEffect effect, int critChance)
+    {
+        int damage = getAttackA(effect);
+        if (Random.Range(0, 100) < critChance)
+        {
+            damage = (int)(damage * BattleController.critFactor);
+        }
+        targetController.takeDamageA(damage, effect, equippedMainHandWeapon);
+    }
+
     public void healUnit(UnitController targetController, EffectInstructionInstance healEffect)
     {
         int healing = getHealing(healEffect);
+        targetController.restoreHealth(healing);
+    }
+
+    public void healUnitA(UnitController targetController, HealEffect effect)
+    {
+        int healing = getHealingA(effect);
         targetController.restoreHealth(healing);
     }
 
@@ -226,6 +242,30 @@ public class UnitController : MonoBehaviour
         return new KeyValuePair<int, int>(damageTaken, startingHP);
     }
 
+    public void takeDamageA(int damage, DamageEffect effect, WeaponInstance attackerWeapon)
+    {
+        //TODO: Reimplement elemental resistances
+        int damageTaken = Mathf.FloorToInt(damage);
+        if (equippedArmor != null && !equippedArmor.NullCheckBase())
+        {
+            switch (effect.type)
+            {
+                case "physical":
+                    damageTaken -= equippedArmor.GetInstanceDefenses()[0];
+                    break;
+                case "magic":
+                    damageTaken -= equippedArmor.GetInstanceDefenses()[1];
+                    break;
+            }
+        }
+        if (damageTaken < 0)
+        {
+            damageTaken = 0;
+        }
+        currentHP -= damageTaken;
+        unitObject.setCurrentHP(currentHP);
+    }
+
     public void restoreHealth(int healing)
     {
         currentHP += healing;
@@ -269,6 +309,13 @@ public class UnitController : MonoBehaviour
         return healing;
     }
 
+    public int getHealingA(HealEffect effect)
+    {
+        //TODO: Reimplement stat-based healing bonus
+        int healing = effect.value;
+        return healing;
+    }
+
     public int getAttack(EffectInstructionInstance attackEffect)
     {
         int damage = 0;
@@ -289,6 +336,28 @@ public class UnitController : MonoBehaviour
                 break;
         }
         damage = (int)(damage * ((attackEffect.getEffectPercentBonus() / 100f) + 1f));
+        return damage;
+    }
+
+    public int getAttackA(DamageEffect effect)
+    {
+        int damage = 0;
+        if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
+        {
+            damage += equippedMainHandWeapon.GetInstanceWeaponStats()[0];
+        }
+        switch (effect.source)
+        {
+            case "phyiscal":
+                damage += effect.value + str;
+                break;
+            case "magic":
+                damage += effect.value + pot;
+                break;
+            case "neutral":
+                damage += effect.value;
+                break;
+        }
         return damage;
     }
 
@@ -415,6 +484,7 @@ public class UnitController : MonoBehaviour
         return unitGridPosition;
     }
 
+    //TODO: Move marker drawing to UIController, not UnitController
     public void createMoveMarkers(MovementAbility activeAbility, MarkerController.Markers color)
     {
         List<Vector2Int> coords = pathfinderValidCoords(activeAbility);

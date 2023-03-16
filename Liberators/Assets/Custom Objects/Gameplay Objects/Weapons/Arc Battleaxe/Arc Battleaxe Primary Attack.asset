@@ -19,6 +19,8 @@ MonoBehaviour:
   equipHandRequirement: 
   equipBaseRequirement: 
   equipDamageRequirement: 
+  equipSizeRequirement: 
+  abilityXMLFile: 
   abilityData:
     targetInstruction:
       targetType: 2

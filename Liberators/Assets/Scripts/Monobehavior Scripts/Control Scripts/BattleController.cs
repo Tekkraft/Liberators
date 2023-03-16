@@ -36,6 +36,7 @@ public class BattleController : MonoBehaviour
     //Action Handlers
     ActionType actionState = ActionType.NONE;
     Ability activeAbility;
+    AbilityScript activeAbilityScript;
     GameObject activeUnit;
 
     //Public Objects
@@ -360,7 +361,7 @@ public class BattleController : MonoBehaviour
         {
             return;
         }
-        activeAbility = ability;
+        SetActiveAbility(ability);
         activeUnit = unit;
         ActionSetup(unit);
     }
@@ -462,37 +463,44 @@ public class BattleController : MonoBehaviour
         {
             return;
         }
-        CombatAbility calculateAbility = activeAbility as CombatAbility;
-        AbilityData abilityData = calculateAbility.getAbilityData();
-        TargetInstructionInstance targetCondition = abilityData.getTargetInstruction();
         actionPhase = ActionPhase.PREPARE;
         UnitController targetController = unit.GetComponent<UnitController>();
-        int rangeMax = abilityData.getTargetInstruction().getMaxRange();
-        if (!targetCondition.getMaxRangeFixed())
+        RangeElement range;
+        switch (activeAbilityScript.targeting[0].GetType().ToString())
         {
-            rangeMax += targetController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
+            case "UnitTargeting":
+                range = (activeAbilityScript.targeting[0] as UnitTargeting).range;
+                break;
+
+            case "BeamTargeting":
+                range = (activeAbilityScript.targeting[0] as BeamTargeting).range;
+                break;
+
+            case "SelfTargeting":
+                targetController.createAttackMarkers(new List<Vector2Int>() { targetController.getUnitPos() }, MarkerController.Markers.RED);
+                return;
+
+            default:
+                return;
         }
-        int rangeMin = targetCondition.getMinRange();
-        if (!abilityData.getTargetInstruction().getMinRangeFixed())
-        {
-            rangeMin += targetController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
-        }
-        if (targetCondition.getIsMelee())
+        int rangeMax;
+        int rangeMin;
+        if (range.melee)
         {
             rangeMax = 1;
             rangeMin = 1;
+        } else
+        {
+            rangeMax = range.max;
+            if (range.extendMaxRange)
+            {
+                rangeMax += targetController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
+            }
+            rangeMin = range.min;
         }
         Vector2 direction = new Vector2(0, 0);
-        if (activeOverlay)
-        {
-            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
-        }
-        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targetCondition.getLOSRequired(), mapController, this, teamLists, direction);
-        if (targetCondition.getTargetType() == TargetType.SELF)
-        {
-            targetController.createAttackMarkers(new List<Vector2Int>() { targetController.getUnitPos() }, MarkerController.Markers.RED);
-        }
-        else if (targetCondition.getTargetType() == TargetType.BEAM)
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, range.sightRequired, mapController, this, teamLists, direction);
+        if (activeAbilityScript.targeting[0].GetType() == typeof(BeamTargeting))
         {
             GameObject temp = GameObject.Instantiate(overlayObject, targetController.gameObject.transform);
             activeOverlay = temp;
@@ -500,32 +508,26 @@ public class BattleController : MonoBehaviour
         }
         else
         {
-            bool noFilter = true;
-            bool enemyFilter = false;
-            bool allyFilter = false;
-            foreach (TargetFilterInstance filter in targetCondition.getConditionFilters())
+            switch((activeAbilityScript.targeting[0] as UnitTargeting).team.filter)
             {
-                if (filter.getTargetFilter() == TargetFilter.ENEMY && !enemyFilter)
-                {
-                    targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), activeTeam, targetCondition.getTargetType() == TargetType.BEAM), MarkerController.Markers.RED);
-                    enemyFilter = true;
-                    noFilter = false;
-                }
-                if (filter.getTargetFilter() == TargetFilter.ALLY && !allyFilter)
-                {
-                    targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(unit.GetComponent<UnitController>().getUnitPos(), activeTeam, targetCondition.getTargetType() == TargetType.BEAM), MarkerController.Markers.GREEN);
-                    allyFilter = true;
-                    noFilter = false;
-                }
+                case "enemy":
+                    targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), activeTeam, false), MarkerController.Markers.RED);
+                    break;
+
+                case "ally":
+                    targetController.createAttackMarkers(rangefinder.generateCoordsOfTeam(unit.GetComponent<UnitController>().getUnitPos(), activeTeam, false), MarkerController.Markers.GREEN);
+                    break;
+
+                case "all":
+                    targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), BattleTeam.NEUTRAL, false), MarkerController.Markers.RED);
+                    break;
             }
-            if (noFilter)
-            {
-                targetController.createAttackMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().getUnitPos(), BattleTeam.NEUTRAL, targetCondition.getTargetType() == TargetType.BEAM), MarkerController.Markers.RED);
-            }
+            //TODO: ADD OTHER FILTERS
         }
 
     }
 
+    //TODO: Examine in depth how this function works
     void CombatAction(GameObject targetUnit)
     {
         if (!activeAbility)
@@ -540,12 +542,45 @@ public class BattleController : MonoBehaviour
         }
         CombatAbility calculateAbility = activeAbility as CombatAbility;
         UnitController selectedController = activeUnit.GetComponent<UnitController>();
-        AbilityData abilityData = calculateAbility.getAbilityData();
-        TargetInstructionInstance targetCondition = abilityData.getTargetInstruction();
-        if ((targetCondition.getTargetType() == TargetType.TARGET && !targetUnit) || (targetCondition.getTargetType() == TargetType.SELF && targetUnit != activeUnit))
+        AbilityScript abilityScript;
+        if (calculateAbility.GetAbilityXMLFile() != null && calculateAbility.GetAbilityXMLFile() != "")
+        {
+            abilityScript = AbilityEvaluator.Deserialize<AbilityScript>(calculateAbility.GetAbilityXMLFile());
+            if (abilityScript == default)
+            {
+                CompleteAction();
+                return;
+            }
+        }
+        else
         {
             CompleteAction();
             return;
+        }
+        switch(abilityScript.targeting[0].GetType().ToString())
+        {
+            case "UnitTargeting":
+                if (!targetUnit)
+                {
+                    CompleteAction();
+                    return;
+                }
+                break;
+
+            case "BeamTargeting":
+                break;
+
+            case "SelfTargeting":
+                if (targetUnit != activeUnit)
+                {
+                    CompleteAction();
+                    return;
+                }
+                break;
+
+            default:
+                CompleteAction();
+                return;
         }
         if (selectedController.checkActions(activeAbility.getAPCost()))
         {
@@ -553,44 +588,224 @@ public class BattleController : MonoBehaviour
             return;
         }
         actionPhase = ActionPhase.EXECUTE;
-        //TEMPORARY CODE - WILL BREAK BEAMS
         List<CombatData> data = new List<CombatData>();
-        foreach (GameObject target in selectedGameObjectTargets)
+        foreach (EffectTypeA effect in abilityScript.effects)
         {
-            for (int i = 0; i < abilityData.getAbilityRepeats(); i++)
+            foreach (GameObject target in selectedGameObjectTargets)
             {
-                UnitController attackerController = activeUnit.GetComponent<UnitController>();
-                UnitController defenderController = target.GetComponent<UnitController>();
-                int randomChance = Random.Range(0, 100);
-                int[] hitStats = GetHitStats(attackerController, defenderController, abilityData.getTargetInstruction());
-                if (randomChance < hitStats[0])
-                {
-                    if (attackerController.GetEquippedWeapons().Item1.GetInstanceWeaponStatus())
-                    {
-                        data.Add(defenderController.inflictStatus(attackerController.GetEquippedWeapons().Item1.GetInstanceWeaponStatus(), attackerController.gameObject));
-                    }
-                    List<CombatData> subResults = AttackUnit(activeUnit, target, true);
-                    if (subResults != null)
-                    {
-                        data.AddRange(subResults);
-                    }
-                }
-                else
-                {
-                    List<CombatData> subResults = AttackUnit(activeUnit, target, false);
-                    if (subResults != null)
-                    {
-                        data.AddRange(subResults);
-                    }
-                }
+                EffectStep(activeUnit, target, effect);
             }
         }
+        //TODO: Reimplement Animation Support
         StartAnimation(data);
         CompleteAction();
         selectedController.useActions(activeAbility.getAPCost());
     }
 
+    //Action Helper Functions
+    void EffectStep(GameObject source, GameObject target, EffectTypeA effect) {
+        switch (effect.GetType().ToString())
+        {
+            case "DamageEffect":
+                DamageUnit(source, target, effect as DamageEffect);
+                return;
+
+            case "StatusEffect":
+                StatusUnit(source, target, effect as StatusEffect);
+                return;
+
+            case "HealEffect":
+                HealUnit(source, target, effect as HealEffect);
+                return;
+
+            case "SelectEffect":
+                //TODO: Implement selection effects
+                return;
+
+            default:
+                return;
+        }
+    }
+
     //Targeting Functions
+    public void CombatTargetingA(GameObject targetUnit, TargetingType targeting)
+    {
+        switch (targeting.GetType().ToString())
+        {
+            case "UnitTargeting":
+                CheckUnitTargeting(targetUnit, targeting as UnitTargeting);
+                break;
+
+            case "BeamTargeting":
+                CheckBeamTargeting(activeUnit, targeting as BeamTargeting);
+                break;
+
+            case "SelfTargeting":
+                Debug.LogError("Self targeting not yet implemented.");
+                break;
+
+            default:
+                Debug.LogError("No such targeting type matches: " + targeting.GetType().ToString());
+                break;
+        }
+    }
+
+    void CheckUnitTargeting(GameObject targetUnit, UnitTargeting targeting)
+    {
+        if (targeting.count.selectManual)
+        {
+            if (targetUnit)
+            {
+                if (RangeCheckUnit(targeting.range, activeUnit, targetUnit) && TeamCheckUnit(targeting.team, activeUnit, targetUnit))
+                {
+                    AddUnitToTargets(targetUnit);
+                }
+                if (GetGameObjectTargets().Count >= targeting.count.targets)
+                {
+                    ExecuteAction(targetUnit, Vector2.zero);
+                }
+            }
+        }
+        else
+        {
+            RandomUnitTargetsA(targeting, activeUnit);
+            ExecuteAction(targetUnit, Vector2.zero);
+        }
+    }
+
+    void CheckBeamTargeting(GameObject targetUnit, BeamTargeting targeting)
+    {
+        if (activeOverlay)
+        {
+            int rangeMax;
+            int rangeMin;
+            rangeMax = targeting.range.max;
+            if (targeting.range.extendMaxRange)
+            {
+                rangeMax += targetUnit.GetComponent<UnitController>().GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
+            }
+            rangeMin = targeting.range.min;
+            Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targeting.range.sightRequired, mapController, this, teamLists, activeOverlay.GetComponent<OverlayController>().getOverlayDirection());
+            List<GameObject> beamTargets = rangefinder.generateTargetsOfTeam(activeUnit.GetComponent<UnitController>().getUnitPos(), GetFilterTeamA(targeting.team, activeTeam), true);
+            foreach (GameObject target in beamTargets)
+            {
+                //TODO: Implement first-unit blocking with block tag
+                selectedGameObjectTargets.Add(target);
+            }
+            ExecuteAction(targetUnit, Vector2.zero);
+        }
+        else
+        {
+            Debug.LogError("Attempting to check beam with null/no overlay");
+        }
+    }
+
+    void RandomUnitTargetsA(UnitTargeting targeting, GameObject source)
+    {
+        RangeElement range = targeting.range;
+        int rangeMax;
+        int rangeMin;
+        if (range.melee)
+        {
+            rangeMax = 1;
+            rangeMin = 1;
+        }
+        else
+        {
+            rangeMax = range.max;
+            if (range.extendMaxRange)
+            {
+                rangeMax += source.GetComponent<UnitController>().GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
+            }
+            rangeMin = range.min;
+        }
+        Vector2 direction = new Vector2(0, 0);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, range.sightRequired, mapController, this, teamLists, direction);
+        List<GameObject> validTargets = rangefinder.generateTargetsNotOfTeam(source.GetComponent<UnitController>().getUnitPos(), activeTeam, false);
+        if (targeting.count.duplicate)
+        {
+            while (selectedGameObjectTargets.Count <= targeting.count.targets)
+            {
+                selectedGameObjectTargets.Add(validTargets[Random.Range(0, validTargets.Count)]);
+            }
+        }
+        else
+        {
+            if (targeting.count.infinite || validTargets.Count <= targeting.count.targets)
+            {
+                selectedGameObjectTargets.AddRange(validTargets);
+            }
+            else
+            {
+                while (selectedGameObjectTargets.Count <= targeting.count.targets)
+                {
+                    GameObject selected = validTargets[Random.Range(0, validTargets.Count)];
+                    selectedGameObjectTargets.Add(selected);
+                    validTargets.Remove(selected);
+                }
+            }
+        }
+    }
+
+    bool RangeCheckUnit(RangeElement range, GameObject source, GameObject target)
+    {
+        int rangeMax;
+        int rangeMin;
+        if (range.melee)
+        {
+            rangeMax = 1;
+            rangeMin = 1;
+        }
+        else
+        {
+            rangeMax = range.max;
+            if (range.extendMaxRange)
+            {
+                rangeMax += source.GetComponent<UnitController>().GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
+            }
+            rangeMin = range.min;
+        }
+        Vector2 direction = new Vector2(0, 0);
+        Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, range.sightRequired, mapController, this, teamLists, direction);
+        bool validLOS = true;
+        bool inRange = rangefinder.inRange(source.GetComponent<UnitController>().getUnitPos(), target.GetComponent<UnitController>().getUnitPos(), rangeMax, rangeMin);
+        if (range.sightRequired)
+        {
+            validLOS = !rangefinder.checkLineCollision(source.GetComponent<UnitController>().getUnitPos(), target.GetComponent<UnitController>().getUnitPos());
+        }
+        return validLOS && inRange;
+    }
+
+    bool TeamCheckUnit(TeamElement team, GameObject source, GameObject target)
+    {
+        BattleTeam targetTeam = GetFilterTeamA(team, source.GetComponent<UnitController>().getTeam());
+        switch (targetTeam)
+        {
+            case BattleTeam.PLAYER:
+            case BattleTeam.ALLY:
+                if (target.GetComponent<UnitController>().getTeam() == BattleTeam.ENEMY)
+                {
+                    return true;
+                }
+                break;
+
+            case BattleTeam.ENEMY:
+                if (target.GetComponent<UnitController>().getTeam() == BattleTeam.PLAYER || target.GetComponent<UnitController>().getTeam() == BattleTeam.ALLY)
+                {
+                    return true;
+                }
+                break;
+
+            case BattleTeam.NEUTRAL:
+                return true;
+
+            default:
+                Debug.LogError("Invalid target team: " + targetTeam.ToString());
+                break;
+        }
+        return false;
+    }
+
     public void CombatTargeting(GameObject targetUnit, TargetInstructionInstance targetInstruction, Vector2 tilePosition)
     {
         switch (targetInstruction.getTargetCondition())
@@ -1034,6 +1249,39 @@ public class BattleController : MonoBehaviour
         return hitUnits;
     }
 
+    public void DamageUnit(GameObject attacker, GameObject defender, DamageEffect effect)
+    {
+        UnitController attackerController = attacker.GetComponent<UnitController>();
+        UnitController defenderController = defender.GetComponent<UnitController>();
+        int randomChance = Random.Range(0, 100);
+        int[] hitStats = GetHitStatsA(attackerController, defenderController, effect);
+        int totalHit = hitStats[0];
+        int totalCrit = hitStats[1];
+        if (effect.trueHit || randomChance < totalHit)
+        {
+            attackerController.attackUnitA(defenderController, effect, totalCrit);
+            return;
+        } else
+        {
+            //TODO: DO SOMETHING FOR MISS
+            return;
+        }
+    }
+
+    public void StatusUnit(GameObject source, GameObject target, StatusEffect effect)
+    {
+        UnitController targetController = target.GetComponent<UnitController>();
+        //TODO: Reimplement chance to inflict status
+        //TODO: Implement status id lookup
+        Status status = new Status();
+        targetController.inflictStatus(status, source);
+    }
+
+    public void HealUnit(GameObject source, GameObject target, HealEffect effect)
+    {
+        source.GetComponent<UnitController>().healUnitA(target.GetComponent<UnitController>(), effect);
+    }
+
     public List<CombatData> AttackUnit(GameObject attacker, GameObject defender, bool overallHit)
     {
         List<CombatData> retVal = new List<CombatData>();
@@ -1264,6 +1512,50 @@ public class BattleController : MonoBehaviour
         return BattleTeam.NEUTRAL;
     }
 
+    public BattleTeam GetFilterTeamA(TeamElement team, BattleTeam actingTeam)
+    {
+        if (team.filter == "enemy")
+        {
+            if (actingTeam == BattleTeam.ENEMY)
+            {
+                return BattleTeam.PLAYER;
+            }
+            else if (actingTeam == BattleTeam.PLAYER || actingTeam == BattleTeam.ALLY)
+            {
+                return BattleTeam.ENEMY;
+            }
+            else
+            {
+                Debug.LogError("Invalid battle team: " + actingTeam.ToString());
+                return BattleTeam.NEUTRAL;
+            }
+        }
+        else if (team.filter == "ally")
+        {
+            if (actingTeam == BattleTeam.PLAYER || actingTeam == BattleTeam.ALLY)
+            {
+                return BattleTeam.PLAYER;
+            }
+            else if (actingTeam == BattleTeam.ENEMY)
+            {
+                return BattleTeam.ENEMY;
+            }
+            else
+            {
+                Debug.LogError("Invalid battle team: " + actingTeam.ToString());
+                return BattleTeam.NEUTRAL;
+            }
+        }
+        else if (team.filter == "all")
+        {
+            return BattleTeam.NEUTRAL;
+        } else
+        {
+            Debug.LogError("Invalid team filter: " + team.filter);
+            return BattleTeam.NEUTRAL;
+        }
+    }
+
     //Stat Math
     public int FinalRange(int baseRange, MovementAbility ability)
     {
@@ -1318,6 +1610,67 @@ public class BattleController : MonoBehaviour
         //Calculate crit independently
         int effectiveCrit;
         if (targetInstruction.getIsMelee())
+        {
+            //Melee - Use acuity
+            effectiveCrit = attackerController.getStats()[5];
+        }
+        else
+        {
+            //Ranged - Use finesse
+            effectiveCrit = attackerController.getStats()[6];
+        }
+        int totalCrit = effectiveCrit - effectiveAvoid;
+        return new int[] { totalHit, totalCrit };
+    }
+
+    public int[] GetHitStatsA(UnitController attackerController, UnitController defenderController, DamageEffect effect)
+    {
+        int effectiveHit;
+        int effectiveAvoid;
+        int totalHit;
+
+        //Always calculate avoid for crit
+        float rawAvoid;
+        if (!effect.melee)
+        {
+            if (defenderController.getStats()[7] < reactThreshold)
+            {
+                rawAvoid = 0;
+            }
+            else
+            {
+                rawAvoid = defenderController.getStats()[5] + (defenderController.getStats()[7] - reactThreshold);
+            }
+        }
+        else
+        {
+            rawAvoid = defenderController.getStats()[6] + defenderController.getStats()[7];
+        }
+        effectiveAvoid = (int)(rawAvoid * avoidFactor);
+
+        //Calculate hit differently if fixed hit
+        if (effect.trueHit)
+        {
+            effectiveHit = effect.hit;
+            totalHit = effectiveHit;
+        }
+        else
+        {
+            effectiveHit = (int)(attackerController.getStats()[5] * hitFactor + effect.hit);
+            if (effect.melee)
+            {
+                effectiveHit = (int)(attackerController.getStats()[6] * hitFactor + effect.hit);
+            }
+            if (attackerController.GetEquippedWeapons().Item1 != null)
+            {
+                effectiveHit += attackerController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[1];
+            }
+            totalHit = effectiveHit - effectiveAvoid;
+        }
+
+        //Calculate crit independently
+        int effectiveCrit;
+        if (effect.melee)
         {
             //Melee - Use acuity
             effectiveCrit = attackerController.getStats()[5];
@@ -1396,5 +1749,21 @@ public class BattleController : MonoBehaviour
         yield return new WaitWhile(() => uiCanvas.GetComponent<UIController>().hasAnimation());
         KillDead(combatSequence);
         turnPhase = TurnPhase.MAIN;
+    }
+
+    //Ability Validation
+
+    //Ability Handling and Parsing
+    void SetActiveAbility(Ability ability)
+    {
+        if (ability == activeAbility)
+        {
+            return;
+        }
+        if (ability.GetAbilityXMLFile() != null && ability.GetAbilityXMLFile() != "")
+        {
+            activeAbility = ability;
+            activeAbilityScript = AbilityEvaluator.Deserialize<AbilityScript>(ability.GetAbilityXMLFile());
+        }
     }
 }

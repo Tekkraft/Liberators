@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abilityScript type="active">
+    <targeting>
+        <!--Targets a different selected unit-->
+        <unit>
+            <!--Range tag is required, however min="0", max="infinite", and sight="true" are assumed if left blank. All other tags are assumed "0" or "false".-->
+            <range max="0" extendMax="true"/>
+            <!--Team tag is required, however filter="all" is assumed if left blank.-->
+            <team filter="enemy"/>
+
+        </unit>
+    </targeting>
+    <effects>
+        <!--Deals damage to each currently selected target-->
+        <!--value attribute is required. element="weapon", source="neutral", and type="true" are assumed if left blank-->
+        <damage value="0" trueHit="true" source="physical" type="physical"/>
+    </effects>
+</abilityScript>

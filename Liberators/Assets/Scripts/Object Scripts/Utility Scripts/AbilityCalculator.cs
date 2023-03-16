@@ -36,11 +36,6 @@ public class AbilityCalculator
         }
     }
 
-    void modifyEffect()
-    {
-
-    }
-
     List<GameObject> checkAOERange(TargetInstructionInstance targetInstruction, UnitController attackingUnit)
     {
         int rangeMax = targetInstruction.getMaxRange();

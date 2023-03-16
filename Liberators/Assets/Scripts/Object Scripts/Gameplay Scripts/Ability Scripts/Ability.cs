@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 [CreateAssetMenu(fileName = "New Ability", menuName = "Ability Object", order = 50)]
 public class Ability : ScriptableObject
@@ -28,6 +29,12 @@ public class Ability : ScriptableObject
 
     [SerializeField]
     List<EquipSizeClass> equipSizeRequirement;
+
+    [SerializeField]
+    string abilityXMLFolder;
+
+    [SerializeField]
+    string abilityXMLFile;
 
     public string getName()
     {
@@ -67,5 +74,10 @@ public class Ability : ScriptableObject
     public List<EquipSizeClass> GetSizeRequirements()
     {
         return equipSizeRequirement;
+    }
+
+    public string GetAbilityXMLFile()
+    {
+        return Path.Combine(abilityXMLFolder ,abilityXMLFile);
     }
 }
