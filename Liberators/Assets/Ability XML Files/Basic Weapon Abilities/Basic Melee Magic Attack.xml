@@ -6,6 +6,8 @@
             <range melee="true"/>
             <!--Team tag is required, however filter="all" is assumed if left blank.-->
             <team filter="enemy"/>
+            <!--Count tag is required, however targets="1", selectManual="true", infinite="false", and duplicate="false" are assumed if left blank.-->
+            <count />
         </unit>
     </targeting>
     <effects>

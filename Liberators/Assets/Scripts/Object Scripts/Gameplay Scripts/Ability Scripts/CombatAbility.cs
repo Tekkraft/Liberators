@@ -5,11 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Combat Ability", menuName = "Combat Ability", order = 44)]
 public class CombatAbility : Ability
 {
-    [SerializeField]
-    AbilityData abilityData;
-
-    public AbilityData getAbilityData()
-    {
-        return abilityData;
-    }
+    
 }

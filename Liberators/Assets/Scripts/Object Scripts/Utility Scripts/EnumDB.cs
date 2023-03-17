@@ -25,15 +25,7 @@ public enum ActionType { NONE, MOVE, COMBAT, MISC, WAIT, END };
 
 public enum StatusType { BUFF, DEBUFF, NONE };
 
-public enum AIMode { idle, attack, flee }
-
-public enum EquipHandClass { oneHanded, twoHanded, flexible, mainHand, offHand };
-
-public enum EquipBaseClass { blade, gun, focus, shield };
-
-public enum EquipDamageClass { kinetic, energy, aether };
-
-public enum EquipSizeClass { small, medium, large }
+public enum AIMode { idle, attack, flee };
 
 public enum ArmorGrade { none, light, medium, heavy, superheavy };
 

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abilityScript type="active">
+    <targeting>
+        <!--Targets a different selected unit-->
+        <beam>
+            <!--Range tag is required, however min="0", max="infinite", and sight="true" are assumed if left blank. All other tags are assumed "0" or "false".-->
+            <range max="0" extendMax="true"/>
+            <!--Team tag is required, however filter="all" is assumed if left blank.-->
+            <team filter="enemy"/>
+            <!--Count tag is required, however targets="1", selectManual="true", infinite="false", and duplicate="false" are assumed if left blank.-->
+            <count infinite="true"/>
+            <!--Block tag is required, however terrain="true" and unit="false" are assumed if left blank-->
+            <block />
+        </beam>
+    </targeting>
+    <effects>
+        <!--Deals damage to each currently selected target-->
+        <!--value attribute is required. element="weapon", source="neutral", and type="true" are assumed if left blank-->
+        <damage value="0" hit="100" source="magic" type="magic"/>
+    </effects>
+</abilityScript>

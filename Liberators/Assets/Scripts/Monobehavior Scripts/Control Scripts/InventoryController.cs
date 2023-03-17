@@ -173,26 +173,14 @@ public class InventoryController : MonoBehaviour
         {
             if (offhandItem.GetComponent<InventoryItemController>().GetLinkedItem() != null)
             {
-                WeaponInstance weapon = offhandItem.GetComponent<InventoryItemController>().GetLinkedItem() as WeaponInstance;
-                if (weapon.GetInstanceHandClass() == EquipHandClass.twoHanded || weapon.GetInstanceHandClass() == EquipHandClass.mainHand)
-                {
-                    offhandSlot.GetComponent<InventoryItemSlotController>().KickItemFromSlot();
-                }
+                offhandSlot.GetComponent<InventoryItemSlotController>().KickItemFromSlot();
             }
         }
         if (mainhandItem)
         {
             if (mainhandItem.GetComponent<InventoryItemController>().GetLinkedItem() != null)
             {
-                WeaponInstance weapon = mainhandItem.GetComponent<InventoryItemController>().GetLinkedItem() as WeaponInstance;
-                if (weapon.GetInstanceHandClass() == EquipHandClass.offHand)
-                {
-                    mainhandSlot.GetComponent<InventoryItemSlotController>().KickItemFromSlot();
-                }
-                if (weapon.GetInstanceHandClass() == EquipHandClass.twoHanded)
-                {
-                    offhandSlot.GetComponent<InventoryItemSlotController>().KickItemFromSlot();
-                }
+                mainhandSlot.GetComponent<InventoryItemSlotController>().KickItemFromSlot();
             }
         }
     }

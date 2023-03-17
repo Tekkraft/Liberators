@@ -169,10 +169,11 @@ public class UIController : MonoBehaviour
         return activePreview;
     }
 
-    public GameObject displayBattleAnimation(List<CombatData> combatSequence)
+    //TODO: Reimplement Animation
+    public GameObject displayBattleAnimation()
     {
         activeAnimation = GameObject.Instantiate(animationPanel, transform);
-        activeAnimation.GetComponent<AnimController>().createBattleAnimation(combatSequence);
+        activeAnimation.GetComponent<AnimController>().createBattleAnimation();
         return activeAnimation;
     }
 

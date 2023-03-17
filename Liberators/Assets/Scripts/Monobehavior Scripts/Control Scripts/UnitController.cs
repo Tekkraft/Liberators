@@ -159,38 +159,19 @@ public class UnitController : MonoBehaviour
         return equippedArmor;
     }
 
-    public CombatData attackUnit(UnitController targetController, EffectInstructionInstance attackEffect, int critChance)
+    public void attackUnit(UnitController targetController, DamageEffect effect, int critChance)
     {
-        int damage = getAttack(attackEffect);
-        bool crit = false;
-        if (Random.Range(0, 100) < critChance)
-        {
-            damage = (int)(damage * BattleController.critFactor);
-            crit = true;
-        }
-        KeyValuePair<int, int> baseData = targetController.takeDamage(damage, attackEffect, equippedMainHandWeapon);
-        return new CombatData(gameObject, targetController.gameObject, attackEffect, true, crit, baseData.Key, baseData.Value, baseData.Value - baseData.Key <= 0);
-    }
-
-    public void attackUnitA(UnitController targetController, DamageEffect effect, int critChance)
-    {
-        int damage = getAttackA(effect);
+        int damage = getAttack(effect);
         if (Random.Range(0, 100) < critChance)
         {
             damage = (int)(damage * BattleController.critFactor);
         }
-        targetController.takeDamageA(damage, effect, equippedMainHandWeapon);
+        targetController.takeDamage(damage, effect, equippedMainHandWeapon);
     }
 
-    public void healUnit(UnitController targetController, EffectInstructionInstance healEffect)
+    public void healUnit(UnitController targetController, HealEffect effect)
     {
-        int healing = getHealing(healEffect);
-        targetController.restoreHealth(healing);
-    }
-
-    public void healUnitA(UnitController targetController, HealEffect effect)
-    {
-        int healing = getHealingA(effect);
+        int healing = getHealing(effect);
         targetController.restoreHealth(healing);
     }
 
@@ -211,52 +192,13 @@ public class UnitController : MonoBehaviour
     }
 
     //Attack Damage
-    public KeyValuePair<int, int> takeDamage(int damage, EffectInstructionInstance attackEffect, WeaponInstance attackerWeapon)
-    {
-        int startingHP = currentHP;
-        DamageElement effectElement = attackEffect.getEffectElement();
-        if (attackerWeapon != null && !attackerWeapon.NullCheckBase() && !attackEffect.getEffectIndependentElement())
-        {
-            effectElement = attackerWeapon.GetInstanceWeaponElement();
-        }
-        float damageMultiplier = getDamageReduction(effectElement);
-        int damageTaken = Mathf.FloorToInt(damage * damageMultiplier);
-        if (equippedArmor != null && !equippedArmor.NullCheckBase())
-        {
-            switch (attackEffect.getEffectDamageType())
-            {
-                case damageType.PHYSICAL:
-                    damageTaken -= equippedArmor.GetInstanceDefenses()[0];
-                    break;
-                case damageType.MAGIC:
-                    damageTaken -= equippedArmor.GetInstanceDefenses()[1];
-                    break;
-            }
-        }
-        if (damageTaken < 0)
-        {
-            damageTaken = 0;
-        }
-        currentHP -= damageTaken;
-        unitObject.setCurrentHP(currentHP);
-        return new KeyValuePair<int, int>(damageTaken, startingHP);
-    }
-
-    public void takeDamageA(int damage, DamageEffect effect, WeaponInstance attackerWeapon)
+    public void takeDamage(int damage, DamageEffect effect, WeaponInstance attackerWeapon)
     {
         //TODO: Reimplement elemental resistances
         int damageTaken = Mathf.FloorToInt(damage);
         if (equippedArmor != null && !equippedArmor.NullCheckBase())
         {
-            switch (effect.type)
-            {
-                case "physical":
-                    damageTaken -= equippedArmor.GetInstanceDefenses()[0];
-                    break;
-                case "magic":
-                    damageTaken -= equippedArmor.GetInstanceDefenses()[1];
-                    break;
-            }
+            damageTaken -= getDefense(effect);
         }
         if (damageTaken < 0)
         {
@@ -276,7 +218,7 @@ public class UnitController : MonoBehaviour
         unitObject.setCurrentHP(currentHP);
     }
 
-    public CombatData inflictStatus(Status newStatus, GameObject source)
+    public void inflictStatus(Status newStatus, GameObject source)
     {
         statuses.Add(new StatusInstance(newStatus, source));
         if (newStatus.getAPMode())
@@ -287,59 +229,16 @@ public class UnitController : MonoBehaviour
                 actions = 0;
             }
         }
-        return new CombatData(source, gameObject, newStatus, true);
     }
 
-    public int getHealing(EffectInstructionInstance healEffect)
-    {
-        int healing = 0;
-        switch (healEffect.getEffectDamageSource())
-        {
-            case damageType.PHYSICAL:
-                healing += healEffect.getEffectIntensity() + str;
-                break;
-            case damageType.MAGIC:
-                healing += healEffect.getEffectIntensity() + pot;
-                break;
-            case damageType.TRUE:
-                healing += healEffect.getEffectIntensity();
-                break;
-        }
-        healing = (int)(healing * ((healEffect.getEffectPercentBonus() / 100f) + 1f));
-        return healing;
-    }
-
-    public int getHealingA(HealEffect effect)
+    public int getHealing(HealEffect effect)
     {
         //TODO: Reimplement stat-based healing bonus
         int healing = effect.value;
         return healing;
     }
 
-    public int getAttack(EffectInstructionInstance attackEffect)
-    {
-        int damage = 0;
-        if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
-        {
-            damage += equippedMainHandWeapon.GetInstanceWeaponStats()[0];
-        }
-        switch (attackEffect.getEffectDamageSource())
-        {
-            case damageType.PHYSICAL:
-                damage += attackEffect.getEffectIntensity() + str;
-                break;
-            case damageType.MAGIC:
-                damage += attackEffect.getEffectIntensity() + pot;
-                break;
-            case damageType.TRUE:
-                damage += attackEffect.getEffectIntensity();
-                break;
-        }
-        damage = (int)(damage * ((attackEffect.getEffectPercentBonus() / 100f) + 1f));
-        return damage;
-    }
-
-    public int getAttackA(DamageEffect effect)
+    public int getAttack(DamageEffect effect)
     {
         int damage = 0;
         if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
@@ -354,6 +253,9 @@ public class UnitController : MonoBehaviour
             case "magic":
                 damage += effect.value + pot;
                 break;
+            case "adaptive":
+                damage += effect.value + Mathf.Max(str,pot);
+                break;
             case "neutral":
                 damage += effect.value;
                 break;
@@ -361,66 +263,21 @@ public class UnitController : MonoBehaviour
         return damage;
     }
 
-    public int getExpectedDamage(UnitController targetController, AbilityData abilityData)
-    {
-        int damage = 0;
-        foreach (EffectInstructionInstance effect in abilityData.getEffectInstructions())
-        {
-            if (effect.getEffectType() == EffectType.DAMAGE)
-            {
-                damage += getExpectedDamageInstance(targetController, effect);
-                DamageElement effectElement = effect.getEffectElement();
-                if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase() && !effect.getEffectIndependentElement())
-                {
-                    effectElement = equippedMainHandWeapon.GetInstanceWeaponElement();
-                }
-                float damageMultiplier = targetController.getDamageReduction(effectElement);
-                damage = Mathf.FloorToInt(damage * damageMultiplier);
-            }
-        }
-        return damage;
-    }
-
-    public int getExpectedDamageInstance(UnitController targetController, EffectInstructionInstance attackEffect)
-    {
-        int damage = 0;
-        if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
-        {
-            damage += equippedMainHandWeapon.GetInstanceWeaponStats()[0];
-        }
-        switch (attackEffect.getEffectDamageSource())
-        {
-            case damageType.PHYSICAL:
-                damage += attackEffect.getEffectIntensity() + str;
-                break;
-            case damageType.MAGIC:
-                damage += attackEffect.getEffectIntensity() + pot;
-                break;
-            case damageType.TRUE:
-                damage += attackEffect.getEffectIntensity();
-                break;
-        }
-        damage = (int)(damage * ((attackEffect.getEffectPercentBonus() / 100f) + 1f));
-        damage -= targetController.getDefense(attackEffect);
-        if (damage < 0)
-        {
-            damage = 0;
-        }
-        return damage;
-    }
-
-    public int getDefense(EffectInstructionInstance attackEffect)
+    public int getDefense(DamageEffect effect)
     {
         int defense = 0;
         if (equippedArmor != null && !equippedArmor.NullCheckBase())
         {
-            switch (attackEffect.getEffectDamageType())
+            switch (effect.type)
             {
-                case damageType.PHYSICAL:
+                case "physical":
                     defense += equippedArmor.GetInstanceDefenses()[0];
                     break;
-                case damageType.MAGIC:
+                case "magic":
                     defense += equippedArmor.GetInstanceDefenses()[1];
+                    break;
+                case "adaptive":
+                    defense += Mathf.Min(equippedArmor.GetInstanceDefenses()[0], equippedArmor.GetInstanceDefenses()[1]);
                     break;
             }
         }

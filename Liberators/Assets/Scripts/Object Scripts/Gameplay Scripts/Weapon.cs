@@ -12,18 +12,6 @@ public class Weapon : ScriptableObject
     Sprite weaponIcon;
 
     [SerializeField]
-    EquipHandClass handClass;
-
-    [SerializeField]
-    EquipBaseClass baseClass;
-
-    [SerializeField]
-    EquipDamageClass damageClass;
-
-    [SerializeField]
-    EquipSizeClass sizeClass;
-
-    [SerializeField]
     int weaponStrength;
 
     [SerializeField]
@@ -52,26 +40,6 @@ public class Weapon : ScriptableObject
     public Sprite GetSprite()
     {
         return weaponIcon;
-    }
-
-    public EquipHandClass GetHandClass()
-    {
-        return handClass;
-    }
-
-    public EquipBaseClass GetBaseClass()
-    {
-        return baseClass;
-    }
-
-    public EquipDamageClass GetDamageClass()
-    {
-        return damageClass;
-    }
-
-    public EquipSizeClass GetSizeClass()
-    {
-        return sizeClass;
     }
 
     public int[] GetWeaponStats()

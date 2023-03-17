@@ -67,26 +67,6 @@ public class WeaponInstance : ItemInstance
         return upgradeCapacity - totalCost;
     }
 
-    public EquipHandClass GetInstanceHandClass()
-    {
-        return weaponBase.GetHandClass();
-    }
-
-    public EquipBaseClass GetInstanceBaseClass()
-    {
-        return weaponBase.GetBaseClass();
-    }
-
-    public EquipDamageClass GetInstanceDamageClass()
-    {
-        return weaponBase.GetDamageClass();
-    }
-
-    public EquipSizeClass GetInstanceSizeClass()
-    {
-        return weaponBase.GetSizeClass();
-    }
-
     public int[] GetInstanceWeaponStats()
     {
         return weaponBase.GetWeaponStats();

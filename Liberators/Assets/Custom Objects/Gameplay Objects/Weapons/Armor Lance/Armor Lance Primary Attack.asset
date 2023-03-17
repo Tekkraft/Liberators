@@ -19,46 +19,6 @@ MonoBehaviour:
   equipHandRequirement: 
   equipBaseRequirement: 
   equipDamageRequirement: 
-  abilityData:
-    targetInstruction:
-      targetType: 2
-      targetCondition: 2
-      targetConditionCount: 1
-      conditionFilters:
-      - targetFilter: 0
-        filterStat: 0
-      isMelee: 0
-      requiresLOS: 1
-      minRange: 0
-      minRangeFixed: 1
-      maxRange: 0
-      maxRangeFixed: 0
-      hitBonus: 0
-      fixedHit: 0
-    effectInstructions:
-    - independentHit: 0
-      effectTarget:
-        targetType: 2
-        targetCondition: 3
-        targetConditionCount: 0
-        conditionFilters:
-        - targetFilter: 0
-          filterStat: 0
-        isMelee: 0
-        requiresLOS: 1
-        minRange: 0
-        minRangeFixed: 1
-        maxRange: 1
-        maxRangeFixed: 1
-        hitBonus: 0
-        fixedHit: 0
-      effectType: 0
-      effectDamageType: 0
-      effectDamageSource: 0
-      effectIntensity: 0
-      effectPercentBonus: 0
-      effectIndependentElement: 0
-      effectElement: 3
-      effectStatus: {fileID: 0}
-      effectSpecialRules: []
-    abilityRepeats: 1
+  equipSizeRequirement: 
+  abilityXMLFolder: Weapons
+  abilityXMLFile: ArmorLancePrimary

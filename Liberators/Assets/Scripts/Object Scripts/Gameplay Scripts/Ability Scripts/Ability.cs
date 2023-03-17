@@ -19,18 +19,6 @@ public class Ability : ScriptableObject
     ActionType abilityType;
 
     [SerializeField]
-    List<EquipHandClass> equipHandRequirement;
-
-    [SerializeField]
-    List<EquipBaseClass> equipBaseRequirement;
-
-    [SerializeField]
-    List<EquipDamageClass> equipDamageRequirement;
-
-    [SerializeField]
-    List<EquipSizeClass> equipSizeRequirement;
-
-    [SerializeField]
     string abilityXMLFolder;
 
     [SerializeField]
@@ -56,28 +44,13 @@ public class Ability : ScriptableObject
         return abilityType;
     }
 
-    public List<EquipHandClass> GetHandRequirements()
-    {
-        return equipHandRequirement;
-    }
-
-    public List<EquipBaseClass> GetBaseRequirements()
-    {
-        return equipBaseRequirement;
-    }
-
-    public List<EquipDamageClass> GetDamageRequirements()
-    {
-        return equipDamageRequirement;
-    }
-
-    public List<EquipSizeClass> GetSizeRequirements()
-    {
-        return equipSizeRequirement;
-    }
-
     public string GetAbilityXMLFile()
     {
-        return Path.Combine(abilityXMLFolder ,abilityXMLFile);
+        if (abilityXMLFolder == null || abilityXMLFile == null || abilityXMLFolder == "" || abilityXMLFile == "")
+        {
+//            Debug.LogError("Null path in either File or Folder for ability: " + abilityName);
+            return null;
+        }
+        return Path.Combine(abilityXMLFolder ,abilityXMLFile + ".xml");
     }
 }

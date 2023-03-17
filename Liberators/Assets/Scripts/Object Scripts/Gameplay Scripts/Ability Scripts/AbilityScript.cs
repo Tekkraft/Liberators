@@ -50,6 +50,9 @@ public class BeamTargeting : TargetingType
     [XmlElement("count")]
     public CountElement count;
 
+    [XmlElement("block")]
+    public BlockElement block;
+
     //TODO: Add filter and custom conditions
 }
 
@@ -95,6 +98,16 @@ public class CountElement
     public bool duplicate = false;
 }
 
+[XmlRoot("block")]
+public class BlockElement
+{
+    [XmlAttribute("terrain"), DefaultValue(true)]
+    public bool terrain = true;
+
+    [XmlAttribute("units"), DefaultValue(true)]
+    public bool units = true;
+}
+
 public class EffectTypeA { }
 
 [XmlRoot("damage")]
@@ -118,8 +131,15 @@ public class DamageEffect : EffectTypeA
     [XmlAttribute("hit"), DefaultValue(100)]
     public int hit = 100;
 
+    [XmlAttribute("multiplier"), DefaultValue(1)]
+    public float multimplier = 1;
+
     [XmlAttribute("trueHit"), DefaultValue(false)]
     public bool trueHit = false;
+
+    [XmlArray("effective")]
+    [XmlArrayItem("target")]
+    public List<string> effective = new List<string>();
 }
 
 [XmlRoot("status")]

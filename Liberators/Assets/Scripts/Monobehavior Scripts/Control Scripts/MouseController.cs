@@ -167,26 +167,18 @@ public class MouseController : MonoBehaviour
 
     public void attackPreview(GameObject attacker, GameObject defender, CombatAbility activeAbility)
     {
+        //TODO: Reimplement Attack Preview
         if (!activeAbility)
         {
             return;
         }
-        UnitController attackerController = attacker.GetComponent<UnitController>();
-        UnitController defenderController = defender.GetComponent<UnitController>();
-        int[] hitStats = battleController.GetHitStats(attackerController, defenderController, activeAbility.getAbilityData().getTargetInstruction());
-        GameObject activePreview = uiCanvas.GetComponent<UIController>().displayPreview(defender, activeAbility, hitStats[0], attackerController.getExpectedDamage(defenderController, activeAbility.getAbilityData()), hitStats[1]);
-        RectTransform previewTransform = activePreview.GetComponent<RectTransform>();
         if (!MouseOnLeft())
         {
-            previewTransform.anchorMax = new Vector2(0, 0.5f);
-            previewTransform.anchorMin = new Vector2(0, 0.5f);
-            previewTransform.anchoredPosition = new Vector2(previewTransform.sizeDelta.x / 2 + 20f, 0);
+            //adjust preview position
         }
         else
         {
-            previewTransform.anchorMax = new Vector2(1, 0.5f);
-            previewTransform.anchorMin = new Vector2(1, 0.5f);
-            previewTransform.anchoredPosition = new Vector2(-(previewTransform.sizeDelta.x / 2 + 20f), 0);
+            //adjust preview position
         }
     }
 
@@ -196,9 +188,7 @@ public class MouseController : MonoBehaviour
         GameObject targetUnit = battleController.GetUnitFromCoords(gridPosition);
         if (battleController.GetActiveUnit())
         {
-            CombatAbility combatAbility = battleController.GetActiveCombatAbility();
-            TargetInstructionInstance targetInstruction = combatAbility.getAbilityData().getTargetInstruction();
-            battleController.CombatTargeting(targetUnit, targetInstruction, tilePosition);
+            battleController.CombatTargeting(targetUnit, battleController.GetActiveAbilityScript().targeting[0]);
         }
     }
 

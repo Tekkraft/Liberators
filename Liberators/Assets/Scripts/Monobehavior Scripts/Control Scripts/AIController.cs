@@ -72,21 +72,12 @@ public class AIController : MonoBehaviour
 
     public Vector2 getPointTarget(CombatAbility activeAbility)
     {
-        AbilityData abilityData = activeAbility.getAbilityData();
-        float maxRange = abilityData.getTargetInstruction().getMinRange();
-        float minRange = abilityData.getTargetInstruction().getMaxRange();
-        Vector2 randomOffset = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * Random.Range(minRange, maxRange);
-        return (Vector2)hostController.getUnitPos() + randomOffset;
+        return Vector2.zero;
     }
 
     public Vector2Int getTileTarget(CombatAbility activeAbility)
     {
-        AbilityData abilityData = activeAbility.getAbilityData();
-        int maxRange = abilityData.getTargetInstruction().getMinRange();
-        int minRange = abilityData.getTargetInstruction().getMaxRange();
-        int horizontal = Random.Range(minRange, maxRange + 1);
-        int vertical = Random.Range(minRange, maxRange + 1);
-        return hostController.getUnitPos() + new Vector2Int(horizontal, vertical);
+        return Vector2Int.zero;
     }
 
     public Vector2Int getMoveTarget(MovementAbility activeAbility)

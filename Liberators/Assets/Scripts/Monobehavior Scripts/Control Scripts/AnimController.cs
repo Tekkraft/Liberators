@@ -12,9 +12,10 @@ public class AnimController : MonoBehaviour
     List<GameObject> deadUnits = new List<GameObject>();
     List<GameObject> damageTextList = new List<GameObject>();
 
-    public void createBattleAnimation(List<CombatData> combatSequence)
+    //TODO: Reimplement Animations
+    public void createBattleAnimation()
     {
-        AnimationSequence sequence = new AnimationSequence(combatSequence);
+        AnimationSequence sequence = new AnimationSequence();
         StartCoroutine(playAnimation(sequence));
     }
 
