@@ -19,14 +19,7 @@ public class Pathfinder
         this.minRange = minRange;
         this.maxRange = maxRange;
         this.controller = controller;
-    }
-
-    public void changeParameters(Vector2Int origin, int maxRange, int minRange)
-    {
-        clearCalculator();
-        this.origin = origin;
-        this.minRange = minRange;
-        this.maxRange = maxRange;
+        calculate();
     }
 
     public void calculate()

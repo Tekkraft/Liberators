@@ -14,13 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Wave Caster
   weaponIcon: {fileID: -6777312160453669288, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
-  handClass: 1
-  baseClass: 2
-  damageClass: 2
   weaponStrength: 15
   weaponHit: 80
   weaponCrit: 0
-  weaponRange: 2
+  weaponRange: 4
   weaponElement: 8
   abilities:
   - {fileID: 11400000, guid: 79c041e99e524417a8497edaba2c9d2b, type: 2}

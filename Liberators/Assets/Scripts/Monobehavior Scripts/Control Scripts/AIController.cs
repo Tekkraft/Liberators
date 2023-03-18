@@ -82,7 +82,7 @@ public class AIController : MonoBehaviour
 
     public Vector2Int getMoveTarget(MovementAbility activeAbility)
     {
-        List<Vector2Int> validTiles = hostController.pathfinderValidCoords(activeAbility);
+        List<Vector2Int> validTiles = hostController.PathfinderValidCoords(activeAbility);
         if (validTiles.Count == 0)
         {
             return Vector2Int.zero;
@@ -109,7 +109,7 @@ public class AIController : MonoBehaviour
                     }
                     foreach (GameObject enemy in AICoordinator.seenEnemies)
                     {
-                        float distance = Mathf.Abs((enemy.GetComponent<UnitController>().getUnitPos() - tile).magnitude);
+                        float distance = Mathf.Abs((enemy.GetComponent<UnitController>().GetUnitPos() - tile).magnitude);
                         if (distance == 0)
                         {
                             skip = true;
@@ -141,7 +141,7 @@ public class AIController : MonoBehaviour
                     }
                     foreach (GameObject enemy in AICoordinator.seenEnemies)
                     {
-                        float distance = Mathf.Abs((enemy.GetComponent<UnitController>().getUnitPos() - tile).magnitude);
+                        float distance = Mathf.Abs((enemy.GetComponent<UnitController>().GetUnitPos() - tile).magnitude);
                         if (distance == 0)
                         {
                             skip = true;

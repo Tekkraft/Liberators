@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System.Linq;
 
 public class AnimController : MonoBehaviour
 {
@@ -11,51 +12,38 @@ public class AnimController : MonoBehaviour
     Dictionary<GameObject, GameObject> activeUnitsUI = new Dictionary<GameObject, GameObject>();
     List<GameObject> deadUnits = new List<GameObject>();
     List<GameObject> damageTextList = new List<GameObject>();
+    Coroutine currentAnimation;
 
     //TODO: Reimplement Animations
-    public void createBattleAnimation()
+    public void createBattleAnimation(List<BattleStep> steps, GameObject attacker)
     {
-        AnimationSequence sequence = new AnimationSequence();
-        StartCoroutine(playAnimation(sequence));
+        currentAnimation = StartCoroutine(PlayAnimation(steps, attacker));
     }
 
-    IEnumerator playAnimation(AnimationSequence sequence)
+    IEnumerator PlayAnimation(List<BattleStep> steps, GameObject attacker)
     {
-        if (sequence.getSequence().Count <= 0)
+        if (steps.Count <= 0)
         {
-            terminateAnimation();
+            TerminateAnimation();
             yield break;
         }
-        if (sequence.getSequence()[0].getAnimationSteps().Count <= 0)
+        List<GameObject> relevantUnits = new List<GameObject>();
+        foreach (BattleStep step in steps)
         {
-            terminateAnimation();
-            yield break;
+            relevantUnits.AddRange(step.GetBattleDetails().Keys);
         }
-        BattleTeam activeTeam = sequence.getSequence()[0].getAnimationSteps()[0].getActor().GetComponent<UnitController>().getTeam();
+        relevantUnits.Distinct().ToList();
         List<GameObject> leftUnits = new List<GameObject>();
         List<GameObject> rightUnits = new List<GameObject>();
-        foreach (AnimationBlock block in sequence.getSequence())
+        foreach (GameObject unit in relevantUnits)
         {
-            if (block.getAnimationSteps().Count <= 0)
+            if (unit.GetComponent<UnitController>().GetTeam() == BattleTeam.ENEMY)
             {
-                continue;
+                rightUnits.Add(unit);
             }
-            foreach (AnimationStep step in block.getAnimationSteps())
+            else
             {
-                if (step.getActor().GetComponent<UnitController>().getTeam() == activeTeam)
-                {
-                    if (!leftUnits.Contains(step.getActor()))
-                    {
-                        leftUnits.Add(step.getActor());
-                    }
-                }
-                else
-                {
-                    if (!rightUnits.Contains(step.getActor()))
-                    {
-                        rightUnits.Add(step.getActor());
-                    }
-                }
+                leftUnits.Add(unit);
             }
         }
         for (int i = 0; i < leftUnits.Count; i++)
@@ -63,10 +51,10 @@ public class AnimController : MonoBehaviour
             if (!activeUnits.Contains(leftUnits[i]))
             {
                 GameObject temp = GameObject.Instantiate(unitBase, gameObject.transform);
-                temp.GetComponent<Image>().sprite = leftUnits[i].GetComponent<UnitController>().getUnitInstance().getBattleSprite("idle");
+                temp.GetComponent<Image>().sprite = leftUnits[i].GetComponent<UnitController>().GetUnitInstance().getBattleSprite("idle");
                 activeUnitsUI.Add(leftUnits[i], temp);
                 activeUnits.Add(leftUnits[i]);
-                //Will have problems down the line, but can fix later
+                //TODO: Will have problems down the line
                 temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(-105 * (i + 1), 100);
             }
         }
@@ -75,27 +63,69 @@ public class AnimController : MonoBehaviour
             if (!activeUnits.Contains(rightUnits[i]))
             {
                 GameObject temp = GameObject.Instantiate(unitBase, gameObject.transform);
-                temp.GetComponent<Image>().sprite = rightUnits[i].GetComponent<UnitController>().getUnitInstance().getBattleSprite("idle");
+                temp.GetComponent<Image>().sprite = rightUnits[i].GetComponent<UnitController>().GetUnitInstance().getBattleSprite("idle");
                 temp.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 180, 0);
                 activeUnitsUI.Add(rightUnits[i], temp);
                 activeUnits.Add(rightUnits[i]);
-                //Will have problems down the line, but can fix later
+                //TODO: Will have problems down the line
                 temp.GetComponent<RectTransform>().anchoredPosition = new Vector2(105 * (i + 1), 100);
             }
         }
-        foreach (AnimationBlock block in sequence.getSequence())
+        foreach (BattleStep step in steps)
         {
-            foreach (AnimationStep step in block.getAnimationSteps())
+            Dictionary<GameObject, List<BattleDetail>> details = step.GetBattleDetails();
+            foreach (GameObject unit in details.Keys)
             {
-                if (deadUnits.Contains(step.getActor()))
+                int depth = 0;
+                foreach (BattleDetail detail in details[unit])
                 {
-                    continue;
-                }
-                activeUnitsUI[step.getActor()].GetComponent<Image>().sprite = step.getActor().GetComponent<UnitController>().getUnitInstance().getBattleSprite(step.getAction());
-                createDamageText(step);
-                if ((step.getAction() == "dead" || step.getAction() == "dead stagger") && !deadUnits.Contains(step.getActor()))
-                {
-                    deadUnits.Add(step.getActor());
+                    //TODO: Setup animation priority
+                    switch (detail.GetEffect())
+                    {
+                        case "attack":
+                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("attack");
+                            break;
+
+                        case "miss":
+                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("evade");
+                            CreateDamageText("evade", 0, depth, unit);
+                            depth++;
+                            break;
+
+                        case "damage":
+                            if (detail.GetCritical())
+                            {
+                                activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("defend");
+                                CreateDamageText("critical", detail.GetValue(), depth, unit);
+                                depth++;
+                            }
+                            else
+                            {
+                                activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("stagger");
+                                CreateDamageText("damage", detail.GetValue(), depth, unit);
+                                depth++;
+                            }
+                            if (detail.GetDead() && !deadUnits.Contains(unit))
+                            {
+                                activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("dead");
+                                deadUnits.Add(unit);
+                            }
+                            break;
+
+                        case "status":
+                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("defend");
+                            break;
+
+                        case "heal":
+                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("idle");
+                            CreateDamageText("heal", detail.GetValue(), depth, unit);
+                            depth++;
+                            break;
+
+                        default:
+                            Debug.LogError("Unrecognized effect: " + detail.GetEffect());
+                            break;
+                    }
                 }
             }
             yield return new WaitForSeconds(1f);
@@ -103,69 +133,65 @@ public class AnimController : MonoBehaviour
             {
                 GameObject.Destroy(damageTextList[i]);
             }
-            //TEMPORARY CODE
-            foreach (AnimationStep step in block.getAnimationSteps())
+            foreach (GameObject tempUnit in relevantUnits)
             {
-                if (deadUnits.Contains(step.getActor()))
+                if (deadUnits.Contains(tempUnit))
                 {
+                    activeUnitsUI[tempUnit].GetComponent<Image>().sprite = tempUnit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("dead");
                     continue;
                 }
-                activeUnitsUI[step.getActor()].GetComponent<Image>().sprite = step.getActor().GetComponent<UnitController>().getUnitInstance().getBattleSprite("idle");
+                activeUnitsUI[tempUnit].GetComponent<Image>().sprite = tempUnit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("idle");
             }
             yield return new WaitForSeconds(0.5f);
         }
-        terminateAnimation();
+        TerminateAnimation();
     }
 
-    public void terminateAnimation()
+    public void TerminateAnimation()
     {
         for (int i = damageTextList.Count - 1; i >= 0; i--)
         {
             GameObject.Destroy(damageTextList[i]);
         }
-        StopCoroutine("playAnimation");
+        StopCoroutine(currentAnimation);
         GameObject.Destroy(gameObject);
     }
 
-    void createDamageText(AnimationStep step)
+    void CreateDamageText(string action, int value, int height, GameObject unit)
     {
-        Vector3 translation = new Vector3(0, 60, 0);
-        switch (step.getAction())
+        Vector3 translation = new Vector3(0, 60 * height, 0);
+        switch (action)
         {
             case "evade":
-                setupDamageText("MISS", translation, step);
+                SetupDamageText("MISS", translation, unit);
                 break;
 
-            case "block":
-                setupDamageText("BLOCK", translation, step);
+            case "damage":
+                SetupDamageText("-" + value, translation, unit);
                 break;
 
-            case "defend":
-                setupDamageText("-" + step.getEffect(), translation, step);
+            case "critical":
+                SetupDamageText("-" + value + "!", translation, unit);
                 break;
 
-            case "dead":
-                setupDamageText("-" + step.getEffect(), translation, step);
+            case "heal":
+                SetupDamageText("+" + value, translation, unit);
                 break;
 
-            case "stagger":
-                setupDamageText("-" + step.getEffect() + "!", translation, step);
-                break;
-
-            case "dead stagger":
-                setupDamageText("-" + step.getEffect() + "!", translation, step);
+            default:
+                Debug.LogError("Unrecognized action: " + action);
                 break;
         }
     }
 
-    void setupDamageText(string message, Vector3 translation, AnimationStep step)
+    void SetupDamageText(string message, Vector3 translation, GameObject target)
     {
-        GameObject temp = GameObject.Instantiate(damageText, activeUnitsUI[step.getActor()].transform);
+        GameObject temp = GameObject.Instantiate(damageText, activeUnitsUI[target].transform);
         float ratio = temp.GetComponent<RectTransform>().sizeDelta.y / 25;
         temp.GetComponent<RectTransform>().localPosition = translation * ratio;
         temp.GetComponent<TMPro.TextMeshProUGUI>().text = message;
         damageTextList.Add(temp);
-        if (Mathf.Abs(activeUnitsUI[step.getActor()].GetComponent<RectTransform>().rotation.eulerAngles.y) == 180)
+        if (Mathf.Abs(activeUnitsUI[target].GetComponent<RectTransform>().rotation.eulerAngles.y) == 180)
         {
             temp.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, Mathf.PI, 0);
         }

@@ -81,7 +81,7 @@ public class MapData : ScriptableObject
                 {
                     if (coord.y <= Mathf.Max(zone.corner1.y, zone.corner2.y) && coord.y >= Mathf.Min(zone.corner1.y, zone.corner2.y))
                     {
-                        if (unitList[coord].GetComponent<UnitController>().getTeam() == zone.targetTeam)
+                        if (unitList[coord].GetComponent<UnitController>().GetTeam() == zone.targetTeam)
                         {
                             return true;
                         }
@@ -119,7 +119,7 @@ public class MapData : ScriptableObject
                 {
                     if (coord.y <= Mathf.Max(zone.corner1.y, zone.corner2.y) && coord.y >= Mathf.Min(zone.corner1.y, zone.corner2.y))
                     {
-                        if (unitList[coord].GetComponent<UnitController>().getTeam() == zone.targetTeam)
+                        if (unitList[coord].GetComponent<UnitController>().GetTeam() == zone.targetTeam)
                         {
                             return true;
                         }

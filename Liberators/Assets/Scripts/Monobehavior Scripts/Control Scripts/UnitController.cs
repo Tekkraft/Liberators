@@ -117,7 +117,7 @@ public class UnitController : MonoBehaviour
             Status linkedStatus = statuses[i].getStatus();
             if (linkedStatus.getHealthOverTime()[0] > 0)
             {
-                takeDamage(linkedStatus.getHealthOverTime()[0], linkedStatus.getHealthOverTimeElement());
+                TakeDamage(linkedStatus.getHealthOverTime()[0], linkedStatus.getHealthOverTimeElement());
                 if (currentHP <= 0)
                 {
                     return true;
@@ -125,7 +125,7 @@ public class UnitController : MonoBehaviour
             }
             if (linkedStatus.getHealthOverTime()[1] > 0)
             {
-                restoreHealth(linkedStatus.getHealthOverTime()[1]);
+                RestoreHealth(linkedStatus.getHealthOverTime()[1]);
             }
             bool expired = statuses[i].update();
             if (expired)
@@ -159,28 +159,29 @@ public class UnitController : MonoBehaviour
         return equippedArmor;
     }
 
-    public void attackUnit(UnitController targetController, DamageEffect effect, int critChance)
+    public BattleDetail AttackUnit(UnitController targetController, DamageEffect effect, int critChance)
     {
-        int damage = getAttack(effect);
+        int damage = GetAttack(effect);
+        bool critical = false;
         if (Random.Range(0, 100) < critChance)
         {
             damage = (int)(damage * BattleController.critFactor);
+            critical = true;
         }
-        targetController.takeDamage(damage, effect, equippedMainHandWeapon);
+        return targetController.TakeDamage(damage, effect, equippedMainHandWeapon, critical);
     }
 
-    public void healUnit(UnitController targetController, HealEffect effect)
+    public BattleDetail HealUnit(UnitController targetController, HealEffect effect)
     {
-        int healing = getHealing(effect);
-        targetController.restoreHealth(healing);
+        int healing = GetHealing(effect);
+        return targetController.RestoreHealth(healing);
     }
 
     //Passive Damage
-    public KeyValuePair<int, int> takeDamage(int damage, DamageElement damageElement)
+    public void TakeDamage(int damage, DamageElement damageElement)
     {
-        int startingHP = currentHP;
         DamageElement effectElement = damageElement;
-        float damageMultiplier = getDamageReduction(effectElement);
+        float damageMultiplier = GetDamageReduction(effectElement);
         int damageTaken = Mathf.FloorToInt(damage * damageMultiplier);
         if (damageTaken < 0)
         {
@@ -188,17 +189,16 @@ public class UnitController : MonoBehaviour
         }
         currentHP -= damageTaken;
         unitObject.setCurrentHP(currentHP);
-        return new KeyValuePair<int, int>(damageTaken, startingHP);
     }
 
     //Attack Damage
-    public void takeDamage(int damage, DamageEffect effect, WeaponInstance attackerWeapon)
+    public BattleDetail TakeDamage(int damage, DamageEffect effect, WeaponInstance attackerWeapon, bool critical)
     {
         //TODO: Reimplement elemental resistances
         int damageTaken = Mathf.FloorToInt(damage);
         if (equippedArmor != null && !equippedArmor.NullCheckBase())
         {
-            damageTaken -= getDefense(effect);
+            damageTaken -= GetDefense(effect);
         }
         if (damageTaken < 0)
         {
@@ -206,9 +206,10 @@ public class UnitController : MonoBehaviour
         }
         currentHP -= damageTaken;
         unitObject.setCurrentHP(currentHP);
+        return new BattleDetail(damage, currentHP <= 0, critical);
     }
 
-    public void restoreHealth(int healing)
+    public BattleDetail RestoreHealth(int healing)
     {
         currentHP += healing;
         if (currentHP > maxHP)
@@ -216,9 +217,10 @@ public class UnitController : MonoBehaviour
             currentHP = maxHP;
         }
         unitObject.setCurrentHP(currentHP);
+        return new BattleDetail(healing);
     }
 
-    public void inflictStatus(Status newStatus, GameObject source)
+    public BattleDetail InflictStatus(Status newStatus, GameObject source)
     {
         statuses.Add(new StatusInstance(newStatus, source));
         if (newStatus.getAPMode())
@@ -229,16 +231,17 @@ public class UnitController : MonoBehaviour
                 actions = 0;
             }
         }
+        return new BattleDetail(newStatus);
     }
 
-    public int getHealing(HealEffect effect)
+    public int GetHealing(HealEffect effect)
     {
         //TODO: Reimplement stat-based healing bonus
         int healing = effect.value;
         return healing;
     }
 
-    public int getAttack(DamageEffect effect)
+    public int GetAttack(DamageEffect effect)
     {
         int damage = 0;
         if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
@@ -263,7 +266,7 @@ public class UnitController : MonoBehaviour
         return damage;
     }
 
-    public int getDefense(DamageEffect effect)
+    public int GetDefense(DamageEffect effect)
     {
         int defense = 0;
         if (equippedArmor != null && !equippedArmor.NullCheckBase())
@@ -284,7 +287,7 @@ public class UnitController : MonoBehaviour
         return defense;
     }
 
-    public float getDamageReduction(DamageElement attackElement)
+    public float GetDamageReduction(DamageElement attackElement)
     {
         if (equippedArmor != null && !equippedArmor.NullCheckBase())
         {
@@ -293,92 +296,56 @@ public class UnitController : MonoBehaviour
         return 1f;
     }
 
-    public string getName()
+    public string GetName()
     {
         return unitName;
     }
 
-    public UnitInstance getUnitInstance()
+    public UnitInstance GetUnitInstance()
     {
         return unitObject;
     }
 
-    public int[] getHealth()
+    public int[] GetHealth()
     {
         return new int[] { maxHP, currentHP };
     }
 
-    public int[] getStats()
+    public int[] GetStats()
     {
         return new int[] { mov, maxHP, currentHP, str, pot, acu, fin, rea };
     }
 
-    public BattleTeam getTeam()
+    public BattleTeam GetTeam()
     {
         return team;
     }
 
-    public bool moveUnit(Vector2 destination, MovementAbility moveAbility)
+    public bool MoveUnit(Vector2 destination, MovementAbility moveAbility)
     {
         Vector2Int destinationTile = mapController.gridTilePos(destination);
-        if (pathfinderValidCoords(moveAbility).Contains(destinationTile))
+        if (PathfinderValidCoords(moveAbility).Contains(destinationTile))
         {
-            setUnitPos(destination);
+            SetUnitPos(destination);
             return true;
         }
         return false;
     }
      
-    void setUnitPos(Vector2 worldPos)
+    void SetUnitPos(Vector2 worldPos)
     {
         transform.position = new Vector3(worldPos.x, worldPos.y, -2);
         unitGridPosition = mapController.gridWorldPos(transform.position);
-        destroyMarkers();
     }
 
-    public Vector2Int getUnitPos()
+    public Vector2Int GetUnitPos()
     {
         return unitGridPosition;
     }
 
-    //TODO: Move marker drawing to UIController, not UnitController
-    public void createMoveMarkers(MovementAbility activeAbility, MarkerController.Markers color)
+    public List<Vector2Int> PathfinderValidCoords(MovementAbility moveAbility)
     {
-        List<Vector2Int> coords = pathfinderValidCoords(activeAbility);
-        foreach (Vector2Int gridPos in coords)
-        {
-            GameObject temp = GameObject.Instantiate(marker);
-            Vector2 markerLocation = mapController.tileGridPos(gridPos);
-            temp.GetComponent<MarkerController>().setup(color, markerLocation);
-            markerList.Add(temp);
-        }
-    }
-
-    public void createAttackMarkers(List<Vector2Int> coords, MarkerController.Markers color)
-    {
-        foreach (Vector2Int gridPos in coords)
-        {
-            GameObject temp = GameObject.Instantiate(marker);
-            Vector2 markerLocation = mapController.tileGridPos(gridPos);
-            temp.GetComponent<MarkerController>().setup(color, markerLocation);
-            markerList.Add(temp);
-        }
-    }
-
-    public void destroyMarkers()
-    {
-        for (int i = 0; i < markerList.Count; i = 0)
-        {
-            GameObject temp = markerList[0];
-            markerList.Remove(temp);
-            temp.GetComponent<MarkerController>().removeMarker();
-        }
-    }
-
-    public List<Vector2Int> pathfinderValidCoords(MovementAbility moveAbility)
-    {
-        mapController.getPathfinder().changeParameters(unitGridPosition, battleController.FinalRange(mov, moveAbility), moveAbility.getMinMoveRange());
-        mapController.getPathfinder().calculate();
-        return mapController.getPathfinder().getValidCoords();
+        Pathfinder pathfinder = new Pathfinder(unitGridPosition, battleController.FinalRange(mov, moveAbility), moveAbility.getMinMoveRange(), mapController);
+        return pathfinder.getValidCoords();
     }
 }

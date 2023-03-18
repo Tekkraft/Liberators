@@ -14,13 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Floret Drone
   weaponIcon: {fileID: 8152089550035463653, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
-  handClass: 0
-  baseClass: 2
-  damageClass: 1
   weaponStrength: 3
   weaponHit: 200
   weaponCrit: 0
-  weaponRange: 3
+  weaponRange: 8
   weaponElement: 4
   abilities:
   - {fileID: 11400000, guid: 711cd4581e168409baf75f8224c12a20, type: 2}

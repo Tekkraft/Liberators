@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Type is either "active" or "passive"-->
+<abilityScript type="active">
+    <!--Currently supports only FIRST tag in targeting-->
+    <targeting>
+        <!--Targets a selected tile-->
+        <tile>
+            <!--Range tag is required, however min="0", max="0", extendMax="false", and sight="true" are assumed if left blank.-->
+            <range max="0" extendMax="true"/>
+            <!--Team tag is required, however filter="all" is assumed if left blank.-->
+            <team />
+            <!--Mode tag is required, however filter="none" and state="any" are assumed if left blank.-->
+            <mode filter="move" state="free"/>
+        </tile>
+    </targeting>
+    <effects>
+        <!--Move selected unit to a selected tile-->
+        <!--ref attribute is required.-->
+        <move ref="caster"/>
+    </effects>
+</abilityScript>

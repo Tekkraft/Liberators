@@ -45,14 +45,14 @@ public class Rangefinder
             {
                 case BattleTeam.PLAYER:
                 case BattleTeam.ALLY:
-                    if (temp.GetComponent<UnitController>().getTeam() == BattleTeam.PLAYER || temp.GetComponent<UnitController>().getTeam() == BattleTeam.ALLY)
+                    if (temp.GetComponent<UnitController>().GetTeam() == BattleTeam.PLAYER || temp.GetComponent<UnitController>().GetTeam() == BattleTeam.ALLY)
                     {
                         validTargets.Add(temp);
                     }
                     break;
 
                 case BattleTeam.ENEMY:
-                    if (temp.GetComponent<UnitController>().getTeam() == BattleTeam.ENEMY)
+                    if (temp.GetComponent<UnitController>().GetTeam() == BattleTeam.ENEMY)
                     {
                         validTargets.Add(temp);
                     }
@@ -87,14 +87,14 @@ public class Rangefinder
             {
                 case BattleTeam.PLAYER:
                 case BattleTeam.ALLY:
-                    if (temp.GetComponent<UnitController>().getTeam() == BattleTeam.ENEMY)
+                    if (temp.GetComponent<UnitController>().GetTeam() == BattleTeam.ENEMY)
                     {
                         validTargets.Add(temp);
                     }
                     break;
 
                 case BattleTeam.ENEMY:
-                    if (temp.GetComponent<UnitController>().getTeam() == BattleTeam.PLAYER || temp.GetComponent<UnitController>().getTeam() == BattleTeam.ALLY)
+                    if (temp.GetComponent<UnitController>().GetTeam() == BattleTeam.PLAYER || temp.GetComponent<UnitController>().GetTeam() == BattleTeam.ALLY)
                     {
                         validTargets.Add(temp);
                     }
@@ -130,14 +130,14 @@ public class Rangefinder
             {
                 case BattleTeam.PLAYER:
                 case BattleTeam.ALLY:
-                    if (temp.GetComponent<UnitController>().getTeam() == BattleTeam.PLAYER || temp.GetComponent<UnitController>().getTeam() == BattleTeam.ALLY)
+                    if (temp.GetComponent<UnitController>().GetTeam() == BattleTeam.PLAYER || temp.GetComponent<UnitController>().GetTeam() == BattleTeam.ALLY)
                     {
                         validTargets.Add(targetCoordsList[i]);
                     }
                     break;
 
                 case BattleTeam.ENEMY:
-                    if (temp.GetComponent<UnitController>().getTeam() == BattleTeam.ENEMY)
+                    if (temp.GetComponent<UnitController>().GetTeam() == BattleTeam.ENEMY)
                     {
                         validTargets.Add(targetCoordsList[i]);
                     }
@@ -173,14 +173,14 @@ public class Rangefinder
             {
                 case BattleTeam.PLAYER:
                 case BattleTeam.ALLY:
-                    if (temp.GetComponent<UnitController>().getTeam() == BattleTeam.ENEMY)
+                    if (temp.GetComponent<UnitController>().GetTeam() == BattleTeam.ENEMY)
                     {
                         validTargets.Add(targetCoordsList[i]);
                     }
                     break;
 
                 case BattleTeam.ENEMY:
-                    if (temp.GetComponent<UnitController>().getTeam() == BattleTeam.PLAYER || temp.GetComponent<UnitController>().getTeam() == BattleTeam.ALLY)
+                    if (temp.GetComponent<UnitController>().GetTeam() == BattleTeam.PLAYER || temp.GetComponent<UnitController>().GetTeam() == BattleTeam.ALLY)
                     {
                         validTargets.Add(targetCoordsList[i]);
                     }
@@ -205,7 +205,7 @@ public class Rangefinder
         }
         for (int i = unitList.Count - 1; i >= 0; i--)
         {
-            if ((losRequired && checkLineCollision(originCoords, unitList[i].GetComponent<UnitController>().getUnitPos())) || !inRange(mapController.tileGridPos(originCoords), mapController.tileGridPos(unitList[i].GetComponent<UnitController>().getUnitPos()), maxRange, minRange))
+            if ((losRequired && checkLineCollision(originCoords, unitList[i].GetComponent<UnitController>().GetUnitPos())) || !inRange(mapController.tileGridPos(originCoords), mapController.tileGridPos(unitList[i].GetComponent<UnitController>().GetUnitPos()), maxRange, minRange))
             {
                 unitList.Remove(unitList[i]);
             }
@@ -213,7 +213,7 @@ public class Rangefinder
         List<Vector2Int> coordsList = new List<Vector2Int>();
         for (int i = 0; i < unitList.Count; i++)
         {
-            coordsList.Add(unitList[i].GetComponent<UnitController>().getUnitPos());
+            coordsList.Add(unitList[i].GetComponent<UnitController>().GetUnitPos());
         }
         return coordsList;
     }
@@ -239,7 +239,7 @@ public class Rangefinder
             }
             else if (temp.GetComponent<UnitController>())
             {
-                unitTargets.Add(temp.GetComponent<UnitController>().getUnitPos());
+                unitTargets.Add(temp.GetComponent<UnitController>().GetUnitPos());
             }
         }
 

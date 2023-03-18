@@ -17,6 +17,10 @@ public class UIController : MonoBehaviour
     public GameObject animationPanel;
     [SerializeField]
     GameObject uiBaseBar;
+    [SerializeField]
+    GameObject marker;
+    [SerializeField]
+    MapController mapController;
 
     GameObject activeBanner;
     GameObject activePreview;
@@ -24,6 +28,8 @@ public class UIController : MonoBehaviour
 
     GameObject hoveredUnit;
     List<GameObject> allButtons = new List<GameObject>();
+
+    List<GameObject> allMarkers = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +43,7 @@ public class UIController : MonoBehaviour
         if (hoveredUnit)
         {
             UnitController unitController = hoveredUnit.GetComponent<UnitController>();
-            hpMeter.GetComponent<Text>().text = "HP: " + unitController.getStats()[2] + "/" + unitController.getStats()[1];
+            hpMeter.GetComponent<Text>().text = "HP: " + unitController.GetStats()[2] + "/" + unitController.GetStats()[1];
             apMeter.GetComponent<Text>().text = "AP: " + unitController.getActions()[1] + "/" + unitController.getActions()[0];
         }
         else
@@ -134,6 +140,28 @@ public class UIController : MonoBehaviour
         }
     }
 
+    //Marker Handling
+    public void drawMarkers(List<Vector2Int> coords, MarkerController.Markers markerColor)
+    {
+        foreach (Vector2Int gridPos in coords)
+        {
+            GameObject temp = Instantiate(marker);
+            Vector2 markerLocation = mapController.tileGridPos(gridPos);
+            temp.GetComponent<MarkerController>().setup(markerColor, markerLocation);
+            allMarkers.Add(temp);
+        }
+    }
+
+    public void clearMarkers()
+    {
+        for (int i = allMarkers.Count - 1; i >= 0; i--)
+        {
+            GameObject temp = allMarkers[i];
+            allMarkers.Remove(temp);
+            GameObject.Destroy(temp);
+        }
+    }
+
     //Banner Handling
     //Time is in tenth of seconds
     public void changeBanner(string textMessage, int bannerDuration)
@@ -170,10 +198,10 @@ public class UIController : MonoBehaviour
     }
 
     //TODO: Reimplement Animation
-    public GameObject displayBattleAnimation()
+    public GameObject displayBattleAnimation(List<BattleStep> steps, GameObject attacker)
     {
         activeAnimation = GameObject.Instantiate(animationPanel, transform);
-        activeAnimation.GetComponent<AnimController>().createBattleAnimation();
+        activeAnimation.GetComponent<AnimController>().createBattleAnimation(steps, attacker);
         return activeAnimation;
     }
 
@@ -181,7 +209,7 @@ public class UIController : MonoBehaviour
     {
         if (activeAnimation)
         {
-            activeAnimation.GetComponent<AnimController>().terminateAnimation();
+            activeAnimation.GetComponent<AnimController>().TerminateAnimation();
         }
     }
 

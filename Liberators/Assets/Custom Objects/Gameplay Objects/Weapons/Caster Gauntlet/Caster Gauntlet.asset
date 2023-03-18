@@ -14,13 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Caster Gauntlet
   weaponIcon: {fileID: -4213184575724999638, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
-  handClass: 2
-  baseClass: 2
-  damageClass: 2
   weaponStrength: 10
   weaponHit: 100
   weaponCrit: 0
-  weaponRange: 0
+  weaponRange: 5
   weaponElement: 8
   abilities:
   - {fileID: 11400000, guid: c03e701e575b34ca7b22bf75e0dd7fa1, type: 2}

@@ -83,7 +83,7 @@ public class MouseController : MonoBehaviour
                     {
                         if (!battleController.GetActiveUnit())
                         {
-                            if (battleController.GetActiveTeam() != targetUnit.GetComponent<UnitController>().getTeam())
+                            if (battleController.GetActiveTeam() != targetUnit.GetComponent<UnitController>().GetTeam())
                             {
                                 return;
                             }

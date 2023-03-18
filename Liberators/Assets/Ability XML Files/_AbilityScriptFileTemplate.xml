@@ -62,6 +62,8 @@
             <range max="0"/>
             <!--Team tag is required, however filter="all" is assumed if left blank.-->
             <team filter="enemy"/>
+            <!--Mode tag is required, however filter="none" is assumed if left blank.-->
+            <mode />
             <!--The following tags are not required, and no default value is assumed-->
             <require>
                 <!--Valid targets must fulfill these conditions-->
@@ -104,8 +106,9 @@
                 <!--Range tag and max attribute are required, however min="0" is assumed if left blank.-->
                 <range max="0"/>
                 <!--Team tag is required, however filter="all" is assumed if left blank.-->
+                <!--Team tag is relative to parent, not relative to caster-->
                 <team filter="enemy"/>
-                <!--Count tag is NOT required, however targets="all", and duplicate="true" are assumed if left blank.-->
+                <!--Count tag is required, however targets="all", and duplicate="true" are assumed if left blank.-->
                 <count />
                 <!--The following tags are not required, and no default value is assumed-->
                 <require>

@@ -56,6 +56,30 @@ public class BeamTargeting : TargetingType
     //TODO: Add filter and custom conditions
 }
 
+[XmlRoot("self")]
+public class SelfTargeting : TargetingType
+{
+    //TODO: Add filter and custom conditions
+}
+
+[XmlRoot("tile")]
+public class TileTargeting : TargetingType
+{
+    [XmlElement("range")]
+    public RangeElement range;
+
+    [XmlElement("team")]
+    public TeamElement team;
+
+    [XmlElement("count")]
+    public CountElement count;
+
+    [XmlElement("mode")]
+    public ModeElement mode;
+
+    //TODO: Add filter and custom conditions
+}
+
 [XmlRoot("range")]
 public class RangeElement
 {
@@ -106,6 +130,16 @@ public class BlockElement
 
     [XmlAttribute("units"), DefaultValue(true)]
     public bool units = true;
+}
+
+[XmlRoot("mode")]
+public class ModeElement
+{
+    [XmlAttribute("filter"), DefaultValue("none")]
+    public string filter = "none";
+
+    [XmlAttribute("state"), DefaultValue("any")]
+    public string state = "any";
 }
 
 public class EffectTypeA { }
@@ -178,10 +212,42 @@ public class HealEffect : EffectTypeA
 [XmlRoot("select")]
 public class SelectEffect : EffectTypeA
 {
-    [XmlArray("select")]
+    [XmlElement("aoe", Type = typeof(AOESelector))]
+    public SelectType selector;
+}
+
+public class SelectType { }
+
+[XmlRoot("aoe")]
+public class AOESelector : SelectType
+{
+    [XmlElement("area")]
+    public AreaElement area;
+
+    [XmlElement("range")]
+    public RangeElement range;
+
+    [XmlElement("team")]
+    public TeamElement team;
+
+    [XmlElement("count")]
+    public CountElement count;
+
+    [XmlArray("effects")]
     [XmlArrayItem("damage", Type = typeof(DamageEffect))]
     [XmlArrayItem("status", Type = typeof(StatusEffect))]
     [XmlArrayItem("heal", Type = typeof(HealEffect))]
     [XmlArrayItem("select", Type = typeof(SelectEffect))]
-    List<EffectTypeA> effects;
+    public List<EffectTypeA> effects;
+    //TODO: Add filter and custom conditions
+}
+
+[XmlRoot("area")]
+public class AreaElement
+{
+    [XmlAttribute("shape"), DefaultValue("circle")]
+    public string shape;
+
+    [XmlAttribute("direction"), DefaultValue("none")]
+    public string direction;
 }

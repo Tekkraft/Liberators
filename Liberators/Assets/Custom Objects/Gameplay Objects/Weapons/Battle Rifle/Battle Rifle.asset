@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Battle Rifle
   weaponIcon: {fileID: 7895098620105481152, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
-  handClass: 1
-  baseClass: 1
-  damageClass: 1
   weaponStrength: 10
   weaponHit: 100
   weaponCrit: 0
