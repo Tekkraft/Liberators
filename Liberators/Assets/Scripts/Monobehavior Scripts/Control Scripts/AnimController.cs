@@ -15,12 +15,12 @@ public class AnimController : MonoBehaviour
     Coroutine currentAnimation;
 
     //TODO: Reimplement Animations
-    public void createBattleAnimation(List<BattleStep> steps, GameObject attacker)
+    public void createBattleAnimation(List<BattleStep> steps)
     {
-        currentAnimation = StartCoroutine(PlayAnimation(steps, attacker));
+        currentAnimation = StartCoroutine(PlayAnimation(steps));
     }
 
-    IEnumerator PlayAnimation(List<BattleStep> steps, GameObject attacker)
+    IEnumerator PlayAnimation(List<BattleStep> steps)
     {
         if (steps.Count <= 0)
         {
@@ -76,7 +76,7 @@ public class AnimController : MonoBehaviour
             Dictionary<GameObject, List<BattleDetail>> details = step.GetBattleDetails();
             foreach (GameObject unit in details.Keys)
             {
-                int depth = 0;
+                int depth = 1;
                 foreach (BattleDetail detail in details[unit])
                 {
                     //TODO: Setup animation priority

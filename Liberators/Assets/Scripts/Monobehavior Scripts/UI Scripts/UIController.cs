@@ -198,10 +198,10 @@ public class UIController : MonoBehaviour
     }
 
     //TODO: Reimplement Animation
-    public GameObject displayBattleAnimation(List<BattleStep> steps, GameObject attacker)
+    public GameObject displayBattleAnimation(List<BattleStep> steps)
     {
         activeAnimation = GameObject.Instantiate(animationPanel, transform);
-        activeAnimation.GetComponent<AnimController>().createBattleAnimation(steps, attacker);
+        activeAnimation.GetComponent<AnimController>().createBattleAnimation(steps);
         return activeAnimation;
     }
 

@@ -548,7 +548,7 @@ public class BattleController : MonoBehaviour
             }
         }
         //TODO: Reimplement Animation Support
-        StartAnimation(steps, activeUnit);
+        StartAnimation(steps);
         CompleteAction();
         selectedController.useActions(activeAbility.getAPCost());
     }
@@ -1167,10 +1167,10 @@ public class BattleController : MonoBehaviour
     }
 
     //Animation Control Functions
-    public void StartAnimation(List<BattleStep> steps, GameObject attacker)
+    public void StartAnimation(List<BattleStep> steps)
     {
         turnPhase = TurnPhase.PAUSE;
-        uiCanvas.GetComponent<UIController>().displayBattleAnimation(steps, attacker);
+        uiCanvas.GetComponent<UIController>().displayBattleAnimation(steps);
         StartCoroutine(PostAnimCleanup());
     }
 
