@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Arc Edge
   weaponIcon: {fileID: -2675880808916121811, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
-  handClass: 0
-  baseClass: 0
-  damageClass: 1
   weaponStrength: 4
   weaponHit: 250
   weaponCrit: 25
@@ -24,4 +21,5 @@ MonoBehaviour:
   weaponElement: 1
   abilities:
   - {fileID: 11400000, guid: 79544125721cb45c1a4408a382e00524, type: 2}
+  - {fileID: 11400000, guid: 6dd8437587b0140fa8f1d90ba3c9b3a2, type: 2}
   weaponStatus: {fileID: 0}

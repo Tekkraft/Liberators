@@ -48,9 +48,9 @@ public class Ability : ScriptableObject
     {
         if (abilityXMLFolder == null || abilityXMLFile == null || abilityXMLFolder == "" || abilityXMLFile == "")
         {
-//            Debug.LogError("Null path in either File or Folder for ability: " + abilityName);
+            Debug.LogError("Null path in either File or Folder for ability: " + abilityName);
             return null;
         }
-        return Path.Combine(abilityXMLFolder ,abilityXMLFile + ".xml");
+        return Path.Combine(abilityXMLFolder, abilityXMLFile + ".xml");
     }
 }

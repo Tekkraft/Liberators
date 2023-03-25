@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Armor Lance
   weaponIcon: {fileID: -2759347359006325258, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
-  handClass: 1
-  baseClass: 1
-  damageClass: 0
   weaponStrength: 40
   weaponHit: 80
   weaponCrit: 0
@@ -24,4 +21,5 @@ MonoBehaviour:
   weaponElement: 1
   abilities:
   - {fileID: 11400000, guid: 539e9c3cf2aae4ba3bb79a296920efa0, type: 2}
+  - {fileID: 11400000, guid: c4adc95a88c8e4bcfa5aa71e22a37d8e, type: 2}
   weaponStatus: {fileID: 0}

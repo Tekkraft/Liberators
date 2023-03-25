@@ -61,7 +61,7 @@ public class AIController : MonoBehaviour
         }
     }
 
-    public GameObject getGameObjectTarget(CombatAbility activeAbility, List<GameObject> targets)
+    public GameObject getGameObjectTarget(AbilityScript script, List<GameObject> targets)
     {
         if (targets.Count == 0)
         {
@@ -70,19 +70,19 @@ public class AIController : MonoBehaviour
         return targets[Random.Range(0, targets.Count)];
     }
 
-    public Vector2 getPointTarget(CombatAbility activeAbility)
+    public Vector2 getPointTarget(AbilityScript script)
     {
         return Vector2.zero;
     }
 
-    public Vector2Int getTileTarget(CombatAbility activeAbility)
+    public Vector2Int getTileTarget(AbilityScript script)
     {
         return Vector2Int.zero;
     }
 
-    public Vector2Int getMoveTarget(MovementAbility activeAbility)
+    public Vector2Int getMoveTarget(AbilityScript script)
     {
-        List<Vector2Int> validTiles = hostController.PathfinderValidCoords(activeAbility);
+        List<Vector2Int> validTiles = hostController.PathfinderValidCoords(script);
         if (validTiles.Count == 0)
         {
             return Vector2Int.zero;

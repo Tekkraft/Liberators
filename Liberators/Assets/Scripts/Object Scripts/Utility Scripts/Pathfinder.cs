@@ -24,7 +24,6 @@ public class Pathfinder
 
     public void calculate()
     {
-        clearCalculator();
         searchList.AddFirst(new CellPair(origin, 0));
         while (searchList.Count > 0)
         {
@@ -79,13 +78,6 @@ public class Pathfinder
     public bool checkCoords(Vector2Int coords)
     {
         return validCoords.Contains(coords);
-    }
-
-    void clearCalculator()
-    {
-        searchList.Clear();
-        searchedCoords.Clear();
-        validCoords.Clear();
     }
 }
 

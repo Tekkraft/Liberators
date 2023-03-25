@@ -5,13 +5,10 @@ using TMPro;
 
 public class PreviewController : MonoBehaviour
 {
-    public void setData(GameObject defender, Ability activeAbility, int playerHit, int playerDamage, int playerCrit)
+    public void setData(GameObject defender, Ability activeAbility)
     {
-        GameObject.Find("Unit Name").GetComponent<TextMeshProUGUI>().text = defender.GetComponent<UnitController>().GetName();
+        GameObject.Find("Target Name").GetComponent<TextMeshProUGUI>().text = defender.GetComponent<UnitController>().GetName();
         GameObject.Find("Ability Name").GetComponent<TextMeshProUGUI>().text = activeAbility.getName();
-        GameObject.Find("Player Hit").GetComponent<TextMeshProUGUI>().text = Mathf.Min(playerHit, 100).ToString();
-        GameObject.Find("Player Damage").GetComponent<TextMeshProUGUI>().text = playerDamage.ToString();
-        GameObject.Find("Player Critical").GetComponent<TextMeshProUGUI>().text = Mathf.Max(playerCrit, 0).ToString();
     }
 
     public void setData(GameObject unit)

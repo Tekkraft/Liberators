@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67a77f5bb98f1433892e2c93c72d91e7, type: 3}
-  m_Name: Arc Edge Primary Attack
+  m_Name: Arc Edge Secondary Attack
   m_EditorClassIdentifier: 
-  abilityName: Attack
+  abilityName: Thrown Attack
   abilitySprite: {fileID: 4285632341194651890, guid: 6a293d27b735b484e91629383135b8bb, type: 3}
   abilityAP: 1
   abilityType: 2
   abilityXMLFolder: Weapons
-  abilityXMLFile: ArcEdgePrimary
+  abilityXMLFile: ArcEdgeSecondary

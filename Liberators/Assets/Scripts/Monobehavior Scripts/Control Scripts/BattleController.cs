@@ -36,6 +36,8 @@ public class BattleController : MonoBehaviour
     ActionType actionState = ActionType.NONE;
     Ability activeAbility;
     AbilityScript activeAbilityScript;
+    Dictionary<string, GameObject> gameobjectRefs = new Dictionary<string, GameObject>();
+    Dictionary<string, int> intRefs = new Dictionary<string, int>();
     GameObject activeUnit;
 
     //Public Objects
@@ -234,7 +236,7 @@ public class BattleController : MonoBehaviour
                             continue;
                         }
                         //TODO: Set AI multitargeting
-                        GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(selectedAbility as CombatAbility, validTargets);
+                        GameObject target = activeUnit.GetComponent<AIController>().getGameObjectTarget(activeAbilityScript, validTargets);
                         if (target)
                         {
                             CombatTargeting(target, targeting);
@@ -246,7 +248,7 @@ public class BattleController : MonoBehaviour
                 }
                 else if (activeAbility.getAbilityType() == ActionType.MOVE)
                 {
-                    Vector2Int destination = activeUnit.GetComponent<AIController>().getMoveTarget(activeAbility as MovementAbility);
+                    Vector2Int destination = activeUnit.GetComponent<AIController>().getMoveTarget(activeAbilityScript);
                     if (destination == active.GetComponent<UnitController>().GetUnitPos())
                     {
                         active.GetComponent<AIController>().disableActions(activeAbility);
@@ -339,11 +341,12 @@ public class BattleController : MonoBehaviour
         switch (actionState)
         {
             case ActionType.MOVE:
-                MovePrepare(targetUnit);
+                AbilityPrepare(targetUnit);
+                //MovePrepare(targetUnit);
                 break;
 
             case ActionType.COMBAT:
-                CombatPrepare(targetUnit);
+                AbilityPrepare(targetUnit);
                 break;
         }
     }
@@ -358,7 +361,7 @@ public class BattleController : MonoBehaviour
                 break;
 
             case ActionType.COMBAT:
-                CombatAction(targetUnit);
+                AbilityAction(targetUnit);
                 break;
         }
         CompleteAction();
@@ -378,23 +381,8 @@ public class BattleController : MonoBehaviour
         uiCanvas.GetComponent<UIController>().clearPreview();
         uiCanvas.GetComponent<UIController>().clearButtons();
         uiCanvas.GetComponent<UIController>().clearMarkers();
-    }
-
-    void MovePrepare(GameObject unit)
-    {
-        if (activeAbility.getAbilityType() != ActionType.MOVE)
-        {
-            return;
-        }
-        MovementAbility calculateAbility = activeAbility as MovementAbility;
-        if (!unit)
-        {
-            return;
-        }
-        actionPhase = ActionPhase.PREPARE;
-        UnitController targetController = unit.GetComponent<UnitController>();
-        Pathfinder pathfinder = new Pathfinder(targetController.GetUnitPos(), FinalRange(targetController.GetStats()[0], calculateAbility), calculateAbility.getMinMoveRange(), mapController);
-        uiCanvas.GetComponent<UIController>().drawMarkers(pathfinder.getValidCoords(), MarkerController.Markers.BLUE);
+        gameobjectRefs.Clear();
+        intRefs.Clear();
     }
 
     bool MoveAction(Vector2 tileDestination)
@@ -414,13 +402,9 @@ public class BattleController : MonoBehaviour
         return clear;
     }
 
-    void CombatPrepare(GameObject unit)
+    void AbilityPrepare(GameObject unit)
     {
         if (!unit || !activeAbility)
-        {
-            return;
-        }
-        if (activeAbility.getAbilityType() != ActionType.COMBAT)
         {
             return;
         }
@@ -437,11 +421,17 @@ public class BattleController : MonoBehaviour
                 range = (activeAbilityScript.targeting[0] as BeamTargeting).range;
                 break;
 
+            case "TileTargeting":
+                range = (activeAbilityScript.targeting[0] as TileTargeting).range;
+                break;
+
             case "SelfTargeting":
                 uiCanvas.GetComponent<UIController>().drawMarkers(new List<Vector2Int>() { targetController.GetUnitPos() }, MarkerController.Markers.RED);
                 return;
 
             default:
+                Debug.LogError("Unrecognized Targeting Type: " + activeAbilityScript.targeting[0].GetType().ToString());
+                CompleteAction();
                 return;
         }
         int[] ranges = GetRanges(range, unit);
@@ -449,35 +439,103 @@ public class BattleController : MonoBehaviour
         int rangeMin = ranges[1];
         Vector2 direction = new Vector2(0, 0);
         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, range.sightRequired, mapController, this, teamLists, direction);
-        if (activeAbilityScript.targeting[0].GetType() == typeof(BeamTargeting))
+        switch (activeAbilityScript.targeting[0].GetType().ToString())
         {
-            GameObject temp = GameObject.Instantiate(overlayObject, targetController.gameObject.transform);
-            activeOverlay = temp;
-            activeOverlay.GetComponent<OverlayController>().initalize(rangeMax, true);
+            case "BeamTargeting":
+                GameObject temp = GameObject.Instantiate(overlayObject, targetController.gameObject.transform);
+                activeOverlay = temp;
+                activeOverlay.GetComponent<OverlayController>().initalize(rangeMax, true);
+                break;
+
+            case "UnitTargeting":
+                switch ((activeAbilityScript.targeting[0] as UnitTargeting).team.filter)
+                {
+                    case "enemy":
+                        uiCanvas.GetComponent<UIController>().drawMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().GetUnitPos(), activeTeam, false), MarkerController.Markers.RED);
+                        break;
+
+                    case "ally":
+                        uiCanvas.GetComponent<UIController>().drawMarkers(rangefinder.generateCoordsOfTeam(unit.GetComponent<UnitController>().GetUnitPos(), activeTeam, false), MarkerController.Markers.GREEN);
+                        break;
+
+                    case "all":
+                        uiCanvas.GetComponent<UIController>().drawMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().GetUnitPos(), BattleTeam.NEUTRAL, false), MarkerController.Markers.RED);
+                        break;
+                }
+                //TODO: ADD OTHER FILTERS
+                break;
+
+            case "SelfTargeting":
+                Debug.LogError("Command should be impossible");
+                CompleteAction();
+                break;
+
+            case "TileTargeting":
+                ModeElement mode = (activeAbilityScript.targeting[0] as TileTargeting).mode;
+                switch (mode.filter)
+                {
+                    case "move":
+
+                        int[] moveRanges = GetMoveRanges(range, unit);
+                        int moveMax = moveRanges[0];
+                        int moveMin = moveRanges[1];
+                        Pathfinder pathfinder = new Pathfinder(unit.GetComponent<UnitController>().GetUnitPos(), moveMax, moveMin, mapController);
+                        List<Vector2Int> baseValidCoords = pathfinder.getValidCoords();
+                        if (baseValidCoords.Count <= 0)
+                        {
+                            CompleteAction();
+                            return;
+                        }
+                        List<Vector2Int> validCoords = baseValidCoords;
+                        //Add unit filtering
+                        //Add and/or filtering combo modes
+                        switch (mode.state)
+                        {
+                            case "occupied":
+                                for (int i = validCoords.Count - 1; i >= 0; i--)
+                                {
+                                    if (unitList.ContainsKey(validCoords[i]))
+                                    {
+                                        validCoords.Remove(validCoords[i]);
+                                    }
+                                }
+                                break;
+
+                            case "empty":
+                                for (int i = validCoords.Count - 1; i >= 0; i--)
+                                {
+                                    if (unitList.ContainsKey(validCoords[i]))
+                                    {
+                                        validCoords.Remove(validCoords[i]);
+                                    }
+                                }
+                                break;
+
+                            case "any":
+                                break;
+
+                            default:
+                                Debug.LogError("Invalid mode state: " + mode.state);
+                                break;
+                        }
+                        uiCanvas.GetComponent<UIController>().drawMarkers(validCoords, MarkerController.Markers.BLUE);
+                        break;
+
+                    default:
+                        Debug.LogError("Unrecognized TileTargeting mode: " + mode.filter);
+                        break;
+                }
+                break;
+
+            default:
+                Debug.LogError("Unrecognized Targeting Type: " + activeAbilityScript.targeting[0].GetType().ToString());
+                CompleteAction();
+                return;
         }
-        else
-        {
-            switch((activeAbilityScript.targeting[0] as UnitTargeting).team.filter)
-            {
-                case "enemy":
-                    uiCanvas.GetComponent<UIController>().drawMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().GetUnitPos(), activeTeam, false), MarkerController.Markers.RED);
-                    break;
-
-                case "ally":
-                    uiCanvas.GetComponent<UIController>().drawMarkers(rangefinder.generateCoordsOfTeam(unit.GetComponent<UnitController>().GetUnitPos(), activeTeam, false), MarkerController.Markers.GREEN);
-                    break;
-
-                case "all":
-                    uiCanvas.GetComponent<UIController>().drawMarkers(rangefinder.generateCoordsNotOfTeam(unit.GetComponent<UnitController>().GetUnitPos(), BattleTeam.NEUTRAL, false), MarkerController.Markers.RED);
-                    break;
-            }
-            //TODO: ADD OTHER FILTERS
-        }
-
     }
 
     //TODO: Examine in depth how this function works
-    void CombatAction(GameObject targetUnit)
+    void AbilityAction(GameObject targetUnit)
     {
         if (!activeAbility)
         {
@@ -489,12 +547,12 @@ public class BattleController : MonoBehaviour
             CompleteAction();
             return;
         }
-        CombatAbility calculateAbility = activeAbility as CombatAbility;
+        gameobjectRefs.Add("caster", activeUnit);
         UnitController selectedController = activeUnit.GetComponent<UnitController>();
         AbilityScript abilityScript;
-        if (calculateAbility.GetAbilityXMLFile() != null && calculateAbility.GetAbilityXMLFile() != "")
+        if (activeAbility.GetAbilityXMLFile() != null && activeAbility.GetAbilityXMLFile() != "")
         {
-            abilityScript = AbilityEvaluator.Deserialize<AbilityScript>(calculateAbility.GetAbilityXMLFile());
+            abilityScript = AbilityEvaluator.Deserialize<AbilityScript>(activeAbility.GetAbilityXMLFile());
             if (abilityScript == default)
             {
                 CompleteAction();
@@ -749,20 +807,20 @@ public class BattleController : MonoBehaviour
         teamLists[team].Add(unit);
     }
 
+    //Effect Step Effectors
     public bool MoveUnit(GameObject unit, Vector2 coords)
     {
         if (activeAbility.getAbilityType() != ActionType.MOVE)
         {
             return false;
         }
-        MovementAbility calculateAbility = activeAbility as MovementAbility;
         if (GetUnitFromCoords(mapController.gridTilePos(coords)) && GetUnitFromCoords(mapController.gridTilePos(coords)) != gameObject)
         {
             return false;
         }
         Vector2Int key = unit.GetComponent<UnitController>().GetUnitPos();
         unitList.Remove(key);
-        bool moved = unit.GetComponent<UnitController>().MoveUnit(coords, calculateAbility);
+        bool moved = unit.GetComponent<UnitController>().MoveUnit(coords);
         if (moved)
         {
             unitList.Add(mapController.gridTilePos(coords), unit);
@@ -774,7 +832,6 @@ public class BattleController : MonoBehaviour
         return moved;
     }
 
-    //Effect Step Effectors
     BattleDetail DamageUnit(GameObject attacker, GameObject defender, DamageEffect effect)
     {
         UnitController attackerController = attacker.GetComponent<UnitController>();
@@ -946,24 +1003,6 @@ public class BattleController : MonoBehaviour
         return activeAbility;
     }
 
-    public CombatAbility GetActiveCombatAbility()
-    {
-        if (activeAbility.getAbilityType() == ActionType.COMBAT)
-        {
-            return activeAbility as CombatAbility;
-        }
-        return null;
-    }
-
-    public MovementAbility GetActiveMovementAbility()
-    {
-        if (activeAbility.getAbilityType() == ActionType.MOVE)
-        {
-            return activeAbility as MovementAbility;
-        }
-        return null;
-    }
-
     public AbilityScript GetActiveAbilityScript()
     {
         return activeAbilityScript;
@@ -1026,9 +1065,26 @@ public class BattleController : MonoBehaviour
     }
 
     //Stat Math
-    public int FinalRange(int baseRange, MovementAbility ability)
+    public int[] GetMoveRanges(RangeElement range, GameObject source)
     {
-        return Mathf.FloorToInt((baseRange + ability.getFlatMoveBonus()) * ((ability.getPercentMoveBonus() / 100f) + 1f));
+        int rangeMax;
+        int rangeMin;
+        if (range.melee)
+        {
+            rangeMax = 1;
+            rangeMin = 1;
+        }
+        else
+        {
+            rangeMax = range.max;
+            if (range.extendMaxRange)
+            {
+                rangeMax += source.GetComponent<UnitController>().GetStats()[0];
+            }
+            rangeMin = range.min;
+        }
+
+        return new int[] { rangeMax, rangeMin };
     }
 
     public int[] GetRanges(RangeElement range, GameObject source)

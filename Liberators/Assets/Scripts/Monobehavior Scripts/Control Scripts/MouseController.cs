@@ -18,7 +18,6 @@ public class MouseController : MonoBehaviour
     Vector2 worldPosition = new Vector2(0, 0);
     public Vector2 tilePosition = new Vector2(0, 0);
     Vector2Int gridPosition = new Vector2Int(0, 0);
-    GameObject activeHover;
 
     // Start is called before the first frame update
     void Start()
@@ -41,22 +40,16 @@ public class MouseController : MonoBehaviour
         Cursor.visible = mapController.mouseOverCanvas(cursorPosition);
         uiController.unHoverUnit();
         uiController.hoverUnit(battleController.GetUnitFromCoords(gridPosition));
-        if (battleController.GetActionPhase() == ActionPhase.PREPARE)
+        if (battleController.GetActionPhase() == ActionPhase.PREPARE && battleController.GetActiveAbility().getAbilityType() == ActionType.COMBAT)
         {
             GameObject hoveredUnit = battleController.GetUnitFromCoords(gridPosition);
-            activeHover = hoveredUnit;
-            if (hoveredUnit && !uiController.hasPreview())
-            {
-                attackPreview(battleController.GetActiveUnit(), hoveredUnit, battleController.GetActiveCombatAbility());
-            }
-            else if (hoveredUnit && !hoveredUnit.Equals(activeHover))
+            if (!hoveredUnit)
             {
                 uiController.clearPreview();
-                attackPreview(battleController.GetActiveUnit(), hoveredUnit, battleController.GetActiveCombatAbility());
             }
-            else if (!hoveredUnit)
+            else
             {
-                uiController.clearPreview();
+                AbilityPreview(hoveredUnit, battleController.GetActiveAbility());
             }
         }
     }
@@ -165,21 +158,14 @@ public class MouseController : MonoBehaviour
         return (cursorPosition.x / Screen.width) < 0.5;
     }
 
-    public void attackPreview(GameObject attacker, GameObject defender, CombatAbility activeAbility)
+    public void AbilityPreview(GameObject defender, Ability activeAbility)
     {
         //TODO: Reimplement Attack Preview
         if (!activeAbility)
         {
             return;
         }
-        if (!MouseOnLeft())
-        {
-            //adjust preview position
-        }
-        else
-        {
-            //adjust preview position
-        }
+        uiController.displayAbilityPreview(defender, activeAbility);
     }
 
     //Helper Functions

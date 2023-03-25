@@ -321,10 +321,10 @@ public class UnitController : MonoBehaviour
         return team;
     }
 
-    public bool MoveUnit(Vector2 destination, MovementAbility moveAbility)
+    public bool MoveUnit(Vector2 destination)
     {
         Vector2Int destinationTile = mapController.gridTilePos(destination);
-        if (PathfinderValidCoords(moveAbility).Contains(destinationTile))
+        if (PathfinderValidCoords(battleController.GetActiveAbilityScript()).Contains(destinationTile))
         {
             SetUnitPos(destination);
             return true;
@@ -343,9 +343,13 @@ public class UnitController : MonoBehaviour
         return unitGridPosition;
     }
 
-    public List<Vector2Int> PathfinderValidCoords(MovementAbility moveAbility)
+    //TODO: Needed? See if can replace/remove
+    public List<Vector2Int> PathfinderValidCoords(AbilityScript abilityScript)
     {
-        Pathfinder pathfinder = new Pathfinder(unitGridPosition, battleController.FinalRange(mov, moveAbility), moveAbility.getMinMoveRange(), mapController);
+        int[] moveRanges = battleController.GetMoveRanges((abilityScript.targeting[0] as TileTargeting).range, gameObject);
+        int moveMax = moveRanges[0];
+        int moveMin = moveRanges[1];
+        Pathfinder pathfinder = new Pathfinder(unitGridPosition, moveMax, moveMin, mapController);
         return pathfinder.getValidCoords();
     }
 }

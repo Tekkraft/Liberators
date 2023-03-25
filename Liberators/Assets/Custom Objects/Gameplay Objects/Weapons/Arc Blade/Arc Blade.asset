@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Arc Blade
   weaponIcon: {fileID: -5824367619583394309, guid: cc98182cdf5bc42fb8c5390a9c955965, type: 3}
-  handClass: 0
-  baseClass: 0
-  damageClass: 1
   weaponStrength: 7
   weaponHit: 250
   weaponCrit: 10
@@ -24,4 +21,5 @@ MonoBehaviour:
   weaponElement: 1
   abilities:
   - {fileID: 11400000, guid: 49e0ee10b8e0643cab24b1b5aad77036, type: 2}
+  - {fileID: 11400000, guid: 317fbdc0d2b724061aab470690a4a291, type: 2}
   weaponStatus: {fileID: 0}

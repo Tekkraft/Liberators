@@ -11,6 +11,8 @@ public class AbilityScript
     [XmlArray("targeting")]
     [XmlArrayItem("unit", Type = typeof(UnitTargeting))]
     [XmlArrayItem("beam", Type = typeof(BeamTargeting))]
+    [XmlArrayItem("self", Type = typeof(SelfTargeting))]
+    [XmlArrayItem("tile", Type = typeof(TileTargeting))]
     public List<TargetingType> targeting;
 
     [XmlArray("effects")]
@@ -138,6 +140,12 @@ public class ModeElement
     [XmlAttribute("filter"), DefaultValue("none")]
     public string filter = "none";
 
+    //states:
+    /*
+     * any - any tile
+     * occupied - tile with unit
+     * empty - tile without unit
+     */
     [XmlAttribute("state"), DefaultValue("any")]
     public string state = "any";
 }

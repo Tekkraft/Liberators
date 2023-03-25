@@ -10,7 +10,7 @@
             <!--Team tag is required, however filter="all" is assumed if left blank.-->
             <team />
             <!--Mode tag is required, however filter="none" and state="any" are assumed if left blank.-->
-            <mode filter="move" state="free"/>
+            <mode filter="move" state="empty"/>
         </tile>
     </targeting>
     <effects>
