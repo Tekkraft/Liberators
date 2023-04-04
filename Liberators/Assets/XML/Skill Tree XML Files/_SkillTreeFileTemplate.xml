@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<skillTree>
+    <nodes>
+        <skillNode id="test" starting="true" cost="0">
+            <requirements>
+            </requirements>
+            <unlocks>
+            </unlocks>
+        </skillNode>
+        <skillNode id="fireball" cost="0">
+            <requirements>
+                <node id="test" />
+                <!--Node ids go here-->
+            </requirements>
+            <unlocks>
+                <skill name="Fireball" />
+                <!--Skill ids go here-->
+            </unlocks>
+        </skillNode>
+    </nodes>
+</skillTree>

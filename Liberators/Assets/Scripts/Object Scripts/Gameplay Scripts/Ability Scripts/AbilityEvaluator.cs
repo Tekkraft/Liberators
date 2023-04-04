@@ -13,7 +13,7 @@ public class AbilityEvaluator
         try
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(AbilityScript));
-            StreamReader streamReader = new StreamReader(Path.Combine(Application.dataPath, "Ability XML Files", filePath));
+            StreamReader streamReader = new StreamReader(Path.Combine(Application.dataPath, "XML", "Ability XML Files", filePath));
             AbilityScript result = (AbilityScript)xmlSerializer.Deserialize(streamReader.BaseStream);
             streamReader.Close();
             return result;
