@@ -5,7 +5,7 @@
     <targeting>
         <!--Targets any selected unit-->
         <unit>
-            <!--Range tag is required, however min="0", max="0", extendMax="false" and sight="true" are assumed if left blank.-->
+            <!--Range tag is required, however min="0", max="0", extendMax="true" and sight="true" are assumed if left blank.-->
             <range max="0" extendMax="true"/>
             <!--Team tag is required, however filter="all" is assumed if left blank.-->
             <team filter="enemy"/>

@@ -19,6 +19,8 @@ public class MouseController : MonoBehaviour
     public Vector2 tilePosition = new Vector2(0, 0);
     Vector2Int gridPosition = new Vector2Int(0, 0);
 
+    List<GameObject> dataOverlays = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,12 @@ public class MouseController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //TODO: Likely inefficiency
+        for (int i = dataOverlays.Count - 1; i >= 0; i--)
+        {
+            GameObject.Destroy(dataOverlays[i]);
+            dataOverlays.Remove(dataOverlays[i]);
+        }
         worldPosition = Camera.main.ScreenToWorldPoint(cursorPosition);
         tilePosition = mapController.tileWorldPos(worldPosition);
         Vector3 tileTransform = new Vector3(tilePosition.x, tilePosition.y, -1);
@@ -46,10 +54,26 @@ public class MouseController : MonoBehaviour
             if (!hoveredUnit)
             {
                 uiController.clearPreview();
+                dataOverlays.Clear();
             }
             else
             {
                 AbilityPreview(hoveredUnit, battleController.GetActiveAbility());
+                foreach (EffectTypeA effect in battleController.GetActiveAbilityScript().effects)
+                {
+                    if (effect.GetType() == typeof(SelectEffect))
+                    {
+                        SelectEffect select = effect as SelectEffect;
+                        if (select.selector.GetType() == typeof(AOESelector))
+                        {
+                            AOESelector aoe = select.selector as AOESelector;
+                            //TODO: Handle more advanced AOE ranges
+                            GameObject temp = GameObject.Instantiate(battleController.GetOverlayObject(), hoveredUnit.gameObject.transform);
+                            temp.GetComponent<OverlayController>().initalize(aoe.range.max * 2 + 1, false, hoveredUnit);
+                            dataOverlays.Add(temp);
+                        }
+                    }
+                }
             }
         }
     }

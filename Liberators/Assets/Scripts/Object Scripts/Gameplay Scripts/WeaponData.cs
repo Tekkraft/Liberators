@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 [System.Serializable]
 public class WeaponData
@@ -12,6 +13,6 @@ public class WeaponData
 
     public Weapon LoadWeaponData()
     {
-        return Resources.Load(weaponBaseId) as Weapon;
+        return Resources.Load(Path.Combine("Weapons", weaponBaseId)) as Weapon;
     }
 }

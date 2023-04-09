@@ -6,8 +6,6 @@ public class OverlayController : MonoBehaviour
 {
     Vector3 origin;
     Quaternion originRotation;
-    GameObject cursor;
-    MouseController cursorController;
 
     float overlaySize = 1;
     Vector2 overlayDirection = new Vector2(0, 0);
@@ -16,10 +14,11 @@ public class OverlayController : MonoBehaviour
     public Sprite beamSprite;
     public Sprite areaSprite;
 
+    GameObject target;
+
     void Awake()
     {
-        cursor = GameObject.FindGameObjectWithTag("Cursor");
-        cursorController = cursor.GetComponent<MouseController>();
+
     }
 
     // Start is called before the first frame update
@@ -34,31 +33,36 @@ public class OverlayController : MonoBehaviour
     {
         if (lineMode)
         {
-            transform.localPosition = new Vector3(0, 0, 0);
-            transform.rotation = originRotation;
-            Vector2 originV2 = new Vector2(origin.x, origin.y);
-            Vector2 destination = cursorController.GetWorldPos();
-            Vector2 target = (destination - originV2).normalized * transform.localScale.x;
-            overlayDirection = target;
-            float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
-            Vector2 offset = target / 2 + target.normalized / 2;
-            transform.Translate(offset);
-            transform.Rotate(new Vector3(0, 0, angle));
+            if (target.GetComponent<MouseController>() != null)
+            {
+                transform.localPosition = new Vector3(0, 0, 0);
+                transform.rotation = originRotation;
+                Vector2 originV2 = new Vector2(origin.x, origin.y);
+                Vector2 destination = target.GetComponent<MouseController>().GetWorldPos();
+                Vector2 targetCoord = (destination - originV2).normalized * transform.localScale.x;
+                overlayDirection = targetCoord;
+                float angle = Mathf.Atan2(targetCoord.y, targetCoord.x) * Mathf.Rad2Deg;
+                Vector2 offset = targetCoord / 2 + targetCoord.normalized / 2;
+                transform.Translate(offset);
+                transform.Rotate(new Vector3(0, 0, angle));
+            }
         }
     }
 
-    public void initalize(float size, bool lineMode)
+    public void initalize(float size, bool lineMode, GameObject target)
     {
         overlaySize = size;
         if (lineMode)
         {
             transform.localScale = new Vector3(size, 0.5f, 1);
             gameObject.GetComponent<SpriteRenderer>().sprite = beamSprite;
+            this.target = target;
         }
         else
         {
             transform.localScale = new Vector3(size, size, 1);
             gameObject.GetComponent<SpriteRenderer>().sprite = areaSprite;
+            this.target = target;
         }
     }
 

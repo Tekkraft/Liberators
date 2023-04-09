@@ -22,9 +22,8 @@ public class BattleController : MonoBehaviour
     MapController mapController;
     Canvas uiCanvas;
     GameObject cursor;
-    MouseController cursorController;
 
-    GameObject activeOverlay;
+    GameObject targetingOverlay;
     List<GameObject> selectedGameObjectTargets = new List<GameObject>();
     List<Vector2Int> selectedTileTargets = new List<Vector2Int>();
     List<Vector2> selectedPointTargets = new List<Vector2>();
@@ -52,7 +51,6 @@ public class BattleController : MonoBehaviour
         mapController = gameObject.GetComponent<MapController>();
         uiCanvas = GameObject.FindObjectOfType<Canvas>();
         cursor = GameObject.FindGameObjectWithTag("Cursor");
-        cursorController = cursor.GetComponent<MouseController>();
     }
 
     // Start is called before the first frame update
@@ -224,9 +222,9 @@ public class BattleController : MonoBehaviour
                         int rangeMax = ranges[0];
                         int rangeMin = ranges[1];
                         Vector2 direction = new Vector2(0, 0);
-                        if (activeOverlay)
+                        if (targetingOverlay)
                         {
-                            direction = activeOverlay.GetComponent<OverlayController>().getOverlayDirection();
+                            direction = targetingOverlay.GetComponent<OverlayController>().getOverlayDirection();
                         }
                         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targeting.range.sightRequired, mapController, this, teamLists, direction);
                         List<GameObject> validTargets = rangefinder.generateTargetsNotOfTeam(activeUnit.GetComponent<UnitController>().GetUnitPos(), activeTeam, false);
@@ -377,7 +375,7 @@ public class BattleController : MonoBehaviour
         actionState = ActionType.NONE;
         activeUnit = null;
         actionPhase = ActionPhase.INACTIVE;
-        GameObject.Destroy(activeOverlay);
+        GameObject.Destroy(targetingOverlay);
         uiCanvas.GetComponent<UIController>().clearPreview();
         uiCanvas.GetComponent<UIController>().clearButtons();
         uiCanvas.GetComponent<UIController>().clearMarkers();
@@ -443,8 +441,8 @@ public class BattleController : MonoBehaviour
         {
             case "BeamTargeting":
                 GameObject temp = GameObject.Instantiate(overlayObject, targetController.gameObject.transform);
-                activeOverlay = temp;
-                activeOverlay.GetComponent<OverlayController>().initalize(rangeMax, true);
+                targetingOverlay = temp;
+                targetingOverlay.GetComponent<OverlayController>().initalize(rangeMax, true, cursor);
                 break;
 
             case "UnitTargeting":
@@ -690,12 +688,12 @@ public class BattleController : MonoBehaviour
 
     void CheckBeamTargeting(GameObject source, BeamTargeting targeting)
     {
-        if (activeOverlay)
+        if (targetingOverlay)
         {
             int[] ranges = GetRanges(targeting.range, source);
             int rangeMax = ranges[0];
             int rangeMin = ranges[1];
-            Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targeting.range.sightRequired, mapController, this, teamLists, activeOverlay.GetComponent<OverlayController>().getOverlayDirection());
+            Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, targeting.range.sightRequired, mapController, this, teamLists, targetingOverlay.GetComponent<OverlayController>().getOverlayDirection());
             List<GameObject> beamTargets = rangefinder.generateTargetsOfTeam(activeUnit.GetComponent<UnitController>().GetUnitPos(), GetFilterTeam(targeting.team, activeTeam), true);
             foreach (GameObject target in beamTargets)
             {
@@ -900,6 +898,7 @@ public class BattleController : MonoBehaviour
         int rangeMax = ranges[0];
         int rangeMin = ranges[1];
         Vector2 direction = new Vector2(0, 0);
+        Debug.Log(rangeMax + "/" + rangeMin);
         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, selector.range.sightRequired, mapController, this, teamLists, direction);
         BattleTeam target = GetFilterTeam(selector.team, parent.GetComponent<UnitController>().GetTeam());
         List<GameObject> validTargets = rangefinder.generateTargetsOfTeam(parent.GetComponent<UnitController>().GetUnitPos(), target, false);
@@ -1015,7 +1014,12 @@ public class BattleController : MonoBehaviour
 
     public GameObject GetActiveOverlay()
     {
-        return activeOverlay;
+        return targetingOverlay;
+    }
+
+    public GameObject GetOverlayObject()
+    {
+        return overlayObject;
     }
 
     //Returns the target team for the given TeamElement and acting team

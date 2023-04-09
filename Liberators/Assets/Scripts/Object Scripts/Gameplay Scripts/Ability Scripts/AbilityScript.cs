@@ -91,8 +91,8 @@ public class RangeElement
     [XmlAttribute("max"), DefaultValue(0)]
     public int max = 0;
 
-    [XmlAttribute("extendMax"), DefaultValue(true)]
-    public bool extendMaxRange = true;
+    [XmlAttribute("extendMax"), DefaultValue(false)]
+    public bool extendMaxRange = false;
 
     [XmlAttribute("sight"), DefaultValue(true)]
     public bool sightRequired = true;
@@ -216,7 +216,6 @@ public class HealEffect : EffectTypeA
     public bool trueHit = false;
 }
 
-//TODO: NEEDS TESTING
 [XmlRoot("select")]
 public class SelectEffect : EffectTypeA
 {
