@@ -1,63 +1,151 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class DataLoader : MonoBehaviour
 {
     [SerializeField]
     Unit lanaBase;
     [SerializeField]
-    Weapon lanaWeapon;
+    string lanaWeaponId;
     [SerializeField]
-    Armor lanaArmor;
+    string lanaArmorId;
     [SerializeField]
     string lanaSkillTree;
-    UnitData lanaData;
 
     [SerializeField]
     Unit ethanBase;
-    UnitData ethanData;
+    [SerializeField]
+    string ethanWeaponId;
+    [SerializeField]
+    string ethanArmorId;
+    [SerializeField]
+    string ethanSkillTree;
 
     [SerializeField]
     Unit saeiBase;
-    UnitData saeiData;
+    [SerializeField]
+    string saeiWeaponId;
+    [SerializeField]
+    string saeiArmorId;
+    [SerializeField]
+    string saeiSkillTree;
 
     [SerializeField]
     Unit vaueBase;
-    UnitData vaueData;
+    [SerializeField]
+    string vaueWeaponId;
+    [SerializeField]
+    string vaueArmorId;
+    [SerializeField]
+    string vaueSkillTree;
 
     [SerializeField]
     Unit mayBase;
-    UnitData mayData;
+    [SerializeField]
+    string mayWeaponId;
+    [SerializeField]
+    string mayArmorId;
+    [SerializeField]
+    string maySkillTree;
 
     [SerializeField]
     Unit runliBase;
-    UnitData runliData;
+    [SerializeField]
+    string runliWeaponId;
+    [SerializeField]
+    string runliArmorId;
+    [SerializeField]
+    string runliSkillTree;
 
     [SerializeField]
     Unit colinBase;
-    UnitData colinData;
+    [SerializeField]
+    string colinWeaponId;
+    [SerializeField]
+    string colinArmorId;
+    [SerializeField]
+    string colinSkillTree;
 
     [SerializeField]
     Unit hanaeiBase;
-    UnitData hanaeiData;
+    [SerializeField]
+    string hanaeiWeaponId;
+    [SerializeField]
+    string hanaeiArmorId;
+    [SerializeField]
+    string hanaeiSkillTree;
 
     [SerializeField]
-    List<WeaponData> weaponList;
+    List<string> weaponList;
 
     [SerializeField]
-    List<ArmorData> armorList;
+    List<string> armorList;
 
-    List<UnitData> characterList;
-    /*
+    UnitDataList teamList = new UnitDataList();
+
     void Awake()
     {
-        characterList = new List<UnitData>() { lanaData, ethanData, saeiData, vaueData, mayData, runliData, colinData, hanaeiData };
-        foreach (UnitData data in characterList)
-        {
-            data.skillTree.CheckAllUnlocked();
-            data.skillTree.LoadAllUnlockedAbilities();
-        }
+        teamList.lanaData = LoadUnitData(lanaBase, lanaWeaponId, lanaArmorId, lanaSkillTree);
+        teamList.ethanData = LoadUnitData(ethanBase, ethanWeaponId, ethanArmorId, ethanSkillTree);
+        teamList.saeiData = LoadUnitData(saeiBase, saeiWeaponId, saeiArmorId, saeiSkillTree);
+        teamList.vaueData = LoadUnitData(vaueBase, vaueWeaponId, vaueArmorId, vaueSkillTree);
+        teamList.mayData = LoadUnitData(mayBase, mayWeaponId, mayArmorId, maySkillTree);
+        teamList.runliData = LoadUnitData(runliBase, runliWeaponId, runliArmorId, runliSkillTree);
+        teamList.colinData = LoadUnitData(colinBase, colinWeaponId, colinArmorId, colinSkillTree);
+        teamList.hanaeiData = LoadUnitData(hanaeiBase, hanaeiWeaponId, hanaeiArmorId, hanaeiSkillTree);
+
+        SaveSystem.SaveTeamData(teamList.ToJSON());
     }
-    */
+
+    UnitData LoadUnitData(Unit unitBase, string weaponId, string armorId, string skillTreeId)
+    {
+        UnitData unitData = new UnitData();
+        unitData.source = unitBase.name;
+        unitData.unitName = unitBase.getUnitName();
+        unitData.className = unitBase.getClassName();
+        unitData.maxHP = unitBase.getStats()[0];
+        unitData.currentHP = unitBase.getStats()[0];
+        unitData.mov = unitBase.getStats()[1];
+        unitData.str = unitBase.getStats()[2];
+        unitData.pot = unitBase.getStats()[3];
+        unitData.acu = unitBase.getStats()[4];
+        unitData.fin = unitBase.getStats()[5];
+        unitData.rea = unitBase.getStats()[6];
+        unitData.maxSkillPoints = 1;
+        unitData.availableSkillPoints = 1;
+        unitData.skillTree = SkillTreeEvaluator.CreateTreeData(skillTreeId + ".xml");
+        unitData.skillTree.Initialize();
+        unitData.mainWeapon = new WeaponData();
+        unitData.mainWeapon.weaponBaseId = weaponId;
+        unitData.secondaryWeapon = new WeaponData();
+        unitData.armor = new ArmorData();
+        unitData.armor.armorBaseId = armorId;
+        unitData.skillTree.CheckAllUnlocked();
+        unitData.skillTree.LoadAllLearnedAbilities();
+        return unitData;
+    }
+}
+
+[System.Serializable]
+public class UnitDataList{
+    public UnitData lanaData;
+    public UnitData ethanData;
+    public UnitData saeiData;
+    public UnitData vaueData;
+    public UnitData mayData;
+    public UnitData runliData;
+    public UnitData colinData;
+    public UnitData hanaeiData;
+
+    public static UnitDataList FromJSON(string jsonString)
+    {
+        return JsonUtility.FromJson<UnitDataList>(jsonString);
+    }
+
+    public string ToJSON()
+    {
+        return JsonUtility.ToJson(this);
+    }
 }

@@ -37,6 +37,8 @@ public class StartController : MonoBehaviour
     [SerializeField]
     List<GameObject> unitOverviewScreenUIElements;
 
+    UnitDataList dataList;
+
     void Awake()
     {
         ChangePage(BattleMenuPage.main);
@@ -44,6 +46,7 @@ public class StartController : MonoBehaviour
 
     void OnEnable()
     {
+        dataList = UnitDataList.FromJSON(SaveSystem.LoadTeamData());
         if (OperationSceneHandler.attackerData != null)
         {
             BattlePrepHandler.data = OperationSceneHandler.attackerData.unitList;
@@ -71,6 +74,7 @@ public class StartController : MonoBehaviour
 
     void OnDisable()
     {
+        SaveSystem.SaveTeamData(dataList.ToJSON());
         BattlePrepHandler.data = characterUnitData;
         BattlePrepHandler.battleScene = OperationSceneHandler.battleScene;
     }
@@ -84,8 +88,8 @@ public class StartController : MonoBehaviour
 
     public void EnterSkillTree()
     {
-        SkillTreeEntryHandler.characterIndex = characterIndex;
-        SkillTreeEntryHandler.activeTree = characterUnitData[characterIndex].getUnit().getSkillTree();
+        SkillTreeTransition.characterIndex = characterIndex;
+        SkillTreeTransition.unitData = UnitIndexToData(characterIndex);
         SceneManager.LoadSceneAsync("UnitSkillTree");
     }
 
@@ -101,12 +105,12 @@ public class StartController : MonoBehaviour
 
     public void LoadSkillTree()
     {
-        if (SkillTreeExitHandler.activated)
+        if (SkillTreeTransition.activated)
         {
-            characterIndex = SkillTreeExitHandler.characterIndex;
-            characterUnitData[characterIndex].getUnit().updateSkillTree(SkillTreeExitHandler.activeTree);
-            LoadUnitPage(SkillTreeExitHandler.characterIndex);
-            SkillTreeExitHandler.reset();
+            characterIndex = SkillTreeTransition.characterIndex;
+            UpdateUnitIndexWithData(characterIndex, SkillTreeTransition.unitData);
+            LoadUnitPage(SkillTreeTransition.characterIndex);
+            SkillTreeTransition.reset();
         }
     }
 
@@ -207,5 +211,61 @@ public class StartController : MonoBehaviour
             characterIndex = characterUnitData.Count - 1;
         }
         LoadUnitPage();
+    }
+
+    public UnitData UnitIndexToData(int index)
+    {
+        switch (index)
+        {
+            case 0:
+                return dataList.lanaData;
+            case 1:
+                return dataList.ethanData;
+            case 2:
+                return dataList.saeiData;
+            case 3:
+                return dataList.vaueData;
+            case 4:
+                return dataList.mayData;
+            case 5:
+                return dataList.runliData;
+            case 6:
+                return dataList.colinData;
+            case 7:
+                return dataList.hanaeiData;
+            default:
+                return null;
+        }
+    }
+
+    public void UpdateUnitIndexWithData(int index, UnitData data)
+    {
+        switch (index)
+        {
+            case 0:
+                dataList.lanaData = data;
+                break;
+            case 1:
+                dataList.ethanData = data;
+                break;
+            case 2:
+                dataList.saeiData = data;
+                break;
+            case 3:
+                dataList.vaueData = data;
+                break;
+            case 4:
+                dataList.mayData = data;
+                break;
+            case 5:
+                dataList.runliData = data;
+                break;
+            case 6:
+                dataList.colinData = data;
+                break;
+            case 7:
+                dataList.hanaeiData = data;
+                break;
+        }
     }
 }

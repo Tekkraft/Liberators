@@ -13,6 +13,17 @@ public class WeaponData
 
     public Weapon LoadWeaponData()
     {
-        return Resources.Load(Path.Combine("Weapons", weaponBaseId)) as Weapon;
+        return Resources.Load<Weapon>("Weapons/" + weaponBaseId);
+    }
+
+    //JSON Code
+    public static WeaponData FromJSON(string jsonString)
+    {
+        return JsonUtility.FromJson<WeaponData>(jsonString);
+    }
+
+    public string ToJSON()
+    {
+        return JsonUtility.ToJson(this);
     }
 }

@@ -43,9 +43,6 @@ public class Unit : ScriptableObject
     string className;
 
     [SerializeField]
-    List<Ability> prfAbilities;
-
-    [SerializeField]
     UnitAnims unitAnims;
 
     [SerializeField]
@@ -56,14 +53,14 @@ public class Unit : ScriptableObject
         return unitName;
     }
 
+    public string getClassName()
+    {
+        return className;
+    }
+
     public int[] getStats()
     {
         return new int[] { maxHP, mov, str, pot, acu, fin, rea };
-    }
-
-    public List<Ability> getAbilities()
-    {
-        return prfAbilities;
     }
 
     public Sprite getBattleSprite(string tag)

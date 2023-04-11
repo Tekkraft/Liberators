@@ -25,12 +25,12 @@ public class SkillNodeScript
     [XmlAttribute("cost"), DefaultValue(0)]
     public int cost = 0;
 
-    [XmlArray]
-    [XmlArrayItem("requirements", Type = typeof(NodeReference))]
+    [XmlArray("requirements")]
+    [XmlArrayItem("node", Type = typeof(NodeReference))]
     public List<NodeReference> nodes;
 
-    [XmlArray]
-    [XmlArrayItem("unlocks", Type = typeof(SkillReference))]
+    [XmlArray("unlocks")]
+    [XmlArrayItem("skill", Type = typeof(SkillReference))]
     public List<SkillReference> skills;
 }
 

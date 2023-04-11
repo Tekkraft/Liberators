@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class NodeController : MonoBehaviour
 {
-    public SkillNode linkedNode;
+    public SkillNodeData node;
     public GameObject icon;
     public GameObject abilityCost;
     public GameObject abilityName;
@@ -15,7 +15,7 @@ public class NodeController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        generate();
+        Initialize();
     }
 
     // Update is called once per frame
@@ -24,15 +24,37 @@ public class NodeController : MonoBehaviour
 
     }
 
-    public void generate()
+    public void Initialize()
     {
-        icon.GetComponent<SpriteRenderer>().sprite = linkedNode.getAbility().getSprite();
-        abilityName.GetComponent<TextMeshPro>().text = linkedNode.getAbility().getName();
-        abilityCost.GetComponent<TextMeshPro>().text = linkedNode.getNodeCost() + " PTS";
+        icon.GetComponent<SpriteRenderer>().sprite = node.unlockedAbilties[0].getSprite();
+        abilityName.GetComponent<TextMeshPro>().text = node.unlockedAbilties[0].getName();
+        abilityCost.GetComponent<TextMeshPro>().text = node.cost + " PTS";
     }
 
-    public SkillNode getLinkedNode()
+    public SkillNodeData GetLinkedNode()
     {
-        return linkedNode;
+        return node;
+    }
+
+    public void UpdateNodeBorder(int skillPoints)
+    {
+        if (node.learned)
+        {
+            abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 1);
+        }
+        else if (node.unlocked)
+        {
+            if (skillPoints >= node.cost)
+            {
+                abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0, 0.7f, 0, 1);
+            }
+            else
+            {
+                abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0.7f, 0, 0, 1);
+            }
+        } else
+        {
+            abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0.3f, 0.3f, 0.3f, 1);
+        }
     }
 }

@@ -28,7 +28,6 @@ public class UnitInstance
         acu = baseUnit.getStats()[4];
         fin = baseUnit.getStats()[5];
         rea = baseUnit.getStats()[6];
-        prfAbilities = baseUnit.getAbilities();
         skillTree = new SkillTreeInstance(baseUnit.getSkillTree());
     }
 

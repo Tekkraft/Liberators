@@ -6,25 +6,25 @@ using UnityEngine.SceneManagement;
 
 public class SkillTreeController : MonoBehaviour
 {
-    public SkillTreeInstance activeTree;
-    public GameObject skillNodeObject;
+    UnitData data;
+    List<GameObject> nodes = new List<GameObject>();
 
+    public GameObject skillNodeObject;
     public GameObject skillPointTracker;
 
     Vector2 cursorPosition;
 
     void OnEnable()
     {
-        activeTree = SkillTreeEntryHandler.activeTree;
-        SkillTreeExitHandler.reset();
+        data = SkillTreeTransition.unitData;
+        data.skillTree.CheckAllUnlocked();
+        data.skillTree.LoadAllLearnedAbilities();
     }
 
     void OnDisable()
     {
-        SkillTreeExitHandler.characterIndex = SkillTreeEntryHandler.characterIndex;
-        SkillTreeExitHandler.activeTree = activeTree;
-        SkillTreeExitHandler.activated = true;
-        SkillTreeEntryHandler.reset();
+        SkillTreeTransition.unitData = data;
+        SkillTreeTransition.activated = true;
     }
 
     // Start is called before the first frame update
@@ -36,98 +36,56 @@ public class SkillTreeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        skillPointTracker.GetComponent<SkillTreeUISync>().setCurrentSkillPoints(activeTree.getAvailableSkillPoints());
-        skillPointTracker.GetComponent<SkillTreeUISync>().setMaxSkillPoints(activeTree.getMaxSkillPoints());
-        //Find root gameobject
-        List<GameObject> children = new List<GameObject>();
-        for (int i = 0; i < transform.childCount; i++)
+        skillPointTracker.GetComponent<SkillTreeUISync>().setCurrentSkillPoints(data.availableSkillPoints);
+        skillPointTracker.GetComponent<SkillTreeUISync>().setMaxSkillPoints(data.maxSkillPoints);
+        foreach (GameObject node in nodes)
         {
-            Transform child = transform.GetChild(i);
-            if (child.gameObject.CompareTag("SkillNode"))
-            {
-                children.Add(child.gameObject);
-            }
-        }
-        foreach (GameObject child in children)
-        {
-            updateNodeBorder(child, activeTree.getUnlockedSkills(), activeTree.getObtainedSkills());
+            node.GetComponent<NodeController>().UpdateNodeBorder(data.availableSkillPoints);
         }
     }
 
     void drawTree()
     {
-        SkillNode rootSkill = activeTree.getRootNode();
-        drawNode(rootSkill, gameObject, 0, 0);
-    }
-
-    void drawNode(SkillNode node, GameObject parent, int layer, float offset)
-    {
-        GameObject newNode = GameObject.Instantiate(skillNodeObject, parent.transform);
-        newNode.SetActive(false);
-        newNode.GetComponent<NodeController>().linkedNode = node;
-        newNode.transform.Translate(new Vector3(offset * 4.5f, 3.5f, 0));
-        newNode.SetActive(true);
-        List<float> offsets = getOffsets(node.widthAboveNode(), node.widthOfChildren());
-        for (int i = 0; i < node.getChildSkills().Count; i++)
+        List<List<SkillNodeData>> treeNodesDepth = data.skillTree.NodesByDepth();
+        for (int i = 0; i < treeNodesDepth.Count; i++)
         {
-            SkillNode subNode = node.getChildSkills()[i];
-            drawNode(subNode, newNode, layer + 1, offsets[i]);
-        }
-    }
-
-    void updateNodeBorder(GameObject root, List<SkillNode> unlocked, List<SkillNode> obtained)
-    {
-        if (unlocked.Contains(root.GetComponent<NodeController>().getLinkedNode()))
-        {
-            if (activeTree.getAvailableSkillPoints() >= root.GetComponent<NodeController>().getLinkedNode().getNodeCost())
+            List<SkillNodeData> nodesDepth = treeNodesDepth[i];
+            for (int j = 0; j < nodesDepth.Count; j++)
             {
-                root.GetComponent<NodeController>().abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0, 0.7f, 0, 1);
-            }
-            else
-            {
-                root.GetComponent<NodeController>().abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0.7f, 0, 0, 1);
-            }
-        } else if (obtained.Contains(root.GetComponent<NodeController>().getLinkedNode()))
-        {
-            root.GetComponent<NodeController>().abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 1);
-        }
-        else
-        {
-            root.GetComponent<NodeController>().abilityBorder.GetComponent<SpriteRenderer>().color = new Color(0.3f, 0.3f, 0.3f, 1);
-        }
-
-        List<GameObject> children = new List<GameObject>();
-        for (int i = 0; i < root.transform.childCount; i++)
-        {
-            Transform child = root.transform.GetChild(i);
-            if (child.gameObject.CompareTag("SkillNode"))
-            {
-                children.Add(child.gameObject);
+                float xOffset;
+                if (nodesDepth.Count % 2 == 1)
+                {
+                    xOffset = (j - (nodesDepth.Count - 1) / 2) * 5.5f;
+                }
+                else
+                {
+                    xOffset = (j - nodesDepth.Count / 2 + .5f) * 5.5f;
+                }
+                Vector3 offset = new Vector3(xOffset, i * 4.5f, 0f);
+                GameObject newNode = GameObject.Instantiate(skillNodeObject);
+                newNode.SetActive(false);
+                newNode.GetComponent<NodeController>().node = nodesDepth[j];
+                newNode.transform.Translate(offset);
+                newNode.SetActive(true);
+                nodes.Add(newNode);
             }
         }
-        foreach (GameObject child in children)
-        {
-            updateNodeBorder(child, unlocked, obtained);
-        }
     }
 
-    List<float> getOffsets(int maxWidth, List<int> descentWidths)
+    public void learnSkill(SkillNodeData node)
     {
-        float midpoint = maxWidth / 2f;
-        float index = -midpoint;
-        List<float> offsets = new List<float>();
-        foreach (int width in descentWidths)
+        if (data.availableSkillPoints < node.cost)
         {
-            index += width / 2f;
-            offsets.Add(index);
-            index += width / 2f;
+            return;
         }
-        return offsets;
-    }
-
-    public void learnSkill(SkillNode node)
-    {
-        activeTree.learnAbility(node);
+        if (!node.unlocked)
+        {
+            return;
+        }
+        node.learned = true;
+        data.availableSkillPoints -= node.cost;
+        data.skillTree.CheckAllUnlocked();
+        data.skillTree.LoadAllLearnedAbilities();
     }
 
     //Input Handling
@@ -143,7 +101,7 @@ public class SkillTreeController : MonoBehaviour
         if (hit.collider != null)
         {
             GameObject node = hit.collider.gameObject;
-            learnSkill(node.GetComponent<NodeController>().getLinkedNode());
+            learnSkill(node.GetComponent<NodeController>().GetLinkedNode());
         }
     }
 

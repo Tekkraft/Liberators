@@ -892,14 +892,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec0898a48f5674315b1efa39ca6729a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lanaBase: {fileID: 0}
-  ethanBase: {fileID: 0}
-  saeiBase: {fileID: 0}
-  vaueBase: {fileID: 0}
-  mayBase: {fileID: 0}
-  runliBase: {fileID: 0}
-  colinBase: {fileID: 0}
-  hanaeiBase: {fileID: 0}
+  lanaBase: {fileID: 11400000, guid: 8166ad6f713e14de68d81d38416bf746, type: 2}
+  lanaWeaponId: Battle Rifle
+  lanaArmorId: Medium Armor
+  lanaSkillTree: _SkillTreeFileTemplate
+  ethanBase: {fileID: 11400000, guid: 499b51155f0cc4a54b9568021990660d, type: 2}
+  ethanWeaponId: Caster Gauntlet
+  ethanArmorId: Light Armor
+  ethanSkillTree: _SkillTreeFileTemplate
+  saeiBase: {fileID: 11400000, guid: 85e65d7afe69042159e6b1509dd1a14e, type: 2}
+  saeiWeaponId: Arc Edge
+  saeiArmorId: Light Armor
+  saeiSkillTree: _SkillTreeFileTemplate
+  vaueBase: {fileID: 11400000, guid: 3d2401bdbe9b64877af68bc5f8533c99, type: 2}
+  vaueWeaponId: Arc Battleaxe
+  vaueArmorId: Heavy Armor
+  vaueSkillTree: _SkillTreeFileTemplate
+  mayBase: {fileID: 11400000, guid: bd42a7b9b3d6f478589988ad92a88597, type: 2}
+  mayWeaponId: Heavy Cannon
+  mayArmorId: Heavy Armor
+  maySkillTree: _SkillTreeFileTemplate
+  runliBase: {fileID: 11400000, guid: b45d036fef93445f29c852b37f37b332, type: 2}
+  runliWeaponId: Wave Caster
+  runliArmorId: Light Armor
+  runliSkillTree: _SkillTreeFileTemplate
+  colinBase: {fileID: 11400000, guid: 1b9ef72a3dff64d32af3f1d0b62c6c10, type: 2}
+  colinWeaponId: Rail Rifle
+  colinArmorId: Medium Armor
+  colinSkillTree: _SkillTreeFileTemplate
+  hanaeiBase: {fileID: 11400000, guid: 94200c73dc8bc4db794cc99483b8e2e5, type: 2}
+  hanaeiWeaponId: Floret Drone
+  hanaeiArmorId: Medium Armor
+  hanaeiSkillTree: _SkillTreeFileTemplate
   weaponList: []
   armorList: []
 --- !u!1 &1706864692

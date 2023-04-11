@@ -12,7 +12,7 @@ public class SkillTreeEvaluator
     {
         try
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(AbilityScript));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(SkillTreeScript));
             StreamReader streamReader = new StreamReader(Path.Combine(Application.dataPath, "XML", "Skill Tree XML Files", filePath));
             SkillTreeScript result = (SkillTreeScript)xmlSerializer.Deserialize(streamReader.BaseStream);
             streamReader.Close();
@@ -29,6 +29,8 @@ public class SkillTreeEvaluator
     {
         SkillTreeScript script = Deserialize<SkillTreeScript>(filePath);
         SkillTreeData data = new SkillTreeData();
+        data.source = filePath;
+        data.nodes = new List<SkillNodeData>();
         Dictionary<SkillNodeScript, SkillNodeData> linker = new Dictionary<SkillNodeScript, SkillNodeData>();
         Dictionary<string, SkillNodeScript> idLinker = new Dictionary<string, SkillNodeScript>();
         foreach (SkillNodeScript node in script.nodes)
@@ -39,6 +41,8 @@ public class SkillTreeEvaluator
             nodeData.id = node.id;
             nodeData.cost = node.cost;
             nodeData.unlocked = node.starting;
+            nodeData.requirements = new List<string>();
+            nodeData.unlocks = new List<string>();
             data.nodes.Add(nodeData);
         }
         foreach (SkillNodeScript node in script.nodes)
@@ -50,7 +54,7 @@ public class SkillTreeEvaluator
                 {
                     continue;
                 }
-                nodeData.requirements.Add(linker[idLinker[reference.id]]);
+                nodeData.requirements.Add(reference.id);
             }
             foreach (SkillReference reference in node.skills)
             {
