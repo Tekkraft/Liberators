@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    ItemInstance linkedItem;
+    ItemData linkedItem;
     Vector2Int homePosition;
     Transform originalParent;
     Transform mainCanvas;
@@ -27,10 +27,20 @@ public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHa
         
     }
 
-    public void InitializeItem(ItemInstance linkedItem, Vector2Int homePosition, Transform originalParent, Transform mainCanvas, InventoryController inventoryController)
+    public void InitializeItem(ItemData linkedItem, Vector2Int homePosition, Transform originalParent, Transform mainCanvas, InventoryController inventoryController)
     {
         this.linkedItem = linkedItem;
-        GetComponent<Image>().sprite = this.linkedItem.GetInstanceSprite();
+        switch (linkedItem.itemType)
+        {
+            case "weapon":
+                GetComponent<Image>().sprite = (this.linkedItem as WeaponData).LoadWeaponData().GetSprite();
+                break;
+
+            case "armor":
+                GetComponent<Image>().sprite = (this.linkedItem as ArmorData).LoadArmorData().GetSprite();
+                break;
+
+        }
         this.homePosition = homePosition;
         this.originalParent = originalParent;
         this.mainCanvas = mainCanvas;
@@ -61,7 +71,7 @@ public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHa
         ResetPosition();
     }
 
-    public ItemInstance GetLinkedItem()
+    public ItemData GetLinkedItem()
     {
         return linkedItem;
     }
@@ -118,7 +128,17 @@ public class InventoryItemController : MonoBehaviour, IDragHandler, IBeginDragHa
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        inventoryController.SetItemHoverText(linkedItem.GetInstanceName());
+        switch (linkedItem.itemType)
+        {
+            case "weapon":
+                inventoryController.SetItemHoverText((this.linkedItem as WeaponData).LoadWeaponData().GetName());
+                break;
+
+            case "armor":
+                inventoryController.SetItemHoverText((this.linkedItem as ArmorData).LoadArmorData().GetName());
+                break;
+
+        }
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)

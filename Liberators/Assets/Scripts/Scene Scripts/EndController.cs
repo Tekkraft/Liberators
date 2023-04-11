@@ -32,13 +32,7 @@ public class EndController : MonoBehaviour
 
     public void exitScreen()
     {
-        foreach (UnitEntryData data in BattleExitHandler.unitData)
-        {
-            if (data.getUnit() != null && data.getUnit().getSkillTree() != null)
-            {
-                data.getUnit().getSkillTree().gainSkillPoints(1);
-            }
-        }
+        //TODO: Reimplement skill point gain
         SceneManager.LoadSceneAsync("OperationMap");
     }
 }

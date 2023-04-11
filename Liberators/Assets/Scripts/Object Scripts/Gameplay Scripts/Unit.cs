@@ -45,9 +45,6 @@ public class Unit : ScriptableObject
     [SerializeField]
     UnitAnims unitAnims;
 
-    [SerializeField]
-    SkillTree unitSkillTree;
-
     public string getUnitName()
     {
         return unitName;
@@ -66,11 +63,6 @@ public class Unit : ScriptableObject
     public Sprite getBattleSprite(string tag)
     {
         return unitAnims.getLinkedSprite(tag);
-    }
-
-    public SkillTree getSkillTree()
-    {
-        return unitSkillTree;
     }
 }
 

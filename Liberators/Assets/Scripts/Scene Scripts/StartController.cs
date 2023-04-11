@@ -95,11 +95,9 @@ public class StartController : MonoBehaviour
 
     public void EnterInventory()
     {
-        InventoryTransitionController.characterIndex = characterIndex;
-        InventoryTransitionController.equippedMainHandWeapon = characterUnitData[characterIndex].getWeapons().Item1;
-        InventoryTransitionController.equippedOffHandWeapon = characterUnitData[characterIndex].getWeapons().Item2;
-        InventoryTransitionController.equippedArmor = characterUnitData[characterIndex].getArmor();
-        InventoryTransitionController.origin = "BattlePrep";
+        InventoryTransition.characterIndex = characterIndex;
+        InventoryTransition.unitData = UnitIndexToData(characterIndex);
+        InventoryTransition.origin = "BattlePrep";
         SceneManager.LoadSceneAsync("UnitInventory");
     }
 
@@ -110,21 +108,19 @@ public class StartController : MonoBehaviour
             characterIndex = SkillTreeTransition.characterIndex;
             UpdateUnitIndexWithData(characterIndex, SkillTreeTransition.unitData);
             LoadUnitPage(SkillTreeTransition.characterIndex);
-            SkillTreeTransition.reset();
         }
+        SkillTreeTransition.reset();
     }
 
     public void LoadInventory()
     {
-        if (InventoryTransitionController.activated)
+        if (InventoryTransition.activated)
         {
-            characterIndex = InventoryTransitionController.characterIndex;
-            characterUnitData[characterIndex].setArmor(InventoryTransitionController.equippedArmor);
-            characterUnitData[characterIndex].setWeapon(InventoryTransitionController.equippedMainHandWeapon, true);
-            characterUnitData[characterIndex].setWeapon(InventoryTransitionController.equippedOffHandWeapon, false);
-            LoadUnitPage(InventoryTransitionController.characterIndex);
+            characterIndex = InventoryTransition.characterIndex;
+            UpdateUnitIndexWithData(characterIndex, InventoryTransition.unitData);
+            LoadUnitPage(InventoryTransition.characterIndex);
         }
-        InventoryTransitionController.reset();
+        InventoryTransition.reset();
     }
 
     void ChangePage(BattleMenuPage newPage)
@@ -184,7 +180,7 @@ public class StartController : MonoBehaviour
             characterIndex = index;
         }
         ChangePage(BattleMenuPage.unit);
-        unitSpecificScreenUIElements[0].GetComponent<TextMeshProUGUI>().text = characterUnitData[characterIndex].getUnit().getUnitName();
+        unitSpecificScreenUIElements[0].GetComponent<TextMeshProUGUI>().text = UnitIndexToData(characterIndex).unitName;
     }
 
     public void LoadUnitOverviewPage()

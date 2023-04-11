@@ -97,6 +97,19 @@ public class DataLoader : MonoBehaviour
         teamList.hanaeiData = LoadUnitData(hanaeiBase, hanaeiWeaponId, hanaeiArmorId, hanaeiSkillTree);
 
         SaveSystem.SaveTeamData(teamList.ToJSON());
+        Debug.Log(SaveSystem.LoadTeamData());
+
+        foreach (string id in weaponList)
+        {
+            WeaponData data = new WeaponData(id);
+            PlayerInventory.PushItem(data);
+        }
+
+        foreach (string id in armorList)
+        {
+            ArmorData data = new ArmorData(id);
+            PlayerInventory.PushItem(data);
+        }
     }
 
     UnitData LoadUnitData(Unit unitBase, string weaponId, string armorId, string skillTreeId)
@@ -117,11 +130,8 @@ public class DataLoader : MonoBehaviour
         unitData.availableSkillPoints = 1;
         unitData.skillTree = SkillTreeEvaluator.CreateTreeData(skillTreeId + ".xml");
         unitData.skillTree.Initialize();
-        unitData.mainWeapon = new WeaponData();
-        unitData.mainWeapon.weaponBaseId = weaponId;
-        unitData.secondaryWeapon = new WeaponData();
-        unitData.armor = new ArmorData();
-        unitData.armor.armorBaseId = armorId;
+        unitData.mainWeapon = new WeaponData(weaponId);
+        unitData.armor = new ArmorData(armorId);
         unitData.skillTree.CheckAllUnlocked();
         unitData.skillTree.LoadAllLearnedAbilities();
         return unitData;

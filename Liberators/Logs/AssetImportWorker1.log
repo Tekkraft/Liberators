@@ -6864,3 +6864,247 @@ AssetImportParameters requested are different than current active one (requested
   custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 678.679847 seconds.
+  path: Assets/XML/Skill Tree XML Files/Templates/_SkillTreeFileTemplate.xml
+  artifactKey: Guid(17aab1929a81848dabc5e6fb393ab659) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/XML/Skill Tree XML Files/Templates/_SkillTreeFileTemplate.xml using Guid(17aab1929a81848dabc5e6fb393ab659) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad5a8ac31a30146167584113ea338570') in 1.192450 seconds 
+  Import took 1.211628 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 508.827176 seconds.
+  path: Assets/Scripts/Object Scripts/Gameplay Scripts/SkillTree.cs
+  artifactKey: Guid(b18a66b2e19684231a843296485000d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Object Scripts/Gameplay Scripts/SkillTree.cs using Guid(b18a66b2e19684231a843296485000d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf476e01f390b4a1ccdc7040aef5810b') in 0.009265 seconds 
+  Import took 0.023497 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 10.162815 seconds.
+  path: Assets/Scripts/Object Scripts/Gameplay Scripts/SkillTreeData.cs
+  artifactKey: Guid(c256166eb8d914446b888bbb5cd28872) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Object Scripts/Gameplay Scripts/SkillTreeData.cs using Guid(c256166eb8d914446b888bbb5cd28872) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ba970bf43f05d3202ffe2a53e3c0754') in 0.002076 seconds 
+  Import took 0.010590 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.315985 seconds.
+  path: Assets/Scripts/Object Scripts/Gameplay Scripts/SkillTreeEvaluator.cs
+  artifactKey: Guid(e1092bb07f29c49c18e9bad18f6c7b49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Object Scripts/Gameplay Scripts/SkillTreeEvaluator.cs using Guid(e1092bb07f29c49c18e9bad18f6c7b49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2ca8323ace1e82262ca9fcc90e88921e') in 0.002071 seconds 
+  Import took 0.010838 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.452367 seconds.
+  path: Assets/Scripts/Object Scripts/Gameplay Scripts/SkillTreeScript.cs
+  artifactKey: Guid(2eceacca421b2459bbbb0df9f06bcda5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Object Scripts/Gameplay Scripts/SkillTreeScript.cs using Guid(2eceacca421b2459bbbb0df9f06bcda5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69294fcebcfde58caeedc52503b8388c') in 0.001996 seconds 
+  Import took 0.010946 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.284190 seconds.
+  path: Assets/Scripts/Object Scripts/Gameplay Scripts/Status.cs
+  artifactKey: Guid(1c97813bd34f14d03a50558471e55cc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Object Scripts/Gameplay Scripts/Status.cs using Guid(1c97813bd34f14d03a50558471e55cc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5eb817b5a33b10920da08d00462db8a3') in 0.001943 seconds 
+  Import took 0.011456 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 286.920367 seconds.
+  path: Assets/Scripts/Scene Scripts/NewBehaviourScript.cs
+  artifactKey: Guid(be367c67f87884a769d3c8710f65053f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Scene Scripts/NewBehaviourScript.cs using Guid(be367c67f87884a769d3c8710f65053f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c7fe0750318f8e9c24822cb43f1183a') in 0.005922 seconds 
+  Import took 0.024715 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.496338 seconds.
+  path: Assets/Scripts/Scene Scripts/BattleTransition.cs
+  artifactKey: Guid(84e2ee983957d4e3381ae930da86fbf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Scene Scripts/BattleTransition.cs using Guid(84e2ee983957d4e3381ae930da86fbf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c6efc0b3cf5c40cf78b1e718152009cb') in 0.002115 seconds 
+  Import took 0.008169 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 11.280670 seconds.
+  path: Assets/Scripts/Scene Scripts/BattleTransition.cs
+  artifactKey: Guid(84e2ee983957d4e3381ae930da86fbf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Scene Scripts/BattleTransition.cs using Guid(84e2ee983957d4e3381ae930da86fbf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b33e0539d6199d9ced690fd2f2f34da') in 0.028383 seconds 
+  Import took 0.063410 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002907 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.58 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2023-04-10 20:36:17.888 Unity[76962:37287325] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7f928b7435a0 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.630 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2632ms)
+		BeginReloadAssembly (256ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (49ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (87ms)
+		EndReloadAssembly (2281ms)
+			LoadAssemblies (216ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (371ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (47ms)
+			SetupLoadedEditorAssemblies (1314ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (18ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (263ms)
+				ProcessInitializeOnLoadAttributes (996ms)
+				ProcessInitializeOnLoadMethodAttributes (32ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (36ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.51 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2634 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 0.62 GB.
+System memory in use after: 0.62 GB.
+
+Unloading 20 unused Assets to reduce memory usage. Loaded Objects now: 3360.
+Total: 3.687834 ms (FindLiveObjects: 0.149250 ms CreateObjectMapping: 0.058583 ms MarkObjects: 3.118166 ms  DeleteObjects: 0.359125 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 932.844405 seconds.
+  path: Assets/Scripts/Scene Scripts/InventoryTransition.cs
+  artifactKey: Guid(5884a5518148f454d9a69381a36ea05e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Scene Scripts/InventoryTransition.cs using Guid(5884a5518148f454d9a69381a36ea05e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dbfcd4b4fdf922034ebd31b45f47e6c2') in 0.032410 seconds 
+  Import took 0.049066 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003516 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for LinuxStandalone target not found
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.59 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+2023-04-10 20:47:55.095 Unity[76962:37287325] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x7f928c258890 Font Asset, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Mono: successfully reloaded assembly
+- Completed reload, in  2.753 seconds
+Domain Reload Profiling:
+	ReloadAssembly (2754ms)
+		BeginReloadAssembly (251ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (43ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (93ms)
+		EndReloadAssembly (2413ms)
+			LoadAssemblies (209ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (392ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (49ms)
+			SetupLoadedEditorAssemblies (1394ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (22ms)
+				SetLoadedEditorAssemblies (2ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (278ms)
+				ProcessInitializeOnLoadAttributes (1038ms)
+				ProcessInitializeOnLoadMethodAttributes (52ms)
+				AfterProcessingInitializeOnLoad (1ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (48ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.03 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2634 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 0.63 GB.
+System memory in use after: 0.63 GB.
+
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 3362.
+Total: 3.260125 ms (FindLiveObjects: 0.233083 ms CreateObjectMapping: 0.064875 ms MarkObjects: 2.695208 ms  DeleteObjects: 0.264542 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:framework-osx-AVFoundation: e770b220cccbd017edd2c1fefb359320 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 14.586658 seconds.
+  path: Assets/Scripts/Scene Scripts/InventoryTransition.cs
+  artifactKey: Guid(5884a5518148f454d9a69381a36ea05e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Scene Scripts/InventoryTransition.cs using Guid(5884a5518148f454d9a69381a36ea05e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b5e3cd55c839e4f44fb220df328b2066') in 0.008538 seconds 
+  Import took 0.014909 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003018 seconds.
+Callback registration failed. Increase kMaxCallback.
+Fatal Error! Callback registration failed. Increase kMaxCallback.
+Obtained 31 stack frames.
+#0  0x007ff814ccd22a in __pthread_kill
+#1  0x007ff814c4eca5 in abort
+#2  0x000001036dc6ae in CrashDontLaunchBugReporter()
+#3  0x00000102266af7 in EditorMonoConsole::LogToConsoleImplementation(CppLogEntry const&)
+#4  0x00000102266127 in EditorMonoConsole::LogToConsoleImplementation(DebugStringToFileData const&)
+#5  0x0000010226789e in LogToConsoleImplementation(DebugStringToFileData const&)
+#6  0x0000010328ddcd in DebugStringToFilePostprocessedStacktrace(DebugStringToFileData const&)
+#7  0x0000010328e6b3 in DebugStringToFile(DebugStringToFileData const&)
+#8  0x00000100e8fcc4 in CallbackArrayBase<void (*)(AssemblyLoadFailure), void (*)(void const*, AssemblyLoadFailure)>::Register(void (*)(AssemblyLoadFailure), void (*)(void const*, AssemblyLoadFailure), void const*)
+#9  0x000001026e3cf8 in LoadDomainAndUserAssemblies(bool)
+#10 0x000001026e65af in LoadUserAssemblies()
+#11 0x00000102932cb9 in AssetImportWorkerClient::ReloadMonoDomain(AssetResolver&)
+#12 0x0000010295501c in invocation function for block in AssetImportWorkerClient::HandleMessage(PrepareMessage const&)::$_5::operator()() const
+#13 0x007ff814b85a44 in _dispatch_client_callout
+#14 0x007ff814b9342a in _dispatch_async_and_wait_invoke
+#15 0x007ff814b85a44 in _dispatch_client_callout
+#16 0x007ff814b927b9 in _dispatch_main_queue_drain
+#17 0x007ff814b923f3 in _dispatch_main_queue_callback_4CF
+#18 0x007ff814e1e43d in __CFRUNLOOP_IS_SERVICING_THE_MAIN_DISPATCH_QUEUE__
+#19 0x007ff814ddeecb in __CFRunLoopRun
+#20 0x007ff814ddde8f in CFRunLoopRunSpecific
+#21 0x007ff81ec67766 in RunCurrentEventLoopInMode
+#22 0x007ff81ec67576 in ReceiveNextEventCommon
+#23 0x007ff81ec672b3 in _BlockUntilNextEventMatchingListInModeWithFilter
+#24 0x007ff817e64f33 in _DPSNextEvent
+#25 0x007ff817e63db4 in -[NSApplication(NSEvent) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]
+#26 0x007ff817e563f7 in -[NSApplication run]
+#27 0x007ff817e2a427 in NSApplicationMain
+#28 0x00000103706541 in EditorMain(int, char const**)
+#29 0x00000103706769 in main
+#30 0x000002076e0310 in (Unknown)

@@ -4,9 +4,15 @@ using UnityEngine;
 using System.IO;
 
 [System.Serializable]
-public class ArmorData
+public class ArmorData : ItemData
 {
     public string armorBaseId;
+
+    public ArmorData(string id)
+    {
+        armorBaseId = id;
+        itemType = "armor";
+    }
 
     public Armor LoadArmorData()
     {

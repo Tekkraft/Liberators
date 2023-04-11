@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryTransitionController
+public class InventoryTransition
 {
-    public static WeaponInstance equippedMainHandWeapon;
-
-    public static WeaponInstance equippedOffHandWeapon;
-
-    public static ArmorInstance equippedArmor;
+    public static UnitData unitData;
 
     public static int characterIndex;
 
@@ -20,9 +16,7 @@ public class InventoryTransitionController
 
     public static void reset()
     {
-        equippedArmor = null;
-        equippedMainHandWeapon = null;
-        equippedOffHandWeapon = null;
+        unitData = null;
         characterIndex = 0;
         origin = null;
         menuPage = BattleMenuPage.main;

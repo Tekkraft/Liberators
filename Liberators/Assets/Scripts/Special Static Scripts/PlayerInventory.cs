@@ -4,50 +4,50 @@ using UnityEngine;
 
 public class PlayerInventory
 {
-    public static List<ItemInstance> inventory = new List<ItemInstance>();
+    public static List<ItemData> inventory = new List<ItemData>();
 
-    public static void LoadInventory(List<ItemInstance> itemList)
+    public static void LoadInventory(List<ItemData> itemList)
     {
         inventory = itemList;
     }
 
-    public static List<ItemInstance> GetInventory()
+    public static List<ItemData> GetInventory()
     {
         return inventory;
     }
 
-    public static List<WeaponInstance> GetWeapons()
+    public static List<WeaponData> GetWeapons()
     {
-        List<WeaponInstance> weapons = new List<WeaponInstance>();
-        foreach (ItemInstance item in inventory)
+        List<WeaponData> weapons = new List<WeaponData>();
+        foreach (ItemData item in inventory)
         {
-            if (item.GetType() == typeof(WeaponInstance))
+            if (item.itemType == "weapon")
             {
-                weapons.Add(item as WeaponInstance);
+                weapons.Add(item as WeaponData);
             }
         }
         return weapons;
     }
 
-    public static List<ArmorInstance> GetArmors()
+    public static List<ArmorData> GetArmors()
     {
-        List<ArmorInstance> armors = new List<ArmorInstance>();
-        foreach (ItemInstance item in inventory)
+        List<ArmorData> armors = new List<ArmorData>();
+        foreach (ItemData item in inventory)
         {
-            if (item.GetType() == typeof(ArmorInstance))
+            if (item.itemType == "armor")
             {
-                armors.Add(item as ArmorInstance);
+                armors.Add(item as ArmorData);
             }
         }
         return armors;
     }
 
-    public static void PullItem(ItemInstance item)
+    public static void PullItem(ItemData item)
     {
         inventory.Remove(item);
     }
 
-    public static void PushItem(ItemInstance item)
+    public static void PushItem(ItemData item)
     {
         inventory.Add(item);
     }

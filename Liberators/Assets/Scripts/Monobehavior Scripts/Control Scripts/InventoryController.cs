@@ -9,11 +9,7 @@ public class InventoryController : MonoBehaviour
     static int rowItems = 11;
 
     //Unit Specific
-    WeaponInstance equippedMainHandWeapon;
-
-    WeaponInstance equippedOffHandWeapon;
-
-    ArmorInstance equippedArmor;
+    UnitData unitData;
 
     string loadScene;
 
@@ -25,19 +21,19 @@ public class InventoryController : MonoBehaviour
     GameObject inventoryFrame;
 
     [SerializeField]
-    GameObject mainhandLabel;
+    GameObject mainLabel;
 
     [SerializeField]
-    GameObject offhandLabel;
+    GameObject secondaryLabel;
 
     [SerializeField]
     GameObject armorLabel;
 
     [SerializeField]
-    GameObject mainhandSlot;
+    GameObject mainSlot;
 
     [SerializeField]
-    GameObject offhandSlot;
+    GameObject secondarySlot;
 
     [SerializeField]
     GameObject armorSlot;
@@ -48,18 +44,16 @@ public class InventoryController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<ItemInstance> inventory = PlayerInventory.GetInventory();
+        List<ItemData> inventory = PlayerInventory.GetInventory();
 
-        equippedMainHandWeapon = InventoryTransitionController.equippedMainHandWeapon;
-        equippedOffHandWeapon = InventoryTransitionController.equippedOffHandWeapon;
-        equippedArmor = InventoryTransitionController.equippedArmor;
-        loadScene = InventoryTransitionController.origin;
+        unitData = InventoryTransition.unitData;
+        loadScene = InventoryTransition.origin;
 
-        mainhandSlot.GetComponent<InventoryItemSlotController>().InitializeSlot(this);
-        offhandSlot.GetComponent<InventoryItemSlotController>().InitializeSlot(this);
+        mainSlot.GetComponent<InventoryItemSlotController>().InitializeSlot(this);
+        secondarySlot.GetComponent<InventoryItemSlotController>().InitializeSlot(this);
         armorSlot.GetComponent<InventoryItemSlotController>().InitializeSlot(this);
 
-        InventoryTransitionController.activated = true;
+        InventoryTransition.activated = true;
 
         ClearItemHoverText();
 
@@ -79,31 +73,31 @@ public class InventoryController : MonoBehaviour
             }
         }
         index--;
-        if (!equippedMainHandWeapon.NullCheckBase())
+        if (unitData.mainWeapon != null && unitData.mainWeapon.weaponBaseId != null && unitData.mainWeapon.weaponBaseId != "")
         {
             index++;
             int xPos = index % rowItems;
             int yPos = Mathf.FloorToInt(index / rowItems);
             GameObject temp = GameObject.Instantiate(inventoryItem, inventoryFrame.transform);
-            temp.GetComponent<InventoryItemController>().InitializeItem(equippedMainHandWeapon, new Vector2Int(xPos, yPos), inventoryFrame.transform, transform, this);
-            mainhandSlot.GetComponent<InventoryItemSlotController>().AddItemToSlot(temp);
+            temp.GetComponent<InventoryItemController>().InitializeItem(unitData.mainWeapon, new Vector2Int(xPos, yPos), inventoryFrame.transform, transform, this);
+            mainSlot.GetComponent<InventoryItemSlotController>().AddItemToSlot(temp);
         }
-        if (!equippedOffHandWeapon.NullCheckBase())
+        if (unitData.secondaryWeapon != null && unitData.secondaryWeapon.weaponBaseId != null && unitData.secondaryWeapon.weaponBaseId != "")
         {
             index++;
             int xPos = index % rowItems;
             int yPos = Mathf.FloorToInt(index / rowItems);
             GameObject temp = GameObject.Instantiate(inventoryItem, inventoryFrame.transform);
-            temp.GetComponent<InventoryItemController>().InitializeItem(equippedOffHandWeapon, new Vector2Int(xPos, yPos), inventoryFrame.transform, transform, this);
-            offhandSlot.GetComponent<InventoryItemSlotController>().AddItemToSlot(temp);
+            temp.GetComponent<InventoryItemController>().InitializeItem(unitData.secondaryWeapon, new Vector2Int(xPos, yPos), inventoryFrame.transform, transform, this);
+            secondarySlot.GetComponent<InventoryItemSlotController>().AddItemToSlot(temp);
         }
-        if (!equippedArmor.NullCheckBase())
+        if (unitData.armor != null && unitData.armor.armorBaseId != null && unitData.armor.armorBaseId != "")
         {
             index++;
             int xPos = index % rowItems;
             int yPos = Mathf.FloorToInt(index / rowItems);
             GameObject temp = GameObject.Instantiate(inventoryItem, inventoryFrame.transform);
-            temp.GetComponent<InventoryItemController>().InitializeItem(equippedArmor, new Vector2Int(xPos, yPos), inventoryFrame.transform, transform, this);
+            temp.GetComponent<InventoryItemController>().InitializeItem(unitData.armor, new Vector2Int(xPos, yPos), inventoryFrame.transform, transform, this);
             armorSlot.GetComponent<InventoryItemSlotController>().AddItemToSlot(temp);
         }
         inventoryFrame.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, multiplier * Mathf.Ceil(index / 11) + offset * 2);
@@ -112,24 +106,25 @@ public class InventoryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (mainhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
+        //TODO: May break without slot verification
+        if (mainSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
         {
-            mainhandLabel.GetComponent<TextMeshProUGUI>().text = mainhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem().GetInstanceName();
+            mainLabel.GetComponent<TextMeshProUGUI>().text = (mainSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as WeaponData).LoadWeaponData().GetName();
         } else
         {
-            mainhandLabel.GetComponent<TextMeshProUGUI>().text = "";
+            mainLabel.GetComponent<TextMeshProUGUI>().text = "";
         }
-        if (offhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
+        if (secondarySlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
         {
-            offhandLabel.GetComponent<TextMeshProUGUI>().text = offhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem().GetInstanceName();
+            secondaryLabel.GetComponent<TextMeshProUGUI>().text = (secondarySlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as WeaponData).LoadWeaponData().GetName();
         }
         else
         {
-            offhandLabel.GetComponent<TextMeshProUGUI>().text = "";
+            secondaryLabel.GetComponent<TextMeshProUGUI>().text = "";
         }
         if (armorSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
         {
-            armorLabel.GetComponent<TextMeshProUGUI>().text = armorSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem().GetInstanceName();
+            armorLabel.GetComponent<TextMeshProUGUI>().text = (armorSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as ArmorData).LoadArmorData().GetName();
         }
         else
         {
@@ -141,48 +136,29 @@ public class InventoryController : MonoBehaviour
     {
         if (armorSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
         {
-            InventoryTransitionController.equippedArmor = armorSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as ArmorInstance;
+            unitData.armor = armorSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as ArmorData;
         }
         else
         {
-            InventoryTransitionController.equippedArmor = null;
+            unitData.armor = null;
         }
-        if (mainhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
+        if (mainSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
         {
-            InventoryTransitionController.equippedMainHandWeapon = mainhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as WeaponInstance;
+            unitData.mainWeapon = mainSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as WeaponData;
         }
         else
         {
-            InventoryTransitionController.equippedMainHandWeapon = null;
+            unitData.mainWeapon = null;
         }
-        if (offhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
+        if (secondarySlot.GetComponent<InventoryItemSlotController>().GetCurrentItem())
         {
-            InventoryTransitionController.equippedOffHandWeapon = offhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as WeaponInstance;
+            unitData.secondaryWeapon = secondarySlot.GetComponent<InventoryItemSlotController>().GetCurrentItem().GetComponent<InventoryItemController>().GetLinkedItem() as WeaponData;
         } else
         {
-            InventoryTransitionController.equippedOffHandWeapon = null;
+            unitData.secondaryWeapon = null;
         }
+        InventoryTransition.unitData = unitData;
         SceneManager.LoadSceneAsync(loadScene);
-    }
-
-    public void ValidateEquipment()
-    {
-        GameObject offhandItem = offhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem();
-        GameObject mainhandItem = mainhandSlot.GetComponent<InventoryItemSlotController>().GetCurrentItem();
-        if (offhandItem)
-        {
-            if (offhandItem.GetComponent<InventoryItemController>().GetLinkedItem() != null)
-            {
-                offhandSlot.GetComponent<InventoryItemSlotController>().KickItemFromSlot();
-            }
-        }
-        if (mainhandItem)
-        {
-            if (mainhandItem.GetComponent<InventoryItemController>().GetLinkedItem() != null)
-            {
-                mainhandSlot.GetComponent<InventoryItemSlotController>().KickItemFromSlot();
-            }
-        }
     }
 
     public void SetItemHoverText(string message)

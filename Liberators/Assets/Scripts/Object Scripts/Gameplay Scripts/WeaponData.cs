@@ -4,12 +4,21 @@ using UnityEngine;
 using System.IO;
 
 [System.Serializable]
-public class WeaponData
+public class WeaponData : ItemData
 {
     public string weaponBaseId;
     public string weaponCoreId;
     public List<string> weaponUpgradeId;
     public int upgradeCapacity;
+
+    public WeaponData(string id)
+    {
+        weaponBaseId = id;
+        itemType = "weapon";
+        weaponCoreId = "";
+        weaponUpgradeId = new List<string>();
+        upgradeCapacity = 0;
+    }
 
     public Weapon LoadWeaponData()
     {

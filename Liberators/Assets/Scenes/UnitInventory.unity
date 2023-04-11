@@ -265,6 +265,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 409609241}
     m_Modifications:
     - target: {fileID: -6903968743638662361, guid: 9715bee409e9346a59f7495920eb2657, type: 3}
+      propertyPath: validateType
+      value: weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: -6903968743638662361, guid: 9715bee409e9346a59f7495920eb2657, type: 3}
       propertyPath: validateWeapon
       value: 1
       objectReference: {fileID: 0}
@@ -354,7 +358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 706972307657917449, guid: 9715bee409e9346a59f7495920eb2657, type: 3}
       propertyPath: m_Name
-      value: Main Hand Slot
+      value: Main Slot
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9715bee409e9346a59f7495920eb2657, type: 3}
@@ -455,7 +459,7 @@ GameObject:
   - component: {fileID: 343049795}
   - component: {fileID: 343049794}
   m_Layer: 5
-  m_Name: Offhand Label
+  m_Name: Secondary Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,7 +482,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 100, y: 30}
-  m_SizeDelta: {x: 200, y: 20}
+  m_SizeDelta: {x: 90, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &343049794
 MonoBehaviour:
@@ -500,7 +504,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Offhand
+  m_text: Secondary
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -527,11 +531,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 17.9
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 12
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -768,6 +772,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 409609241}
     m_Modifications:
+    - target: {fileID: -6903968743638662361, guid: 9715bee409e9346a59f7495920eb2657, type: 3}
+      propertyPath: validateType
+      value: armor
+      objectReference: {fileID: 0}
     - target: {fileID: -6903968743638662361, guid: 9715bee409e9346a59f7495920eb2657, type: 3}
       propertyPath: validateArmor
       value: 1
@@ -1018,7 +1026,7 @@ GameObject:
   - component: {fileID: 828193633}
   - component: {fileID: 828193632}
   m_Layer: 5
-  m_Name: Mainhand Data
+  m_Name: Main Data
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1703,7 +1711,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1532573458}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.6666666
+  m_Size: 0.6666667
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1758,7 +1766,7 @@ GameObject:
   - component: {fileID: 1688492641}
   - component: {fileID: 1688492640}
   m_Layer: 5
-  m_Name: Mainhand Label
+  m_Name: Main Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1781,7 +1789,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -100, y: 30}
-  m_SizeDelta: {x: 200, y: 20}
+  m_SizeDelta: {x: 90, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1688492640
 MonoBehaviour:
@@ -1803,7 +1811,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Main Hand
+  m_text: Main Weapon
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1830,11 +1838,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 14.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 12
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
@@ -2084,7 +2092,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 200, y: 20}
+  m_SizeDelta: {x: 90, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1843361323
 MonoBehaviour:
@@ -2195,7 +2203,7 @@ GameObject:
   - component: {fileID: 1973943688}
   - component: {fileID: 1973943687}
   m_Layer: 5
-  m_Name: Offhand Data
+  m_Name: Secondary Data
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2511,11 +2519,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryItem: {fileID: 8472362169199446660, guid: b2c18c11750094719af9ca7f551061aa, type: 3}
   inventoryFrame: {fileID: 1729692971}
-  mainhandLabel: {fileID: 828193630}
-  offhandLabel: {fileID: 1973943685}
+  mainLabel: {fileID: 828193630}
+  secondaryLabel: {fileID: 1973943685}
   armorLabel: {fileID: 702920241}
-  mainhandSlot: {fileID: 187903771}
-  offhandSlot: {fileID: 522302050}
+  mainSlot: {fileID: 187903771}
+  secondarySlot: {fileID: 522302050}
   armorSlot: {fileID: 532315485}
   itemHoverText: {fileID: 66456512}
 --- !u!1001 &4529960389918937842
@@ -2527,7 +2535,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4529960389933588624, guid: 608cd472d5e81406bb8576bcbcffefb4, type: 3}
       propertyPath: m_Name
-      value: Offhand Slot
+      value: Secondary Slot
       objectReference: {fileID: 0}
     - target: {fileID: 4529960389933588625, guid: 608cd472d5e81406bb8576bcbcffefb4, type: 3}
       propertyPath: m_Pivot.x
@@ -2612,6 +2620,10 @@ PrefabInstance:
     - target: {fileID: 4529960389933588625, guid: 608cd472d5e81406bb8576bcbcffefb4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4529960389933588628, guid: 608cd472d5e81406bb8576bcbcffefb4, type: 3}
+      propertyPath: validateType
+      value: weapon
       objectReference: {fileID: 0}
     - target: {fileID: 4529960389933588628, guid: 608cd472d5e81406bb8576bcbcffefb4, type: 3}
       propertyPath: validateWeapon

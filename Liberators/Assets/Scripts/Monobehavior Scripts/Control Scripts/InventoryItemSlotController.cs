@@ -7,10 +7,7 @@ using UnityEngine.EventSystems;
 public class InventoryItemSlotController : MonoBehaviour, IDropHandler
 {
     [SerializeField]
-    bool validateWeapon;
-
-    [SerializeField]
-    bool validateArmor;
+    string validateType;
 
     GameObject currentItem;
 
@@ -51,11 +48,7 @@ public class InventoryItemSlotController : MonoBehaviour, IDropHandler
         {
             return;
         }
-        if (item.GetComponent<InventoryItemController>().GetLinkedItem().GetType() != typeof(WeaponInstance) && validateWeapon)
-        {
-            return;
-        }
-        if (item.GetComponent<InventoryItemController>().GetLinkedItem().GetType() != typeof(ArmorInstance) && validateArmor)
+        if (item.GetComponent<InventoryItemController>().GetLinkedItem().itemType != validateType)
         {
             return;
         }
@@ -66,7 +59,6 @@ public class InventoryItemSlotController : MonoBehaviour, IDropHandler
         item.GetComponent<InventoryItemController>().ResetPosition();
         PlayerInventory.PullItem(item.GetComponent<InventoryItemController>().GetLinkedItem());
         currentItem = item;
-        inventoryController.ValidateEquipment();
     }
 
     public void KickItemFromSlot()

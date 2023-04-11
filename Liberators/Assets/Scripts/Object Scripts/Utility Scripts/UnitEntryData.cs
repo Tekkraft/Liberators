@@ -18,8 +18,6 @@ public class UnitEntryData
     [SerializeField]
     public ArmorInstance armor;
 
-    SkillTreeInstance skillTree;
-
     public UnitEntryData(Unit unit, WeaponInstance mainHandWeapon, WeaponInstance offHandWeapon, ArmorInstance armor)
     {
         this.unit = unit;
@@ -27,7 +25,6 @@ public class UnitEntryData
         this.mainHandWeapon = mainHandWeapon;
         this.offHandWeapon = offHandWeapon;
         this.armor = armor;
-        skillTree = new SkillTreeInstance(unit.getSkillTree());
     }
 
     public void reconstruct()

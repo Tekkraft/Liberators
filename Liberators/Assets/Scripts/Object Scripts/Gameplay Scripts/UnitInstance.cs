@@ -14,8 +14,6 @@ public class UnitInstance
     int acu;
     int fin;
     int rea;
-    List<Ability> prfAbilities;
-    SkillTreeInstance skillTree;
 
     public UnitInstance(Unit baseUnit)
     {
@@ -28,7 +26,6 @@ public class UnitInstance
         acu = baseUnit.getStats()[4];
         fin = baseUnit.getStats()[5];
         rea = baseUnit.getStats()[6];
-        skillTree = new SkillTreeInstance(baseUnit.getSkillTree());
     }
 
     public string getUnitName()
@@ -55,27 +52,9 @@ public class UnitInstance
         }
     }
 
-    public List<Ability> getAbilities()
-    {
-        List<Ability> abilities = new List<Ability>();
-        abilities.AddRange(prfAbilities);
-        abilities.AddRange(skillTree.getObtainedAbilities());
-        return abilities;
-    }
-
     public Sprite getBattleSprite(string tag)
     {
         return baseUnit.getBattleSprite(tag);
-    }
-
-    public SkillTreeInstance getSkillTree()
-    {
-        return skillTree;
-    }
-
-    public void updateSkillTree(SkillTreeInstance skillTree)
-    {
-        this.skillTree = skillTree;
     }
 
     public void increaseStats(List<int> stats)
