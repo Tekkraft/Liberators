@@ -6,7 +6,6 @@ using TMPro;
 
 public class StartController : MonoBehaviour
 {
-    List<UnitEntryData> characterUnitData = new List<UnitEntryData>();
     int characterIndex = 0;
 
     [SerializeField]
@@ -37,7 +36,7 @@ public class StartController : MonoBehaviour
     [SerializeField]
     List<GameObject> unitOverviewScreenUIElements;
 
-    UnitDataList dataList;
+    PlayerUnitDataList dataList;
 
     void Awake()
     {
@@ -46,43 +45,37 @@ public class StartController : MonoBehaviour
 
     void OnEnable()
     {
-        dataList = UnitDataList.FromJSON(SaveSystem.LoadTeamData());
-        if (OperationSceneHandler.attackerData != null)
+        if (BattlePrepHandler.unitData == null)
         {
-            BattlePrepHandler.data = OperationSceneHandler.attackerData.unitList;
+            dataList = PlayerUnitDataList.FromJSON(SaveSystem.LoadTeamData());
+            BattlePrepHandler.unitData = dataList;
+        } else
+        {
+            dataList = BattlePrepHandler.unitData;
         }
         //TODO: Fix error with invalid/empty/null scene
         //Possibly no issue?
         BattlePrepHandler.battleScene = OperationSceneHandler.battleScene;
-        if (BattlePrepHandler.data != null)
-        {
-            characterUnitData = BattlePrepHandler.data;
-        }
-        for (int i = 0; i < characterUnitData.Count; i++)
-        {
-            UnitEntryData data = characterUnitData[i];
-            if (data.getUnit() == null)
-            {
-                data.reconstruct();
-            }
-        }
         LoadSkillTree();
         LoadInventory();
-        BattlePrepHandler.data = characterUnitData;
-        OperationSceneHandler.attackerData.unitList = BattlePrepHandler.data;
+        OperationSceneHandler.attackerData.unitDataList = BattlePrepHandler.unitData.ToList();
     }
 
     void OnDisable()
     {
         SaveSystem.SaveTeamData(dataList.ToJSON());
-        BattlePrepHandler.data = characterUnitData;
+        BattlePrepHandler.unitData = dataList;
         BattlePrepHandler.battleScene = OperationSceneHandler.battleScene;
     }
 
     public void EnterBattle()
     {
-        BattleEntryHandler.deployedUnits = OperationSceneHandler.attackerData.getPairedUnits();
-        BattleEntryHandler.enemyPlacements = OperationSceneHandler.defenderData.getPairedUnits();
+        BattleTransition.playerSpawnLocations = new List<Vector2Int>();
+        foreach (Vector2Int place in OperationSceneHandler.attackerData.getPairedUnits().Values)
+        {
+            BattleTransition.playerSpawnLocations.Add(place);
+        }
+        BattleTransition.enemyPlacements = OperationSceneHandler.defenderData.getPairedUnits();
         SceneManager.LoadSceneAsync(BattlePrepHandler.battleScene);
     }
 
@@ -170,12 +163,12 @@ public class StartController : MonoBehaviour
     public void LoadUnitPage()
     {
         ChangePage(BattleMenuPage.unit);
-        unitSpecificScreenUIElements[0].GetComponent<TextMeshProUGUI>().text = characterUnitData[characterIndex].getUnit().getUnitName();
+        unitSpecificScreenUIElements[0].GetComponent<TextMeshProUGUI>().text = UnitIndexToData(characterIndex).unitName;
     }
 
     public void LoadUnitPage(int index)
     {
-        if (index < characterUnitData.Count && index >= 0)
+        if (index < dataList.entries && index >= 0)
         {
             characterIndex = index;
         }
@@ -186,13 +179,13 @@ public class StartController : MonoBehaviour
     public void LoadUnitOverviewPage()
     {
         ChangePage(BattleMenuPage.overview);
-        unitOverviewScreenUIElements[0].GetComponent<TextMeshProUGUI>().text = characterUnitData[characterIndex].getUnit().getUnitName();
+        unitOverviewScreenUIElements[0].GetComponent<TextMeshProUGUI>().text = UnitIndexToData(characterIndex).unitName;
     }
 
     public void NextUnit()
     {
         characterIndex++;
-        if (characterIndex >= characterUnitData.Count)
+        if (characterIndex >= dataList.entries)
         {
             characterIndex = 0;
         }
@@ -204,7 +197,7 @@ public class StartController : MonoBehaviour
         characterIndex--;
         if (characterIndex < 0)
         {
-            characterIndex = characterUnitData.Count - 1;
+            characterIndex = dataList.entries - 1;
         }
         LoadUnitPage();
     }

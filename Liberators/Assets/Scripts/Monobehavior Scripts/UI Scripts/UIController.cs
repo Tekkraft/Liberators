@@ -43,7 +43,7 @@ public class UIController : MonoBehaviour
         if (hoveredUnit)
         {
             UnitController unitController = hoveredUnit.GetComponent<UnitController>();
-            hpMeter.GetComponent<Text>().text = "HP: " + unitController.GetStats()[2] + "/" + unitController.GetStats()[1];
+            hpMeter.GetComponent<Text>().text = "HP: " + unitController.GetStat("currentHP") + "/" + unitController.GetStat("maxHP");
             apMeter.GetComponent<Text>().text = "AP: " + unitController.getActions()[1] + "/" + unitController.getActions()[0];
         }
         else

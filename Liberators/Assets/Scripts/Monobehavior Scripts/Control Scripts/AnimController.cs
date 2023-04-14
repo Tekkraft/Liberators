@@ -51,7 +51,7 @@ public class AnimController : MonoBehaviour
             if (!activeUnits.Contains(leftUnits[i]))
             {
                 GameObject temp = GameObject.Instantiate(unitBase, gameObject.transform);
-                temp.GetComponent<Image>().sprite = leftUnits[i].GetComponent<UnitController>().GetUnitInstance().getBattleSprite("idle");
+                temp.GetComponent<Image>().sprite = leftUnits[i].GetComponent<UnitController>().GetUnitData().GetBattleSprite("idle");
                 activeUnitsUI.Add(leftUnits[i], temp);
                 activeUnits.Add(leftUnits[i]);
                 //TODO: Will have problems down the line
@@ -63,7 +63,7 @@ public class AnimController : MonoBehaviour
             if (!activeUnits.Contains(rightUnits[i]))
             {
                 GameObject temp = GameObject.Instantiate(unitBase, gameObject.transform);
-                temp.GetComponent<Image>().sprite = rightUnits[i].GetComponent<UnitController>().GetUnitInstance().getBattleSprite("idle");
+                temp.GetComponent<Image>().sprite = rightUnits[i].GetComponent<UnitController>().GetUnitData().GetBattleSprite("idle");
                 temp.GetComponent<RectTransform>().rotation = Quaternion.Euler(0, 180, 0);
                 activeUnitsUI.Add(rightUnits[i], temp);
                 activeUnits.Add(rightUnits[i]);
@@ -83,11 +83,11 @@ public class AnimController : MonoBehaviour
                     switch (detail.GetEffect())
                     {
                         case "attack":
-                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("attack");
+                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitData().GetBattleSprite("attack");
                             break;
 
                         case "miss":
-                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("evade");
+                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitData().GetBattleSprite("evade");
                             CreateDamageText("evade", 0, depth, unit);
                             depth++;
                             break;
@@ -95,29 +95,29 @@ public class AnimController : MonoBehaviour
                         case "damage":
                             if (detail.GetCritical())
                             {
-                                activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("defend");
+                                activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitData().GetBattleSprite("defend");
                                 CreateDamageText("critical", detail.GetValue(), depth, unit);
                                 depth++;
                             }
                             else
                             {
-                                activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("stagger");
+                                activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitData().GetBattleSprite("stagger");
                                 CreateDamageText("damage", detail.GetValue(), depth, unit);
                                 depth++;
                             }
                             if (detail.GetDead() && !deadUnits.Contains(unit))
                             {
-                                activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("dead");
+                                activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitData().GetBattleSprite("dead");
                                 deadUnits.Add(unit);
                             }
                             break;
 
                         case "status":
-                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("defend");
+                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitData().GetBattleSprite("defend");
                             break;
 
                         case "heal":
-                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("idle");
+                            activeUnitsUI[unit].GetComponent<Image>().sprite = unit.GetComponent<UnitController>().GetUnitData().GetBattleSprite("idle");
                             CreateDamageText("heal", detail.GetValue(), depth, unit);
                             depth++;
                             break;
@@ -137,10 +137,10 @@ public class AnimController : MonoBehaviour
             {
                 if (deadUnits.Contains(tempUnit))
                 {
-                    activeUnitsUI[tempUnit].GetComponent<Image>().sprite = tempUnit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("dead");
+                    activeUnitsUI[tempUnit].GetComponent<Image>().sprite = tempUnit.GetComponent<UnitController>().GetUnitData().GetBattleSprite("dead");
                     continue;
                 }
-                activeUnitsUI[tempUnit].GetComponent<Image>().sprite = tempUnit.GetComponent<UnitController>().GetUnitInstance().getBattleSprite("idle");
+                activeUnitsUI[tempUnit].GetComponent<Image>().sprite = tempUnit.GetComponent<UnitController>().GetUnitData().GetBattleSprite("idle");
             }
             yield return new WaitForSeconds(0.5f);
         }

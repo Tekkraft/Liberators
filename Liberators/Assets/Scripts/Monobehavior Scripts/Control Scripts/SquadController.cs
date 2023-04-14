@@ -9,7 +9,8 @@ public class SquadController : MonoBehaviour
 
     //Instance Variables
     float baseSpeed;
-    List<UnitEntryData> unitList;
+    List<UnitData> unitDataList;
+    PlayerUnitDataList playerUnitDataList;
     List<Vector2Int> spawnLocations;
     OperationsTeam team;
     OperationsMoveType movementType;
@@ -44,20 +45,13 @@ public class SquadController : MonoBehaviour
     {
         //TODO: Possible overlap problem if transform snapping not addressed
         Vector3 snapTransform = transform.position = new Vector3(Mathf.RoundToInt(transform.position.x + 0.5f) - 0.5f, Mathf.RoundToInt(transform.position.y + 0.5f) - 0.5f, -1);
-        return new SquadData(baseSpeed, unitList, spawnLocations, team, snapTransform, gameObject.name, gameObject.GetComponent<SquadAIController>().squadAI, squadAnchored, overrideBattlefield);
+        return new SquadData(baseSpeed, unitDataList, spawnLocations, team, snapTransform, gameObject.name, gameObject.GetComponent<SquadAIController>().squadAI, squadAnchored, overrideBattlefield);
     }
 
     public void loadSquadData(SquadData data)
     {
         baseSpeed = data.baseSpeed;
-        unitList = data.unitList;
-        foreach (UnitEntryData dataEntry in unitList)
-        {
-            if (dataEntry.getUnit() == null)
-            {
-                dataEntry.reconstruct();
-            }
-        }
+        unitDataList = data.unitDataList;
         spawnLocations = data.spawnLocations;
         team = data.team;
         transform.position = new Vector3(data.position.x, data.position.y, -1);
@@ -129,14 +123,19 @@ public class SquadController : MonoBehaviour
         }
     }
 
-    public bool isMoving()
+    public bool IsMoving()
     {
         return activeMove != null;
     }
 
-    public List<UnitEntryData> getUnitList()
+    public List<UnitData> GetUnitList()
     {
-        return unitList;
+        return unitDataList;
+    }
+
+    public PlayerUnitDataList GetPlayerUnitDataList()
+    {
+        return playerUnitDataList;
     }
 
     public OperationsTeam GetTeam()
@@ -144,12 +143,12 @@ public class SquadController : MonoBehaviour
         return team;
     }
 
-    public OperationController getOperationController()
+    public OperationController GetOperationController()
     {
         return operationController;
     }
 
-    public bool isSquadAnchored()
+    public bool IsSquadAnchored()
     {
         return squadAnchored;
     }
@@ -163,7 +162,7 @@ public class SquadController : MonoBehaviour
 public class SquadData
 {
     public float baseSpeed { get; }
-    public List<UnitEntryData> unitList { get; set; }
+    public List<UnitData> unitDataList { get; set; }
     public List<Vector2Int> spawnLocations { get; }
     public OperationsTeam team { get; }
     public Vector2 position { get; }
@@ -172,10 +171,10 @@ public class SquadData
     public bool squadAnchored { get; }
     public string overrideBattlefield { get; }
 
-    public SquadData(float baseSpeed, List<UnitEntryData> unitList, List<Vector2Int> spawnLocations, OperationsTeam team, Vector2 position, string name, OperationsAI squadAI, bool squadAnchored, string overrideBattlefield)
+    public SquadData(float baseSpeed, List<UnitData> unitDataList, List<Vector2Int> spawnLocations, OperationsTeam team, Vector2 position, string name, OperationsAI squadAI, bool squadAnchored, string overrideBattlefield)
     {
         this.baseSpeed = baseSpeed;
-        this.unitList = unitList;
+        this.unitDataList = unitDataList;
         this.spawnLocations = spawnLocations;
         this.team = team;
         this.position = position;
@@ -185,12 +184,12 @@ public class SquadData
         this.overrideBattlefield = overrideBattlefield;
     }
 
-    public Dictionary<UnitEntryData, Vector2Int> getPairedUnits()
+    public Dictionary<UnitData, Vector2Int> getPairedUnits()
     {
-        Dictionary<UnitEntryData, Vector2Int> retVal = new Dictionary<UnitEntryData, Vector2Int>();
-        for (int i = 0; i < unitList.Count && i < spawnLocations.Count; i++)
+        Dictionary<UnitData, Vector2Int> retVal = new Dictionary<UnitData, Vector2Int>();
+        for (int i = 0; i < unitDataList.Count && i < spawnLocations.Count; i++)
         {
-            retVal.Add(unitList[i], spawnLocations[i]);
+            retVal.Add(unitDataList[i], spawnLocations[i]);
         }
         return retVal;
     }

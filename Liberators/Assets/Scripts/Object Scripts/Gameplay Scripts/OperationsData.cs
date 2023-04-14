@@ -48,7 +48,7 @@ public class SquadSeralization
     Vector2 squadPosition;
 
     [SerializeField]
-    List<UnitEntryData> units;
+    List<UnitData> units;
 
     [SerializeField]
     List<Vector2Int> unitPositions;
@@ -78,7 +78,7 @@ public class SquadSeralization
         return squadPosition;
     }
 
-    public List<UnitEntryData> GetUnits()
+    public List<UnitData> GetUnits()
     {
         return units;
     }
@@ -111,6 +111,14 @@ public class SquadSeralization
     public string GetOverrideBattlefield()
     {
         return overrideBattlefield;
+    }
+
+    public void InitializeData()
+    {
+        foreach (UnitData data in units)
+        {
+            data.Initialize();
+        }
     }
 }
 

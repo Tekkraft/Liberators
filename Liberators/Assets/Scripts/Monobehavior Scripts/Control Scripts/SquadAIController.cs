@@ -17,7 +17,7 @@ public class SquadAIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!gameObject.GetComponent<SquadController>().isMoving())
+        if (!gameObject.GetComponent<SquadController>().IsMoving())
         {
             inactive = true;
         }
@@ -43,7 +43,7 @@ public class SquadAIController : MonoBehaviour
 
     void attackAI()
     {
-        OperationController operationController = gameObject.GetComponent<SquadController>().getOperationController();
+        OperationController operationController = gameObject.GetComponent<SquadController>().GetOperationController();
         GameObject target = operationController.getSquadOfTeam(0);
         operationController.moveSquadToLocation(gameObject, operationController.gameObject.GetComponent<MapController>().gridTilePos(target.transform.position));
     }

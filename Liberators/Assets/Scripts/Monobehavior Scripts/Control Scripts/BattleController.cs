@@ -15,6 +15,7 @@ public class BattleController : MonoBehaviour
     //Main Variabless
     Dictionary<Vector2Int, GameObject> unitList = new Dictionary<Vector2Int, GameObject>();
     Dictionary<BattleTeam, List<GameObject>> teamLists = new Dictionary<BattleTeam, List<GameObject>>();
+    List<UnitData> allUnits = new List<UnitData>();
     BattleTeam activeTeam;
     BattleTeam firstTeam;
     int turnNumber = 1;
@@ -30,6 +31,8 @@ public class BattleController : MonoBehaviour
 
     TurnPhase turnPhase = TurnPhase.START;
     ActionPhase actionPhase = ActionPhase.INACTIVE;
+
+    PlayerUnitDataList playerData;
 
     //Action Handlers
     ActionType actionState = ActionType.NONE;
@@ -69,39 +72,37 @@ public class BattleController : MonoBehaviour
     void OnDisable()
     {
         AICoordinator.clearSeenEnemies();
-        foreach (UnitEntryData unit in BattleEntryHandler.deployedUnits.Keys)
+        foreach (UnitData unit in allUnits)
         {
-            unit.doPostBattleHealing();
-            BattleExitHandler.unitData.Add(unit);
+            PostBattleEffects(unit);
         }
-        foreach (UnitEntryData unit in BattleEntryHandler.enemyPlacements.Keys)
-        {
-            unit.doPostBattleHealing();
-            BattleExitHandler.unitData.Add(unit);
-        }
-        BattleEntryHandler.reset();
         Cursor.visible = true;
+        SaveSystem.SaveTeamData(playerData.ToJSON());
     }
 
     //Use this to load key data upon start
     void OnEnable()
     {
-        BattleExitHandler.reset();
-        foreach (UnitEntryData player in BattleEntryHandler.deployedUnits.Keys)
+        playerData = PlayerUnitDataList.FromJSON(SaveSystem.LoadTeamData());
+        int index = 0;
+        foreach (UnitData player in playerData.ToList())
         {
-            if (player.getUnit().getCurrentHP() <= 0)
+            allUnits.Add(player);
+            if (player.currentHP <= 0)
             {
                 continue;
             }
-            PlaceUnit(player, BattleEntryHandler.deployedUnits[player], BattleTeam.PLAYER);
+            PlaceUnit(player, BattleTransition.playerSpawnLocations[index], BattleTeam.PLAYER);
+            index++;
         }
-        foreach (UnitEntryData enemy in BattleEntryHandler.enemyPlacements.Keys)
+        foreach (UnitData enemy in BattleTransition.enemyPlacements.Keys)
         {
-            if (enemy.getUnit().getCurrentHP() <= 0)
+            allUnits.Add(enemy);
+            if (enemy.currentHP <= 0)
             {
                 continue;
             }
-            PlaceUnit(enemy, BattleEntryHandler.enemyPlacements[enemy], BattleTeam.ENEMY);
+            PlaceUnit(enemy, BattleTransition.enemyPlacements[enemy], BattleTeam.ENEMY);
         }
         //TODO: ADD ALLY FOREACH
         activeTeam = BattleTeam.PLAYER;
@@ -160,7 +161,7 @@ public class BattleController : MonoBehaviour
         RescanEnemies(units);
         foreach (GameObject active in units)
         {
-            if (active.GetComponent<UnitController>().GetHealth()[1] / active.GetComponent<UnitController>().GetHealth()[0] > 0.5f)
+            if ((float) active.GetComponent<UnitController>().GetStat("currentHP") / (float) active.GetComponent<UnitController>().GetStat("maxHP") > 0.5f)
             {
                 active.GetComponent<AIController>().SetAIMode(AIMode.attack);
             } else
@@ -910,25 +911,25 @@ public class BattleController : MonoBehaviour
     {
         if (EvaluatePlayerRout())
         {
-            BattleExitHandler.outcome = BattleOutcome.ROUTED;
+            BattleTransition.outcome = BattleOutcome.ROUTED;
             MapEnd();
             return;
         }
         if (EvaluateEnemyRout())
         {
-            BattleExitHandler.outcome = BattleOutcome.VICTORY;
+            BattleTransition.outcome = BattleOutcome.VICTORY;
             MapEnd();
             return;
         }
         if (mapData.evaluateDefeatConditions(unitList, turnNumber))
         {
-            BattleExitHandler.outcome = BattleOutcome.FAILURE;
+            BattleTransition.outcome = BattleOutcome.FAILURE;
             MapEnd();
             return;
         }
         if (mapData.evaluateVictoryConditions(unitList, turnNumber))
         {
-            BattleExitHandler.outcome = BattleOutcome.SUCCESS;
+            BattleTransition.outcome = BattleOutcome.SUCCESS;
             MapEnd();
             return;
         }
@@ -946,7 +947,7 @@ public class BattleController : MonoBehaviour
 
     void MapEnd()
     {
-        BattleExitHandler.turn_count = turnNumber;
+        BattleTransition.turn_count = turnNumber;
         StopAllCoroutines();
         SceneManager.LoadSceneAsync("BattleEnd");
     }
@@ -973,7 +974,7 @@ public class BattleController : MonoBehaviour
             for (int i = team.Value.Count - 1; i >= 0; i--)
             {
                 GameObject unit = team.Value[i];
-                if (unit.GetComponent<UnitController>().GetHealth()[1] <= 0)
+                if (unit.GetComponent<UnitController>().GetStat("currentHP") <= 0)
                 {
                     KillUnit(unit);
                 }
@@ -1083,7 +1084,7 @@ public class BattleController : MonoBehaviour
             rangeMax = range.max;
             if (range.extendMaxRange)
             {
-                rangeMax += source.GetComponent<UnitController>().GetStats()[0];
+                rangeMax += source.GetComponent<UnitController>().GetStat("mov");
             }
             rangeMin = range.min;
         }
@@ -1105,7 +1106,7 @@ public class BattleController : MonoBehaviour
             rangeMax = range.max;
             if (range.extendMaxRange)
             {
-                rangeMax += source.GetComponent<UnitController>().GetEquippedWeapons().Item1.GetInstanceWeaponStats()[3];
+                rangeMax += source.GetComponent<UnitController>().GetEquippedWeapons().Item1.LoadWeaponData().GetWeaponStats()[3];
             }
             rangeMin = range.min;
         }
@@ -1123,18 +1124,18 @@ public class BattleController : MonoBehaviour
         float rawAvoid;
         if (!effect.melee)
         {
-            if (defenderController.GetStats()[7] < reactThreshold)
+            if (defenderController.GetStat("rea") < reactThreshold)
             {
                 rawAvoid = 0;
             }
             else
             {
-                rawAvoid = defenderController.GetStats()[5] + (defenderController.GetStats()[7] - reactThreshold);
+                rawAvoid = defenderController.GetStat("acu") + (defenderController.GetStat("rea") - reactThreshold);
             }
         }
         else
         {
-            rawAvoid = defenderController.GetStats()[6] + defenderController.GetStats()[7];
+            rawAvoid = defenderController.GetStat("fin") + defenderController.GetStat("rea");
         }
         effectiveAvoid = (int)(rawAvoid * avoidFactor);
 
@@ -1146,14 +1147,14 @@ public class BattleController : MonoBehaviour
         }
         else
         {
-            effectiveHit = (int)(attackerController.GetStats()[5] * hitFactor + effect.hit);
+            effectiveHit = (int)(attackerController.GetStat("acu") * hitFactor + effect.hit);
             if (effect.melee)
             {
-                effectiveHit = (int)(attackerController.GetStats()[6] * hitFactor + effect.hit);
+                effectiveHit = (int)(attackerController.GetStat("fin") * hitFactor + effect.hit);
             }
             if (attackerController.GetEquippedWeapons().Item1 != null)
             {
-                effectiveHit += attackerController.GetEquippedWeapons().Item1.GetInstanceWeaponStats()[1];
+                effectiveHit += attackerController.GetEquippedWeapons().Item1.LoadWeaponData().GetWeaponStats()[1];
             }
             totalHit = effectiveHit - effectiveAvoid;
         }
@@ -1163,12 +1164,12 @@ public class BattleController : MonoBehaviour
         if (effect.melee)
         {
             //Melee - Use acuity
-            effectiveCrit = attackerController.GetStats()[5];
+            effectiveCrit = attackerController.GetStat("acu");
         }
         else
         {
             //Ranged - Use finesse
-            effectiveCrit = attackerController.GetStats()[6];
+            effectiveCrit = attackerController.GetStat("fin");
         }
         int totalCrit = effectiveCrit - effectiveAvoid;
         return new int[] { totalHit, totalCrit };
@@ -1211,16 +1212,13 @@ public class BattleController : MonoBehaviour
     }
 
     //Unit Construction
-    void PlaceUnit(UnitEntryData unit, Vector2Int tile, BattleTeam team)
+    void PlaceUnit(UnitData unit, Vector2Int tile, BattleTeam team)
     {
         GameObject temp = GameObject.Instantiate(unitTemplate);
         temp.SetActive(false);
-        temp.GetComponent<UnitController>().setUnitInstance(unit.getUnit());
-        temp.GetComponent<UnitController>().equippedMainHandWeapon = unit.getWeapons().Item1;
-        temp.GetComponent<UnitController>().equippedOffHandWeapon = unit.getWeapons().Item2;
-        temp.GetComponent<UnitController>().equippedArmor = unit.getArmor();
+        temp.GetComponent<UnitController>().Initialize(unit, unit.mainWeapon, unit.secondaryWeapon, unit.armor);
         temp.GetComponent<UnitController>().team = team;
-        temp.GetComponent<SpriteRenderer>().sprite = unit.getUnit().getBattleSprite("idle");
+        temp.GetComponent<SpriteRenderer>().sprite = unit.GetBattleSprite("idle");
         Vector2 unitPos = mapController.tileGridPos(tile);
         temp.GetComponent<Transform>().position = new Vector3(unitPos.x, unitPos.y, -2);
         temp.SetActive(true);
@@ -1258,5 +1256,15 @@ public class BattleController : MonoBehaviour
         }
         //TODO: Implement fail state for setting abilities and remove the following line
         activeAbility = ability;
+    }
+
+    void PostBattleEffects(UnitData unit)
+    {
+        if (unit.currentHP > 0)
+        {
+            unit.ChangeCurrentHP(Mathf.FloorToInt(unit.maxHP * 0.1f));
+            unit.maxSkillPoints++;
+            unit.availableSkillPoints++;
+        }
     }
 }

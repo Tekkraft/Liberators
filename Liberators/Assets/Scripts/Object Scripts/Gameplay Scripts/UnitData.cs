@@ -38,6 +38,69 @@ public class UnitData
         return unit.getBattleSprite(tag);
     }
 
+    public void Initialize()
+    {
+        Unit unit = Resources.Load<Unit>("Units/" + source);
+        //TODO: TEMP CODE, REMOVE
+        if (unit == null)
+        {
+            return;
+        }
+        unitName = unit.getUnitName();
+        className = unit.getClassName();
+        maxHP = unit.getStats()[0];
+        currentHP = unit.getStats()[0];
+        mov = unit.getStats()[1];
+        str = unit.getStats()[2];
+        pot = unit.getStats()[3];
+        acu = unit.getStats()[4];
+        fin = unit.getStats()[5];
+        rea = unit.getStats()[6];
+        if (mainWeapon.weaponBaseId == "")
+        {
+            mainWeapon = null;
+        }
+        else
+        {
+            mainWeapon = new WeaponData(mainWeapon.weaponBaseId);
+        }
+        if (secondaryWeapon.weaponBaseId == "")
+        {
+            secondaryWeapon = null;
+        }
+        else
+        {
+            secondaryWeapon = new WeaponData(secondaryWeapon.weaponBaseId);
+        }
+        if (armor.armorBaseId == "")
+        {
+            armor = null;
+        }
+        else
+        {
+            armor = new ArmorData(armor.armorBaseId);
+        }
+    }
+
+    //Stat Functions
+    public void SetCurrentHP(int newValue)
+    {
+        currentHP = newValue;
+        if (currentHP > maxHP)
+        {
+            currentHP = maxHP;
+        }
+    }
+
+    public void ChangeCurrentHP(int changeAmount)
+    {
+        currentHP += changeAmount;
+        if (currentHP > maxHP)
+        {
+            currentHP = maxHP;
+        }
+    }
+
     //JSON Code
     public static UnitData FromJson(string jsonString)
     {

@@ -8,7 +8,7 @@ public class EndController : MonoBehaviour
 {
     void OnEnable()
     {
-        switch (BattleExitHandler.outcome)
+        switch (BattleTransition.outcome)
         {
             case BattleOutcome.VICTORY:
                 GameObject.Find("Victory Label").GetComponent<TextMeshProUGUI>().text = "Total Victory!";
@@ -26,13 +26,12 @@ public class EndController : MonoBehaviour
                 GameObject.Find("Victory Label").GetComponent<TextMeshProUGUI>().text = "Defeat...";
                 break;
         }
-        OperationSceneHandler.battleOutcome = BattleExitHandler.outcome;
-        GameObject.Find("Turn Count Label").GetComponent<TextMeshProUGUI>().text = "Turns: " + BattleExitHandler.turn_count;
+        OperationSceneHandler.battleOutcome = BattleTransition.outcome;
+        GameObject.Find("Turn Count Label").GetComponent<TextMeshProUGUI>().text = "Turns: " + BattleTransition.turn_count;
     }
 
     public void exitScreen()
     {
-        //TODO: Reimplement skill point gain
         SceneManager.LoadSceneAsync("OperationMap");
     }
 }

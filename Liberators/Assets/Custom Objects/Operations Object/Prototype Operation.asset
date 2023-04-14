@@ -17,66 +17,130 @@ MonoBehaviour:
   - squadName: Enemy Squad Alpha
     squadPosition: {x: -10.5, y: 8.5}
     units:
-    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: c3dbc947c99aa4555b32bf5f9590d483, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: f6081fe3fb7464d678304a7f7034382a, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 97ae5405b6027448e80054c8e1ddcd8b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
     unitPositions:
     - {x: 0, y: 11}
     - {x: -1, y: 10}
@@ -90,126 +154,254 @@ MonoBehaviour:
   - squadName: Boss Squad
     squadPosition: {x: 24.5, y: -0.5}
     units:
-    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: d23daf8f209a64dc5a2b19cb7ce27fa3, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: d23daf8f209a64dc5a2b19cb7ce27fa3, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 4722034b8c9224110a4f534e13155876, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 4722034b8c9224110a4f534e13155876, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: d3f7c403475d54f058ce6469ca30aa70, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: d3f7c403475d54f058ce6469ca30aa70, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
     unitPositions:
     - {x: 1, y: 9}
     - {x: -1, y: 9}
@@ -227,36 +419,68 @@ MonoBehaviour:
   - squadName: Enemy Test Squad 1
     squadPosition: {x: -22.5, y: -12.5}
     units:
-    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+    - source: Hostile Caster
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: Wave Caster
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 4722034b8c9224110a4f534e13155876, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: Hostile Melee
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: Arc Edge
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
     unitPositions:
     - {x: 0, y: 11}
     - {x: 0, y: 9}
@@ -268,66 +492,130 @@ MonoBehaviour:
   - squadName: Enemy Squad Beta
     squadPosition: {x: -10.5, y: 5.5}
     units:
-    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: c3dbc947c99aa4555b32bf5f9590d483, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: f6081fe3fb7464d678304a7f7034382a, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 97ae5405b6027448e80054c8e1ddcd8b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
     unitPositions:
     - {x: 0, y: 11}
     - {x: -1, y: 10}
@@ -341,66 +629,130 @@ MonoBehaviour:
   - squadName: Enemy Squad Gamma
     squadPosition: {x: 24.5, y: 0.5}
     units:
-    - unit: {fileID: 11400000, guid: a1144ed3033e14c20a4edede9cf63e05, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: c3dbc947c99aa4555b32bf5f9590d483, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 88ddbc63c6b53491bb255d7f0e2b999d, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 9002678da8e2742ed9e70fceb9243c56, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      armor:
-        armorBase: {fileID: 11400000, guid: 8a3f49a449f1845dd836f40b696e281b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: 2dc366480bf844d31ae91e7ec90d6d67, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: aaa789d03f25f4b44879040062216434, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-        upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 2c86b87e518754b8e87d8d11e002e43b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
-    - unit: {fileID: 11400000, guid: f6081fe3fb7464d678304a7f7034382a, type: 2}
-      mainHandWeapon:
-        weaponBase: {fileID: 11400000, guid: 97ae5405b6027448e80054c8e1ddcd8b, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
-      offHandWeapon:
-        weaponBase: {fileID: 0}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
         upgradeCapacity: 0
       armor:
-        armorBase: {fileID: 11400000, guid: 45315c0517f3749efacea1ed64ca2d47, type: 2}
-        instanceName: 
-        instanceSprite: {fileID: 0}
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
+    - source: 
+      unitName: 
+      className: 
+      maxHP: 0
+      currentHP: 0
+      mov: 0
+      str: 0
+      pot: 0
+      acu: 0
+      fin: 0
+      rea: 0
+      maxSkillPoints: 0
+      availableSkillPoints: 0
+      skillTree:
+        source: 
+        nodes: []
+      mainWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      secondaryWeapon:
+        itemType: 
+        weaponBaseId: 
+        weaponCoreId: 
+        weaponUpgradeId: []
+        upgradeCapacity: 0
+      armor:
+        itemType: 
+        armorBaseId: 
     unitPositions:
     - {x: 0, y: 11}
     - {x: -1, y: 10}

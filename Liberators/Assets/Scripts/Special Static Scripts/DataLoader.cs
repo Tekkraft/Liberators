@@ -83,7 +83,7 @@ public class DataLoader : MonoBehaviour
     [SerializeField]
     List<string> armorList;
 
-    UnitDataList teamList = new UnitDataList();
+    PlayerUnitDataList teamList = new PlayerUnitDataList();
 
     void Awake()
     {
@@ -139,7 +139,7 @@ public class DataLoader : MonoBehaviour
 }
 
 [System.Serializable]
-public class UnitDataList{
+public class PlayerUnitDataList{
     public UnitData lanaData;
     public UnitData ethanData;
     public UnitData saeiData;
@@ -149,13 +149,20 @@ public class UnitDataList{
     public UnitData colinData;
     public UnitData hanaeiData;
 
-    public static UnitDataList FromJSON(string jsonString)
+    public int entries = 8;
+
+    public static PlayerUnitDataList FromJSON(string jsonString)
     {
-        return JsonUtility.FromJson<UnitDataList>(jsonString);
+        return JsonUtility.FromJson<PlayerUnitDataList>(jsonString);
     }
 
     public string ToJSON()
     {
         return JsonUtility.ToJson(this);
+    }
+
+    public List<UnitData> ToList()
+    {
+        return new List<UnitData>() { lanaData, ethanData, saeiData, vaueData, mayData, runliData, colinData, hanaeiData };
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitController : MonoBehaviour
 {
+    static int baseActions = 3;
     //Control Variables
     public GameObject marker;
     Vector2Int unitGridPosition;
@@ -13,29 +14,23 @@ public class UnitController : MonoBehaviour
     List<GameObject> markerList = new List<GameObject>();
     public BattleTeam team;
 
-    public Unit unitTemplate;
-    UnitInstance unitObject;
-    string unitName;
-    int mov;
-    int maxHP;
-    int currentHP;
-    int str;
-    int pot;
-    int acu;
-    int fin;
-    int rea;
+    UnitData unitData;
 
     //Unit Properties
-    int maxActions = 3;
-    int actions = 3;
+    int maxActions;
+    int actions;
 
     public Ability basicMovement;
     public Ability passUnitAbility;
     public Ability endTurnAbility;
 
-    public WeaponInstance equippedMainHandWeapon;
-    public WeaponInstance equippedOffHandWeapon;
-    public ArmorInstance equippedArmor;
+    public WeaponData equippedMainWeapon;
+    public WeaponData equippedSecondaryWeapon;
+    public ArmorData equippedArmor;
+
+    bool validMainWeapon = false;
+    bool validSecondaryWeapon = false;
+    bool validArmor = false;
 
     List<Ability> allAbilities = new List<Ability>();
 
@@ -47,43 +42,35 @@ public class UnitController : MonoBehaviour
         mapController = mainGrid.GetComponentsInChildren<MapController>()[0];
         battleController = mainGrid.GetComponentsInChildren<BattleController>()[0];
         unitGridPosition = mapController.gridWorldPos(transform.position);
-        battleController.AddUnit(this.gameObject);
-        if (unitObject == null)
-        {
-            unitObject = new UnitInstance(unitTemplate);
-        }
-        createUnit(unitObject.getStats(), team, unitObject.getCurrentHP());
-        unitName = unitObject.getUnitName();
+        battleController.AddUnit(gameObject);
+    }
+
+    public void Initialize(UnitData unitData, WeaponData mainWeapon, WeaponData secondaryWeapon, ArmorData armor)
+    {
+        this.unitData = unitData;
+        equippedMainWeapon = mainWeapon;
+        equippedSecondaryWeapon = secondaryWeapon;
+        equippedArmor = armor;
+        maxActions = baseActions;
+        actions = maxActions;
         if (basicMovement)
         {
             allAbilities.Add(basicMovement);
         }
-        if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
+        if (equippedMainWeapon != null && equippedMainWeapon.weaponBaseId != null && equippedMainWeapon.weaponBaseId != "")
         {
-            allAbilities.AddRange(equippedMainHandWeapon.GetInstanceAbilities());
+            allAbilities.AddRange(equippedMainWeapon.LoadWeaponData().GetAbilities());
+            validMainWeapon = true;
         }
-        if (equippedOffHandWeapon != null && !equippedOffHandWeapon.NullCheckBase())
+        if (equippedSecondaryWeapon != null && equippedSecondaryWeapon.weaponBaseId != null && equippedSecondaryWeapon.weaponBaseId != "")
         {
-            allAbilities.AddRange(equippedOffHandWeapon.GetInstanceAbilities());
+            allAbilities.AddRange(equippedSecondaryWeapon.LoadWeaponData().GetAbilities());
+            validSecondaryWeapon = true;
         }
-    }
-
-    public void createUnit(int[] unitStats, BattleTeam team, int startingHP)
-    {
-        maxHP = unitStats[0];
-        mov = unitStats[1];
-        currentHP = startingHP;
-        str = unitStats[2];
-        pot = unitStats[3];
-        acu = unitStats[4];
-        fin = unitStats[5];
-        rea = unitStats[6];
-        this.team = team;
-    }
-
-    public void setUnitInstance(UnitInstance unitInstance)
-    {
-        unitObject = unitInstance;
+        if (equippedArmor != null && equippedArmor.armorBaseId != null && equippedArmor.armorBaseId != "")
+        {
+            validArmor = true;
+        }
     }
 
     public int[] getActions()
@@ -117,7 +104,7 @@ public class UnitController : MonoBehaviour
             if (linkedStatus.getHealthOverTime()[0] > 0)
             {
                 TakeDamage(linkedStatus.getHealthOverTime()[0], linkedStatus.getHealthOverTimeElement());
-                if (currentHP <= 0)
+                if (unitData.currentHP <= 0)
                 {
                     return true;
                 }
@@ -148,12 +135,12 @@ public class UnitController : MonoBehaviour
         return allAbilities;
     }
 
-    public (WeaponInstance, WeaponInstance) GetEquippedWeapons()
+    public (WeaponData, WeaponData) GetEquippedWeapons()
     {
-        return (equippedMainHandWeapon, equippedOffHandWeapon);
+        return (equippedMainWeapon, equippedSecondaryWeapon);
     }
 
-    public ArmorInstance GetEquippedArmor()
+    public ArmorData GetEquippedArmor()
     {
         return equippedArmor;
     }
@@ -167,7 +154,7 @@ public class UnitController : MonoBehaviour
             damage = (int)(damage * BattleController.critFactor);
             critical = true;
         }
-        return targetController.TakeDamage(damage, effect, equippedMainHandWeapon, critical);
+        return targetController.TakeDamage(damage, effect, equippedMainWeapon, critical);
     }
 
     public BattleDetail HealUnit(UnitController targetController, HealEffect effect)
@@ -186,16 +173,15 @@ public class UnitController : MonoBehaviour
         {
             damageTaken = 0;
         }
-        currentHP -= damageTaken;
-        unitObject.setCurrentHP(currentHP);
+        unitData.ChangeCurrentHP(-damageTaken);
     }
 
     //Attack Damage
-    public BattleDetail TakeDamage(int damage, DamageEffect effect, WeaponInstance attackerWeapon, bool critical)
+    public BattleDetail TakeDamage(int damage, DamageEffect effect, WeaponData attackerWeapon, bool critical)
     {
         //TODO: Reimplement elemental resistances
         int damageTaken = Mathf.FloorToInt(damage);
-        if (equippedArmor != null && !equippedArmor.NullCheckBase())
+        if (validArmor)
         {
             damageTaken -= GetDefense(effect);
         }
@@ -203,19 +189,13 @@ public class UnitController : MonoBehaviour
         {
             damageTaken = 0;
         }
-        currentHP -= damageTaken;
-        unitObject.setCurrentHP(currentHP);
-        return new BattleDetail(damage, currentHP <= 0, critical);
+        unitData.ChangeCurrentHP(-damageTaken);
+        return new BattleDetail(damage, unitData.currentHP <= 0, critical);
     }
 
     public BattleDetail RestoreHealth(int healing)
     {
-        currentHP += healing;
-        if (currentHP > maxHP)
-        {
-            currentHP = maxHP;
-        }
-        unitObject.setCurrentHP(currentHP);
+        unitData.ChangeCurrentHP(healing);
         return new BattleDetail(healing);
     }
 
@@ -243,20 +223,20 @@ public class UnitController : MonoBehaviour
     public int GetAttack(DamageEffect effect)
     {
         int damage = 0;
-        if (equippedMainHandWeapon != null && !equippedMainHandWeapon.NullCheckBase())
+        if (validMainWeapon)
         {
-            damage += equippedMainHandWeapon.GetInstanceWeaponStats()[0];
+            damage += equippedMainWeapon.LoadWeaponData().GetWeaponStats()[0];
         }
         switch (effect.source)
         {
             case "phyiscal":
-                damage += effect.value + str;
+                damage += effect.value + unitData.str;
                 break;
             case "magic":
-                damage += effect.value + pot;
+                damage += effect.value + unitData.pot;
                 break;
             case "adaptive":
-                damage += effect.value + Mathf.Max(str,pot);
+                damage += effect.value + Mathf.Max(unitData.str, unitData.pot);
                 break;
             case "neutral":
                 damage += effect.value;
@@ -268,18 +248,18 @@ public class UnitController : MonoBehaviour
     public int GetDefense(DamageEffect effect)
     {
         int defense = 0;
-        if (equippedArmor != null && !equippedArmor.NullCheckBase())
+        if (validArmor)
         {
             switch (effect.type)
             {
                 case "physical":
-                    defense += equippedArmor.GetInstanceDefenses()[0];
+                    defense += equippedArmor.LoadArmorData().GetDefenses()[0];
                     break;
                 case "magic":
-                    defense += equippedArmor.GetInstanceDefenses()[1];
+                    defense += equippedArmor.LoadArmorData().GetDefenses()[1];
                     break;
                 case "adaptive":
-                    defense += Mathf.Min(equippedArmor.GetInstanceDefenses()[0], equippedArmor.GetInstanceDefenses()[1]);
+                    defense += Mathf.Min(equippedArmor.LoadArmorData().GetDefenses()[0], equippedArmor.LoadArmorData().GetDefenses()[1]);
                     break;
             }
         }
@@ -288,31 +268,47 @@ public class UnitController : MonoBehaviour
 
     public float GetDamageReduction(DamageElement attackElement)
     {
-        if (equippedArmor != null && !equippedArmor.NullCheckBase())
+        if (validArmor)
         {
-            return equippedArmor.GetInstanceElementResist(attackElement);
+            return equippedArmor.LoadArmorData().GetElementResist(attackElement);
         }
         return 1f;
     }
 
     public string GetName()
     {
-        return unitName;
+        return unitData.unitName;
     }
 
-    public UnitInstance GetUnitInstance()
+    public UnitData GetUnitData()
     {
-        return unitObject;
+        return unitData;
     }
 
-    public int[] GetHealth()
+    public int GetStat(string stat)
     {
-        return new int[] { maxHP, currentHP };
-    }
-
-    public int[] GetStats()
-    {
-        return new int[] { mov, maxHP, currentHP, str, pot, acu, fin, rea };
+        switch (stat)
+        {
+            case "mov":
+                return unitData.mov;
+            case "maxHP":
+                return unitData.maxHP;
+            case "currentHP":
+                return unitData.currentHP;
+            case "str":
+                return unitData.str;
+            case "pot":
+                return unitData.pot;
+            case "acu":
+                return unitData.acu;
+            case "fin":
+                return unitData.fin;
+            case "rea":
+                return unitData.rea;
+            default:
+                Debug.LogError("Invalid stat: " + stat);
+                return -1;
+        }
     }
 
     public BattleTeam GetTeam()

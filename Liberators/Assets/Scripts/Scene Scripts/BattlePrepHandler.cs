@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class BattlePrepHandler
 {
-    public static List<UnitEntryData> data;
+    public static PlayerUnitDataList unitData;
 
     public static string battleScene;
 }

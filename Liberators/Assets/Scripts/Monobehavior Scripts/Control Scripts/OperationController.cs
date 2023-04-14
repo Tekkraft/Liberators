@@ -68,7 +68,7 @@ public class OperationController : MonoBehaviour
                 break;
 
             case BattleOutcome.SUCCESS:
-                if (!squads[OperationSceneHandler.defenderId].GetComponent<SquadController>().isSquadAnchored())
+                if (!squads[OperationSceneHandler.defenderId].GetComponent<SquadController>().IsSquadAnchored())
                 {
                     options = availableTranslations(squads[OperationSceneHandler.defenderId].transform.position);
                     if (options.Count == 0)
@@ -80,7 +80,7 @@ public class OperationController : MonoBehaviour
                 } else
                 {
                     options = availableTranslations(squads[OperationSceneHandler.attackerId].transform.position);
-                    if (options.Count == 0 || squads[OperationSceneHandler.attackerId].GetComponent<SquadController>().isSquadAnchored())
+                    if (options.Count == 0 || squads[OperationSceneHandler.attackerId].GetComponent<SquadController>().IsSquadAnchored())
                     {
                         //Note: Defending squad is destroyed if attacker cannot be pushed for any reason
                         destroySquad(squads[OperationSceneHandler.defenderId]);
