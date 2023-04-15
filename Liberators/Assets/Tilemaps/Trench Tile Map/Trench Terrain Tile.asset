@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c92ac47b0374eb5becdf2af4456ab0, type: 3}
+  m_Name: Trench Terrain Tile
+  m_EditorClassIdentifier: 
+  m_Sprite: {fileID: 21300000, guid: 8c075f43d20634690b9c41991277bdbf, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Transform:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
+  m_InstancedGameObject: {fileID: 0}
+  m_Flags: 1
+  m_ColliderType: 1
+  tileName: Trench
+  spriteList:
+  - {fileID: 21300000, guid: 03bb446bda82248f4a57651ee1cc1a70, type: 3}
+  - {fileID: 21300000, guid: 53a30ddda6e8b45c6b5ac7d670e04b14, type: 3}
+  - {fileID: 21300000, guid: 6f4f19b7bea5d48329e3a54adebb75dd, type: 3}
+  - {fileID: 21300000, guid: c418109f6f67d458fac64cc009f820bb, type: 3}
+  - {fileID: 21300000, guid: bc80019267892413d88370f3aed6cd9b, type: 3}
+  - {fileID: 21300000, guid: 5168ca3ab7a314e0186869ace7e41543, type: 3}
+  - {fileID: 21300000, guid: 0f9bec35fd4494948ab509f943b765c6, type: 3}
+  - {fileID: 21300000, guid: ea3fca66d33c84208b5970236cc33ef6, type: 3}
+  - {fileID: 21300000, guid: 1d77e0354865343628768ee9a1b269dc, type: 3}
+  - {fileID: 21300000, guid: 2fcb095caf06042e49a3108a9237f7e0, type: 3}
+  - {fileID: 21300000, guid: 9807ad3f4185246ff8ba85bfdcde8ff1, type: 3}
+  - {fileID: 21300000, guid: 12f484327e88f4ef68a3125c18269fd8, type: 3}
+  - {fileID: 21300000, guid: dbf6efbcf4a434b848acedc9a8f64929, type: 3}
+  - {fileID: 21300000, guid: bdb7bed5ceb494148882df272cfcf9d8, type: 3}
+  - {fileID: 21300000, guid: 98a3cb8390c44436da940b384c7ae844, type: 3}
+  - {fileID: 21300000, guid: 8c075f43d20634690b9c41991277bdbf, type: 3}
+  single: 0
+  passable: 1
+  hitBonus: 0
+  avoidBonus: 20
+  matchFlags:
+  - Trench
+  idFlag: Trench

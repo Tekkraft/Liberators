@@ -97,7 +97,6 @@ public class DataLoader : MonoBehaviour
         teamList.hanaeiData = LoadUnitData(hanaeiBase, hanaeiWeaponId, hanaeiArmorId, hanaeiSkillTree);
 
         SaveSystem.SaveTeamData(teamList.ToJSON());
-        Debug.Log(SaveSystem.LoadTeamData());
 
         foreach (string id in weaponList)
         {
@@ -164,5 +163,17 @@ public class PlayerUnitDataList{
     public List<UnitData> ToList()
     {
         return new List<UnitData>() { lanaData, ethanData, saeiData, vaueData, mayData, runliData, colinData, hanaeiData };
+    }
+
+    public void FromList(List<UnitData> units)
+    {
+        lanaData = units[0];
+        ethanData = units[1];
+        saeiData = units[2];
+        vaueData = units[3];
+        mayData = units[4];
+        runliData = units[5];
+        colinData = units[6];
+        hanaeiData = units[7];
     }
 }

@@ -16,6 +16,8 @@ public class SquadController : MonoBehaviour
     OperationsMoveType movementType;
     bool squadAnchored = false;
     string overrideBattlefield;
+    bool isElite = false;
+    bool isCommander = false;
 
     Grid mainGrid;
     MapController mapController;
@@ -45,7 +47,7 @@ public class SquadController : MonoBehaviour
     {
         //TODO: Possible overlap problem if transform snapping not addressed
         Vector3 snapTransform = transform.position = new Vector3(Mathf.RoundToInt(transform.position.x + 0.5f) - 0.5f, Mathf.RoundToInt(transform.position.y + 0.5f) - 0.5f, -1);
-        return new SquadData(baseSpeed, unitDataList, spawnLocations, team, snapTransform, gameObject.name, gameObject.GetComponent<SquadAIController>().squadAI, squadAnchored, overrideBattlefield);
+        return new SquadData(baseSpeed, unitDataList, spawnLocations, team, snapTransform, gameObject.name, gameObject.GetComponent<SquadAIController>().squadAI, squadAnchored, overrideBattlefield, isElite, isCommander);
     }
 
     public void loadSquadData(SquadData data)
@@ -57,6 +59,9 @@ public class SquadController : MonoBehaviour
         transform.position = new Vector3(data.position.x, data.position.y, -1);
         gameObject.name = data.name;
         gameObject.GetComponent<SquadAIController>().squadAI = data.squadAI;
+        overrideBattlefield = data.overrideBattlefield;
+        isElite = data.isElite;
+        isCommander = data.isCommander;
     }
 
     public void moveSquad(List<Vector2Int> directions)
@@ -170,8 +175,10 @@ public class SquadData
     public OperationsAI squadAI { get; }
     public bool squadAnchored { get; }
     public string overrideBattlefield { get; }
+    public bool isElite { get; }
+    public bool isCommander { get; }
 
-    public SquadData(float baseSpeed, List<UnitData> unitDataList, List<Vector2Int> spawnLocations, OperationsTeam team, Vector2 position, string name, OperationsAI squadAI, bool squadAnchored, string overrideBattlefield)
+    public SquadData(float baseSpeed, List<UnitData> unitDataList, List<Vector2Int> spawnLocations, OperationsTeam team, Vector2 position, string name, OperationsAI squadAI, bool squadAnchored, string overrideBattlefield, bool isElite, bool isCommander)
     {
         this.baseSpeed = baseSpeed;
         this.unitDataList = unitDataList;
@@ -182,6 +189,8 @@ public class SquadData
         this.squadAI = squadAI;
         this.squadAnchored = squadAnchored;
         this.overrideBattlefield = overrideBattlefield;
+        this.isElite = isElite;
+        this.isCommander = isCommander;
     }
 
     public Dictionary<UnitData, Vector2Int> getPairedUnits()

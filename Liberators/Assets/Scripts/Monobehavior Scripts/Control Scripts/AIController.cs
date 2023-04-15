@@ -50,7 +50,21 @@ public class AIController : MonoBehaviour
                     returnValue = validAbilities[abilityStep];
                     abilityStep++;
                     return returnValue;
-                } else
+                }
+                else
+                {
+                    abilityStep = 1;
+                    return validAbilities[0];
+                }
+
+            case AIMode.hold:
+                if (abilityStep < validAbilities.Count)
+                {
+                    returnValue = validAbilities[abilityStep];
+                    abilityStep++;
+                    return returnValue;
+                }
+                else
                 {
                     abilityStep = 1;
                     return validAbilities[0];
@@ -155,6 +169,9 @@ public class AIController : MonoBehaviour
                     }
                 }
                 return destination;
+
+            case AIMode.hold:
+                return new Vector2Int(int.MaxValue, int.MaxValue);
 
             default:
                 return validTiles[Random.Range(0, validTiles.Count)];

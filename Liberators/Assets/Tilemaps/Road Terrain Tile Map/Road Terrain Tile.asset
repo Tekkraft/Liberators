@@ -59,4 +59,5 @@ MonoBehaviour:
   matchFlags:
   - RoadCore
   - Road
+  - RoadBarrier
   idFlag: Road

@@ -78,6 +78,12 @@ public class SquadSeralization
     [SerializeField]
     string overrideBattlefield;
 
+    [SerializeField]
+    bool squadElite;
+
+    [SerializeField]
+    bool squadCommander;
+
     public string GetSquadName()
     {
         return squadName;
@@ -128,8 +134,19 @@ public class SquadSeralization
         return overrideBattlefield;
     }
 
+    public bool GetSquadElite()
+    {
+        return squadAnchored;
+    }
+
+    public bool GetSquadCommander()
+    {
+        return squadAnchored;
+    }
+
     public void InitializeData()
     {
+        unitData = new List<UnitData>();
         foreach (OperationsUnitData data in unitBases)
         {
             UnitData unit = new UnitData();
@@ -222,6 +239,9 @@ public class OperationsUnitData
     [SerializeField]
     int bonusLevels;
 
+    [SerializeField]
+    bool holdPosition;
+
     public string GetUnitBase()
     {
         return unitBase;
@@ -245,6 +265,11 @@ public class OperationsUnitData
     public int GetBonusLevels()
     {
         return bonusLevels;
+    }
+
+    public bool GetHoldPosition()
+    {
+        return holdPosition;
     }
 
 }

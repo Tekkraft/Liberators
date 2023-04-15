@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52c92ac47b0374eb5becdf2af4456ab0, type: 3}
+  m_Name: Fort Terrain Tile
+  m_EditorClassIdentifier: 
+  m_Sprite: {fileID: 21300000, guid: bf543540f0ee24066b901f5b01da5000, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Transform:
+    e00: 1
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 1
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 1
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 1
+  m_InstancedGameObject: {fileID: 0}
+  m_Flags: 1
+  m_ColliderType: 1
+  tileName: 
+  spriteList:
+  - {fileID: 21300000, guid: 2cb021235d46848f7a287a3bed7d85bf, type: 3}
+  - {fileID: 21300000, guid: 6c54b33082e904916bf113fe3f48ea7f, type: 3}
+  - {fileID: 21300000, guid: 60cc7932f4d124e1f84baa87226ae2e6, type: 3}
+  - {fileID: 21300000, guid: fb79f7480e1d341f3bdf418480cc994e, type: 3}
+  - {fileID: 21300000, guid: 3ef82604feffd48f2ab71c6b0fedb533, type: 3}
+  - {fileID: 21300000, guid: b6025bd5341f74e60bab65e14a96f72c, type: 3}
+  - {fileID: 21300000, guid: 1d6614e966f5e49ffa97f796a5abfd5f, type: 3}
+  - {fileID: 21300000, guid: 55a4dd34ea43a4eb9b9bf886c12df2b0, type: 3}
+  - {fileID: 21300000, guid: d2bc55ad59ac845ab954b36c507744da, type: 3}
+  - {fileID: 21300000, guid: a24a71f4e9d7643518ac1609e2640881, type: 3}
+  - {fileID: 21300000, guid: 4362e171bb90f4d018d536fd24175ce3, type: 3}
+  - {fileID: 21300000, guid: 45e71742ae71a4c7283cf9a3121be564, type: 3}
+  - {fileID: 21300000, guid: 8e0a5de6a2e9a4ab0be9399cae60287f, type: 3}
+  - {fileID: 21300000, guid: 8f7abf5c5b1c347408461806446da615, type: 3}
+  - {fileID: 21300000, guid: bba6c7f1b763048ca8915c2fb7102a2d, type: 3}
+  - {fileID: 21300000, guid: bf543540f0ee24066b901f5b01da5000, type: 3}
+  single: 0
+  passable: 0
+  hitBonus: 0
+  avoidBonus: 0
+  matchFlags:
+  - Fort
+  - FortGate
+  idFlag: Fort

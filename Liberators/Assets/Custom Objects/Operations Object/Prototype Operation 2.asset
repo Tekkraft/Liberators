@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c3acdf59c9b4634b714a8861171cf8, type: 3}
+  m_Name: Prototype Operation 2
+  m_EditorClassIdentifier: 
+  operationsName: Operation Golden Leaves
+  squadData:
+  - squadName: Enemy Command Squad
+    squadPosition: {x: 24.5, y: -0.5}
+    unitBases:
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 1
+      holdPosition: 0
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Battleaxe
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 1
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 1
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Rail Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 1
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 1
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 1
+      holdPosition: 0
+    - unitBase: Hostile Caster
+      mainWeaponId: Caster Gauntlet
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 1
+      holdPosition: 0
+    - unitBase: Hostile Caster
+      mainWeaponId: Wave Caster
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 1
+      holdPosition: 0
+    - unitBase: Hostile Commander
+      mainWeaponId: Arc Battleaxe
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 3
+      holdPosition: 0
+    unitPositions:
+    - {x: 1, y: 9}
+    - {x: -1, y: 9}
+    - {x: 1, y: 10}
+    - {x: -1, y: 10}
+    - {x: 2, y: 10}
+    - {x: -2, y: 10}
+    - {x: 1, y: 11}
+    - {x: -1, y: 11}
+    - {x: 0, y: 11}
+    team: 1
+    squadAI: 1
+    movementType: 0
+    squadAnchored: 1
+    overrideBattlefield: BossFortress
+    squadElite: 1
+    squadCommander: 1
+  playerReachConditions:
+  - corner1: {x: 25, y: 0}
+    corner2: {x: 25, y: 0}
+    team: 0
+  enemyReachConditions: []

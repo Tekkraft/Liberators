@@ -12,6 +12,10 @@ public class OperationController : MonoBehaviour
 
     public Sprite playerFlag;
     public Sprite enemyFlag;
+    [SerializeField]
+    Sprite enemyEliteFlag;
+    [SerializeField]
+    Sprite enemyCommanderFlag;
 
     public GameObject squadPrefab;
 
@@ -35,6 +39,13 @@ public class OperationController : MonoBehaviour
         {
             if (checkVictory())
             {
+                while (squads.Count > 0)
+                {
+                    GameObject temp = squads[0];
+                    squads.Remove(temp);
+                    GameObject.Destroy(temp);
+                }
+                opsData = null;
                 SceneManager.LoadSceneAsync("OperationEnd");
             }
         }
@@ -55,7 +66,17 @@ public class OperationController : MonoBehaviour
             }
             if (data.team == OperationsTeam.ENEMY)
             {
-                temp.GetComponent<SpriteRenderer>().sprite = enemyFlag;
+                if (data.isCommander)
+                {
+                    temp.GetComponent<SpriteRenderer>().sprite = enemyCommanderFlag;
+                }
+                else if (data.isElite)
+                {
+                    temp.GetComponent<SpriteRenderer>().sprite = enemyEliteFlag;
+                } else
+                {
+                    temp.GetComponent<SpriteRenderer>().sprite = enemyFlag;
+                }
             }
             squads.Add(temp);
         }
@@ -111,6 +132,7 @@ public class OperationController : MonoBehaviour
     void OnDisable()
     {
         Cursor.visible = true;
+        OperationSceneHandler.data = opsData;
     }
 
     public void moveSquadToLocation(GameObject squad, Vector2Int cell)

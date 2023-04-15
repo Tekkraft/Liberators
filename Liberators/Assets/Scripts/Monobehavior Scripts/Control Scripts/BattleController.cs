@@ -161,9 +161,16 @@ public class BattleController : MonoBehaviour
         RescanEnemies(units);
         foreach (GameObject active in units)
         {
-            if ((float) active.GetComponent<UnitController>().GetStat("currentHP") / (float) active.GetComponent<UnitController>().GetStat("maxHP") > 0.5f)
+            if ((float) active.GetComponent<UnitController>().GetStat("currentHP") / active.GetComponent<UnitController>().GetStat("maxHP") > 0.5f)
             {
-                active.GetComponent<AIController>().SetAIMode(AIMode.attack);
+                if (active.GetComponent<AIController>().GetAIMode() == AIMode.hold)
+                {
+                    active.GetComponent<AIController>().SetAIMode(AIMode.hold);
+                }
+                else
+                {
+                    active.GetComponent<AIController>().SetAIMode(AIMode.attack);
+                }
             } else
             {
                 active.GetComponent<AIController>().SetAIMode(AIMode.flee);

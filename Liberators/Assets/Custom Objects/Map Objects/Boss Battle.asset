@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1df50a09c8d248829fe9d23903af0ab, type: 3}
+  m_Name: Boss Battle
+  m_EditorClassIdentifier: 
+  teamAlignments:
+  - items: 00000000
+  - items: 01000000
+  teamNames:
+  - Player
+  - Enemy
+  AITeams: 01000000
+  reachWinConditions: []
+  targetWinConditions: []
+  timeWinConditions: []
+  reachLoseConditions: []
+  targetLoseConditions: []
+  timeLoseConditions: []
