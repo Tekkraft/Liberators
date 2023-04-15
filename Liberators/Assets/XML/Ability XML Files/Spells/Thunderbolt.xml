@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Type is either "active" or "passive"-->
+<abilityScript type="active">
+    <!--Currently supports only FIRST tag in targeting-->
+    <targeting>
+        <!--Targets any selected unit-->
+        <unit>
+            <!--Range tag is required, however min="0", max="0", extendMax="true" and sight="true" are assumed if left blank.-->
+            <range max="5" extendMax="true" sight="false"/>
+            <!--Team tag is required, however filter="all" is assumed if left blank.-->
+            <team filter="enemy"/>
+            <!--Count tag is required, however targets="1", selectManual="true", infinite="false", and duplicate="false" are assumed if left blank.-->
+            <count />
+            <!--The following tags are not required, and no default value is assumed-->
+            <require>
+                <!--Valid targets must fulfill these conditions-->
+            </require>
+            <forbid>
+                <!--Valid targets must NOT fulfill these conditions-->
+            </forbid>
+            <special>
+                <!--Special unit filter conditions go here-->
+            </special>
+        </unit>
+    </targeting>
+    <effects>
+        <damage value="0" hit="70" source="magic" type="magic"/>
+    </effects>
+</abilityScript>

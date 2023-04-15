@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c97813bd34f14d03a50558471e55cc5, type: 3}
-  m_Name: Burn
+  m_Name: Dodge
   m_EditorClassIdentifier: 
-  statusName: Burn
-  statusDuration: 3
-  statusType: 1
+  statusName: Dodge
+  statusDuration: 1
+  statusType: 0
   statusVisible: 1
-  hasStatChanges: 0
-  flatStatChange: 0
+  hasStatChanges: 1
+  flatStatChange: 1
   maxHP: 0
+  mov: 0
   str: 0
   pot: 0
   acu: 0
   fin: 0
-  rea: 0
-  damageOverTime: 10
+  rea: 20
+  damageOverTime: 0
   healingOverTime: 0
-  healthChangeElement: 11
+  healthChangeElement: 0
   actionPointChange: 0
   setAPMode: 0
   movementChange: 0

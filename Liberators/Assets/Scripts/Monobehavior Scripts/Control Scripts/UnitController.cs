@@ -235,13 +235,13 @@ public class UnitController : MonoBehaviour
         switch (effect.source)
         {
             case "phyiscal":
-                damage += effect.value + unitData.str;
+                damage += effect.value + GetStat("str");
                 break;
             case "magic":
-                damage += effect.value + unitData.pot;
+                damage += effect.value + GetStat("pot");
                 break;
             case "adaptive":
-                damage += effect.value + Mathf.Max(unitData.str, unitData.pot);
+                damage += effect.value + Mathf.Max(GetStat("str"), GetStat("pot"));
                 break;
             case "neutral":
                 damage += effect.value;
@@ -292,24 +292,58 @@ public class UnitController : MonoBehaviour
 
     public int GetStat(string stat)
     {
+        //TODO: Implement percent-based stat changes
+        int movChange = 0;
+        int strChange = 0;
+        int potChange = 0;
+        int acuChange = 0;
+        int finChange = 0;
+        int reaChange = 0;
+        foreach (StatusInstance status in statuses)
+        {
+            if (status.getStatus().getStatChanges()[1] > movChange)
+            {
+                movChange = status.getStatus().getStatChanges()[1];
+            }
+            if (status.getStatus().getStatChanges()[2] > strChange)
+            {
+                strChange = status.getStatus().getStatChanges()[2];
+            }
+            if (status.getStatus().getStatChanges()[3] > potChange)
+            {
+                potChange = status.getStatus().getStatChanges()[3];
+            }
+            if (status.getStatus().getStatChanges()[4] > acuChange)
+            {
+                acuChange = status.getStatus().getStatChanges()[4];
+            }
+            if (status.getStatus().getStatChanges()[5] > finChange)
+            {
+                finChange = status.getStatus().getStatChanges()[5];
+            }
+            if (status.getStatus().getStatChanges()[6] > reaChange)
+            {
+                reaChange = status.getStatus().getStatChanges()[6];
+            }
+        }
         switch (stat)
         {
             case "mov":
-                return unitData.mov;
+                return Mathf.Max(0,unitData.mov - movChange);
             case "maxHP":
                 return unitData.maxHP;
             case "currentHP":
                 return unitData.currentHP;
             case "str":
-                return unitData.str;
+                return Mathf.Max(0, unitData.str - strChange);
             case "pot":
-                return unitData.pot;
+                return Mathf.Max(0, unitData.pot - potChange);
             case "acu":
-                return unitData.acu;
+                return Mathf.Max(0, unitData.acu - acuChange);
             case "fin":
-                return unitData.fin;
+                return Mathf.Max(0, unitData.fin - finChange);
             case "rea":
-                return unitData.rea;
+                return Mathf.Max(0, unitData.rea - reaChange);
             default:
                 Debug.LogError("Invalid stat: " + stat);
                 return -1;

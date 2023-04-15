@@ -47,5 +47,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Special Battles/BossFortress.unity
     guid: 61340a5ee4776464c9cf2563ef9ac5b3
+  - enabled: 1
+    path: Assets/Scenes/Road Battles/RoadBattle2.unity
+    guid: 66f1e1904cad246699b196052ff995ed
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: ca0fad2e3a1044d0b9227ce384067d5e, type: 2}

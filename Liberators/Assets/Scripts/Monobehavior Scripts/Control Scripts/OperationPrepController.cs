@@ -26,6 +26,7 @@ public class OperationPrepController : MonoBehaviour
 
     public void startOperation()
     {
+        OperationSceneHandler.squadDataList = new List<SquadData>();
         foreach (SquadSeralization squad in opsData.GetSquads())
         {
             squad.InitializeData();

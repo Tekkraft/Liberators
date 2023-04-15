@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<skillTree>
+    <nodes>
+        <skillNode id="heal" starting="true" cost="1">
+            <requirements>
+            </requirements>
+            <unlocks>
+                <skill name="Heal" />
+            </unlocks>
+        </skillNode>
+        <skillNode id="execute" cost="2">
+            <requirements>
+                <node id="heal" />
+                <!--Node ids go here-->
+            </requirements>
+            <unlocks>
+                <skill name="Execute" />
+                <!--Skill ids go here-->
+            </unlocks>
+        </skillNode>
+        <skillNode id="aetherStrike" cost="3">
+            <requirements>
+                <node id="heal" />
+                <!--Node ids go here-->
+            </requirements>
+            <unlocks>
+                <skill name="AetherStrike" />
+                <!--Skill ids go here-->
+            </unlocks>
+        </skillNode>
+        <skillNode id="aether" cost="4">
+            <requirements>
+                <node id="execute" />
+                <node id="aetherStrike" />
+                <!--Node ids go here-->
+            </requirements>
+            <unlocks>
+                <skill name="TripleAttack" />
+                <!--Skill ids go here-->
+            </unlocks>
+        </skillNode>
+    </nodes>
+</skillTree>

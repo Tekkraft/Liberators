@@ -17,14 +17,20 @@ MonoBehaviour:
   - squadName: Enemy Command Squad
     squadPosition: {x: 24.5, y: -0.5}
     unitBases:
-    - unitBase: Hostile Melee
-      mainWeaponId: Arc Blade
+    - unitBase: Hostile Commander
+      mainWeaponId: Arc Battleaxe
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 3
+      holdPosition: 0
+    - unitBase: Hostile Sentinel
+      mainWeaponId: Heavy Cannon
       secondaryWeaponId: 
       armorId: Heavy Armor
       bonusLevels: 1
       holdPosition: 0
-    - unitBase: Hostile Melee
-      mainWeaponId: Arc Battleaxe
+    - unitBase: Hostile Sentinel
+      mainWeaponId: Heavy Cannon
       secondaryWeaponId: 
       armorId: Heavy Armor
       bonusLevels: 1
@@ -36,19 +42,25 @@ MonoBehaviour:
       bonusLevels: 1
       holdPosition: 0
     - unitBase: Hostile Gunner
-      mainWeaponId: Rail Rifle
+      mainWeaponId: Battle Rifle
       secondaryWeaponId: 
       armorId: Medium Armor
       bonusLevels: 1
       holdPosition: 0
-    - unitBase: Hostile Ranger
-      mainWeaponId: Arc Blade
+    - unitBase: Hostile Gunner
+      mainWeaponId: Armor Lance
       secondaryWeaponId: 
-      armorId: Light Armor
+      armorId: Medium Armor
       bonusLevels: 1
       holdPosition: 0
-    - unitBase: Hostile Ranger
-      mainWeaponId: Arc Edge
+    - unitBase: Hostile Gunner
+      mainWeaponId: Armor Lance
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 1
+      holdPosition: 0
+    - unitBase: Hostile Caster
+      mainWeaponId: Caster Gauntlet
       secondaryWeaponId: 
       armorId: Light Armor
       bonusLevels: 1
@@ -59,28 +71,30 @@ MonoBehaviour:
       armorId: Light Armor
       bonusLevels: 1
       holdPosition: 0
-    - unitBase: Hostile Caster
-      mainWeaponId: Wave Caster
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
       secondaryWeaponId: 
       armorId: Light Armor
       bonusLevels: 1
       holdPosition: 0
-    - unitBase: Hostile Commander
-      mainWeaponId: Arc Battleaxe
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
       secondaryWeaponId: 
-      armorId: Heavy Armor
-      bonusLevels: 3
+      armorId: Light Armor
+      bonusLevels: 1
       holdPosition: 0
     unitPositions:
-    - {x: 1, y: 9}
-    - {x: -1, y: 9}
-    - {x: 1, y: 10}
-    - {x: -1, y: 10}
-    - {x: 2, y: 10}
-    - {x: -2, y: 10}
-    - {x: 1, y: 11}
-    - {x: -1, y: 11}
-    - {x: 0, y: 11}
+    - {x: 0, y: 12}
+    - {x: 7, y: 0}
+    - {x: -7, y: 0}
+    - {x: 3, y: 11}
+    - {x: -3, y: 11}
+    - {x: 3, y: 10}
+    - {x: -3, y: 10}
+    - {x: 4, y: 10}
+    - {x: -4, y: 10}
+    - {x: 1, y: 3}
+    - {x: -1, y: 3}
     team: 1
     squadAI: 1
     movementType: 0
@@ -88,6 +102,424 @@ MonoBehaviour:
     overrideBattlefield: BossFortress
     squadElite: 1
     squadCommander: 1
+  - squadName: Enemy Guard Squad Titanium
+    squadPosition: {x: -6.5, y: -0.5}
+    unitBases:
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 3, y: 0}
+    - {x: -3, y: 0}
+    - {x: 8, y: 0}
+    - {x: -8, y: 0}
+    - {x: 5, y: 0}
+    - {x: -5, y: 0}
+    team: 1
+    squadAI: 1
+    movementType: 0
+    squadAnchored: 1
+    overrideBattlefield: RoadBattle2
+    squadElite: 1
+    squadCommander: 0
+  - squadName: Enemy Guard Squad Steel
+    squadPosition: {x: 1.5, y: -0.5}
+    unitBases:
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 3, y: 0}
+    - {x: -3, y: 0}
+    - {x: 8, y: 0}
+    - {x: -8, y: 0}
+    - {x: 5, y: 0}
+    - {x: -5, y: 0}
+    team: 1
+    squadAI: 1
+    movementType: 0
+    squadAnchored: 1
+    overrideBattlefield: RoadBattle2
+    squadElite: 1
+    squadCommander: 0
+  - squadName: Enemy Scout Squad Raven
+    squadPosition: {x: -0.5, y: -12.5}
+    unitBases:
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 3, y: 9}
+    - {x: -3, y: 9}
+    - {x: 4, y: 11}
+    - {x: -4, y: 11}
+    team: 1
+    squadAI: 2
+    movementType: 0
+    squadAnchored: 0
+    overrideBattlefield: 
+    squadElite: 0
+    squadCommander: 0
+  - squadName: Enemy Scout Squad Kestrel
+    squadPosition: {x: -5.5, y: 10.5}
+    unitBases:
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 3, y: 9}
+    - {x: -3, y: 9}
+    - {x: 4, y: 11}
+    - {x: -4, y: 11}
+    team: 1
+    squadAI: 2
+    movementType: 0
+    squadAnchored: 0
+    overrideBattlefield: 
+    squadElite: 0
+    squadCommander: 0
+  - squadName: Enemy Scout Squad Falcon
+    squadPosition: {x: -14.5, y: -9.5}
+    unitBases:
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 3, y: 9}
+    - {x: -3, y: 9}
+    - {x: 4, y: 11}
+    - {x: -4, y: 11}
+    team: 1
+    squadAI: 2
+    movementType: 0
+    squadAnchored: 0
+    overrideBattlefield: 
+    squadElite: 0
+    squadCommander: 0
+  - squadName: Enemy Battle Squad Sword
+    squadPosition: {x: 24.5, y: -1.5}
+    unitBases:
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Rail Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Caster
+      mainWeaponId: Caster Gauntlet
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 1, y: 11}
+    - {x: -1, y: 11}
+    - {x: 0, y: 12}
+    - {x: 0, y: 10}
+    team: 1
+    squadAI: 1
+    movementType: 0
+    squadAnchored: 0
+    overrideBattlefield: 
+    squadElite: 0
+    squadCommander: 0
+  - squadName: Enemy Battle Squad Lance
+    squadPosition: {x: 24.5, y: 0.5}
+    unitBases:
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Armor Lance
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Caster
+      mainWeaponId: Caster Gauntlet
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Battleaxe
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 1, y: 11}
+    - {x: -1, y: 11}
+    - {x: 0, y: 12}
+    - {x: 0, y: 10}
+    team: 1
+    squadAI: 1
+    movementType: 0
+    squadAnchored: 0
+    overrideBattlefield: 
+    squadElite: 0
+    squadCommander: 0
+  - squadName: Enemy Battle Squad Hammer
+    squadPosition: {x: 23.5, y: -0.5}
+    unitBases:
+    - unitBase: Hostile Gunner
+      mainWeaponId: Heavy Cannon
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Rail Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Caster
+      mainWeaponId: Caster Gauntlet
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Battleaxe
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 1, y: 11}
+    - {x: -1, y: 11}
+    - {x: 0, y: 12}
+    - {x: 0, y: 10}
+    team: 1
+    squadAI: 1
+    movementType: 0
+    squadAnchored: 0
+    overrideBattlefield: 
+    squadElite: 0
+    squadCommander: 0
+  - squadName: Enemy Battle Squad Longbow
+    squadPosition: {x: 22.5, y: -0.5}
+    unitBases:
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Caster
+      mainWeaponId: Floret Drone
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Battleaxe
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 1, y: 11}
+    - {x: -1, y: 11}
+    - {x: 0, y: 12}
+    - {x: 0, y: 10}
+    team: 1
+    squadAI: 2
+    movementType: 0
+    squadAnchored: 0
+    overrideBattlefield: 
+    squadElite: 0
+    squadCommander: 0
+  - squadName: Enemy Battle Squad Crossbow
+    squadPosition: {x: -17.5, y: 2.5}
+    unitBases:
+    - unitBase: Hostile Gunner
+      mainWeaponId: Rail Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Rail Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Caster
+      mainWeaponId: Wave Caster
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+      holdPosition: 0
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+      holdPosition: 0
+    unitPositions:
+    - {x: 1, y: 11}
+    - {x: -1, y: 11}
+    - {x: 0, y: 12}
+    - {x: 0, y: 10}
+    team: 1
+    squadAI: 2
+    movementType: 0
+    squadAnchored: 0
+    overrideBattlefield: 
+    squadElite: 0
+    squadCommander: 0
   playerReachConditions:
   - corner1: {x: 25, y: 0}
     corner2: {x: 25, y: 0}

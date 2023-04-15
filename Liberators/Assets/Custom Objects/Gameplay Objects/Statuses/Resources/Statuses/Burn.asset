@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c97813bd34f14d03a50558471e55cc5, type: 3}
-  m_Name: Shock
+  m_Name: Burn
   m_EditorClassIdentifier: 
-  statusName: Shock
-  statusDuration: 1
+  statusName: Burn
+  statusDuration: 3
   statusType: 1
   statusVisible: 1
   hasStatChanges: 0
   flatStatChange: 0
   maxHP: 0
+  mov: 0
   str: 0
   pot: 0
   acu: 0
   fin: 0
   rea: 0
-  damageOverTime: 0
+  damageOverTime: 10
   healingOverTime: 0
-  healthChangeElement: 0
-  actionPointChange: -1
-  setAPMode: 1
+  healthChangeElement: 5
+  actionPointChange: 0
+  setAPMode: 0
   movementChange: 0
   setMoveMode: 0
   specialProperties: []

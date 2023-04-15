@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Enemy Commander
   maxHP: 35
-  mov: 5
+  mov: 0
   str: 9
   pot: 8
   acu: 8
@@ -22,11 +22,11 @@ MonoBehaviour:
   rea: 6
   className: Captain
   unitAnims:
-    idleSprite: {fileID: -8288719416775323596, guid: bc6c32322bc3e46598f248509556ca52, type: 3}
-    attackSprite: {fileID: -5254153324720950760, guid: bc6c32322bc3e46598f248509556ca52, type: 3}
-    evadeSprite: {fileID: 2011250110748125458, guid: bc6c32322bc3e46598f248509556ca52, type: 3}
-    deadStaggerSprite: {fileID: 3203026583860860714, guid: bc6c32322bc3e46598f248509556ca52, type: 3}
-    deadSprite: {fileID: 3203026583860860714, guid: bc6c32322bc3e46598f248509556ca52, type: 3}
-    blockSprite: {fileID: 2011250110748125458, guid: bc6c32322bc3e46598f248509556ca52, type: 3}
-    staggerSprite: {fileID: 3790070924638718474, guid: bc6c32322bc3e46598f248509556ca52, type: 3}
-    defendSprite: {fileID: 3790070924638718474, guid: bc6c32322bc3e46598f248509556ca52, type: 3}
+    idleSprite: {fileID: -5485416651559738898, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    attackSprite: {fileID: -1125667106224686872, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    evadeSprite: {fileID: -1474733479245878889, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    deadStaggerSprite: {fileID: -23036815260366909, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    deadSprite: {fileID: -23036815260366909, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    blockSprite: {fileID: -1474733479245878889, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    staggerSprite: {fileID: 1839775356003820687, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}
+    defendSprite: {fileID: 1839775356003820687, guid: b602619af9bce49faaf44a26ea4492c5, type: 3}

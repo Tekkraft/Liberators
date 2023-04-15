@@ -859,9 +859,7 @@ public class BattleController : MonoBehaviour
     BattleDetail StatusUnit(GameObject source, GameObject target, StatusEffect effect)
     {
         UnitController targetController = target.GetComponent<UnitController>();
-        //TODO: Reimplement chance to inflict status
-        //TODO: Implement status id lookup
-        Status status = new Status();
+        Status status = Resources.Load<Status>("Statuses/" + effect.id);
         return targetController.InflictStatus(status, source);
     }
 

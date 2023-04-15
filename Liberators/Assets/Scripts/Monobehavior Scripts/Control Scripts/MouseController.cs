@@ -75,6 +75,25 @@ public class MouseController : MonoBehaviour
                     }
                 }
             }
+            int maxRange = 0;
+            switch (battleController.GetActiveAbilityScript().targeting[0].GetType().ToString())
+            {
+                case "UnitTargeting":
+                    maxRange = battleController.GetRanges((battleController.GetActiveAbilityScript().targeting[0] as UnitTargeting).range, battleController.GetActiveUnit())[0];
+                    break;
+
+                case "BeamTargeting":
+                    maxRange = battleController.GetRanges((battleController.GetActiveAbilityScript().targeting[0] as BeamTargeting).range, battleController.GetActiveUnit())[0];
+                    break;
+
+                case "TileTargeting":
+                    maxRange = battleController.GetRanges((battleController.GetActiveAbilityScript().targeting[0] as TileTargeting).range, battleController.GetActiveUnit())[0];
+                    break;
+            }
+            GameObject temp2 = GameObject.Instantiate(battleController.GetOverlayObject(), battleController.GetActiveUnit().gameObject.transform);
+            temp2.transform.Translate(new Vector3(0, 0, -4));
+            temp2.GetComponent<OverlayController>().initalize(maxRange * 2 + 1, false, battleController.GetActiveUnit());
+            dataOverlays.Add(temp2);
         }
     }
 

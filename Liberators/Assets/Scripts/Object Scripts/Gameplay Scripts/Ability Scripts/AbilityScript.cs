@@ -212,8 +212,8 @@ public class HealEffect : EffectTypeA
     [XmlAttribute("hit"), DefaultValue(100)]
     public int hit = 100;
 
-    [XmlAttribute("trueHit"), DefaultValue(false)]
-    public bool trueHit = false;
+    [XmlAttribute("trueHit"), DefaultValue(true)]
+    public bool trueHit = true;
 }
 
 [XmlRoot("select")]

@@ -28,8 +28,8 @@ public class Status : ScriptableObject
     [SerializeField]
     int maxHP;
 
-    //[SerializeField]
-    int mov = 0;
+    [SerializeField]
+    int mov;
 
     [SerializeField]
     int str;
