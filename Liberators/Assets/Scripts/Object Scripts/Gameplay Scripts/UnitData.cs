@@ -38,12 +38,14 @@ public class UnitData
         return unit.getBattleSprite(tag);
     }
 
-    public void Initialize()
+    public void Initialize(string source, string mainWeaponId, string secondaryWeaponId, string armorId)
     {
+        this.source = source;
         Unit unit = Resources.Load<Unit>("Units/" + source);
         //TODO: TEMP CODE, REMOVE
         if (unit == null)
         {
+            Debug.LogError("No unit template for unit: " + source);
             return;
         }
         unitName = unit.getUnitName();
@@ -56,29 +58,29 @@ public class UnitData
         acu = unit.getStats()[4];
         fin = unit.getStats()[5];
         rea = unit.getStats()[6];
-        if (mainWeapon.weaponBaseId == "")
+        if (mainWeaponId == "")
         {
             mainWeapon = null;
         }
         else
         {
-            mainWeapon = new WeaponData(mainWeapon.weaponBaseId);
+            mainWeapon = new WeaponData(mainWeaponId);
         }
-        if (secondaryWeapon.weaponBaseId == "")
+        if (secondaryWeaponId == "")
         {
             secondaryWeapon = null;
         }
         else
         {
-            secondaryWeapon = new WeaponData(secondaryWeapon.weaponBaseId);
+            secondaryWeapon = new WeaponData(secondaryWeaponId);
         }
-        if (armor.armorBaseId == "")
+        if (armorId == "")
         {
             armor = null;
         }
         else
         {
-            armor = new ArmorData(armor.armorBaseId);
+            armor = new ArmorData(armorId);
         }
     }
 

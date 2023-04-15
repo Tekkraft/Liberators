@@ -899,7 +899,6 @@ public class BattleController : MonoBehaviour
         int rangeMax = ranges[0];
         int rangeMin = ranges[1];
         Vector2 direction = new Vector2(0, 0);
-        Debug.Log(rangeMax + "/" + rangeMin);
         Rangefinder rangefinder = new Rangefinder(rangeMax, rangeMin, selector.range.sightRequired, mapController, this, teamLists, direction);
         BattleTeam target = GetFilterTeam(selector.team, parent.GetComponent<UnitController>().GetTeam());
         List<GameObject> validTargets = rangefinder.generateTargetsOfTeam(parent.GetComponent<UnitController>().GetUnitPos(), target, false);

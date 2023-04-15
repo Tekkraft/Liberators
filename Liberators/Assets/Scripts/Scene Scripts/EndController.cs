@@ -33,5 +33,6 @@ public class EndController : MonoBehaviour
     public void exitScreen()
     {
         SceneManager.LoadSceneAsync("OperationMap");
+        BattlePrepHandler.reset();
     }
 }

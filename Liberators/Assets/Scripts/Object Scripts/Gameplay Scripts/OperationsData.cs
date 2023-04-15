@@ -17,22 +17,30 @@ public class OperationsData : ScriptableObject
     [SerializeField]
     List<OperationsReachCondition> enemyReachConditions;
 
-    public string getOperationsName()
+    public string GetOperationsName()
     {
         return operationsName;
     }
 
-    public List<SquadSeralization> getSquads()
+    public void InitializeSquads()
+    {
+        foreach (SquadSeralization squad in squadData)
+        {
+            squad.InitializeData();
+        }
+    }
+
+    public List<SquadSeralization> GetSquads()
     {
         return squadData;
     }
 
-    public List<OperationsReachCondition> getPlayerReachWinConditions()
+    public List<OperationsReachCondition> GetPlayerReachWinConditions()
     {
         return playerReachConditions;
     }
 
-    public List<OperationsReachCondition> getEnemyReachWinConditions()
+    public List<OperationsReachCondition> GetEnemyReachWinConditions()
     {
         return playerReachConditions;
     }
@@ -48,7 +56,9 @@ public class SquadSeralization
     Vector2 squadPosition;
 
     [SerializeField]
-    List<UnitData> units;
+    List<OperationsUnitData> unitBases;
+
+    List<UnitData> unitData;
 
     [SerializeField]
     List<Vector2Int> unitPositions;
@@ -78,9 +88,14 @@ public class SquadSeralization
         return squadPosition;
     }
 
-    public List<UnitData> GetUnits()
+    public List<OperationsUnitData> GetUnitBases()
     {
-        return units;
+        return unitBases;
+    }
+
+    public List<UnitData> GetUnitData()
+    {
+        return unitData;
     }
 
     public List<Vector2Int> GetUnitPositions()
@@ -115,9 +130,53 @@ public class SquadSeralization
 
     public void InitializeData()
     {
-        foreach (UnitData data in units)
+        foreach (OperationsUnitData data in unitBases)
         {
-            data.Initialize();
+            UnitData unit = new UnitData();
+            unit.Initialize(data.GetUnitBase(), data.GetMainWeaponId(), data.GetSecondaryWeaponId(), data.GetArmorId());
+            for (int i = 0; i < data.GetBonusLevels(); i++)
+            {
+                unit.maxHP += Mathf.CeilToInt(unit.maxHP * 0.1f);
+                unit.currentHP = unit.maxHP;
+                unit.str += Mathf.CeilToInt(unit.str * 0.1f);
+                unit.pot += Mathf.CeilToInt(unit.pot * 0.1f);
+                unit.fin += Mathf.CeilToInt(unit.fin * 0.1f);
+                unit.acu += Mathf.CeilToInt(unit.acu * 0.1f);
+                unit.rea += Mathf.CeilToInt(unit.rea * 0.1f);
+                for (int j = 0; j < 3; j++)
+                {
+                    int stat = Random.Range(0,6);
+                    switch (stat)
+                    {
+                        case 0:
+                            unit.maxHP += Random.Range(1, 4);
+                            unit.currentHP = unit.maxHP;
+                            break;
+
+                        case 1:
+                            unit.str++;
+                            break;
+
+                        case 2:
+                            unit.pot++;
+                            break;
+
+                        case 3:
+                            unit.fin++;
+                            break;
+
+                        case 4:
+                            unit.acu++;
+                            break;
+
+                        case 5:
+                            unit.rea++;
+                            break;
+
+                    }
+                }
+            }
+            unitData.Add(unit);
         }
     }
 }
@@ -143,4 +202,49 @@ public class OperationsReachCondition
     {
         return team;
     }
+}
+
+[System.Serializable]
+public class OperationsUnitData
+{
+    [SerializeField]
+    string unitBase;
+
+    [SerializeField]
+    string mainWeaponId;
+
+    [SerializeField]
+    string secondaryWeaponId;
+
+    [SerializeField]
+    string armorId;
+
+    [SerializeField]
+    int bonusLevels;
+
+    public string GetUnitBase()
+    {
+        return unitBase;
+    }
+
+    public string GetMainWeaponId()
+    {
+        return mainWeaponId;
+    }
+
+    public string GetSecondaryWeaponId()
+    {
+        return secondaryWeaponId;
+    }
+
+    public string GetArmorId()
+    {
+        return armorId;
+    }
+
+    public int GetBonusLevels()
+    {
+        return bonusLevels;
+    }
+
 }

@@ -71,6 +71,11 @@ public class UnitController : MonoBehaviour
         {
             validArmor = true;
         }
+        if (unitData.skillTree != null)
+        {
+            unitData.skillTree.LoadAllLearnedAbilities();
+            allAbilities.AddRange(unitData.skillTree.GetAllLearnedAbilities());
+        }
     }
 
     public int[] getActions()
@@ -190,7 +195,7 @@ public class UnitController : MonoBehaviour
             damageTaken = 0;
         }
         unitData.ChangeCurrentHP(-damageTaken);
-        return new BattleDetail(damage, unitData.currentHP <= 0, critical);
+        return new BattleDetail(damageTaken, unitData.currentHP <= 0, critical);
     }
 
     public BattleDetail RestoreHealth(int healing)

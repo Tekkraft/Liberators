@@ -195,9 +195,9 @@ public class UIController : MonoBehaviour
     public GameObject displayUnitDataPreview(GameObject unit)
     {
         GameObject.Destroy(activePreview);
-        activePreview = GameObject.Instantiate(unitDataPreview, transform);
-        activePreview.transform.SetParent(transform, false);
+        activePreview = GameObject.Instantiate(unitDataPreview, transform, false);
         activePreview.GetComponent<PreviewController>().setData(unit);
+        Canvas.ForceUpdateCanvases();
         return activePreview;
     }
 

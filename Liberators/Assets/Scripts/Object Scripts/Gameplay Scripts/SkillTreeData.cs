@@ -150,6 +150,7 @@ public class SkillNodeData
 
     public void LoadLearnedAbilities()
     {
+        unlockedAbilties = new List<Ability>();
         foreach(string abilityName in unlocks)
         {
             unlockedAbilties.Add(Resources.Load<Ability>("Abilities/" + abilityName));

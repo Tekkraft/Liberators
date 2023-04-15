@@ -8,4 +8,10 @@ public class BattlePrepHandler
     public static PlayerUnitDataList unitData;
 
     public static string battleScene;
+
+    public static void reset()
+    {
+        unitData = null;
+        battleScene = null;
+    }
 }

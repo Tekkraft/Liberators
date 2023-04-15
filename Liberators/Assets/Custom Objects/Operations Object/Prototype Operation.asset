@@ -16,131 +16,27 @@ MonoBehaviour:
   squadData:
   - squadName: Enemy Squad Alpha
     squadPosition: {x: -10.5, y: 8.5}
-    units:
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
+    unitBases:
+    - unitBase: Hostile Caster
+      mainWeaponId: Caster Gauntlet
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Battleaxe
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
     unitPositions:
     - {x: 0, y: 11}
     - {x: -1, y: 10}
@@ -153,255 +49,52 @@ MonoBehaviour:
     overrideBattlefield: 
   - squadName: Boss Squad
     squadPosition: {x: 24.5, y: -0.5}
-    units:
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
+    unitBases:
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 1
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Battleaxe
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 1
+    - unitBase: Hostile Gunner
+      mainWeaponId: Battle Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 1
+    - unitBase: Hostile Gunner
+      mainWeaponId: Rail Rifle
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 1
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 1
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Edge
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 1
+    - unitBase: Hostile Caster
+      mainWeaponId: Caster Gauntlet
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 1
+    - unitBase: Hostile Caster
+      mainWeaponId: Wave Caster
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 1
+    - unitBase: Hostile Commander
+      mainWeaponId: Heavy Cannon
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 3
     unitPositions:
     - {x: 1, y: 9}
     - {x: -1, y: 9}
@@ -411,6 +104,7 @@ MonoBehaviour:
     - {x: -2, y: 10}
     - {x: 1, y: 11}
     - {x: -1, y: 11}
+    - {x: 0, y: 11}
     team: 1
     squadAI: 1
     movementType: 0
@@ -418,69 +112,17 @@ MonoBehaviour:
     overrideBattlefield: RoadBattle0
   - squadName: Enemy Test Squad 1
     squadPosition: {x: -22.5, y: -12.5}
-    units:
-    - source: Hostile Caster
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: Wave Caster
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: Hostile Melee
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: Arc Edge
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
+    unitBases:
+    - unitBase: Hostile Caster
+      mainWeaponId: Caster Gauntlet
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Rail Rifle
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
     unitPositions:
     - {x: 0, y: 11}
     - {x: 0, y: 9}
@@ -491,131 +133,27 @@ MonoBehaviour:
     overrideBattlefield: 
   - squadName: Enemy Squad Beta
     squadPosition: {x: -10.5, y: 5.5}
-    units:
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
+    unitBases:
+    - unitBase: Hostile Caster
+      mainWeaponId: Wave Caster
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Armor Lance
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Battleaxe
+      secondaryWeaponId: 
+      armorId: Medium Armor
+      bonusLevels: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
     unitPositions:
     - {x: 0, y: 11}
     - {x: -1, y: 10}
@@ -628,131 +166,27 @@ MonoBehaviour:
     overrideBattlefield: 
   - squadName: Enemy Squad Gamma
     squadPosition: {x: 24.5, y: 0.5}
-    units:
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
-    - source: 
-      unitName: 
-      className: 
-      maxHP: 0
-      currentHP: 0
-      mov: 0
-      str: 0
-      pot: 0
-      acu: 0
-      fin: 0
-      rea: 0
-      maxSkillPoints: 0
-      availableSkillPoints: 0
-      skillTree:
-        source: 
-        nodes: []
-      mainWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      secondaryWeapon:
-        itemType: 
-        weaponBaseId: 
-        weaponCoreId: 
-        weaponUpgradeId: []
-        upgradeCapacity: 0
-      armor:
-        itemType: 
-        armorBaseId: 
+    unitBases:
+    - unitBase: Hostile Caster
+      mainWeaponId: Caster Gauntlet
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+    - unitBase: Hostile Gunner
+      mainWeaponId: Heavy Cannon
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
+    - unitBase: Hostile Ranger
+      mainWeaponId: Floret Drone
+      secondaryWeaponId: 
+      armorId: Light Armor
+      bonusLevels: 0
+    - unitBase: Hostile Melee
+      mainWeaponId: Arc Blade
+      secondaryWeaponId: 
+      armorId: Heavy Armor
+      bonusLevels: 0
     unitPositions:
     - {x: 0, y: 11}
     - {x: -1, y: 10}

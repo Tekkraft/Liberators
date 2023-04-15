@@ -190,11 +190,11 @@ public class OperationController : MonoBehaviour
     //Win-Lose Checks
     bool checkVictory()
     {
-        foreach (OperationsReachCondition condition in opsData.getPlayerReachWinConditions())
+        foreach (OperationsReachCondition condition in opsData.GetPlayerReachWinConditions())
         {
             return checkReachCondition(condition);
         }
-        foreach (OperationsReachCondition condition in opsData.getEnemyReachWinConditions())
+        foreach (OperationsReachCondition condition in opsData.GetEnemyReachWinConditions())
         {
             return checkReachCondition(condition);
         }
